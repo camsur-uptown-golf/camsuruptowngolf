@@ -1,20 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-
-const SLIDES = [
-  { image: "/course-concepts/concept-01.jpg", title: "Aerial Perspective", description: "A sweeping first look at the scale, rhythm, and open character envisioned for the course." },
-  { image: "/course-concepts/concept-02.jpg", title: "Championship Layout", description: "Generous fairways, strategic water, and a landscape designed to reward thoughtful play." },
-  { image: "/course-concepts/concept-03.jpg", title: "Resort & Fairway", description: "Golf and hospitality brought together in one destination beneath the Bicol landscape." },
-  { image: "/course-concepts/concept-04.jpg", title: "Lakeside Course", description: "Waterfront holes create memorable views and a distinctive challenge from tee to green." },
-  { image: "/course-concepts/concept-05.jpg", title: "Golden Hour", description: "A course experience shaped by warm light, wide horizons, and long afternoons outdoors." },
-  { image: "/course-concepts/concept-06.jpg", title: "Waterfront Greens", description: "Sculpted greens and reflective water bring drama and calm to every round." },
-  { image: "/course-concepts/concept-07.jpg", title: "The Grand Course", description: "An expansive championship landscape designed to feel both elevated and welcoming." },
-  { image: "/course-concepts/concept-08.jpg", title: "Signature Green", description: "Bold bunkering and considered contours frame a green made to be remembered." },
-  { image: "/course-concepts/concept-09.jpg", title: "Clubhouse Village", description: "A complete golf destination where the course, clubhouse, and community come together." },
-  { image: "/hero-4k.png", title: "Mt. Isarog Vision", description: "The defining idea for CamSur Uptown: championship golf meeting the spirit of Bicol." },
-];
+import { CONCEPTS as SLIDES } from "@/lib/site-content";
 
 function Arrow({ direction }: { direction: "left" | "right" }) {
   return (
@@ -41,7 +30,7 @@ export default function ConceptCarousel() {
   return (
     <section
       id="concepts"
-      className="overflow-hidden bg-[#f7f5ee] pb-16 pt-20 text-[#14271d] sm:pb-20 sm:pt-24 lg:pb-24 lg:pt-28"
+      className="overflow-hidden bg-white pb-16 pt-8 text-[#14271d] sm:pb-20 sm:pt-10 lg:pb-24 lg:pt-12"
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") goPrevious();
         if (event.key === "ArrowRight") goNext();
@@ -71,7 +60,11 @@ export default function ConceptCarousel() {
         <span className="absolute left-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#173126]/55 lg:block" aria-hidden="true" />
         <span className="absolute right-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#173126]/55 lg:block" aria-hidden="true" />
 
-        <div className="relative z-10 mx-auto aspect-[1.94] w-[calc(100%-3rem)] max-w-[1040px] overflow-hidden bg-[#173a29] shadow-[0_18px_42px_rgba(17,44,31,0.1)] sm:w-[52vw]">
+        <Link
+          href={`/golf/${SLIDES[active].slug}`}
+          aria-label={`View ${SLIDES[active].title}`}
+          className="relative z-10 mx-auto block aspect-[1.94] w-[calc(100%-3rem)] max-w-[1040px] overflow-hidden bg-[#173a29] shadow-[0_18px_42px_rgba(17,44,31,0.1)] sm:w-[52vw]"
+        >
           <Image
             key={SLIDES[active].image}
             src={SLIDES[active].image}
@@ -85,31 +78,32 @@ export default function ConceptCarousel() {
           <p className="absolute bottom-4 right-5 text-[10px] font-bold tracking-[0.18em] text-white/85 sm:bottom-6 sm:right-7">
             {String(active + 1).padStart(2, "0")} / {SLIDES.length}
           </p>
-        </div>
+        </Link>
+
       </div>
 
-      <div className="mx-auto grid w-full max-w-[1040px] grid-cols-[auto_1fr_auto] items-center gap-4 px-6 pt-7 sm:w-[52vw] sm:min-w-[720px] sm:gap-7 sm:px-0 sm:pt-8">
+      <div className="mx-auto grid w-full max-w-[1040px] grid-cols-[auto_1fr_auto] items-start gap-4 px-6 pt-7 sm:w-[52vw] sm:min-w-[720px] sm:gap-7 sm:px-0 sm:pt-8">
         <button
           type="button"
           onClick={goPrevious}
           aria-label="Previous concept image"
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-[#183e2b]/30 text-[#183e2b] transition hover:border-[#174630] hover:bg-[#174630] hover:text-white sm:h-14 sm:w-14"
+          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#183e2b]/30 text-[#183e2b] transition hover:border-[#174630] hover:bg-[#174630] hover:text-white"
         >
           <Arrow direction="left" />
         </button>
 
-        <div className="grid min-w-0 gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-10">
+        <div className="grid min-w-0 gap-5 lg:grid-cols-2 lg:gap-10">
           <div className="min-w-0 lg:border-r lg:border-[#183e2b]/35 lg:pr-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">Concept {String(active + 1).padStart(2, "0")}</p>
-            <h3 className="mt-2 text-xl font-medium leading-[0.95] tracking-[-0.045em] sm:text-4xl">
+            <h3 className="mt-2 max-w-full text-[1.625rem] font-medium leading-[0.94] tracking-[-0.05em] sm:text-[clamp(2.25rem,2.7vw,3rem)]">
               {SLIDES[active].title}
             </h3>
           </div>
-          <div className="hidden lg:block" aria-live="polite">
+          <div className="hidden lg:block lg:pt-6" aria-live="polite">
             <p className="text-base leading-7 text-[#536058]">{SLIDES[active].description}</p>
-            <a href="#contact" className="mt-5 inline-flex rounded-full bg-[#174630] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#0f3825]">
-              Plan your round
-            </a>
+            <Link href={`/golf/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#174630] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#0f3825]">
+              View concept
+            </Link>
           </div>
         </div>
 
@@ -117,7 +111,7 @@ export default function ConceptCarousel() {
           type="button"
           onClick={goNext}
           aria-label="Next concept image"
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-[#183e2b]/30 text-[#183e2b] transition hover:border-[#174630] hover:bg-[#174630] hover:text-white sm:h-14 sm:w-14"
+          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#183e2b]/30 text-[#183e2b] transition hover:border-[#174630] hover:bg-[#174630] hover:text-white"
         >
           <Arrow direction="right" />
         </button>
