@@ -7,6 +7,29 @@ import { CONCEPTS } from "@/lib/site-content";
 
 export const dynamicParams = false;
 
+const CONCEPT_04_ANGLES = [
+  {
+    src: "/course-concepts/concept-04-alt-01.png",
+    alt: "Lakeside golf course viewed by drone from across the water",
+    label: "Across the lake",
+  },
+  {
+    src: "/course-concepts/concept-04-alt-02.png",
+    alt: "Lakeside golf course viewed from the tee beside the water",
+    label: "From the tee",
+  },
+  {
+    src: "/course-concepts/concept-04-alt-03.png",
+    alt: "Elevated side view of the lakeside golf course and winding fairways",
+    label: "Above the fairway",
+  },
+  {
+    src: "/course-concepts/concept-04-alt-04.png",
+    alt: "Golf green and sculpted bunker beside the lake and city skyline",
+    label: "Beside the green",
+  },
+] as const;
+
 export function generateStaticParams() {
   return CONCEPTS.map((concept) => ({ concept: concept.slug }));
 }
@@ -43,16 +66,52 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
         <section className="bg-white py-20 text-[#14271d] sm:py-24 lg:py-28">
           <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20 lg:px-8">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f]">The vision</p>
-              <h2 className="mt-4 text-4xl font-medium leading-none tracking-[-0.055em] sm:text-5xl">Concept {String(index + 1).padStart(2, "0")}</h2>
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f]">Course vision</p>
+              <h2 className="mt-4 text-4xl font-medium leading-none tracking-[-0.055em] sm:text-5xl">Design direction {String(index + 1).padStart(2, "0")}</h2>
             </div>
             <div>
               <p className="text-xl leading-9 text-[#506058] sm:text-2xl sm:leading-10">{concept.description}</p>
-              <p className="mt-6 text-base leading-8 text-[#6a756f]">This image is part of the initial visual direction for CamSur Uptown Golf Club. Course planning, architecture, landscaping, and guest experiences shown here remain conceptual and may evolve during development.</p>
+              <p className="mt-6 text-base leading-8 text-[#6a756f]">These images show the current design direction for CamSur Uptown Golf Club. Course routing, architecture, landscaping, and guest amenities may change as the project develops.</p>
               <Link href="/#contact" className="mt-8 inline-flex rounded-full bg-[#174630] px-7 py-4 text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#0f3825]">Plan your round →</Link>
             </div>
           </div>
         </section>
+
+        {slug === "concept-04" && (
+          <section className="bg-[#f3f0e7] py-20 text-[#14271d] sm:py-24 lg:py-28">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <div className="max-w-3xl">
+                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Lakeside course views</p>
+                <h2 className="mt-4 text-4xl font-medium leading-[0.98] tracking-[-0.055em] sm:text-5xl lg:text-6xl">
+                  See the lakeside course from every angle.
+                </h2>
+              </div>
+
+              <div className="mt-12 grid gap-5 md:grid-cols-2 lg:mt-16 lg:gap-6">
+                {CONCEPT_04_ANGLES.map((angle, angleIndex) => (
+                  <figure key={angle.src} className="group">
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-[1.5rem] bg-[#d9ded8] sm:rounded-[2rem]">
+                      <Image
+                        src={angle.src}
+                        alt={angle.alt}
+                        fill
+                        sizes="(max-width: 767px) calc(100vw - 3rem), (max-width: 1279px) calc(50vw - 2.5rem), 608px"
+                        className="object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#071d13]/55 to-transparent" />
+                      <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white sm:p-6">
+                        <span className="text-sm font-semibold tracking-[-0.02em]">{angle.label}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f1d98f]">
+                          {String(angleIndex + 1).padStart(2, "0")} / 04
+                        </span>
+                      </figcaption>
+                    </div>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         <nav aria-label="Concept navigation" className="grid bg-[#f3f0e7] sm:grid-cols-2">
           <Link href={`/golf/${previous.slug}`} className="group relative min-h-72 overflow-hidden border-b border-white/15 sm:border-b-0 sm:border-r">

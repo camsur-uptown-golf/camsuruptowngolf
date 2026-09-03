@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -30,13 +31,16 @@ export default function ConceptCarousel() {
   return (
     <section
       id="concepts"
-      className="overflow-hidden bg-white pb-16 pt-8 text-[#14271d] sm:pb-20 sm:pt-10 lg:pb-24 lg:pt-12"
+      className="overflow-hidden bg-white pb-6 pt-8 text-[#14271d] sm:pb-8 sm:pt-10 lg:pb-10 lg:pt-12"
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") goPrevious();
         if (event.key === "ArrowRight") goNext();
       }}
     >
       <div className="relative">
+        {/* Reveals go only on elements without a transform of their own — the
+            side previews and the divider rules are centred with -translate-y,
+            which a landed reveal would reset to none. */}
         <button
           type="button"
           onClick={goPrevious}
@@ -63,6 +67,7 @@ export default function ConceptCarousel() {
         <Link
           href={`/golf/${SLIDES[active].slug}`}
           aria-label={`View ${SLIDES[active].title}`}
+          data-reveal="scale"
           className="relative z-10 mx-auto block aspect-[1.94] w-[calc(100%-3rem)] max-w-[1040px] overflow-hidden bg-[#173a29] shadow-[0_18px_42px_rgba(17,44,31,0.1)] sm:w-[52vw]"
         >
           <Image
@@ -79,10 +84,13 @@ export default function ConceptCarousel() {
             {String(active + 1).padStart(2, "0")} / {SLIDES.length}
           </p>
         </Link>
-
       </div>
 
-      <div className="mx-auto grid w-full max-w-[1040px] grid-cols-[auto_1fr_auto] items-start gap-4 px-6 pt-7 sm:w-[52vw] sm:min-w-[720px] sm:gap-7 sm:px-0 sm:pt-8">
+      <div
+        data-reveal="up"
+        style={{ "--reveal-delay": "150ms" } as CSSProperties}
+        className="mx-auto grid w-full max-w-[1040px] grid-cols-[auto_1fr_auto] items-start gap-4 px-6 pt-7 sm:w-[52vw] sm:min-w-[720px] sm:gap-7 sm:px-0 sm:pt-8"
+      >
         <button
           type="button"
           onClick={goPrevious}
@@ -95,14 +103,14 @@ export default function ConceptCarousel() {
         <div className="grid min-w-0 gap-5 lg:grid-cols-2 lg:gap-10">
           <div className="min-w-0 lg:border-r lg:border-[#183e2b]/35 lg:pr-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">Concept {String(active + 1).padStart(2, "0")}</p>
-            <h3 className="mt-2 max-w-full text-[1.625rem] font-medium leading-[0.94] tracking-[-0.05em] sm:text-[clamp(2.25rem,2.7vw,3rem)]">
+            <h3 className="mt-2 max-w-full font-serif text-[1.625rem] font-medium leading-[0.94] tracking-[-0.05em] sm:text-[clamp(2.25rem,2.7vw,3rem)]">
               {SLIDES[active].title}
             </h3>
           </div>
           <div className="hidden lg:block lg:pt-6" aria-live="polite">
             <p className="text-base leading-7 text-[#536058]">{SLIDES[active].description}</p>
             <Link href={`/golf/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#174630] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#0f3825]">
-              View concept
+              Explore this concept
             </Link>
           </div>
         </div>
@@ -117,7 +125,12 @@ export default function ConceptCarousel() {
         </button>
       </div>
 
-      <div className="mx-auto mt-6 flex max-w-[1040px] justify-center gap-2 px-6 sm:w-[52vw]" aria-label="Choose concept image">
+      <div
+        data-reveal="up"
+        style={{ "--reveal-delay": "260ms" } as CSSProperties}
+        className="mx-auto mt-6 flex max-w-[1040px] justify-center gap-2 px-6 sm:w-[52vw]"
+        aria-label="Choose concept image"
+      >
         {SLIDES.map((slide, index) => (
           <button
             key={slide.image}

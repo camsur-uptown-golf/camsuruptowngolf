@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const LINK_GROUPS = [
   { title: "Explore", links: ["Our Story", "Membership", "The Course", "FAQs"] },
-  { title: "Stay & Play", links: ["Packages", "Accommodations", "Dining", "Events"] },
+  { title: "Stay & Play", links: ["Packages", "Accommodations", "Events"] },
   { title: "The Club", links: ["Golf Academy", "News & Blog", "Careers", "Contact Us"] },
   { title: "Information", links: ["Privacy Policy", "Accessibility", "Terms"] },
 ];
@@ -81,13 +81,13 @@ export default function Footer() {
 
           <div className="lg:border-l lg:border-white/10 lg:pl-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#c9a54e]">
-              Club updates
+              News & offers
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-white">
-              Stay close to the course.
+              Stay connected to the club.
             </h2>
             <p className="mt-3 max-w-sm text-sm leading-6 text-white/55">
-              Receive exclusive offers, upcoming events, and the latest news from CamSur Uptown.
+              Course updates, event announcements, and occasional offers from CamSur Uptown, sent straight to your inbox.
             </p>
 
             <div className="mt-6 flex flex-col gap-2 sm:max-w-md sm:flex-row lg:flex-col xl:flex-row">
@@ -111,7 +111,7 @@ export default function Footer() {
                 className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#c9a54e]"
               />
               <span>
-                I agree to receive CamSur Uptown offers and news and accept the{" "}
+                I agree to receive news and offers from CamSur Uptown, and I have read the{" "}
                 <a href="#" className="text-white/80 underline hover:text-[#e9d9a8]">
                   Privacy Policy
                 </a>.
@@ -122,7 +122,7 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 text-[11px] text-white/35 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 CamSur Uptown Golf Club. All rights reserved.</p>
-          <p>Championship golf beneath Mt. Isarog.</p>
+          <p>Championship golf in the heart of Camarines Sur.</p>
         </div>
       </div>
     </footer>
