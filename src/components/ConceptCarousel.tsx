@@ -31,7 +31,7 @@ export default function ConceptCarousel() {
   return (
     <section
       id="concepts"
-      className="overflow-hidden bg-white pb-6 pt-8 text-[#14271d] sm:pb-8 sm:pt-10 lg:pb-10 lg:pt-12"
+      className="overflow-hidden bg-[#f7f5ee] pb-6 pt-8 text-[#14271d] sm:pb-8 sm:pt-10 lg:pb-10 lg:pt-12"
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") goPrevious();
         if (event.key === "ArrowRight") goNext();

@@ -4,7 +4,7 @@
  *
  * Magkakaiba ang hugis ng tatlong ridge — hindi lang magkapatong na
  * pareho — dahil kung magkatulad sila ay parang guhit-guhit sa halip na
- * burol. Ang ginintuang linya ay parang mowing line sa gilid ng green.
+ * burol.
  *
  * Isang puting hole flag ang nakatayo sa crest sa kanan.
  *
@@ -25,7 +25,12 @@
 const PIN_LEFT = "79.9%";
 const PIN_BOTTOM = "54.3%";
 
-export default function FairwayDivider() {
+/**
+ * @param fill Kulay ng harapang burol. Dapat itong eksaktong katumbas ng
+ * background ng unang section sa ilalim ng hero — kung magkaiba sila kahit
+ * bahagya ay may lumalabas na tahi sa dugtungan.
+ */
+export default function FairwayDivider({ fill = "#ffffff" }: { fill?: string }) {
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-0" aria-hidden="true">
       <div className="relative h-[70px] w-full sm:h-[100px] lg:h-[124px]">
@@ -41,17 +46,20 @@ export default function FairwayDivider() {
             fillOpacity="0.44"
           />
           <path
-            d="M0,109 C120,107 260,49 430,43 C600,37 640,89 760,91 C900,93 1000,53 1150,55 C1280,57 1370,81 1440,83"
-            stroke="#e7d18d"
-            strokeOpacity="0.55"
-            strokeWidth="1.1"
-            vectorEffect="non-scaling-stroke"
-          />
-          <path
             d="M0,118 C120,116 260,58 430,52 C600,46 640,98 760,100 C900,102 1000,62 1150,64 C1280,66 1370,90 1440,92 L1440,140 L0,140 Z"
-            fill="#ffffff"
+            fill={fill}
           />
         </svg>
+
+        {/* Solidong sapin sa pinakailalim.
+            Inuunat ng preserveAspectRatio="none" ang SVG sa buong lapad, kaya
+            sa ilang sukat ng window ay hindi eksaktong bumabagsak sa gilid ang
+            ilalim ng kurba. Ang naiiwang sub-pixel ay nagpapasilip sa madilim
+            na hero sa likod, at nakikita iyon bilang manipis na itim na guhit
+            sa buong lapad. Tinatakpan ito ng bandang ito — nasa loob na siya
+            ng solidong bahagi ng harapang burol, kaya walang nababago sa
+            hugis. */}
+        <div className="absolute inset-x-0 bottom-0 h-[3px]" style={{ backgroundColor: fill }} />
 
         {/* Hole flag. Puti ito at tumatawid sa dalawang puting translucent na
             ridge, kaya kailangan ng anino — kung wala ito ay nawawala ang

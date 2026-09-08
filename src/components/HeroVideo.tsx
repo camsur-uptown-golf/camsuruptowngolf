@@ -1,75 +1,37 @@
 "use client";
 
-import { useEffect } from "react";
-import Script from "next/script";
+import { useRef } from "react";
+import { TEASER_VIDEO } from "@/lib/site-content";
 
-const MEDIA_ID = "xfqyn64zqs";
-
-/** Ang teaser ay babalik sa simula pagsapit nito. 1:28 — halos buo na ang
-    92-segundong teaser, apat na segundo bago ang tunay na dulo. */
-const CUT_AT_SECONDS = 88;
-
-/* Wistia reads its options from the class list, hindi mula sa props.
-   silentAutoPlay=allow + muted ang kailangan para payagan ng browser ang
-   autoplay; fitStrategy=cover ang pumupuno sa hero nang walang letterbox. */
-const WISTIA_OPTIONS = [
-  "autoPlay=true",
-  "muted=true",
-  "silentAutoPlay=allow",
-  "endVideoBehavior=loop",
-  "fitStrategy=cover",
-  "controlsVisibleOnLoad=false",
-  "playbar=false",
-  "playButton=false",
-  "smallPlayButton=false",
-  "fullscreenButton=false",
-  "settingsControl=false",
-  "volumeControl=false",
-].join(" ");
-
-type WistiaVideo = {
-  bind: (event: string, handler: (seconds: number) => void) => void;
-  unbind?: (event: string, handler: (seconds: number) => void) => void;
-  time: (seconds?: number) => number;
-};
-
-declare global {
-  interface Window {
-    _wq?: Array<{ id: string; onReady?: (video: WistiaVideo) => void }>;
-  }
-}
-
+/**
+ * Hero background video.
+ *
+ * Native <video> sa direktang MP4, kaya walang panlabas na player script at
+ * walang iframe. Ang muted + playsInline ang kailangan ng mga browser bago
+ * nila payagan ang autoplay — huwag alisin ang alinman sa dalawa.
+ *
+ * Maikli ang clip (~20s) kaya ang native na `loop` ang bumabalik sa simula —
+ * hindi na kailangan ng manu-manong hiwa sa pamamagitan ng timeupdate.
+ */
 export default function HeroVideo() {
-  useEffect(() => {
-    let video: WistiaVideo | null = null;
-
-    // Ang timechange ay tumitibok tuwing ~200ms, kaya bahagyang lumalampas
-    // sa hangganan ang aktwal na hiwa. Hindi ito halata sa background loop.
-    const onTimeChange = (seconds: number) => {
-      if (seconds >= CUT_AT_SECONDS) video?.time(0);
-    };
-
-    window._wq = window._wq || [];
-    window._wq.push({
-      id: MEDIA_ID,
-      onReady(instance) {
-        video = instance;
-        instance.bind("timechange", onTimeChange);
-      },
-    });
-
-    return () => {
-      video?.unbind?.("timechange", onTimeChange);
-    };
-  }, []);
+  const ref = useRef<HTMLVideoElement>(null);
 
   return (
-    <>
-      <Script src={`https://fast.wistia.com/embed/medias/${MEDIA_ID}.jsonp`} strategy="afterInteractive" />
-      <Script src="https://fast.wistia.com/assets/external/E-v1.js" strategy="afterInteractive" />
-      <div className="hero-image pointer-events-none absolute inset-0 overflow-hidden">
-        <div className={`wistia_embed wistia_async_${MEDIA_ID} ${WISTIA_OPTIONS} absolute inset-0 h-full w-full`} />
-      </div>
-    </>
+    <div className="hero-image pointer-events-none absolute inset-0 overflow-hidden">
+      {/* Walang poster attribute: hinahayaan nitong makita ang <Image /> na
+          nasa likod habang naglo-load, sa halip na itim na parisukat. */}
+      <video
+        ref={ref}
+        src={TEASER_VIDEO}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        tabIndex={-1}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+    </div>
   );
 }

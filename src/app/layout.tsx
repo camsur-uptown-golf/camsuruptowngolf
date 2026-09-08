@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Montserrat } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
 import RouteScrollReset from "@/components/RouteScrollReset";
 import "./globals.css";
@@ -19,6 +19,16 @@ const montserrat = Montserrat({
   subsets: ["latin"],
 });
 
+/**
+ * Editorial display face. Variable ito, kaya isang file lang ang nadadala
+ * para sa buong hanay ng bigat na ginagamit ng mga pamagat.
+ */
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "CamSur Uptown Golf Club",
   description:
@@ -29,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <RouteScrollReset />

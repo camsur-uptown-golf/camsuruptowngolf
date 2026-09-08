@@ -157,7 +157,7 @@ function CourseSnapshot() {
 
 function Introduction() {
   return (
-    <section id="story" className="relative isolate flex min-h-[520px] items-center overflow-hidden bg-white text-[#14271d]">
+    <section id="story" className="relative isolate flex min-h-[520px] items-center overflow-hidden bg-[#f7f5ee] text-[#14271d]">
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center" aria-hidden="true">
         {/* Safe to parallax: a floating watermark has no container edge to expose. */}
         <div data-parallax="0.1" className="relative h-[290px] w-[340px] overflow-hidden opacity-[0.075] sm:h-[350px] sm:w-[420px]">
@@ -203,7 +203,7 @@ function Introduction() {
 
 function ShopFeature() {
   return (
-    <section id="shop-feature" className="bg-white px-6 py-14 text-[#18251f] sm:px-10 sm:py-16 lg:px-[clamp(4rem,6vw,7.5rem)] lg:py-20">
+    <section id="shop-feature" className="bg-[#f7f5ee] px-6 py-14 text-[#18251f] sm:px-10 sm:py-16 lg:px-[clamp(4rem,6vw,7.5rem)] lg:py-20">
       <div className="mx-auto grid w-full max-w-[1560px] items-center gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(420px,1fr)] lg:gap-[clamp(3.5rem,4vw,5rem)]">
         <div
           data-reveal="left"
@@ -258,7 +258,7 @@ function StayFeature() {
   ] as const;
 
   return (
-    <section id="stays" className="bg-white pb-16 pt-6 text-[#14271d] sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
+    <section id="stays" className="bg-[#f7f5ee] pb-16 pt-6 text-[#14271d] sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid gap-7 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
@@ -341,7 +341,9 @@ export default function Home() {
         <Hero />
         <CourseSnapshot />
         <Introduction />
-        <div className="bg-white">
+        {/* Ang balot na ito ang sumasagip sa mga siwang sa pagitan ng mga
+            section sa loob, kaya kasama siya kapag pinalitan ang kulay. */}
+        <div className="bg-[#f7f5ee]">
           <ShopFeature />
           <ConceptCarousel />
           <StayFeature />

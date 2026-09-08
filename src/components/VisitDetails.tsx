@@ -1,15 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
-import { Container, SECTION, SectionHeading, delay } from "@/components/SectionKit";
+import { EDITORIAL_SECTION_ALT, EditorialHeading, Kicker, Shell, Watermark, delay } from "@/components/EditorialKit";
 import { CLUB_PHONE } from "@/lib/site-content";
 
 /**
  * Visitor information for the Visit page.
  *
  * Ang mga animation ay deklarado bilang data attributes (data-reveal,
- * data-parallax, data-count) at pinapatakbo ng <ScrollMotion />, kaya
- * nananatiling server component ang buong section na ito.
+ * data-parallax) at pinapatakbo ng <ScrollMotion />, kaya nananatiling
+ * server component ang buong section na ito.
  *
  * TODO (para sa club): kumpirmahin ang mga sumusunod bago i-publish —
  *  - tee times, pace of play, at travel times sa ibaba
@@ -17,27 +16,23 @@ import { CLUB_PHONE } from "@/lib/site-content";
  *  - dress code at etiquette rules
  */
 
-const TEE_SHEET = [
-  ["6:00 AM", "First tee time"],
-  ["3:30 PM", "Last tee time"],
-  ["4h 30m", "Pace of play"],
-  ["Required", "Caddie per round"],
-] as const;
-
 const ROUTES = [
   {
+    icon: "plane",
     time: 25,
     unit: "min",
     from: "Naga Airport (Pili)",
     note: "Daily flights from Manila, roughly one hour each way. Taxis and club transfers wait at arrivals.",
   },
   {
+    icon: "pin",
     time: 20,
     unit: "min",
     from: "Naga City center",
     note: "Follow the road toward Mt. Isarog and watch for the club gate on your right.",
   },
   {
+    icon: "car",
     time: 2,
     unit: "hrs",
     from: "Legazpi City",
@@ -46,17 +41,15 @@ const ROUTES = [
 ] as const;
 
 const ARRIVAL_NOTES = [
-  ["Parking", "Free on-site parking beside the clubhouse for guests and visitors."],
-  ["Transfers", "Airport and hotel transfers can be arranged with 24 hours’ notice."],
+  ["parking", "Parking", "Free on-site parking beside the clubhouse for guests and visitors."],
+  ["shuttle", "Transfers", "Airport and hotel transfers can be arranged with 24 hours’ notice."],
 ] as const;
 
 const FEES = [
   { item: "18 holes", detail: "Full round, weekday or weekend rate", price: "On request" },
-  { item: "9 holes", detail: "Afternoon tee times, subject to availability", price: "On request" },
   { item: "Caddie", detail: "Required for every round, one caddie per bag", price: "On request" },
   { item: "Golf cart", detail: "Optional, two seats per cart", price: "On request" },
   { item: "Club rental", detail: "Full set, right- or left-handed", price: "On request" },
-  { item: "Practice balls", detail: "Per bucket at the driving range", price: "On request" },
 ] as const;
 
 const DRESS_WELCOME = [
@@ -75,7 +68,6 @@ const ETIQUETTE = [
   ["Keep pace", "Play ready golf and stay with the group ahead of you, not just ahead of the group behind."],
   ["Repair the course", "Fix your pitch marks on the green and rake the bunker before you leave it."],
   ["Mind the greens", "Keep carts and trolleys on the paths within thirty meters of any green."],
-  ["Play quietly", "Phones stay on silent, and slower groups let the players behind them through."],
 ] as const;
 
 const FACILITIES = [
@@ -97,19 +89,9 @@ const FAQS = [
       "Yes. Visitors are welcome throughout the week. Members and their guests have priority on weekend mornings, so visitor tee times on those days are limited.",
   },
   {
-    question: "Are caddies required?",
-    answer:
-      "Yes. Every round is played with a caddie, one for each bag. Your caddie is assigned when you check in at the starter’s desk.",
-  },
-  {
     question: "Is there a handicap requirement?",
     answer:
       "No handicap certificate is needed to play. We only ask that first-time and higher-handicap players keep pace with the group in front of them.",
-  },
-  {
-    question: "Can I rent clubs and shoes?",
-    answer:
-      "Yes. Full rental sets in both right- and left-handed configurations are available at the pro shop. Reserve them together with your tee time.",
   },
   {
     question: "What happens if play is suspended for weather?",
@@ -118,20 +100,9 @@ const FAQS = [
   },
 ] as const;
 
-/** Faint club crest that drifts against the scroll. */
-function Watermark({ speed }: { speed: number }) {
-  return (
-    <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center" aria-hidden="true">
-      <div data-parallax={speed} className="relative w-[360px] opacity-[0.045] sm:w-[440px]">
-        <Image src="/camsur-uptown-logo.png" alt="" width={720} height={958} className="h-auto w-full grayscale" />
-      </div>
-    </div>
-  );
-}
-
 function CheckIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="mt-1 h-3.5 w-3.5 shrink-0" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className="mt-1.5 h-3.5 w-3.5 shrink-0" fill="none" aria-hidden="true">
       <path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -139,7 +110,7 @@ function CheckIcon() {
 
 function CrossIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="mt-1 h-3.5 w-3.5 shrink-0" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className="mt-1.5 h-3.5 w-3.5 shrink-0" fill="none" aria-hidden="true">
       <path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
@@ -158,68 +129,94 @@ function PhoneIcon() {
   );
 }
 
-function TeeSheet() {
+type TravelIconName = "plane" | "pin" | "car" | "parking" | "shuttle";
+
+/** Compact travel pictograms drawn in the same fine-line style as the page. */
+function TravelIcon({ name }: { name: TravelIconName }) {
   return (
-    <section className="border-b border-[#173b2a]/10 bg-white font-navigation" aria-label="Tee sheet essentials">
-      <Container>
-        <div className="grid grid-cols-2 py-6 sm:grid-cols-4 sm:py-7">
-          {TEE_SHEET.map(([value, label], index) => (
-            <div
-              key={label}
-              data-reveal="up"
-              style={delay(index * 90)}
-              className={`px-1 py-2.5 text-center sm:py-1 ${index % 2 ? "border-l border-[#173b2a]/10" : ""} ${index > 1 ? "border-t border-[#173b2a]/10 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-[#173b2a]/10" : ""}`}
-            >
-              <p className="text-base font-semibold leading-none tracking-[-0.02em] text-[#174630]">{value}</p>
-              <p className="mt-2 text-[9px] font-bold uppercase leading-tight tracking-[0.16em] text-[#98782f]">{label}</p>
-            </div>
-          ))}
-        </div>
-      </Container>
-    </section>
+    <span
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#174630]"
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none">
+        {name === "plane" ? (
+          <path d="m3.5 13 7.1-2.1V5.6c0-1 .6-2.6 1.4-2.6s1.4 1.6 1.4 2.6v5.3l7.1 2.1v1.5l-7.1-.9-.5 5 2.2 1.2V21L12 20l-3.1 1v-1.2l2.2-1.2-.5-5-7.1.9V13Z" stroke="currentColor" strokeWidth="1.45" strokeLinejoin="round" />
+        ) : name === "pin" ? (
+          <>
+            <path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <circle cx="12" cy="10" r="2.2" stroke="currentColor" strokeWidth="1.5" />
+          </>
+        ) : name === "car" ? (
+          <>
+            <path d="m5 10 1.5-4h11l1.5 4M4 10h16v7H4v-7Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M7 17v2M17 17v2M7 13h.01M17 13h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </>
+        ) : name === "parking" ? (
+          <>
+            <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M10 17V7h3a3 3 0 0 1 0 6h-3M10 13h3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </>
+        ) : (
+          <>
+            <path d="M5 5h14v11H5V5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M8 16v2M16 16v2M8 9h8M8 13h.01M16 13h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          </>
+        )}
+      </svg>
+    </span>
   );
 }
 
 function GettingHere() {
   return (
-    <section id="getting-here" className={SECTION}>
+    <section id="getting-here" className={EDITORIAL_SECTION_ALT}>
       <Watermark speed={0.12} />
-      <Container>
-        <SectionHeading
-          eyebrow="Getting here"
+      <Shell>
+        <EditorialHeading
+          kicker="Getting here"
           title="Closer than you think."
           intro="The club sits on the Naga side of Mt. Isarog, within a short drive of the airport, the city, and most hotels in the area."
         />
 
-        <div className="mt-10 border-y border-[#173b2a]/12">
+        <div className="mt-10 border-t border-[#173b2a]/12">
           {ROUTES.map((route, index) => (
             <div
               key={route.from}
-              data-reveal="left"
-              style={delay(index * 130)}
-              className={`grid gap-1.5 py-5 sm:grid-cols-[86px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#173b2a]/12" : ""}`}
+              data-reveal="up"
+              style={delay(index * 90)}
+              className={`grid items-baseline gap-x-8 gap-y-4 py-8 sm:grid-cols-[auto_minmax(0,1fr)_auto] ${index ? "border-t border-[#173b2a]/12" : ""}`}
             >
-              <p className="flex items-baseline gap-1.5 text-xl font-semibold leading-none tracking-[-0.03em] text-[#174630]">
-                <span data-count={route.time}>{route.time}</span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#98782f]">{route.unit}</span>
-              </p>
-              <div>
+              <div className="self-center">
+                <TravelIcon name={route.icon} />
+              </div>
+              <div className="min-w-0">
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-[#14271d]">{route.from}</h3>
                 <p className="mt-1.5 text-sm leading-7 text-[#667269]">{route.note}</p>
               </div>
+              {/* Ang oras ang pinakamalaking bagay sa hilera — iyon ang
+                  unang hinahanap ng bumibisita. */}
+              <p className="flex items-baseline gap-2 text-[clamp(2.6rem,4vw,3.75rem)] font-normal leading-none tracking-[-0.04em] text-[#174630] sm:justify-self-end">
+                {route.time}
+                <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
+                  {route.unit}
+                </span>
+              </p>
             </div>
           ))}
         </div>
 
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 sm:gap-8">
-          {ARRIVAL_NOTES.map(([title, description], index) => (
-            <div key={title} data-reveal="up" style={delay(index * 120)}>
-              <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">{title}</h3>
-              <p className="mt-2 text-sm leading-7 text-[#5d685f]">{description}</p>
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 sm:gap-14">
+          {ARRIVAL_NOTES.map(([icon, title, description], index) => (
+            <div key={title} data-reveal="up" style={delay(index * 110)} className="flex gap-5">
+              <TravelIcon name={icon} />
+              <div>
+                <h3 className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">{title}</h3>
+                <p className="mt-2.5 max-w-sm text-sm leading-7 text-[#5d685f]">{description}</p>
+              </div>
             </div>
           ))}
         </div>
-      </Container>
+      </Shell>
     </section>
   );
 }
@@ -228,69 +225,80 @@ function GreenFees() {
   return (
     <section
       id="green-fees"
-      className="relative isolate scroll-mt-24 overflow-hidden border-t border-[#173b2a]/10 bg-[#f7f5ee] py-14 sm:py-16"
+      className={EDITORIAL_SECTION_ALT}
     >
       <div
         data-parallax="-0.1"
         className="pointer-events-none absolute -left-24 top-8 -z-10 h-72 w-72 rounded-full bg-[#c9a54e]/[0.09] blur-3xl"
         aria-hidden="true"
       />
-      <Container>
-        <SectionHeading
-          eyebrow="Green fees"
+      <Shell>
+        <EditorialHeading
+          kicker="Green fees"
           title="What a round costs."
           intro="Rates are confirmed when you reserve your tee time. Member rates, group bookings, and stay-and-play packages are quoted separately."
         />
 
-        <div className="mt-10 bg-[#0d2419] p-6 text-white sm:p-8">
-          <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d8b65b]">
+        {/* Puting kard sa ibabaw ng cream na section — anino ang nagbibigay
+            ng gilid, dahil masyadong magkalapit ang dalawang kulay para
+            umasa sa kaibahan lang nila. */}
+        <div className="mt-10 bg-white px-7 py-8 text-[#14271d] shadow-[0_16px_44px_rgba(20,45,32,0.08)] sm:px-12 sm:py-12">
+          <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f]">
             Rate card
           </p>
-          <dl className="mt-5">
+          <dl className="mt-8">
             {FEES.map((fee, index) => (
               <div
                 key={fee.item}
                 data-reveal="up"
-                style={delay(80 + index * 70)}
-                className="flex items-baseline justify-between gap-5 border-t border-white/10 py-4 first:border-t-0 first:pt-0"
+                style={delay(60 + index * 70)}
+                className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-[#173b2a]/12 py-6 first:border-t-0 first:pt-0"
               >
                 <div className="min-w-0">
-                  <dt className="text-base font-semibold tracking-[-0.02em]">{fee.item}</dt>
-                  <p className="mt-1 text-[13px] leading-6 text-white/50">{fee.detail}</p>
+                  <dt className="text-xl font-medium tracking-[-0.02em] text-[#174630] sm:text-2xl">{fee.item}</dt>
+                  <p className="mt-2 max-w-md text-sm leading-7 text-[#667269]">{fee.detail}</p>
                 </div>
-                <dd className="shrink-0 text-[10px] font-bold uppercase tracking-[0.14em] text-[#e7d18d]">{fee.price}</dd>
+                <dd className="shrink-0 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
+                  {fee.price}
+                </dd>
               </div>
             ))}
           </dl>
         </div>
 
-        <div data-reveal="up" className="mt-8 text-center">
+        <div data-reveal="up" className="mt-10">
           <Link
             href="/#contact"
-            className="inline-flex h-11 items-center justify-center rounded-full bg-[#174630] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#0f3825]"
+            className="inline-flex h-11 items-center rounded-full bg-[#174630] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#0f3825]"
           >
             Request current rates
           </Link>
         </div>
-      </Container>
+      </Shell>
     </section>
   );
 }
 
 function ClubGuidelines() {
   return (
-    <section id="club-guidelines" className={SECTION}>
-      <Container>
-        <SectionHeading eyebrow="Club guidelines" title="Dress the part, play the part." />
+    <section id="club-guidelines" className={EDITORIAL_SECTION_ALT}>
+      <Shell>
+        <EditorialHeading
+          kicker="Club guidelines"
+          title="Dress the part, play the part."
+          intro="Two short lists. One covers what to wear on the course, the other covers how the club expects a round to be played."
+        />
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
-          <div data-reveal="left" className="border border-[#173b2a]/12 bg-white p-6">
+        <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:gap-12">
+          <div data-reveal="left">
             <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">What to wear</h3>
 
-            <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">Welcome on course</p>
-            <ul className="mt-3 space-y-2">
+            <p className="mt-8 font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
+              Welcome on course
+            </p>
+            <ul className="mt-4 space-y-3">
               {DRESS_WELCOME.map((rule) => (
-                <li key={rule} className="flex gap-2.5 text-sm leading-7 text-[#4b5a51]">
+                <li key={rule} className="flex gap-3 text-sm leading-8 text-[#4b5a51] sm:text-base">
                   <span className="text-[#2f7a52]">
                     <CheckIcon />
                   </span>
@@ -299,10 +307,12 @@ function ClubGuidelines() {
               ))}
             </ul>
 
-            <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">Not permitted</p>
-            <ul className="mt-3 space-y-2">
+            <p className="mt-8 font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
+              Not permitted
+            </p>
+            <ul className="mt-4 space-y-3">
               {DRESS_NOT_PERMITTED.map((rule) => (
-                <li key={rule} className="flex gap-2.5 text-sm leading-7 text-[#4b5a51]">
+                <li key={rule} className="flex gap-3 text-sm leading-8 text-[#4b5a51] sm:text-base">
                   <span className="text-[#a8492f]">
                     <CrossIcon />
                   </span>
@@ -311,69 +321,73 @@ function ClubGuidelines() {
               ))}
             </ul>
 
-            <p className="mt-6 border-t border-[#173b2a]/12 pt-5 text-sm leading-7 text-[#667269]">
+            <p className="mt-8 border-t border-[#173b2a]/12 pt-6 text-sm leading-7 text-[#667269]">
               Smart casual applies throughout the clubhouse, and caps come off in the dining room.
             </p>
           </div>
 
-          <div data-reveal="right" style={delay(120)} className="border border-[#173b2a]/12 bg-white p-6">
+          <div data-reveal="right" style={delay(120)}>
             <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">On-course etiquette</h3>
-            <div className="mt-6">
+            <div className="mt-8 border-t border-[#173b2a]/12">
               {ETIQUETTE.map(([title, description], index) => (
-                <div key={title} className={`flex gap-4 py-4 ${index ? "border-t border-[#173b2a]/12" : "pt-0"}`}>
-                  <p className="w-5 shrink-0 text-[10px] font-bold tracking-[0.12em] text-[#98782f]">
+                <div key={title} className={`grid grid-cols-[44px_minmax(0,1fr)] gap-4 py-6 ${index ? "border-t border-[#173b2a]/12" : ""}`}>
+                  <p className="text-[10px] font-bold tracking-[0.14em] text-[#98782f]">
                     {String(index + 1).padStart(2, "0")}
                   </p>
                   <div>
-                    <h4 className="text-sm font-semibold tracking-[-0.01em] text-[#14271d]">{title}</h4>
-                    <p className="mt-1.5 text-sm leading-7 text-[#5d685f]">{description}</p>
+                    <h4 className="text-base font-semibold tracking-[-0.01em] text-[#14271d] sm:text-lg">{title}</h4>
+                    <p className="mt-2 text-sm leading-7 text-[#5d685f] sm:leading-8">{description}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </Container>
+      </Shell>
     </section>
   );
 }
 
 function GuestInformation() {
   return (
-    <section id="guest-information" className={SECTION}>
-      <Watermark speed={-0.09} />
-      <Container>
-        <SectionHeading
-          eyebrow="Guest information"
+    <section id="guest-information" className={EDITORIAL_SECTION_ALT}>
+      <Shell>
+        <EditorialHeading
+          kicker="Guest information"
           title="Practice and services."
           intro="Arrive about forty minutes before your tee time to check in, warm up, and meet your caddie without rushing."
         />
 
-        <div className="mt-10 grid border-y border-[#173e2b]/12 sm:grid-cols-2">
+        <div className="mt-10 grid gap-x-14 gap-y-2 sm:grid-cols-2">
           {FACILITIES.map(([title, description], index) => (
             <div
               key={title}
               data-reveal="up"
               style={delay(index * 100)}
-              className={`py-5 sm:px-6 ${index ? "border-t border-[#173e2b]/12" : ""} ${index % 2 ? "sm:border-l sm:border-[#173e2b]/12" : "sm:pl-0"} ${index === 1 ? "sm:border-t-0" : ""}`}
+              className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-[#173e2b]/12 py-7"
             >
-              <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">{title}</h3>
-              <p className="mt-1.5 text-sm leading-7 text-[#667269]">{description}</p>
+              <p className="text-[10px] font-bold tracking-[0.14em] text-[#98782f]">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <div>
+                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">{title}</h3>
+                <p className="mt-1.5 max-w-sm text-sm leading-7 text-[#667269]">{description}</p>
+              </div>
             </div>
           ))}
         </div>
-      </Container>
+      </Shell>
     </section>
   );
 }
 
 function Faqs() {
   return (
-    <section id="faqs" className={SECTION}>
-      <Container>
-        <SectionHeading eyebrow="Before you book" title="Common questions." />
+    <section id="faqs" className={EDITORIAL_SECTION_ALT}>
+      <Shell>
+        <EditorialHeading kicker="Before you book" title="Common questions." />
 
-        <div className="mt-10">
+        <div className="mt-14">
           {FAQS.map((faq, index) => (
             <details
               key={faq.question}
@@ -381,63 +395,69 @@ function Faqs() {
               style={delay(index * 70)}
               className="group border-b border-[#173b2a]/15 first:border-t first:border-[#173b2a]/15"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-4 text-sm font-semibold tracking-[-0.01em] text-[#14271d] transition-colors hover:text-[#174630] [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-8 py-7 text-lg font-medium tracking-[-0.015em] text-[#14271d] transition-colors hover:text-[#174630] sm:text-xl [&::-webkit-details-marker]:hidden">
                 {faq.question}
                 <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#173b2a]/20 text-[#174630] transition duration-300 group-open:rotate-45 group-open:border-[#174630] group-open:bg-[#174630] group-open:text-white"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#173b2a]/20 text-[#174630] transition duration-300 group-open:rotate-45 group-open:border-[#174630] group-open:bg-[#174630] group-open:text-white"
                   aria-hidden="true"
                 >
-                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
                     <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   </svg>
                 </span>
               </summary>
-              <p className="pb-5 pr-12 text-sm leading-7 text-[#5d685f]">{faq.answer}</p>
+              <p className="max-w-2xl pb-8 pr-14 text-sm leading-8 text-[#5d685f] sm:text-base">{faq.answer}</p>
             </details>
           ))}
         </div>
-      </Container>
+      </Shell>
     </section>
   );
 }
 
 function VisitCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#071d13] py-14 text-white sm:py-16">
+    <section className="relative isolate overflow-hidden bg-[#071d13] py-14 text-white sm:py-16">
       <div
         data-parallax="0.14"
-        className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-80 w-80 rounded-full bg-[#c9a54e]/[0.06] blur-3xl"
+        className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"
         aria-hidden="true"
       />
-      <Container>
+      <Shell>
         <div className="mx-auto max-w-xl text-center">
-          <p data-reveal="up" style={delay(0)} className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">
-            Plan your visit
-          </p>
-          <h2 data-reveal="up" style={delay(90)} className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl">
-            Reserve your tee time.
-          </h2>
-          <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 text-white/60">
-            Tell us when you would like to play and how many are in your group. The club team will confirm your time, your caddies, and anything else you need.
-          </p>
-
-          <div data-reveal="up" style={delay(270)} className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/#contact"
-              className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+          <div>
+            <Kicker>Plan your visit</Kicker>
+            <h2
+              data-reveal="up"
+              style={delay(90)}
+              className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl"
             >
-              Plan your visit
-            </Link>
-            <a
-              href={CLUB_PHONE.href}
-              className="inline-flex h-11 items-center gap-2.5 rounded-full border border-white/22 px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-white/85 transition hover:border-[#e7d18d]/60 hover:text-[#f1d98f]"
-            >
-              <PhoneIcon />
-              {CLUB_PHONE.label}
-            </a>
+              Reserve your tee time.
+            </h2>
+          </div>
+          <div data-reveal="up" style={delay(180)}>
+            <p className="text-sm leading-7 text-white/60">
+              Tell us when you would like to play and how many are in your group. The club team will confirm your time,
+              your caddies, and anything else you need.
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/#contact"
+                className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+              >
+                Plan your visit
+              </Link>
+              <a
+                href={CLUB_PHONE.href}
+                className="inline-flex h-11 items-center gap-2.5 rounded-full border border-white/22 px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-white/85 transition hover:border-[#e7d18d]/60 hover:text-[#f1d98f]"
+              >
+                <PhoneIcon />
+                {CLUB_PHONE.label}
+              </a>
+            </div>
           </div>
         </div>
-      </Container>
+      </Shell>
     </section>
   );
 }
@@ -446,7 +466,6 @@ export default function VisitDetails() {
   return (
     <>
       <ScrollMotion />
-      <TeeSheet />
       <GettingHere />
       <GreenFees />
       <ClubGuidelines />

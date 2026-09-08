@@ -59,19 +59,19 @@ const STATS = [
 
 export default function ClubhouseVision() {
   return (
-    <section id="clubhouse" className="relative isolate scroll-mt-24 overflow-hidden bg-[#0b2419] py-14 text-white sm:py-16">
+    <section id="clubhouse" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
       <ScrollMotion />
       <Container>
         <div className="grid gap-7 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
           <div>
-            <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">
+            <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
               The clubhouse
             </p>
-            <h2 data-reveal="up" style={delay(90)} className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl">
+            <h2 data-reveal="up" style={delay(90)} className="mt-3 text-[clamp(2.25rem,3.5vw,3.5rem)] font-medium leading-[0.98] tracking-[-0.05em]">
               Architecture that continues the landscape.
             </h2>
           </div>
-          <p data-reveal="up" style={delay(180)} className="text-sm leading-7 text-white/64">
+          <p data-reveal="up" style={delay(180)} className="text-sm leading-7 text-[#5d685f]">
             The architectural concept follows the curves of the fairway with layered terraces, deep shade, and a
             continuous glass edge. Bronze, travertine, walnut, and planting give every part of the club one warm,
             cohesive character.
@@ -88,16 +88,16 @@ export default function ClubhouseVision() {
           />
         </div>
 
-        <div className="grid grid-cols-2 border-b border-white/12 sm:grid-cols-4">
+        <div className="grid grid-cols-2 border-b border-[#173b2a]/12 sm:grid-cols-4">
           {STATS.map(([value, label], index) => (
             <div
               key={label}
               data-reveal="up"
               style={delay(index * 70)}
-              className={`py-5 text-center ${index % 2 ? "border-l border-white/12" : ""} ${index > 1 ? "border-t border-white/12 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-white/12" : ""}`}
+              className={`py-5 text-center ${index % 2 ? "border-l border-[#173b2a]/12" : ""} ${index > 1 ? "border-t border-[#173b2a]/12 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-[#173b2a]/12" : ""}`}
             >
-              <p className="text-lg font-semibold tracking-[-0.03em] text-[#e8d18a]">{value}</p>
-              <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.14em] text-white/48">{label}</p>
+              <p className="text-lg font-semibold tracking-[-0.03em] text-[#174630]">{value}</p>
+              <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#98782f]">{label}</p>
             </div>
           ))}
         </div>
@@ -114,13 +114,13 @@ export default function ClubhouseVision() {
                   className="object-cover transition duration-700 hover:scale-[1.025]"
                 />
               </div>
-              <h3 className="mt-4 text-base font-semibold tracking-[-0.02em]">{feature.title}</h3>
-              <p className="mt-1.5 text-sm leading-6 text-white/56">{feature.description}</p>
+              <h3 className="mt-4 text-xl font-semibold tracking-[-0.03em] text-[#174630]">{feature.title}</h3>
+              <p className="mt-1.5 text-sm leading-6 text-[#667269]">{feature.description}</p>
             </article>
           ))}
         </div>
 
-        <p className="mt-9 border-t border-white/12 pt-5 text-[10px] leading-5 text-white/42">
+        <p className="mt-9 border-t border-[#173b2a]/12 pt-5 text-[10px] leading-5 text-[#8a938c]">
           Architectural concept imagery and programme information are based on the June 2026 presentation and may be
           refined as design development continues.
         </p>

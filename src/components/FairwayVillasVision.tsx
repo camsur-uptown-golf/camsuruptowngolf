@@ -44,7 +44,7 @@ const STATS = [
 
 export default function FairwayVillasVision() {
   return (
-    <section id="villa-details" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f4f0e6] py-14 text-[#14271d] sm:py-16">
+    <section id="villa-details" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
       <ScrollMotion />
       <Container>
         <div className="grid gap-7 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
@@ -65,7 +65,7 @@ export default function FairwayVillasVision() {
 
         <div data-reveal="scale" className="relative mt-10 aspect-[16/9] overflow-hidden bg-[#173a29]">
           <Image
-            src="/fairway-villas/overview.png"
+            src="/fairway-villas/overview-mt-isarog.png"
             alt="Overview of private Fairway Villas beside the golf course with Mt. Isarog in the distance"
             fill
             sizes="(max-width: 1023px) calc(100vw - 3rem), 896px"

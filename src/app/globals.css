@@ -24,7 +24,7 @@
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-geist-sans);
+  --font-display: var(--font-fraunces);
   --font-navigation: var(--font-montserrat);
 }
 
@@ -45,7 +45,10 @@ body {
    labels, body copy, and compact card headings stay sans-serif for clarity. */
 main h1,
 main h2 {
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-family: var(--font-fraunces), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  /* Fraunces ay may optical sizing: sa malalaking titulo, mas mahigpit ang
+     kontraste at mas tikas ang mga serif. */
+  font-optical-sizing: auto;
 }
 
 html {
@@ -122,6 +125,20 @@ html {
   }
 
   [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Ang detalye ng hole ay umaangat mula sa ilalim kapag may pinili sa
+   routing plan. Naka-key ito sa hole number sa React, kaya muling tumatakbo
+   ang animation sa bawat palit. */
+@keyframes hole-lift {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
     opacity: 1;
     transform: none;
   }

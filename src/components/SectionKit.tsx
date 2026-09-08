@@ -8,9 +8,10 @@ import type { CSSProperties, ReactNode } from "react";
  * silang naghihiwalay at hindi na magkatugma ang mga pahina.
  */
 
-/* Puti ang lahat ng section, kaya hairline rule ang naghahati sa kanila. */
+/* Iisa ang kulay ng lahat ng section dito, kaya hairline rule ang naghahati
+   sa kanila. Ang mga concept page lang ang gumagamit ng SECTION. */
 export const SECTION =
-  "relative isolate scroll-mt-24 overflow-hidden border-t border-[#173b2a]/10 bg-white py-14 sm:py-16";
+  "relative isolate scroll-mt-24 overflow-hidden border-t border-[#173b2a]/10 bg-[#f7f5ee] py-14 sm:py-16";
 
 /** Stagger helper — nababasa sa CSS bilang `transition-delay`. */
 export const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
