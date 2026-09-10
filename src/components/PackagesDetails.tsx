@@ -22,6 +22,7 @@ import { CLUB_PHONE } from "@/lib/site-content";
 const PACKAGES = [
   {
     slug: "stay-and-play",
+    href: "/packages/stay-and-play",
     name: "Stay & Play",
     summary: "One night, one round",
     who: "The simplest way to see the course",
@@ -33,15 +34,16 @@ const PACKAGES = [
     ],
   },
   {
-    slug: "weekend-escape",
-    name: "Weekend Escape",
-    summary: "Two nights, two rounds",
-    who: "Friday to Sunday, unhurried",
+    slug: "buddy-trip",
+    name: "Buddy Golf Trip",
+    summary: "Two nights, two rounds, one memorable group escape",
+    who: "Golf, meals, and good company",
+    href: "/packages/buddy-trip",
     inclusions: [
-      "Two nights, with a late checkout on the last day",
+      "A flexible three-day itinerary for your group",
       "Two rounds with caddies",
-      "Breakfast daily and one dinner at the clubhouse",
-      "Cart on both rounds",
+      "Daily breakfast and one group dinner",
+      "Stay and transfers arranged around your dates",
     ],
   },
 ] as const;
@@ -111,17 +113,17 @@ function ThePackages() {
               style={delay((index % 2) * 90)}
               className="scroll-mt-28 border-t border-[#173b2a]/12 pt-8"
             >
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">
+              <p className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">
                 {String(index + 1).padStart(2, "0")} · {pack.who}
               </p>
               <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em] text-[#174630]">
                 {pack.name}
               </h3>
-              <p className="mt-2 text-sm leading-7 text-[#5d685f]">{pack.summary}</p>
+              <p className="mt-2 text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">{pack.summary}</p>
 
               <ul className="mt-6 space-y-3">
                 {pack.inclusions.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-7 text-[#4b5a51] sm:text-base">
+                  <li key={item} className="flex gap-3 text-sm leading-7 xl:text-base xl:leading-8 text-[#4b5a51] sm:text-base">
                     <span className="text-[#2f7a52]">
                       <CheckIcon />
                     </span>
@@ -130,9 +132,14 @@ function ThePackages() {
                 ))}
               </ul>
 
-              <p className="mt-6 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
+              <p className="mt-6 font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
                 Rate on request
               </p>
+              {"href" in pack && (
+                <Link href={pack.href} className="mt-5 inline-flex h-11 items-center rounded-full bg-[#2f644b] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.13em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a]">
+                  View itinerary →
+                </Link>
+              )}
             </article>
           ))}
         </div>
@@ -167,12 +174,12 @@ function AddOns() {
               style={delay((index % 2) * 90)}
               className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-[#173b2a]/12 py-7"
             >
-              <p className="text-[10px] font-bold tracking-[0.14em] text-[#98782f]">
+              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <div>
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">{title}</h3>
-                <p className="mt-1.5 max-w-sm text-sm leading-7 text-[#667269]">{description}</p>
+                <p className="mt-1.5 max-w-sm text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
               </div>
             </div>
           ))}
@@ -201,12 +208,12 @@ function GoodToKnow() {
               style={delay(index * 90)}
               className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#173b2a]/12" : ""}`}
             >
-              <p className="text-[10px] font-bold tracking-[0.14em] text-[#98782f]">
+              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <div className="min-w-0">
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-[#14271d]">{title}</h3>
-                <p className="mt-1.5 text-sm leading-7 text-[#667269]">{description}</p>
+                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
               </div>
             </div>
           ))}
@@ -225,32 +232,32 @@ function PackagesCta() {
         aria-hidden="true"
       />
       <Shell>
-        <div className="mx-auto max-w-xl text-center">
+        <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
           <div>
             <Kicker>Build your package</Kicker>
             <h2
               data-reveal="up"
               style={delay(90)}
-              className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl"
+              className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
             >
               Send us your dates.
             </h2>
           </div>
           <div data-reveal="up" style={delay(180)}>
-            <p className="text-sm leading-7 text-white/60">
+            <p className="text-sm leading-7 xl:text-base xl:leading-8 text-white/60">
               Tell the club your dates, how many are playing, and which package is closest to what you want. You will
               get back a quote built around those three things.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
                 href="/#contact"
-                className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
               >
                 Request a quote
               </Link>
               <a
                 href={CLUB_PHONE.href}
-                className="inline-flex h-11 items-center gap-2.5 rounded-full border border-white/22 px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-white/85 transition hover:border-[#e7d18d]/60 hover:text-[#f1d98f]"
+                className="inline-flex h-11 items-center gap-2.5 rounded-full border border-white/22 px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white/85 transition hover:border-[#e7d18d]/60 hover:text-[#f1d98f]"
               >
                 <PhoneIcon />
                 {CLUB_PHONE.label}

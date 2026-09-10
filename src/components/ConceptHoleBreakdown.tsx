@@ -75,7 +75,7 @@ function HoleRouteDiagram({ hole }: { hole: number }) {
         <circle cx="198" cy="19" r="15" fill="#173326" />
         <text x="198" y="23" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="700">{hole}</text>
       </svg>
-      <figcaption className="mt-3 text-center font-navigation text-[9px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+      <figcaption className="mt-3 text-center font-navigation text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
         Hole {hole} · Top-down aerial sketch
       </figcaption>
     </figure>
@@ -104,7 +104,7 @@ export default function ConceptHoleBreakdown({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-[1.5rem] border border-[#b9994d]/30 bg-white shadow-[0_25px_80px_rgba(20,39,29,0.07)] sm:rounded-[2rem]">
           <div className="border-b border-[#174630]/12 px-5 pb-0 pt-10 text-center sm:px-10 sm:pt-12">
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Every hole, clearly explained</p>
+            <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Every hole, clearly explained</p>
             <h2 className="mt-3 text-3xl font-medium tracking-[-0.045em] sm:text-4xl">{conceptTitle} Breakdown</h2>
             <div className="mt-8 flex flex-wrap justify-center gap-1" role="tablist" aria-label={`${conceptTitle} holes`}>
               {holes.map((hole) => (
@@ -115,7 +115,7 @@ export default function ConceptHoleBreakdown({
                   aria-selected={selectedHole === hole}
                   onClick={() => setSelectedHole(hole)}
                   className={`min-w-11 rounded-t-md px-4 py-3 font-navigation text-xs font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b9994d] ${
-                    selectedHole === hole ? "bg-[#173326] text-[#f3dda0] shadow-lg" : "text-[#68736d] hover:bg-[#f3f0e7] hover:text-[#173326]"
+                    selectedHole === hole ? "bg-[#2f644b] text-[#f3dda0] shadow-lg" : "text-[#68736d] hover:bg-[#f3f0e7] hover:text-[#2f644b]"
                   }`}
                 >
                   {hole}
@@ -126,24 +126,24 @@ export default function ConceptHoleBreakdown({
 
           <div key={selectedHole} role="tabpanel" className="grid gap-12 px-6 py-12 sm:px-10 sm:py-16 lg:grid-cols-[1.05fr_0.75fr] lg:gap-20 lg:px-14">
             <div>
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f]">Hole {selectedHole} · Concept design</p>
-              <h3 className="mt-4 font-serif text-4xl leading-none tracking-[-0.045em] sm:text-5xl">{profile.name}</h3>
+              <p className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]">Hole {selectedHole} · Concept design</p>
+              <h3 className="mt-4 font-serif text-4xl leading-none tracking-[-0.045em] sm:text-5xl">No. {selectedHole}</h3>
               <p className="mt-6 font-navigation text-xs font-bold uppercase tracking-[0.24em] text-[#173326]">Par {profile.par}</p>
 
               <div className="mt-5 grid max-w-xl gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl bg-[#f4f1e8] p-4">
-                  <p className="font-navigation text-[9px] font-bold uppercase tracking-[0.18em] text-[#98782f]">Blue tees</p>
+                  <p className="font-navigation text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">Blue tees</p>
                   <p className="mt-2 text-lg font-semibold">{profile.blueMetres} m <span className="text-[#748078]">/ {blueYards} yd</span></p>
                 </div>
                 <div className="rounded-2xl bg-[#f4f1e8] p-4">
-                  <p className="font-navigation text-[9px] font-bold uppercase tracking-[0.18em] text-[#98782f]">Forward tees</p>
+                  <p className="font-navigation text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">Forward tees</p>
                   <p className="mt-2 text-lg font-semibold">{profile.forwardMetres} m <span className="text-[#748078]">/ {forwardYards} yd</span></p>
                 </div>
               </div>
 
               <div className="mt-7 h-px w-24 bg-[#c8a650]" />
               <p className="mt-7 max-w-2xl text-base leading-8 text-[#59665f] sm:text-lg sm:leading-9">{profile.description}</p>
-              <p className="mt-4 text-sm leading-7 text-[#7b8580]">Distances and routing are provisional and remain subject to detailed course design.</p>
+              <p className="mt-4 text-sm leading-7 xl:text-base xl:leading-8 text-[#7b8580]">Distances and routing are provisional and remain subject to detailed course design.</p>
 
               <div className="mt-9 grid grid-cols-3 gap-3">
                 {[marker?.startLeft ?? "25%", marker?.left ?? "50%", "75%"].map((position, index) => (
@@ -170,7 +170,7 @@ export default function ConceptHoleBreakdown({
                   style={{ objectPosition: `${marker?.left ?? "50%"} ${marker?.top ?? "50%"}` }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071d13]/65 via-transparent to-transparent" />
-                <p className="absolute bottom-5 left-5 font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-white">Hole {selectedHole} · Aerial corridor</p>
+                <p className="absolute bottom-5 left-5 font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.18em] text-white">Hole {selectedHole} · Aerial corridor</p>
               </div>
             </div>
 
@@ -179,22 +179,22 @@ export default function ConceptHoleBreakdown({
 
           <div className="space-y-3 border-t border-[#174630]/10 bg-[#fbfaf7] p-6 sm:p-10">
             <details className="group bg-[#f0efec] px-5 py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#3e4c45] [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#3e4c45] [&::-webkit-details-marker]:hidden">
                 Blue tee scorecard · Hole {selectedHole}<span className="text-lg text-[#98782f] transition group-open:rotate-45">+</span>
               </summary>
               <p className="pt-4 text-sm text-[#667169]">Par {profile.par} · {profile.blueMetres} metres · {blueYards} yards · Provisional concept distance</p>
             </details>
             <details className="group bg-[#f0efec] px-5 py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#3e4c45] [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#3e4c45] [&::-webkit-details-marker]:hidden">
                 Forward tee scorecard · Hole {selectedHole}<span className="text-lg text-[#98782f] transition group-open:rotate-45">+</span>
               </summary>
               <p className="pt-4 text-sm text-[#667169]">Par {profile.par} · {profile.forwardMetres} metres · {forwardYards} yards · Provisional concept distance</p>
             </details>
             <details className="group bg-[#f0efec] px-5 py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#3e4c45] [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#3e4c45] [&::-webkit-details-marker]:hidden">
                 View this hole on the concept map<span className="text-lg text-[#98782f] transition group-open:rotate-45">+</span>
               </summary>
-              <a href="#aerial-study" className="mt-4 inline-flex rounded-full bg-[#173326] px-5 py-3 font-navigation text-[9px] font-bold uppercase tracking-[0.15em] text-white transition hover:bg-[#0d291c]">Open aerial study ↑</a>
+              <a href="#aerial-study" className="mt-4 inline-flex rounded-full bg-[#2f644b] px-5 py-3 font-navigation text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.15em] text-white transition hover:bg-[#3a765a]">Open aerial study ↑</a>
             </details>
           </div>
         </div>

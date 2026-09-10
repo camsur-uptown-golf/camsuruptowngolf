@@ -1,3 +1,5 @@
+import { HOLE_PROFILES } from "@/lib/course-holes";
+
 // TODO: palitan ng totoong contact number ng club
 export const CLUB_PHONE = { label: "(054) 123 4567", href: "tel:+63541234567" } as const;
 
@@ -23,7 +25,7 @@ export const CONCEPTS = [
     slug: "concept-01",
     image: "/course-concepts/concept-01-nadir-five-hole-v2.png",
     title: "Five-Hole Landscape",
-    description: "Holes 1, 2, 3, 4, and 10 form the broad lower course landscape between the clubhouse and Fairway Villas.",
+    description: "Holes 1, 2, 3, 4, and 10 form the broad lower course landscape around the clubhouse.",
     holes: [1, 2, 3, 4, 10],
     markers: [
       { hole: 1, left: "57.8%", top: "89.5%", startLeft: "59%", startTop: "96%" },
@@ -124,21 +126,28 @@ export const CONCEPTS = [
   },
 ] as const;
 
+/** Individual hole pages. Several holes share the same wider routing artwork,
+ * but each route exposes only the marker and course information for that hole.
+ */
+const COURSE_HEADLINE = "A Great Start for CamSur Uptown Golf Club, and for You";
+
+export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
+  const hole = index + 1;
+  const concept = CONCEPTS.find((item) => item.holes.some((itemHole) => itemHole === hole));
+
+  if (!concept) throw new Error(`Missing course artwork for hole ${hole}`);
+
+  return {
+    slug: `course-${String(hole).padStart(2, "0")}`,
+    image: concept.image,
+    title: COURSE_HEADLINE,
+    description: HOLE_PROFILES[hole].description,
+    holes: [hole] as const,
+    markers: concept.markers.filter((marker) => marker.hole === hole),
+  };
+});
+
 export const ACCOMMODATIONS = [
-  {
-    slug: "fairway-villas",
-    image: "/fairway-villas/overview-mt-isarog.png",
-    title: "Fairway Villas",
-    eyebrow: "Private course-side villas",
-    tagline: "Your own place on the fairway.",
-    description: "Private one- and two-bedroom villas with open living spaces, plunge pools, and uninterrupted course views.",
-    overview: "Fairway Villas combine the privacy of a home with the ease of a resort stay. Every villa opens toward the course, giving couples, families, and golf groups a generous place to gather before an early round and unwind at the end of the day.",
-    features: [
-      { title: "Indoor-outdoor living", description: "Full-height glass connects the lounge and dining area to a shaded private terrace." },
-      { title: "Private plunge pools", description: "A landscaped pool garden gives every stay its own quiet outdoor retreat." },
-      { title: "Course-side convenience", description: "The fairway is at the door, with the clubhouse and golf services close by." },
-    ],
-  },
   {
     slug: "clubhouse-lodge",
     image: "/clubhouse/clubhouse-hero.jpg",
@@ -153,6 +162,34 @@ export const ACCOMMODATIONS = [
       { title: "Relaxed veranda living", description: "Shaded seating for morning coffee or a quiet end to the day." },
     ],
   },
+  {
+    slug: "villa-del-rey",
+    image: "/villa-del-rey/hero-4k-cropped.jpg",
+    title: "Villa Del Rey",
+    eyebrow: "CamSur resort stay",
+    tagline: "A relaxed base for your CamSur visit.",
+    description: "A convenient resort option for golf groups, families, and guests exploring Camarines Sur.",
+    overview: "Villa Del Rey offers guests a comfortable place to stay within easy reach of CamSur attractions and the wider Uptown experience. Official room details, amenities, and booking information will be added when confirmed.",
+    features: [
+      { title: "Comfortable stays", description: "Guest spaces planned for restful nights and easy-going days in CamSur." },
+      { title: "Group-friendly setting", description: "A practical option for families, friends, and golf groups travelling together." },
+      { title: "Convenient access", description: "Positioned as a useful base for exploring the destination and nearby attractions." },
+    ],
+  },
+  {
+    slug: "gota-village-resort",
+    image: "/gota-village-resort/hero-4k.jpg",
+    title: "Gota Village Resort",
+    eyebrow: "Nature-side resort stay",
+    tagline: "A village retreat shaped by the landscape.",
+    description: "A nature-oriented resort option for guests looking to extend their CamSur journey beyond the course.",
+    overview: "Gota Village Resort brings guests closer to the natural character of Camarines Sur in a relaxed village setting. Official accommodation details, amenities, and booking information will be added when confirmed.",
+    features: [
+      { title: "Natural surroundings", description: "A resort setting framed by the distinctive landscape of Camarines Sur." },
+      { title: "Relaxed village atmosphere", description: "An easy-going environment for quieter mornings and unhurried evenings." },
+      { title: "Extended CamSur experience", description: "A complementary stay for guests combining golf with a wider regional visit." },
+    ],
+  },
 ] as const;
 
 export const SITE_SECTIONS = [
@@ -162,8 +199,8 @@ export const SITE_SECTIONS = [
     eyebrow: "Golf and clubhouse",
     title: "A landmark clubhouse at the heart of the course",
     description: "A championship golf experience shaped around play, arrival, dining, recovery, and the landscape of Camarines Sur.",
-    image: "/clubhouse/clubhouse-hero.jpg",
-    links: CONCEPTS.map((concept, index) => ({ label: `Concept ${String(index + 1).padStart(2, "0")} — ${concept.title}`, href: `/golf/${concept.slug}` })),
+    image: "/golf-hero-aerial-clean-4k.jpg",
+    links: COURSE_PAGES.map((course, index) => ({ label: `No. ${index + 1}`, href: `/golf/${course.slug}` })),
   },
   {
     slug: "packages",
@@ -171,23 +208,72 @@ export const SITE_SECTIONS = [
     eyebrow: "Golf packages",
     title: "Plan a golf trip that fits your schedule",
     description: "Golf, dining, and accommodation combined into packages for weekends, groups, and special occasions.",
-    image: "/fairway-villas/overview-mt-isarog.png",
+    image: "/packages-main-hero-option-3-4k-v2.jpg",
     /* Highlights lang ito, hindi ang buong listahan — anim ang package sa
        PackagesDetails.tsx, dalawa lang ang ipinapakita sa mega menu. Ang
        label at ang slug sa href ay dapat tumugma sa PACKAGES doon. */
     links: [
-      { label: "Stay & Play", href: "/packages#stay-and-play" },
-      { label: "Weekend Escape", href: "/packages#weekend-escape" },
+      { label: "Stay & Play", href: "/packages/stay-and-play", image: "/stay-and-play-hero-option-2.png" },
+      { label: "Buddy Golf Trip", href: "/packages/buddy-trip", image: "/buddy-golf-trip-hero-v2.png" },
     ],
   },
   {
     slug: "accommodations",
     label: "Accommodations",
     eyebrow: "Stay at CamSur",
-    title: "Two distinctive ways to stay close to the course",
-    description: "Choose a private Fairway Villa or the intimate Clubhouse Lodge, both within easy reach of the first tee.",
+    title: "Three distinctive ways to stay in CamSur",
+    description: "Choose Clubhouse Lodge, Villa Del Rey, or Gota Village Resort for a stay that fits your CamSur visit.",
     image: ACCOMMODATIONS[0].image,
     links: ACCOMMODATIONS.map((stay) => ({ label: stay.title, href: `/accommodations/${stay.slug}` })),
+  },
+  /* Ang Experiences at Dining ay tungkol sa hinahandog sa labas ng golf
+     course. Hiwalay sila sa halip na isang item na may Dining sa loob:
+     sariling dahilan ng pagbisita ang pagkaing Bicol, at ang unang
+     hinahanap ng bisita sa nav ay hindi nakatago sa loob ng ibang menu. */
+  {
+    slug: "experiences",
+    label: "Experiences",
+    eyebrow: "Beyond the course",
+    title: "There is a great deal here that is not golf",
+    description: "Wakepark, ATV trails, a bike track, pickle ball courts, and the quieter corners of the resort — for the days between rounds, and for everyone not playing.",
+    image: "/gota-village-resort/hero.jpg",
+    /* Isa-isa ang bawat pasilidad dito, hindi ang apat na pangkat: ito ang
+       aktwal na hinahanap ng bisita sa menu. Ang bawat anchor ay tumuturo sa
+       `id` ng hilera sa ExperiencesDetails.tsx — kapag may binago doon,
+       sundan dito. Walang Golf dito: sarili niyang section iyon sa nav. */
+    links: [
+      /* Ang mga facility ay may sarili nang official external pages. */
+      {
+        label: "Pickle Ball",
+        href: "https://pickleball.camsur.com/",
+        image: "/experiences/pickleball.webp",
+      },
+      { label: "Skate Park", href: "https://visitcamsur.com/facilities/skate-park", image: "/experiences/skate-park.webp" },
+      { label: "Bike Track", href: "https://visitcamsur.com/facilities/bike-track", image: "/experiences/bike-track.webp" },
+      {
+        label: "Playground & Outdoor Basketball Court",
+        href: "https://visitcamsur.com/facilities/playground",
+        image: "/experiences/playground-basketball.webp",
+      },
+      { label: "ATV", href: "https://visitcamsur.com/facilities/atv", image: "/experiences/atv.webp" },
+      { label: "Kiddie Park", href: "https://visitcamsur.com/facilities/kiddiepark", image: "/experiences/kiddie-park.webp" },
+      { label: "Billiards", href: "https://visitcamsur.com/facilities/billiards", image: "/experiences/billiards.webp" },
+      { label: "Lago Del Rey", href: "https://visitcamsur.com/facilities/lagodelrey", image: "/experiences/lago-del-rey.webp" },
+      { label: "Massage", href: "https://visitcamsur.com/facilities/massage", image: "/experiences/massage.webp" },
+      { label: "Wakepark", href: "https://visitcamsur.com/facilities/wakepark", image: "/experiences/wakepark.webp" },
+    ],
+  },
+  {
+    slug: "dining",
+    label: "Dining",
+    eyebrow: "Bicol cooking",
+    title: "Coconut milk, chili, and no translation",
+    description: "The food of Camarines Sur served the way the region serves it — Bicol Express, laing, pinangat, and the chili ice cream that ends the meal.",
+    image: "/fairway-villas/evening-dining.png",
+    links: [
+      { label: "Zeach Bar", href: "https://book.visitcamsur.com/cwc/zeach-bar", image: "/dining/zeach-bar.webp" },
+      { label: "Clubhouse", href: "https://visitcamsur.com/facilities/clubhouse", image: "/dining/clubhouse.webp" },
+    ],
   },
   {
     slug: "visit",
@@ -211,20 +297,6 @@ export const SITE_SECTIONS = [
     description: "Tournaments, corporate days, weddings, and private celebrations, hosted beside the course.",
     image: "/course-concepts/concept-06.jpg",
     links: ["Golf Tournaments", "Corporate Events", "Weddings", "Private Celebrations"].map((label) => ({ label, href: "/events" })),
-  },
-  {
-    slug: "shop",
-    label: "Shop",
-    eyebrow: "CamSur Uptown Pro Shop",
-    title: "Made for the round ahead",
-    description: "Performance golf essentials, personal service, and signature pieces from CamSur Uptown.",
-    image: "/camsur-pro-shop.png",
-    links: [
-      { label: "Course-ready Apparel", href: "/shop#apparel" },
-      { label: "Golf Equipment", href: "/shop#equipment" },
-      { label: "Player Accessories", href: "/shop#accessories" },
-      { label: "Signature Club Gifts", href: "/shop#club-gifts" },
-    ],
   },
 ] as const;
 

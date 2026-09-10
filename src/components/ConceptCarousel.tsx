@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { CONCEPTS as SLIDES } from "@/lib/site-content";
+import { COURSE_PAGES as SLIDES } from "@/lib/site-content";
 
 function Arrow({ direction }: { direction: "left" | "right" }) {
   return (
@@ -73,14 +73,14 @@ export default function ConceptCarousel() {
           <Image
             key={SLIDES[active].image}
             src={SLIDES[active].image}
-            alt={`${SLIDES[active].title} — CamSur Uptown Golf Club concept`}
+            alt={`${SLIDES[active].title} — CamSur Uptown Golf Club course`}
             fill
             priority={active === 0}
             sizes="(min-width: 640px) 52vw, calc(100vw - 3rem)"
             className="carousel-image object-cover"
           />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#061a11]/30 to-transparent" aria-hidden="true" />
-          <p className="absolute bottom-4 right-5 text-[10px] font-bold tracking-[0.18em] text-white/85 sm:bottom-6 sm:right-7">
+          <p className="absolute bottom-4 right-5 text-[10px] xl:text-[11px] font-bold tracking-[0.18em] text-white/85 sm:bottom-6 sm:right-7">
             {String(active + 1).padStart(2, "0")} / {SLIDES.length}
           </p>
         </Link>
@@ -94,23 +94,23 @@ export default function ConceptCarousel() {
         <button
           type="button"
           onClick={goPrevious}
-          aria-label="Previous concept image"
-          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#183e2b]/30 text-[#183e2b] transition hover:border-[#174630] hover:bg-[#174630] hover:text-white"
+          aria-label="Previous course image"
+          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#2f644b]/35 text-[#2f644b] transition hover:border-[#2f644b] hover:bg-[#2f644b] hover:text-white"
         >
           <Arrow direction="left" />
         </button>
 
         <div className="grid min-w-0 gap-5 lg:grid-cols-2 lg:gap-10">
           <div className="min-w-0 lg:border-r lg:border-[#183e2b]/35 lg:pr-10">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">Concept {String(active + 1).padStart(2, "0")}</p>
+            <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">Course {String(active + 1).padStart(2, "0")}</p>
             <h3 className="mt-2 max-w-full font-serif text-[1.625rem] font-medium leading-[0.94] tracking-[-0.05em] sm:text-[clamp(2.25rem,2.7vw,3rem)]">
               {SLIDES[active].title}
             </h3>
           </div>
           <div className="hidden lg:block lg:pt-6" aria-live="polite">
             <p className="text-base leading-7 text-[#536058]">{SLIDES[active].description}</p>
-            <Link href={`/golf/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#174630] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#0f3825]">
-              Explore this concept
+            <Link href={`/golf/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]">
+              Explore this course
             </Link>
           </div>
         </div>
@@ -118,8 +118,8 @@ export default function ConceptCarousel() {
         <button
           type="button"
           onClick={goNext}
-          aria-label="Next concept image"
-          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#183e2b]/30 text-[#183e2b] transition hover:border-[#174630] hover:bg-[#174630] hover:text-white"
+          aria-label="Next course image"
+          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#2f644b]/35 text-[#2f644b] transition hover:border-[#2f644b] hover:bg-[#2f644b] hover:text-white"
         >
           <Arrow direction="right" />
         </button>
@@ -129,11 +129,11 @@ export default function ConceptCarousel() {
         data-reveal="up"
         style={{ "--reveal-delay": "260ms" } as CSSProperties}
         className="mx-auto mt-6 flex max-w-[1040px] justify-center gap-2 px-6 sm:w-[52vw]"
-        aria-label="Choose concept image"
+        aria-label="Choose course image"
       >
         {SLIDES.map((slide, index) => (
           <button
-            key={slide.image}
+            key={slide.slug}
             type="button"
             onClick={() => setActive(index)}
             aria-label={`Show ${slide.title}`}

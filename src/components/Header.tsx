@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ACCOMMODATIONS, CONCEPTS, SITE_SECTIONS } from "@/lib/site-content";
+import { ACCOMMODATIONS, COURSE_PAGES, SITE_SECTIONS } from "@/lib/site-content";
 
 // TODO: palitan ng totoong contact number ng club
 const PHONE_LABEL = "(054) 123 4567";
@@ -44,20 +44,55 @@ export default function Header() {
   const lastScrollY = useRef(0);
   const compactHeader = useRef(false);
   const activeSection = SITE_SECTIONS.find((section) => section.slug === openMenu);
+  /**
+   * Dalawang paraan ng pagkuha ng larawan sa preview.
+   *
+   * Ang Golf at Accommodations ay may sariling listahan ng pahina
+   * (COURSE_PAGES, ACCOMMODATIONS) kung saan hinuhugot ang larawan. Ang iba
+   * ay pwedeng magdala ng sariling `image` sa bawat link — iyon ang paraang
+   * gamit ng Experiences, dahil pasilidad ang laman ng listahan niya at
+   * walang hiwalay na pahina ang bawat isa.
+   *
+   * Kapag walang larawan ang link, nananatili ang larawan ng buong section.
+   * Kaya ligtas magdagdag ng link na walang `image`.
+   */
+  const hoveredLink = hoveredPreviewIndex === null ? null : activeSection?.links[hoveredPreviewIndex] ?? null;
+  /* Ang `typeof` na pagsusuri ay hindi labis: hangga't walang kahit isang
+     link na may `image`, ang `in` lang ay nagbibigay ng `{}` sa TypeScript
+     at hindi tinatanggap ng next/image. Ito ang nagpapanatiling `string`. */
+  const hoveredLinkImage =
+    hoveredLink && "image" in hoveredLink && typeof hoveredLink.image === "string"
+      ? hoveredLink.image
+      : null;
+
   const hoveredPreview = hoveredPreviewIndex === null
     ? null
     : activeSection?.slug === "golf"
-      ? CONCEPTS[hoveredPreviewIndex]
+      ? COURSE_PAGES[hoveredPreviewIndex]
       : activeSection?.slug === "accommodations"
-        ? ACCOMMODATIONS[hoveredPreviewIndex]
+        ? ACCOMMODATIONS.find((stay) => activeSection.links[hoveredPreviewIndex]?.href.endsWith(stay.slug))
         : null;
-  const previewImage = hoveredPreview?.image ?? activeSection?.image;
-  const previewLabel = hoveredPreview?.title ?? activeSection?.label;
-  const previewHref = hoveredPreview && activeSection
-    ? `/${activeSection.slug}/${hoveredPreview.slug}`
-    : activeSection
-      ? `/${activeSection.slug}`
-      : "/";
+
+  /* May preview ang section kung may sariling pahina ang bawat link nito, o
+     kung may kahit isang link na may dalang larawan. */
+  const sectionHasLinkPreviews =
+    activeSection?.slug === "golf" ||
+    activeSection?.slug === "accommodations" ||
+    (activeSection?.links.some((link) => "image" in link) ?? false);
+
+  const previewImage = hoveredLinkImage ?? hoveredPreview?.image ?? activeSection?.image;
+  const previewLabel = activeSection?.slug === "golf" && hoveredLink
+    ? hoveredLink.label
+    : hoveredLinkImage
+      ? hoveredLink?.label
+      : hoveredPreview?.title ?? activeSection?.label;
+  const previewHref = hoveredLinkImage && hoveredLink
+    ? hoveredLink.href
+    : hoveredPreview && activeSection
+      ? `/${activeSection.slug}/${hoveredPreview.slug}`
+      : activeSection
+        ? `/${activeSection.slug}`
+        : "/";
 
   const cancelScheduledClose = () => {
     if (closeMenuTimer.current) {
@@ -177,7 +212,7 @@ export default function Header() {
     >
       <div
         data-header-background
-        className={`${isScrolled ? "translate-y-0" : "-translate-y-full"} pointer-events-none absolute inset-x-0 top-0 -z-10 h-20 transform-gpu border-b border-[#d8b65b]/25 bg-[#071d13] shadow-[0_10px_35px_rgba(0,0,0,0.22)] transition-transform duration-350 ease-out`}
+        className={`${isScrolled ? "translate-y-0" : "-translate-y-full"} pointer-events-none absolute inset-x-0 top-0 -z-10 h-20 transform-gpu border-b border-[#d8b65b]/25 bg-[#17382b] shadow-[0_10px_35px_rgba(0,0,0,0.18)] transition-transform duration-350 ease-out`}
         aria-hidden="true"
       />
       <div
@@ -188,7 +223,7 @@ export default function Header() {
       <div className={`${isScrolled ? "py-3 lg:py-3" : "py-5 lg:py-6"} pointer-events-none relative z-40 mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-5 px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8`}>
         <Link
           href="/"
-          className={`${isScrolled ? "h-14 w-14" : "h-36 w-[108px] lg:h-44 lg:w-[132px]"} pointer-events-auto relative block shrink-0 justify-self-start`}
+          className={`${isScrolled ? "h-14 w-14" : pathname === "/" ? "h-44 w-[132px] lg:h-52 lg:w-[156px]" : "h-36 w-[108px] lg:h-44 lg:w-[132px]"} pointer-events-auto relative block shrink-0 justify-self-start`}
           aria-label="Camsur Uptown Golf Club — home"
         >
           <span data-logo="full" className={`${isScrolled ? "invisible opacity-0" : "visible opacity-100"} absolute inset-0`}>
@@ -207,18 +242,18 @@ export default function Header() {
             aria-hidden="true"
           >
             <Image
-              src="/camsur-uptown-logo.png"
+              src="/camsur-uptown-mark-transparent.png"
               alt=""
-              width={176}
-              height={234}
+              width={911}
+              height={1251}
               priority
-              className="absolute left-1/2 top-0 h-[90px] w-auto max-w-none -translate-x-1/2 drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]"
+              className="h-full w-full object-contain drop-shadow-[0_3px_10px_rgba(0,0,0,0.3)]"
             />
           </span>
         </Link>
 
         <div className={`${isScrolled ? "translate-y-0 gap-0" : "-translate-y-7 gap-3"} relative hidden w-[min(820px,calc(100vw-3rem))] flex-col items-center justify-self-center lg:flex`}>
-          <div className="pointer-events-auto flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.07em] text-white/88 [text-shadow:0_1px_7px_rgba(0,0,0,0.45)] xl:text-[11px]">
+          <div className="pointer-events-auto flex items-center gap-4 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.07em] text-white/88 [text-shadow:0_1px_7px_rgba(0,0,0,0.45)] xl:text-[11px]">
             <Link href="/#contact" className="flex items-center gap-2 transition-colors hover:text-[#f1d98f]">
               <CalendarIcon />
               Plan your visit
@@ -233,7 +268,7 @@ export default function Header() {
           <nav
             data-nav="hero"
             aria-label="Primary navigation"
-            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : openMenu ? "visible max-h-16 w-[min(820px,calc(100vw-3rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#10281e] px-5 py-2 opacity-100 shadow-none" : "visible max-h-16 w-[min(690px,calc(100vw-3rem))] rounded-full border border-[#d8b65b]/20 bg-[#0a2b1d]/82 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.2)]"} ${openMenu ? "flex items-center justify-between gap-0.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
+            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : openMenu ? "visible max-h-16 w-[min(820px,calc(100vw-3rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#254936] px-5 py-2 opacity-100 shadow-none" : "visible max-h-16 w-[min(690px,calc(100vw-3rem))] rounded-full border border-[#d8b65b]/20 bg-[#214936]/88 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.16)]"} ${openMenu ? "flex items-center justify-between gap-0.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
           >
             {SITE_SECTIONS.map((item) => (
               <button
@@ -243,9 +278,9 @@ export default function Header() {
                 aria-expanded={openMenu === item.slug}
                 aria-haspopup="true"
                 aria-controls="desktop-mega-menu"
-                className={`${openMenu === item.slug ? "bg-transparent text-[#f3dda0] after:absolute after:inset-x-3 after:-bottom-2 after:h-0.5 after:bg-[#f3dda0] hover:bg-transparent" : ""} pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-3 py-2.5 transition-colors hover:bg-white/10 hover:text-[#f3dda0] xl:px-3.5`}
+                className={`${openMenu === item.slug ? "bg-[#56725f] text-[#f3dda0]" : ""} pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-3 py-2.5 transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f3dda0] xl:px-3.5`}
               >
-                {item.label}
+                {item.label.toUpperCase()}
               </button>
             ))}
           </nav>
@@ -253,12 +288,12 @@ export default function Header() {
 
         <Link
           href="/#contact"
-          className={`${isScrolled ? "translate-y-0 px-5 py-2.5" : "-translate-y-3 px-6 py-3"} pointer-events-auto hidden items-center justify-self-end rounded-full bg-white/90 text-[11px] font-bold uppercase tracking-[0.08em] text-[#20362c] shadow-[0_10px_28px_rgba(0,0,0,0.15)] backdrop-blur hover:bg-white lg:inline-flex`}
+          className={`${isScrolled ? "translate-y-0 px-5 py-2.5" : "-translate-y-3 px-6 py-3"} pointer-events-auto hidden items-center justify-self-end rounded-full bg-white/90 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.08em] text-[#20362c] shadow-[0_10px_28px_rgba(0,0,0,0.15)] backdrop-blur hover:bg-white lg:inline-flex`}
         >
           Contact Us
         </Link>
 
-        <div className="pointer-events-auto flex items-center gap-1 justify-self-end rounded-full border border-white/20 bg-[#071d13]/35 p-1 shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-xl lg:hidden">
+        <div className="pointer-events-auto flex items-center gap-1 justify-self-end rounded-full border border-white/20 bg-[#234735]/55 p-1 shadow-[0_12px_32px_rgba(0,0,0,0.15)] backdrop-blur-xl lg:hidden">
           <a href={PHONE_HREF} aria-label={`Call ${PHONE_LABEL}`} className="flex h-11 w-11 items-center justify-center rounded-full text-white/90 transition hover:bg-white/10 hover:text-[#f1d98f]">
             <PhoneIcon />
           </a>
@@ -291,14 +326,14 @@ export default function Header() {
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
-        className={`${mobileMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"} ${isScrolled ? "top-[5.5rem]" : "top-[11.5rem] sm:top-[6.5rem]"} fixed inset-x-4 z-30 max-h-[calc(100svh-12.5rem)] overflow-y-auto rounded-[1.75rem] border border-white/12 bg-[#082218]/98 p-3 text-white shadow-[0_30px_80px_rgba(0,0,0,0.42)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out sm:left-auto sm:right-6 sm:w-[390px] sm:max-h-[calc(100svh-7.5rem)] lg:hidden`}
+        className={`${mobileMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"} ${isScrolled ? "top-[5.5rem]" : "top-[11.5rem] sm:top-[6.5rem]"} fixed inset-x-4 z-30 max-h-[calc(100svh-12.5rem)] overflow-y-auto rounded-[1.75rem] border border-white/12 bg-[#214333]/98 p-3 text-white shadow-[0_30px_80px_rgba(0,0,0,0.34)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out sm:left-auto sm:right-6 sm:w-[390px] sm:max-h-[calc(100svh-7.5rem)] lg:hidden`}
       >
         <div className="flex items-center justify-between px-3 pb-2 pt-2">
           <div>
-            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">CamSur Uptown</p>
+            <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">CamSur Uptown</p>
             <p className="mt-1 text-sm font-semibold text-white/90">Explore CamSur Uptown</p>
           </div>
-          <span className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Menu</span>
+          <span className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-white/45">Menu</span>
         </div>
 
         <nav aria-label="Mobile primary navigation" className="mt-2 overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.035] p-1.5">
@@ -311,10 +346,10 @@ export default function Header() {
                 href={href}
                 onClick={() => setMobileMenuOpen(false)}
                 aria-current={isActive ? "page" : undefined}
-                className={`${isActive ? "bg-white/[0.09] text-[#f1d98f]" : "text-white/82 hover:bg-white/[0.06] hover:text-white"} group flex min-h-12 items-center gap-3 rounded-2xl px-3.5 transition-colors`}
+                className={`${isActive ? "bg-[#56725f] text-[#f1d98f]" : "text-white/82 hover:bg-[#56725f] hover:text-[#f1d98f]"} group flex min-h-12 items-center gap-3 rounded-full px-3.5 transition-colors duration-200`}
               >
-                <span className={`${isActive ? "text-[#d8b65b]" : "text-white/30"} w-5 text-[9px] font-bold tracking-[0.12em]`}>{String(index + 1).padStart(2, "0")}</span>
-                <span className="flex-1 text-sm font-semibold tracking-[-0.01em]">{item.label}</span>
+                <span className={`${isActive ? "text-[#d8b65b]" : "text-white/30"} w-5 text-[9px] xl:text-[10px] font-bold tracking-[0.12em]`}>{String(index + 1).padStart(2, "0")}</span>
+                <span className="flex-1 text-sm font-semibold tracking-[-0.01em]">{item.label.toUpperCase()}</span>
                 <span className={`${isActive ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-35 group-hover:translate-x-0 group-hover:opacity-100"} text-sm transition`}>→</span>
               </Link>
             );
@@ -338,7 +373,7 @@ export default function Header() {
       <nav
         data-nav="compact"
         aria-label="Compact primary navigation"
-        className={`${isScrolled && (showCompactNav || openMenu) ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} ${openMenu ? "lg:flex w-[min(820px,calc(100vw-3rem))] items-center justify-between gap-0.5 rounded-t-[1.6rem] rounded-b-none border-b-white/25 bg-[#10281e] px-5 py-2 shadow-none" : "lg:grid w-[min(740px,calc(100vw-3rem))] grid-flow-col auto-cols-max items-center justify-evenly rounded-full border-b-[#d8b65b]/25 bg-[#123828] p-1 shadow-[0_10px_28px_rgba(0,0,0,0.24)]"} absolute left-1/2 top-[70px] z-50 hidden -translate-x-1/2 border border-[#d8b65b]/25 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
+        className={`${isScrolled && (showCompactNav || openMenu) ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} ${openMenu ? "lg:flex w-[min(820px,calc(100vw-3rem))] items-center justify-between gap-0.5 rounded-t-[1.6rem] rounded-b-none border-b-white/25 bg-[#254936] px-5 py-2 shadow-none" : "lg:grid w-[min(740px,calc(100vw-3rem))] grid-flow-col auto-cols-max items-center justify-evenly rounded-full border-b-[#d8b65b]/25 bg-[#2b553f] p-1 shadow-[0_10px_28px_rgba(0,0,0,0.18)]"} absolute left-1/2 top-[70px] z-50 hidden -translate-x-1/2 border border-[#d8b65b]/25 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
       >
         {SITE_SECTIONS.map((item) => (
           <button
@@ -348,9 +383,9 @@ export default function Header() {
             aria-expanded={openMenu === item.slug}
             aria-haspopup="true"
             aria-controls="desktop-mega-menu"
-            className={`${openMenu === item.slug ? "bg-transparent text-[#f3dda0] after:absolute after:inset-x-3 after:-bottom-2 after:h-0.5 after:bg-[#f3dda0] hover:bg-transparent" : ""} pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-3 py-2 transition-colors hover:bg-white/10 hover:text-[#f3dda0] xl:px-3.5`}
+            className={`${openMenu === item.slug ? "bg-[#56725f] text-[#f3dda0]" : ""} pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-3 py-2 transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f3dda0] xl:px-3.5`}
           >
-            {item.label}
+            {item.label.toUpperCase()}
           </button>
         ))}
       </nav>
@@ -358,43 +393,61 @@ export default function Header() {
       {activeSection && (
         <div
           id="desktop-mega-menu"
-          className={`${isScrolled ? "top-[110px]" : "top-[121px]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-3rem))] -translate-x-1/2 overflow-hidden rounded-t-none rounded-b-[1.6rem] border border-t-0 border-white/10 bg-[#10281e] text-white shadow-[0_24px_60px_rgba(0,0,0,0.34)] lg:block`}
+          className={`${isScrolled ? "top-[110px]" : "top-[121px]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-3rem))] -translate-x-1/2 overflow-hidden rounded-t-none rounded-b-[1.6rem] border border-t-0 border-white/10 bg-[#254936] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block`}
         >
           <div className="grid min-h-[285px] grid-cols-[0.82fr_1.18fr_1fr]">
             <div className="border-r border-white/12 p-5">
-              <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.18em] text-[#d8b65b]">{activeSection.eyebrow}</p>
-              <Link href={previewHref} onClick={closeDesktopMenu} className="group block">
+              <p className="mb-3 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.18em] text-[#d8b65b]">{activeSection.eyebrow}</p>
+              <Link
+                href={previewHref}
+                target={previewHref.startsWith("http") ? "_blank" : undefined}
+                rel={previewHref.startsWith("http") ? "noreferrer" : undefined}
+                onClick={closeDesktopMenu}
+                className="group block"
+              >
                 <div className="relative aspect-[1.35] overflow-hidden rounded-lg bg-[#183d2c]">
                   <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes="220px" className="mega-preview-image object-cover opacity-85 transition duration-500 group-hover:scale-[1.035] group-hover:opacity-100" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#071a12]/65 to-transparent" aria-hidden="true" />
-                  <p className="absolute bottom-3 left-3 right-3 text-base font-semibold leading-tight tracking-[-0.035em]">{previewLabel}</p>
+                  <p className="absolute bottom-3 left-3 right-3 text-base font-semibold uppercase leading-tight tracking-[0.02em]">{previewLabel}</p>
                 </div>
-                <span className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-white/35 px-4 py-2.5 text-[9px] font-bold uppercase tracking-[0.14em] transition group-hover:border-[#e7d18d] group-hover:bg-[#e7d18d] group-hover:text-[#10281e]">
-                  {hoveredPreview ? (activeSection.slug === "accommodations" ? "Explore this stay" : "Explore concept") : `Explore ${activeSection.label}`}
+                <span className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-white/35 px-4 py-2.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] transition group-hover:border-[#e7d18d] group-hover:bg-[#e7d18d] group-hover:text-[#10281e]">
+                  {hoveredLinkImage
+                    ? hoveredLink?.href.startsWith("http")
+                      ? "Visit the site"
+                      : `Explore ${hoveredLink?.label}`
+                    : hoveredPreview
+                      ? activeSection.slug === "accommodations"
+                        ? "Explore this stay"
+                        : "Explore concept"
+                      : `Explore ${activeSection.label}`}
                 </span>
               </Link>
             </div>
 
             <div className="border-r border-white/12 p-5">
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.12em] text-white/92">
-                {activeSection.slug === "golf" ? "Course concepts" : `${activeSection.label} highlights`}
+              <p className="mb-3 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white/92">
+                {activeSection.slug === "golf" ? "Course holes" : `${activeSection.label} highlights`}
               </p>
               <div
                 onMouseLeave={() => setHoveredPreviewIndex(null)}
                 className={`${activeSection.slug === "golf" ? "grid-cols-2" : "grid-cols-1"} grid gap-x-3 gap-y-0.5`}
               >
                 {activeSection.links.map((link, index) => (
+                  /* May link na palabas ng site (halimbawa ang Pickleball
+                     Club). Bagong tab sila, para hindi maiwan ang bisita. */
                   <Link
                     key={`${link.href}-${link.label}`}
                     href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noreferrer" : undefined}
                     onClick={closeDesktopMenu}
                     onMouseEnter={() => {
-                      if (activeSection.slug === "golf" || activeSection.slug === "accommodations") setHoveredPreviewIndex(index);
+                      if (sectionHasLinkPreviews) setHoveredPreviewIndex(index);
                     }}
                     onFocus={() => {
-                      if (activeSection.slug === "golf" || activeSection.slug === "accommodations") setHoveredPreviewIndex(index);
+                      if (sectionHasLinkPreviews) setHoveredPreviewIndex(index);
                     }}
-                    className={`${(activeSection.slug === "golf" || activeSection.slug === "accommodations") && hoveredPreviewIndex === index ? "bg-white/[0.07] text-[#f1d98f]" : "text-white/72"} rounded-md px-2 py-1.5 text-[11px] font-semibold leading-4 transition hover:bg-white/[0.07] hover:text-[#f1d98f]`}
+                    className={`${sectionHasLinkPreviews && hoveredPreviewIndex === index ? "bg-[#56725f] text-[#f1d98f]" : "text-white/72"} rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase leading-4 tracking-[0.04em] transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f1d98f]`}
                   >
                     {link.label}
                   </Link>
@@ -404,11 +457,11 @@ export default function Header() {
 
             <div className="flex flex-col justify-between p-5">
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#d8b65b]">Discover CamSur Uptown</p>
-                <h2 className="mt-3 text-xl font-semibold leading-tight tracking-[-0.04em]">{activeSection.title}</h2>
+                <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.16em] text-[#d8b65b]">Discover CamSur Uptown</p>
+                <h2 className="mt-3 text-xl font-semibold uppercase leading-tight tracking-[0.01em]">{activeSection.title}</h2>
                 <p className="mt-3 text-xs leading-5 text-white/58">{activeSection.description}</p>
               </div>
-              <Link href={`/${activeSection.slug}`} onClick={closeDesktopMenu} className="mt-5 inline-flex items-center justify-between rounded-full bg-[#e7d18d] px-5 py-2.5 text-[9px] font-bold uppercase tracking-[0.12em] text-[#10281e] transition hover:bg-[#f3dfa0]">
+              <Link href={`/${activeSection.slug}`} onClick={closeDesktopMenu} className="mt-5 inline-flex items-center justify-between rounded-full bg-[#e7d18d] px-5 py-2.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.12em] text-[#10281e] transition hover:bg-[#f3dfa0]">
                 View details <span aria-hidden="true">→</span>
               </Link>
             </div>

@@ -42,12 +42,15 @@ body {
 }
 
 /* Editorial display face for every major title across the site. Navigation,
-   labels, body copy, and compact card headings stay sans-serif for clarity. */
+   labels, body copy, and compact card headings stay sans-serif for clarity.
+
+   Dumaraan ito sa --font-display, hindi sa pangalan ng font mismo: iisang
+   linya lang sa @theme sa itaas ang kailangang baguhin para mapalitan ang
+   display face ng buong site. */
 main h1,
 main h2 {
-  font-family: var(--font-fraunces), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  /* Fraunces ay may optical sizing: sa malalaking titulo, mas mahigpit ang
-     kontraste at mas tikas ang mga serif. */
+  font-family: var(--font-display), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  /* Walang epekto ito sa font na walang optical size axis. */
   font-optical-sizing: auto;
 }
 

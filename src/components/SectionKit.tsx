@@ -18,25 +18,25 @@ export const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSPro
 
 /** Pare-parehong lapad, gitna, at gap sa magkabilang gilid. */
 export function Container({ children }: { children: ReactNode }) {
-  return <div className="relative mx-auto w-full max-w-4xl px-6 sm:px-10 lg:px-12">{children}</div>;
+  return <div className="relative mx-auto w-full max-w-4xl px-6 sm:px-10 lg:px-12 xl:max-w-5xl">{children}</div>;
 }
 
 /** Pare-parehong type scale at pagpasok ng bawat section heading. */
 export function SectionHeading({ eyebrow, title, intro }: { eyebrow: string; title: string; intro?: string }) {
   return (
-    <div className="mx-auto max-w-xl text-center">
-      <p data-reveal="up" style={delay(0)} className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
+    <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
+      <p data-reveal="up" style={delay(0)} className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
         {eyebrow}
       </p>
       <h2
         data-reveal="up"
         style={delay(90)}
-        className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#14271d] sm:text-3xl"
+        className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#14271d] sm:text-3xl xl:text-4xl"
       >
         {title}
       </h2>
       {intro ? (
-        <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 text-[#5d685f]">
+        <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">
           {intro}
         </p>
       ) : null}

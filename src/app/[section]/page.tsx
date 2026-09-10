@@ -7,9 +7,10 @@ import FairwayDivider from "@/components/FairwayDivider";
 import Footer from "@/components/Footer";
 import EventsDetails from "@/components/EventsDetails";
 import GolfDetails from "@/components/GolfDetails";
+import DiningDetails from "@/components/DiningDetails";
+import ExperiencesDetails from "@/components/ExperiencesDetails";
 import PackagesDetails from "@/components/PackagesDetails";
 import ScrollMotion from "@/components/ScrollMotion";
-import ShopExperience from "@/components/ShopExperience";
 import VisitDetails from "@/components/VisitDetails";
 import { ACCOMMODATIONS, SITE_SECTIONS } from "@/lib/site-content";
 
@@ -34,9 +35,10 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
   if (!section) notFound();
   const isVisit = section.slug === "visit";
   const isGolf = section.slug === "golf";
-  const isShop = section.slug === "shop";
   const isEvents = section.slug === "events";
   const isPackages = section.slug === "packages";
+  const isExperiences = section.slug === "experiences";
+  const isDining = section.slug === "dining";
 
   /**
    * Ang mga pahinang may sariling detail component: sila ang may fairway
@@ -52,7 +54,8 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
   /* Mga pahinang may <ScrollMotion />. Dito lang pwede ang data-reveal:
      nakatago ito sa CSS hangga't walang naglalagay ng .is-in, kaya sa
      pahinang walang motion driver ay mananatiling blangko ang teksto. */
-  const usesFairwayHero = isVisit || isGolf || isEvents || isPackages || isAccommodations;
+  const usesFairwayHero =
+    isVisit || isGolf || isEvents || isPackages || isAccommodations || isExperiences || isDining;
   const usesHeroParallax = isVisit || isGolf || isEvents;
 
   /* Pareho na sila: bawat pahinang may divider ay may ScrollMotion na rin. */
@@ -62,24 +65,13 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
      section sa ilalim — kahit bahagyang pagkakaiba ay lumilitaw bilang tahi. */
   const dividerFill = isGolf ? "#f6f5f5" : "#f7f5ee";
 
-  if (isShop) {
-    return (
-      <>
-        <main>
-          <ShopExperience />
-        </main>
-        <Footer />
-      </>
-    );
-  }
-
   return (
     <>
       <main>
         <section
           id="top"
           className={`relative isolate flex items-end overflow-hidden bg-[#071d13] text-white ${
-            isGolf ? "min-h-[820px] sm:min-h-[720px] lg:min-h-[600px]" : "min-h-[660px]"
+            isGolf ? "min-h-[820px] sm:min-h-[760px] lg:min-h-[700px]" : "min-h-[660px]"
           }`}
         >
           <Image
@@ -100,10 +92,26 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           />
           {usesFairwayDivider && <FairwayDivider fill={dividerFill} />}
           {isGolf ? (
-            <div className="mx-auto flex min-h-[820px] w-full max-w-7xl items-end px-6 pb-32 pt-40 sm:min-h-[720px] sm:pb-36 lg:min-h-[600px] lg:px-8 lg:pb-36 lg:pt-32">
-              <p data-reveal="up" className="text-[12px] font-bold uppercase tracking-[0.24em] text-[#e1c56e] sm:text-sm">
-                Clubhouse and course
-              </p>
+            <div className="mx-auto flex min-h-[820px] w-full max-w-7xl items-center justify-center px-6 pb-24 pt-32 text-center sm:min-h-[760px] lg:min-h-[700px] lg:px-8 lg:pb-24 lg:pt-40">
+              <div className="mx-auto max-w-4xl">
+                <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.26em] text-[#f1d98f] sm:text-[11px]">
+                  Championship golf · beneath Mt. Isarog
+                </p>
+                <h1
+                  data-reveal="up"
+                  style={revealDelay(110)}
+                  className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,4.25vw,4.25rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
+                >
+                  A course shaped by Camarines Sur
+                </h1>
+                <p
+                  data-reveal="up"
+                  style={revealDelay(220)}
+                  className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/72 sm:text-lg"
+                >
+                  Eighteen holes moving through water, tropical fairways, and open views of the mountain—designed for a complete round with a strong sense of place.
+                </p>
+              </div>
             </div>
           ) : (
             <div
@@ -111,7 +119,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             >
               <p
                 data-reveal={usesFairwayHero ? "up" : undefined}
-                className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e]"
+                className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#e1c56e]"
               >
                 {section.eyebrow}
               </p>
@@ -133,7 +141,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           )}
         </section>
 
-        {isVisit ? <VisitDetails /> : isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : (
+        {isVisit ? <VisitDetails /> : isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isDining ? <DiningDetails /> : (
         <section className="bg-[#f7f5ee] py-20 text-[#14271d] sm:py-24 lg:py-28">
           {/* Ang ScrollMotion ang naglalagay ng .is-in. Kung wala siya ay
               mananatiling opacity: 0 ang lahat ng data-reveal dito. */}
@@ -141,7 +149,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-8 border-b border-[#173b2a]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
               <div>
-                <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f]">Explore {section.label}</p>
+                <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]">Explore {section.label}</p>
                 <h2
                   data-reveal="up"
                   style={revealDelay(110)}
@@ -183,13 +191,13 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                       />
                     </div>
                     <div className="p-6 sm:p-7">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">{stay.eyebrow}</p>
+                      <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">{stay.eyebrow}</p>
                       <div className="mt-4 flex items-start justify-between gap-5">
                         <div>
                           <h3 className="text-2xl font-semibold leading-tight tracking-[-0.04em]">{stay.title}</h3>
                           <p className="mt-3 max-w-xl text-sm leading-6 text-[#5d685f]">{stay.description}</p>
                         </div>
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#173b2a]/20 transition group-hover:bg-[#174630] group-hover:text-white" aria-hidden="true">→</span>
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#2f644b]/25 transition group-hover:bg-[#2f644b] group-hover:text-white" aria-hidden="true">→</span>
                       </div>
                     </div>
                   </Link>

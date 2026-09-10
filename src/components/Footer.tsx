@@ -17,7 +17,7 @@ const SOCIALS: { label: string; path: string }[] = [
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative overflow-hidden bg-[#07170f] text-white">
+    <footer id="contact" className="relative overflow-hidden bg-[#1c3b2d] text-white">
       <div className="h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" />
       <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-[#c9a54e]/[0.035] blur-3xl" aria-hidden="true" />
 
@@ -60,7 +60,7 @@ export default function Footer() {
           <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
             {LINK_GROUPS.map((group) => (
               <div key={group.title}>
-                <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#c9a54e]">
+                <p className="mb-5 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#c9a54e]">
                   {group.title}
                 </p>
                 <ul className="space-y-3">
@@ -80,7 +80,7 @@ export default function Footer() {
           </nav>
 
           <div className="lg:border-l lg:border-white/10 lg:pl-10">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#c9a54e]">
+            <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#c9a54e]">
               News & offers
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-white">

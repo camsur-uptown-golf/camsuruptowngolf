@@ -45,13 +45,13 @@ export default function ShopExperience() {
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(3,14,9,0.62)_0%,rgba(3,14,9,0.12)_42%,rgba(3,14,9,0.9)_100%)]" />
 
         <div className="mx-auto w-full max-w-6xl px-6 pb-16 pt-64 text-center sm:px-10 sm:pb-20 lg:px-12 lg:pb-24">
-          <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#efd98f]">
+          <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.28em] text-[#efd98f]">
             CamSur Uptown Golf Club · Opening 2026
           </p>
           <h1 className="mx-auto mt-5 max-w-5xl font-serif text-[clamp(3.2rem,7.2vw,7rem)] font-normal leading-[0.9] tracking-[-0.055em]">
             The CamSur Uptown Pro Shop
           </h1>
-          <p className="mx-auto mt-7 max-w-2xl text-sm leading-7 text-white/76 sm:text-base">
+          <p className="mx-auto mt-7 max-w-2xl text-sm leading-7 xl:text-base xl:leading-8 text-white/76 sm:text-base">
             A refined retail destination for performance golf, personal service, and pieces that carry the club beyond the course.
           </p>
           <a
@@ -66,7 +66,7 @@ export default function ShopExperience() {
 
       <article id="shop-story" className="bg-white text-[#14271d]">
         <section className="mx-auto max-w-4xl px-6 py-16 sm:px-10 sm:py-20 lg:px-12 lg:py-24">
-          <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">
+          <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">
             More than a stop before the first tee
           </p>
           <div className="mt-6 grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
@@ -108,7 +108,7 @@ export default function ShopExperience() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-9 border-b border-[#173b2a]/15 pb-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
               <div>
-                <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Inside the shop</p>
+                <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Inside the shop</p>
                 <h2 data-reveal="up" className="mt-4 font-serif text-[clamp(2.8rem,5vw,5rem)] leading-[0.95] tracking-[-0.05em]">
                   Selected for every kind of player.
                 </h2>
@@ -132,10 +132,10 @@ export default function ShopExperience() {
               <div className="border-t border-[#173b2a]/15 lg:border-t-0">
                 {SHOP_FEATURES.map((feature) => (
                   <div key={feature.id} id={feature.id} className="scroll-mt-32 grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#173b2a]/15 py-7 sm:grid-cols-[3rem_1fr] sm:py-8">
-                    <p className="pt-1 text-[10px] font-bold tracking-[0.16em] text-[#a07d30]">{feature.number}</p>
+                    <p className="pt-1 text-[10px] xl:text-[11px] font-bold tracking-[0.16em] text-[#a07d30]">{feature.number}</p>
                     <div>
                       <h3 className="text-xl font-semibold tracking-[-0.035em] sm:text-2xl">{feature.title}</h3>
-                      <p className="mt-3 text-sm leading-7 text-[#647068]">{feature.description}</p>
+                      <p className="mt-3 text-sm leading-7 xl:text-base xl:leading-8 text-[#647068]">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -147,17 +147,17 @@ export default function ShopExperience() {
         <section className="bg-[#0b281b] px-6 py-16 text-white sm:px-10 sm:py-20 lg:px-12 lg:py-24">
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#e4c86f]">Visit the pro shop</p>
+              <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#e4c86f]">Visit the pro shop</p>
               <h2 data-reveal="up" className="mt-5 max-w-3xl font-serif text-[clamp(2.8rem,5.5vw,5.4rem)] leading-[0.94] tracking-[-0.05em]">
                 Begin your next round here.
               </h2>
-              <p data-reveal="up" className="mt-6 max-w-2xl text-sm leading-7 text-white/62 sm:text-base">
+              <p data-reveal="up" className="mt-6 max-w-2xl text-sm leading-7 xl:text-base xl:leading-8 text-white/62 sm:text-base">
                 Ask about merchandise, tournament orders, and opening updates from CamSur Uptown Golf Club.
               </p>
             </div>
             <Link
               href="/#contact"
-              className="inline-flex min-h-12 items-center justify-between gap-8 rounded-full bg-[#e8d28e] px-6 text-[10px] font-bold uppercase tracking-[0.14em] text-[#10281e] transition hover:bg-[#f3dfa0] sm:px-8"
+              className="inline-flex min-h-12 items-center justify-between gap-8 rounded-full bg-[#e8d28e] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.14em] text-[#10281e] transition hover:bg-[#f3dfa0] sm:px-8"
             >
               Contact the club <span aria-hidden="true">→</span>
             </Link>

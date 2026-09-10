@@ -61,7 +61,7 @@ export default function CourseFilm() {
               namang puwang sa tabi ng teksto. */}
           <div className="mx-auto w-full max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
             <div className="max-w-xl">
-              <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e]">
+              <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#e1c56e]">
                 Course film
               </p>
               <h2
@@ -82,7 +82,7 @@ export default function CourseFilm() {
                 href="/golf"
                 data-reveal="up"
                 style={delay(330)}
-                className="mt-8 inline-flex h-12 items-center gap-3 rounded-full bg-[#e7d18d] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                className="mt-8 inline-flex h-12 items-center gap-3 rounded-full bg-[#e7d18d] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
               >
                 Explore the course <ArrowIcon />
               </Link>
@@ -101,7 +101,7 @@ export default function CourseFilm() {
                   <path d="M8 5.2 19.2 12 8 18.8Z" />
                 </svg>
               </span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-white/85 transition-colors group-hover:text-white">
+              <span className="text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.24em] text-white/85 transition-colors group-hover:text-white">
                 Watch
               </span>
             </button>

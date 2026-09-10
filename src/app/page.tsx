@@ -3,16 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import ConceptCarousel from "@/components/ConceptCarousel";
-import CourseFilm from "@/components/CourseFilm";
 import HeroVideo from "@/components/HeroVideo";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Eyebrow } from "@/components/ImgPlaceholder";
+import { TEASER_POSTER } from "@/lib/site-content";
 
 /** `count` drives the count-up; leave it null for values that are not numbers. */
 const COURSE_FACTS = [
   { value: "18", count: 18, label: "Championship holes", Icon: FlagIcon },
   { value: "72", count: 72, label: "Course par", Icon: ScorecardIcon },
-  { value: "80+", count: null, label: "Estimated hectares", Icon: AreaIcon },
+  { value: "54.23", count: null, label: "Hectares", Icon: AreaIcon },
   { value: "Mt. Isarog", count: null, label: "Signature backdrop", Icon: MountainIcon },
 ] as const;
 
@@ -85,7 +85,7 @@ function MountainIcon() {
 function ScrollArrowIcon() {
   return (
     <svg viewBox="0 0 24 14" className="h-2.5 w-4" fill="none" aria-hidden="true">
-      <path d="M3 2.5 12 11l9-8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3 2.5 12 11l9-8.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -101,10 +101,14 @@ function Hero() {
           className="parallax-media absolute inset-0"
           style={{ "--parallax-scale": "1.15" } as CSSProperties}
         >
-          {/* Nananatili ang larawan sa likod: ito ang nakikita habang naglo-load
-              ang video, at ito rin ang natitira kung hinarang ng Wistia ang
-              domain o sinuko ng browser ang autoplay. */}
-          <Image src="/hero-4k.png" alt="" fill preload sizes="100vw" className="hero-image object-cover object-[58%_center] sm:object-center" />
+          <Image
+            src={TEASER_POSTER}
+            alt=""
+            fill
+            preload
+            sizes="100vw"
+            className="hero-image object-cover object-center"
+          />
           <HeroVideo />
         </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,16,10,0.68)_0%,rgba(2,16,10,0.24)_48%,rgba(2,16,10,0.08)_72%)]" />
@@ -118,18 +122,18 @@ function Hero() {
 // ibabang gilid ng hero nang hindi nagbabago ang taas ng hero.
 function CourseSnapshot() {
   return (
-    <section id="course-snapshot" className="relative z-20 border-y border-[#d1af58]/22 bg-[#071d13] font-navigation text-white lg:-mt-[68px] lg:h-[68px]" aria-label="Course snapshot">
+    <section id="course-snapshot" className="relative z-20 border-y border-[#d1af58]/22 bg-[#1c3b2d] font-navigation text-white lg:-mt-[68px] lg:h-[68px]" aria-label="Course snapshot">
       {/* The band sits on the hero, so a gold hairline reads as its edge. */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" aria-hidden="true" />
       {/* No reveal on the scroll cue: it already carries a translate, and a
           reveal would reset that transform when it lands. */}
-      <a href="#course-snapshot" aria-label="Discover the course" className="group absolute left-1/2 top-0 z-30 flex -translate-x-1/2 -translate-y-full flex-col items-center text-white/45">
-        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/35 bg-black/[0.03] backdrop-blur-[1px] transition-colors group-hover:border-[#f1d98f] group-hover:text-[#f1d98f]">
+      <a href="#course-snapshot" aria-label="Discover the course" className="group absolute left-1/2 top-0 z-30 flex -translate-x-1/2 -translate-y-full flex-col items-center text-[#d1af58]">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d1af58]/80 bg-black/[0.04] backdrop-blur-[1px] transition-colors group-hover:border-[#f1d98f] group-hover:bg-[#d1af58]/10 group-hover:text-[#f1d98f]">
           <span className="flex items-center justify-center">
             <ScrollArrowIcon />
           </span>
         </span>
-        <span className="h-4 w-px bg-white/35 transition-colors group-hover:bg-[#f1d98f]" aria-hidden="true" />
+        <span className="mt-2 h-3 w-px bg-[#d1af58]/80 transition-colors group-hover:bg-[#f1d98f] sm:h-4" aria-hidden="true" />
       </a>
       <div className="mx-auto grid max-w-7xl grid-cols-2 px-6 sm:grid-cols-4 lg:h-full lg:px-8">
         {COURSE_FACTS.map(({ value, count, label, Icon }, index) => (
@@ -147,7 +151,7 @@ function CourseSnapshot() {
                 {count === null ? value : <span data-count={count}>{value}</span>}
               </p>
             </div>
-            <p className="mt-1.5 text-[8px] font-medium uppercase leading-tight tracking-[0.14em] text-white/55 sm:text-[9px]">{label}</p>
+            <p className="mt-1.5 text-[8px] font-medium uppercase leading-tight tracking-[0.14em] text-white/55 sm:text-[9px] xl:text-[10px]">{label}</p>
           </div>
         ))}
       </div>
@@ -177,7 +181,7 @@ function Introduction() {
         <h1
           data-reveal="up"
           style={delay(110)}
-          className="max-w-[1080px] text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[1.02] tracking-[-0.055em] text-[#17251e]"
+          className="max-w-[1080px] font-display text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.96] tracking-[-0.055em] text-[#17251e]"
         >
           Championship golf in the heart of Bicol.
         </h1>
@@ -192,59 +196,10 @@ function Introduction() {
           href="/#contact"
           data-reveal="up"
           style={delay(330)}
-          className="mt-8 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#174630] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_14px_34px_rgba(20,68,44,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#0f3825]"
+          className="mt-8 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_14px_34px_rgba(20,68,44,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#3a765a]"
         >
           Plan your round <ArrowIcon />
         </Link>
-      </div>
-    </section>
-  );
-}
-
-function ShopFeature() {
-  return (
-    <section id="shop-feature" className="bg-[#f7f5ee] px-6 py-14 text-[#18251f] sm:px-10 sm:py-16 lg:px-[clamp(4rem,6vw,7.5rem)] lg:py-20">
-      <div className="mx-auto grid w-full max-w-[1560px] items-center gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(420px,1fr)] lg:gap-[clamp(3.5rem,4vw,5rem)]">
-        <div
-          data-reveal="left"
-          className="relative aspect-[1.85/1] w-full overflow-hidden bg-[#071d13] shadow-[0_20px_55px_rgba(18,43,30,0.12)]"
-        >
-          <Image
-            src="/camsur-pro-shop-wordmark.png"
-            alt="CamSur Uptown pro shop with golf apparel, equipment, and the complete gold club wordmark displayed on a green feature wall"
-            fill
-            sizes="(max-width: 1023px) calc(100vw - 2.5rem), (max-width: 1919px) 58vw, 1050px"
-            className="object-cover object-center"
-          />
-        </div>
-
-        <div className="max-w-[640px] lg:py-4">
-          <div data-reveal="up" style={delay(120)}>
-            <Eyebrow className="mb-5 text-[#877f73]">CamSur Uptown Pro Shop</Eyebrow>
-          </div>
-          <h2
-            data-reveal="up"
-            style={delay(210)}
-            className="text-[clamp(2.2rem,3vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.045em]"
-          >
-            Everything you need to play your best.
-          </h2>
-          <p
-            data-reveal="up"
-            style={delay(300)}
-            className="mt-6 max-w-xl text-base leading-8 text-[#536159] sm:text-lg sm:leading-8"
-          >
-            Performance apparel, trusted golf equipment, practical accessories, and signature CamSur Uptown merchandise—chosen to get you ready for the course.
-          </p>
-          <Link
-            href="/shop"
-            data-reveal="up"
-            style={delay(390)}
-            className="mt-7 inline-flex h-12 w-fit items-center gap-4 rounded-full bg-[#174630] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#0f3825]"
-          >
-            Explore the Pro Shop <ArrowIcon />
-          </Link>
-        </div>
       </div>
     </section>
   );
@@ -285,7 +240,7 @@ function StayFeature() {
         <div className="relative mt-10 shadow-[0_30px_90px_rgba(0,0,0,0.28)] sm:mt-12">
           <div data-reveal="scale" className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/9] lg:aspect-[2.15/1]">
             <Image
-              src="/camsur-stay-villas.png"
+              src="/camsur-stay-villas-isarog.png"
               alt="Private tropical guest villas beside the CamSur Uptown golf course with Mt. Isarog in the distance"
               fill
               sizes="(max-width: 1279px) calc(100vw - 3rem), 1280px"
@@ -301,14 +256,14 @@ function StayFeature() {
           >
             <Eyebrow className="mb-4 text-[#98782f]">Private villas</Eyebrow>
             <h3 className="font-serif text-[clamp(2rem,3vw,3.35rem)] font-medium leading-[0.98] tracking-[-0.05em]">Private villas designed around your stay.</h3>
-            <p className="mt-5 max-w-lg text-sm leading-7 text-[#5d685f] sm:text-base">
+            <p className="mt-5 max-w-lg text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f] sm:text-base">
               Wake to quiet garden paths and fairway views, then reach the first tee without rushing your morning.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/accommodations" className="inline-flex h-12 items-center gap-4 rounded-full bg-[#174630] px-7 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#0f3825]">
+              <Link href="/accommodations" className="inline-flex h-12 items-center gap-4 rounded-full bg-[#2f644b] px-7 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]">
                 Explore stays <ArrowIcon />
               </Link>
-              <Link href="/#contact" className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[10px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630]">
+              <Link href="/#contact" className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630]">
                 Plan your stay
               </Link>
             </div>
@@ -344,10 +299,8 @@ export default function Home() {
         {/* Ang balot na ito ang sumasagip sa mga siwang sa pagitan ng mga
             section sa loob, kaya kasama siya kapag pinalitan ang kulay. */}
         <div className="bg-[#f7f5ee]">
-          <ShopFeature />
           <ConceptCarousel />
           <StayFeature />
-          <CourseFilm />
         </div>
       </main>
       <Footer />

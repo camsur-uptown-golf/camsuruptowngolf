@@ -4,8 +4,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ClubhouseVision from "@/components/ClubhouseVision";
 import FairwayDivider from "@/components/FairwayDivider";
-import FairwayVillasVision from "@/components/FairwayVillasVision";
 import Footer from "@/components/Footer";
+import GotaVillageStays from "@/components/GotaVillageStays";
+import VillaDelReyStays from "@/components/VillaDelReyStays";
 import { ACCOMMODATIONS } from "@/lib/site-content";
 
 export const dynamicParams = false;
@@ -33,83 +34,92 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
   const stay = ACCOMMODATIONS[index];
   const previous = ACCOMMODATIONS[(index - 1 + ACCOMMODATIONS.length) % ACCOMMODATIONS.length];
   const next = ACCOMMODATIONS[(index + 1) % ACCOMMODATIONS.length];
+  const hasEditorialStayLayout =
+    stay.slug === "clubhouse-lodge" || stay.slug === "villa-del-rey" || stay.slug === "gota-village-resort";
 
   return (
     <>
       <main>
-        <section id="top" className="relative isolate flex min-h-[78svh] items-end overflow-hidden bg-[#0b2419] text-white">
+        <section
+          id="top"
+          className={`relative isolate flex w-full items-end overflow-hidden bg-[#0b2419] text-white ${
+            hasEditorialStayLayout
+              ? "h-[80svh] min-h-[620px]"
+              : "min-h-[78svh]"
+          }`}
+        >
           <Image
             src={stay.image}
             alt={`${stay.title} accommodation concept at CamSur Uptown`}
             fill
             preload
             sizes="100vw"
-            className="-z-20 object-cover"
+            className="-z-20 h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(4,20,13,0.48)_0%,rgba(4,20,13,0.08)_40%,rgba(4,20,13,0.88)_100%)]" />
           {/* #f7f5ee ang unang section sa ilalim sa parehong stay, kaya
               ganoon din ang harapang burol — kung hindi magkatugma ay may
               lumalabas na tahi sa dugtungan. */}
-          <FairwayDivider fill="#f7f5ee" />
-          {/* Dagdag na pb para hindi sumagi ang teksto sa mga burol. */}
-          <div className="mx-auto w-full max-w-7xl px-6 pb-28 pt-64 sm:pb-36 lg:px-8 lg:pb-44">
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e]">{stay.eyebrow}</p>
-            <h1 className="mt-4 max-w-5xl text-[clamp(3.25rem,6vw,6rem)] font-medium leading-[0.92] tracking-[-0.06em]">{stay.title}</h1>
-            <p className="mt-6 max-w-2xl text-base leading-7 text-white/78 sm:text-lg sm:leading-8">{stay.description}</p>
+          {!hasEditorialStayLayout ? <FairwayDivider fill="#f7f5ee" /> : null}
+          {/* Dagdag na pb sa mga hero na may fairway divider; mas mababa ang
+              text block kapag malinis at tuwid ang ilalim ng hero. */}
+          <div
+            className={`relative z-10 mx-auto w-full max-w-7xl px-6 pt-64 lg:px-8 ${
+              stay.slug === "villa-del-rey"
+                ? "pb-24 sm:pb-28 lg:pb-32"
+                : stay.slug === "clubhouse-lodge"
+                  ? "pb-24 sm:pb-28 lg:pb-32"
+                : stay.slug === "gota-village-resort"
+                  ? "pb-16 sm:pb-20 lg:pb-24"
+                  : "pb-28 sm:pb-36 lg:pb-44"
+            }`}
+          >
+            <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#e1c56e]">{stay.eyebrow}</p>
+            <h1
+              className={`mt-4 max-w-5xl font-medium leading-[0.92] tracking-[-0.06em] drop-shadow-[0_3px_14px_rgba(0,0,0,0.55)] ${
+                stay.slug === "villa-del-rey" || stay.slug === "gota-village-resort"
+                  ? "text-[clamp(2.75rem,5vw,4.75rem)]"
+                  : "text-[clamp(3.25rem,6vw,6rem)]"
+              }`}
+            >
+              {stay.title}
+            </h1>
+            <p className={`mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 ${stay.slug === "villa-del-rey" ? "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]" : "text-white/78"}`}>
+              {stay.description}
+            </p>
           </div>
+          {hasEditorialStayLayout ? (
+            <a
+              href={
+                stay.slug === "villa-del-rey"
+                  ? "#villa-stays"
+                  : stay.slug === "clubhouse-lodge"
+                    ? "#clubhouse-stays"
+                    : "#gota-stays"
+              }
+              aria-label={`Explore ${stay.title} stays`}
+              className="group absolute bottom-0 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-white"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/75 bg-black/[0.04] backdrop-blur-[1px] transition-colors group-hover:border-white group-hover:bg-white/10">
+                <svg viewBox="0 0 24 14" className="h-2.5 w-4" fill="none" aria-hidden="true">
+                  <path d="M3 2.5 12 11l9-8.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <span className="mt-2 h-3 w-px bg-white/75 transition-colors group-hover:bg-white sm:h-4" aria-hidden="true" />
+            </a>
+          ) : null}
         </section>
 
-        <section className="bg-[#f7f5ee] py-20 text-[#14271d] sm:py-24 lg:py-28">
-          <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f]">The experience</p>
-              <h2 className="mt-4 text-[clamp(2.5rem,4vw,4rem)] font-medium leading-[0.96] tracking-[-0.055em]">{stay.tagline}</h2>
-            </div>
-            <div className="lg:pt-8">
-              <p className="max-w-2xl text-base leading-8 text-[#506058] sm:text-lg sm:leading-9">{stay.overview}</p>
-              <p className="mt-6 text-sm leading-7 text-[#6a756f] sm:text-base sm:leading-8">
-                This accommodation is part of the current CamSur Uptown development concept. Final design, amenities, and availability may change as planning continues.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link href="/#contact" className="inline-flex h-12 items-center rounded-full bg-[#174630] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#0f3825]">
-                  Inquire about your stay
-                </Link>
-                <Link href="/accommodations" className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630]">
-                  View all stays
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {stay.slug === "fairway-villas" ? <FairwayVillasVision /> : null}
         {stay.slug === "clubhouse-lodge" ? <ClubhouseVision /> : null}
-
-        <section className="bg-[#f7f5ee] py-20 text-[#14271d] sm:py-24 lg:py-28">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f]">What to expect</p>
-              <h2 className="mt-4 text-[clamp(2.25rem,3.5vw,3.5rem)] font-medium leading-[0.98] tracking-[-0.05em]">Designed for a comfortable CamSur stay.</h2>
-            </div>
-
-            <div className="mt-12 grid border-y border-[#173b2a]/15 md:grid-cols-3 lg:mt-16">
-              {stay.features.map((feature, featureIndex) => (
-                <article key={feature.title} className={`py-8 md:px-8 ${featureIndex ? "border-t border-[#173b2a]/15 md:border-l md:border-t-0" : "md:pl-0"}`}>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">{String(featureIndex + 1).padStart(2, "0")}</p>
-                  <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em] text-[#174630]">{feature.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-[#5d685f] sm:text-base">{feature.description}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        {stay.slug === "villa-del-rey" ? <VillaDelReyStays /> : null}
+        {stay.slug === "gota-village-resort" ? <GotaVillageStays /> : null}
 
         <nav aria-label="Accommodation navigation" className="grid bg-[#0b2419] sm:grid-cols-2">
           <Link href={`/accommodations/${previous.slug}`} className="group relative min-h-80 overflow-hidden border-b border-white/15 sm:border-b-0 sm:border-r">
             <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover transition duration-700 group-hover:scale-[1.035]" />
             <div className="absolute inset-0 bg-[#0b2419]/62 transition group-hover:bg-[#0b2419]/48" />
             <div className="absolute inset-0 flex flex-col justify-end p-8 text-white sm:p-10">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">← Previous stay</p>
+              <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">← Previous stay</p>
               <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{previous.title}</p>
             </div>
           </Link>
@@ -117,7 +127,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             <Image src={next.image} alt="" fill sizes="50vw" className="object-cover transition duration-700 group-hover:scale-[1.035]" />
             <div className="absolute inset-0 bg-[#0b2419]/62 transition group-hover:bg-[#0b2419]/48" />
             <div className="absolute inset-0 flex flex-col items-end justify-end p-8 text-right text-white sm:p-10">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">Next stay →</p>
+              <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">Next stay →</p>
               <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{next.title}</p>
             </div>
           </Link>

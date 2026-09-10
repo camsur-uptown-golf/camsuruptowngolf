@@ -49,14 +49,14 @@ export default function FairwayVillasVision() {
       <Container>
         <div className="grid gap-7 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
           <div>
-            <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
+            <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
               Fairway Villas
             </p>
-            <h2 data-reveal="up" style={delay(90)} className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl">
+            <h2 data-reveal="up" style={delay(90)} className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl">
               Your own place on the fairway.
             </h2>
           </div>
-          <p data-reveal="up" style={delay(180)} className="text-sm leading-7 text-[#5d685f]">
+          <p data-reveal="up" style={delay(180)} className="text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">
             A quiet collection of private villas shaped for golf trips, family weekends, and longer stays. The
             architecture carries the clubhouse palette into a more intimate setting, with warm stone, timber,
             bronze details, and rooms that open directly to the landscape.
@@ -82,7 +82,7 @@ export default function FairwayVillasVision() {
               className={`py-5 text-center ${index % 2 ? "border-l border-[#173b2a]/15" : ""} ${index > 1 ? "border-t border-[#173b2a]/15 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-[#173b2a]/15" : ""}`}
             >
               <p className="text-lg font-semibold tracking-[-0.03em] text-[#174630]">{value}</p>
-              <p className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#98782f]">{label}</p>
+              <p className="mt-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f]">{label}</p>
             </div>
           ))}
         </div>
@@ -110,7 +110,7 @@ export default function FairwayVillasVision() {
           ))}
         </div>
 
-        <p className="mt-9 border-t border-[#173b2a]/15 pt-5 text-[10px] leading-5 text-[#7b847e]">
+        <p className="mt-9 border-t border-[#173b2a]/15 pt-5 text-[10px] xl:text-[11px] leading-5 text-[#7b847e]">
           Fairway Villas imagery, occupancy, and amenities are part of the current accommodation concept and may be
           refined as planning continues.
         </p>
