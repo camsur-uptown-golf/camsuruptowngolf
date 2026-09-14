@@ -225,7 +225,7 @@ function GoodToKnow() {
 
 function PackagesCta() {
   return (
-    <section className="relative isolate overflow-hidden bg-[#071d13] py-14 text-white sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#1c3b2d] py-14 text-white sm:py-16">
       <div
         data-parallax="0.14"
         className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"
@@ -250,7 +250,7 @@ function PackagesCta() {
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
-                href="/#contact"
+                href="/plan-your-visit"
                 className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
               >
                 Request a quote

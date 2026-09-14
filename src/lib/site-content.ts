@@ -1,7 +1,32 @@
 import { HOLE_PROFILES } from "@/lib/course-holes";
 
+/**
+ * Mga oras ng pagtawag sa "request a call back".
+ *
+ * Nandito sila sa shared na lugar dahil kailangan sila ng form at ng
+ * /api/callback, at eksaktong string ang ipinagkukumpara ng route — kasama
+ * ang en-dash. Kapag may dalawang kopya nito, sapat nang magkaiba ang isang
+ * karakter para tahimik na tanggihan ang bawat pasa.
+ *
+ * Oras sa Pilipinas: nasa Camarines Sur ang club.
+ */
+export const CALL_WINDOWS = [
+  "9:00 AM – 12:00 PM",
+  "12:00 – 2:00 PM",
+  "2:00 – 4:00 PM",
+  "4:00 – 6:00 PM",
+] as const;
+
 // TODO: palitan ng totoong contact number ng club
 export const CLUB_PHONE = { label: "(054) 123 4567", href: "tel:+63541234567" } as const;
+
+/* TODO (para sa club): palitan ng totoong inbox na tumatanggap ng inquiry. */
+export const CLUB_EMAIL = { label: "inquiries@camsuruptown.com", href: "mailto:inquiries@camsuruptown.com" } as const;
+
+/* TODO (para sa club): kumpletuhin ang address — barangay, bayan, at ZIP. */
+export const CLUB_ADDRESS = {
+  lines: ["CamSur Uptown Golf Club", "Camarines Sur, Philippines"],
+} as const;
 
 /**
  * "Golf Club" hero clip — direktang 4K MP4 (3840x2160, 60fps, ~20s, 48 MB),
@@ -136,7 +161,9 @@ export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
   if (!concept) throw new Error(`Missing course artwork for hole ${hole}`);
 
   return {
-    slug: `course-${String(hole).padStart(2, "0")}`,
+    /* Ang slug ang huling bahagi ng /golf/courses/no-1 … no-18. Walang
+       leading zero — "no-1", hindi "no-01". */
+    slug: `no-${hole}`,
     image: `/golf/aerial-holes/hole-${String(hole).padStart(2, "0")}-aerial.png`,
     title: COURSE_HEADLINE,
     description: HOLE_PROFILES[hole].description,
@@ -198,7 +225,7 @@ export const SITE_SECTIONS = [
     title: "A landmark clubhouse at the heart of the course",
     description: "A championship golf experience shaped around play, arrival, dining, recovery, and the landscape of Camarines Sur.",
     image: "/golf-hero-aerial-clean-4k.jpg",
-    links: COURSE_PAGES.map((course, index) => ({ label: `No. ${index + 1}`, href: `/golf/${course.slug}` })),
+    links: COURSE_PAGES.map((course, index) => ({ label: `No. ${index + 1}`, href: `/golf/courses/${course.slug}` })),
   },
   {
     slug: "packages",
@@ -274,27 +301,13 @@ export const SITE_SECTIONS = [
     ],
   },
   {
-    slug: "visit",
-    label: "Visit",
-    eyebrow: "Visitor information",
-    title: "Everything you need before you arrive",
-    description: "Directions, guest information, and club guidelines, so your first visit to CamSur Uptown is straightforward.",
-    image: "/course-concepts/concept-07.jpg",
-    links: [
-      { label: "Directions & Transportation", href: "/visit#getting-here" },
-      { label: "Guest Information", href: "/visit#guest-information" },
-      { label: "Club Guidelines", href: "/visit#club-guidelines" },
-      { label: "Contact the Club", href: "/#contact" },
-    ],
-  },
-  {
     slug: "events",
     label: "Events",
     eyebrow: "Events at CamSur",
     title: "A course-side setting for every occasion",
-    description: "Tournaments, corporate days, weddings, and private celebrations, hosted beside the course.",
+    description: "Tournaments, corporate days, and private celebrations, hosted beside the course.",
     image: "/course-concepts/concept-06.jpg",
-    links: ["Golf Tournaments", "Corporate Events", "Weddings", "Private Celebrations"].map((label) => ({ label, href: "/events" })),
+    links: ["Golf Tournaments", "Corporate Events", "Private Celebrations"].map((label) => ({ label, href: "/events" })),
   },
 ] as const;
 

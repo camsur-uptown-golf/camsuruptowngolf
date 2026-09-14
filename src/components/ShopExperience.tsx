@@ -156,7 +156,7 @@ export default function ShopExperience() {
               </p>
             </div>
             <Link
-              href="/#contact"
+              href="/plan-your-visit"
               className="inline-flex min-h-12 items-center justify-between gap-8 rounded-full bg-[#e8d28e] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.14em] text-[#10281e] transition hover:bg-[#f3dfa0] sm:px-8"
             >
               Contact the club <span aria-hidden="true">→</span>

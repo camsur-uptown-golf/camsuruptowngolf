@@ -3,12 +3,15 @@
 import type { CSSProperties } from "react";
 import { useState } from "react";
 import Image from "next/image";
-import { HOLE_PROFILES, metresToYards } from "@/lib/course-holes";
+import { COURSE_PLAN_IMAGE, HOLE_POSITIONS, HOLE_PROFILES, metresToYards } from "@/lib/course-holes";
 
 /**
  * Interactive na routing plan.
  *
- * TODO (para sa club): tantiya ang mga coordinate sa ibaba — inilagay sila
+ * Ang HOLE_POSITIONS ay nasa @/lib/course-holes na ngayon dahil ginagamit
+ * din ito ng maliit na mapa sa Scorecard.
+ *
+ * TODO (para sa club): tantiya ang mga coordinate na iyon — inilagay sila
  * sa gitna ng bawat nakikitang fairway corridor sa masterplan, hindi galing
  * sa sinukat na drawing. Kapag dumating ang opisyal na numbered routing,
  * ang array na ito lang ang kailangang ayusin; walang ibang bahagi ng
@@ -17,27 +20,6 @@ import { HOLE_PROFILES, metresToYards } from "@/lib/course-holes";
  * Ang x at y ay porsiyento ng lapad at taas ng larawan, kaya nananatili
  * silang tama kahit anong sukat ng screen.
  */
-const HOLE_POSITIONS: Record<number, { x: number; y: number }> = {
-  1: { x: 30, y: 27 },
-  2: { x: 41, y: 24 },
-  3: { x: 50, y: 26 },
-  4: { x: 63, y: 16 },
-  5: { x: 73, y: 13 },
-  6: { x: 81, y: 20 },
-  7: { x: 74, y: 25 },
-  8: { x: 64, y: 27 },
-  9: { x: 55, y: 34 },
-  10: { x: 26, y: 36 },
-  11: { x: 24, y: 47 },
-  12: { x: 34, y: 44 },
-  13: { x: 44, y: 43 },
-  14: { x: 37, y: 57 },
-  15: { x: 31, y: 68 },
-  16: { x: 48, y: 70 },
-  17: { x: 63, y: 70 },
-  18: { x: 75, y: 58 },
-};
-
 const HOLE_NUMBERS = Object.keys(HOLE_POSITIONS).map(Number);
 
 /* Ang plano ay iginuhit nang north-up, ang karaniwan sa mga site plan. */
@@ -150,7 +132,7 @@ export default function CourseRoutingMap() {
 
         <figure data-reveal="scale" className="relative mx-auto aspect-square w-full max-w-[920px]">
           <Image
-            src="/golf/course-masterplan-revision-2026-course-only-v4.png"
+            src={COURSE_PLAN_IMAGE}
             alt="Revised course-only landscape plan showing the complete 18-hole CamSur Uptown golf course and its water features"
             fill
             sizes="(max-width: 1023px) calc(100vw - 3rem), 60vw"

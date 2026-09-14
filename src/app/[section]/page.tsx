@@ -10,8 +10,8 @@ import GolfDetails from "@/components/GolfDetails";
 import DiningDetails from "@/components/DiningDetails";
 import ExperiencesDetails from "@/components/ExperiencesDetails";
 import PackagesDetails from "@/components/PackagesDetails";
+import ScrollCue from "@/components/ScrollCue";
 import ScrollMotion from "@/components/ScrollMotion";
-import VisitDetails from "@/components/VisitDetails";
 import { ACCOMMODATIONS, SITE_SECTIONS } from "@/lib/site-content";
 
 export const dynamicParams = false;
@@ -33,7 +33,6 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
   const { section: slug } = await params;
   const section = SITE_SECTIONS.find((item) => item.slug === slug);
   if (!section) notFound();
-  const isVisit = section.slug === "visit";
   const isGolf = section.slug === "golf";
   const isEvents = section.slug === "events";
   const isPackages = section.slug === "packages";
@@ -55,11 +54,11 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
      nakatago ito sa CSS hangga't walang naglalagay ng .is-in, kaya sa
      pahinang walang motion driver ay mananatiling blangko ang teksto. */
   const usesFairwayHero =
-    isVisit || isGolf || isEvents || isPackages || isAccommodations || isExperiences || isDining;
-  const usesHeroParallax = isVisit || isGolf || isEvents;
+    isGolf || isEvents || isPackages || isAccommodations || isExperiences || isDining;
+  const usesHeroParallax = isGolf || isEvents;
 
-  /* Patag ang Golf hero; ang ibang editorial heroes lang ang may landscape wave. */
-  const usesFairwayDivider = usesFairwayHero && !isGolf;
+  /* Patag ang Golf at Experiences heroes; ang iba lang ang may landscape wave. */
+  const usesFairwayDivider = usesFairwayHero && !isGolf && !isExperiences;
 
   /* Ang harapang burol ay dapat eksaktong katumbas ng background ng unang
      section sa ilalim — kahit bahagyang pagkakaiba ay lumilitaw bilang tahi. */
@@ -71,7 +70,11 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         <section
           id="top"
           className={`relative isolate flex items-end overflow-hidden bg-[#071d13] text-white ${
-            isGolf ? "min-h-[620px] sm:min-h-[680px] lg:min-h-[700px]" : "min-h-[660px]"
+            isGolf
+              ? "min-h-[620px] sm:min-h-[680px] lg:min-h-[700px]"
+              : isExperiences
+                ? "h-[80svh] min-h-[620px]"
+                : "min-h-[660px]"
           }`}
         >
           <Image
@@ -87,13 +90,15 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             className={`absolute inset-0 -z-10 ${
               isPackages
                 ? "bg-[linear-gradient(180deg,rgba(4,20,13,0.48)_0%,rgba(4,20,13,0.08)_40%,rgba(4,20,13,0.88)_100%)]"
+                : isExperiences
+                  ? "bg-[linear-gradient(180deg,rgba(5,22,15,0.58)_0%,rgba(5,22,15,0.16)_45%,rgba(5,22,15,0.72)_100%)]"
                 : "bg-[linear-gradient(180deg,rgba(5,22,15,0.62)_0%,rgba(5,22,15,0.2)_45%,rgba(5,22,15,0.88)_100%)]"
             }`}
           />
           {usesFairwayDivider && <FairwayDivider fill={dividerFill} />}
           {!isGolf ? (
             <div
-              className={`mx-auto w-full max-w-7xl px-6 pt-64 lg:px-8 ${usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`}
+              className={`mx-auto w-full max-w-7xl px-6 pt-64 lg:px-8 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`}
             >
               <p
                 data-reveal={usesFairwayHero ? "up" : undefined}
@@ -141,32 +146,10 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             </div>
           ) : null}
 
-          {isGolf ? (
-            <a
-              href="#the-course"
-              aria-label="Explore the golf course"
-              className="group absolute bottom-0 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-white"
-            >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/75 bg-black/[0.04] backdrop-blur-[1px] transition-colors group-hover:border-white group-hover:bg-white/10">
-                <svg viewBox="0 0 24 14" className="h-2.5 w-4" fill="none" aria-hidden="true">
-                  <path
-                    d="M3 2.5 12 11l9-8.5"
-                    stroke="currentColor"
-                    strokeWidth="1.25"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              <span
-                className="mt-2 h-3 w-px bg-white/75 transition-colors group-hover:bg-white sm:h-4"
-                aria-hidden="true"
-              />
-            </a>
-          ) : null}
+          {isGolf ? <ScrollCue targetId="the-course" label="Explore the golf course" /> : null}
         </section>
 
-        {isVisit ? <VisitDetails /> : isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isDining ? <DiningDetails /> : (
+        {isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isDining ? <DiningDetails /> : (
         <section className="bg-[#f7f5ee] py-20 text-[#14271d] sm:py-24 lg:py-28">
           {/* Ang ScrollMotion ang naglalagay ng .is-in. Kung wala siya ay
               mananatiling opacity: 0 ang lahat ng data-reveal dito. */}

@@ -1,18 +1,57 @@
 import Image from "next/image";
+import Link from "next/link";
+import NewsletterSignup from "@/components/NewsletterSignup";
+import { CLUB_PHONE } from "@/lib/site-content";
 
-const LINK_GROUPS = [
-  { title: "Explore", links: ["Our Story", "Membership", "The Course", "FAQs"] },
-  { title: "Stay & Play", links: ["Packages", "Accommodations", "Events"] },
-  { title: "The Club", links: ["Golf Academy", "News & Blog", "Careers", "Contact Us"] },
-  { title: "Information", links: ["Privacy Policy", "Accessibility", "Terms"] },
+/**
+ * Ang mga link ng footer.
+ *
+ * Bawat isa dito ay may totoong pupuntahan. Dati silang lahat `href="#"` —
+ * labing-apat na link na walang patutunguhan.
+ *
+ * TODO: wala pang pahina ang Our Story, Membership, FAQs, Golf Academy,
+ * News & Blog, Careers, Accessibility, at Terms, kaya inalis muna sila.
+ * Ibalik ang bawat isa kapag may pahina na. Ang Privacy Policy ang
+ * pinakaunang kailangan — nag-iimbak na tayo ng personal na datos.
+ */
+const LINK_GROUPS: { title: string; links: { label: string; href: string }[] }[] = [
+  {
+    title: "Play",
+    links: [
+      { label: "The Course", href: "/golf" },
+      { label: "Packages", href: "/packages" },
+    ],
+  },
+  {
+    title: "Stay & Play",
+    links: [
+      { label: "Accommodations", href: "/accommodations" },
+      { label: "Dining", href: "/dining" },
+    ],
+  },
+  {
+    title: "The Club",
+    links: [
+      { label: "Experiences", href: "/experiences" },
+      { label: "Events", href: "/events" },
+      { label: "Contact Us", href: "/contact" },
+    ],
+  },
 ];
 
-const SOCIALS: { label: string; path: string }[] = [
-  { label: "Facebook", path: "M13.5 21v-7h2.3l.4-2.7h-2.7V9.5c0-.8.2-1.3 1.4-1.3h1.4V5.8c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5v1.9H8.6V14h2.3v7h2.6z" },
-  { label: "X", path: "M17.5 5h2.1l-4.6 5.3L20.5 19h-4.3l-3.3-4.4L9 19H6.9l5-5.7L5.7 5h4.4l3 4 3.4-4zm-.8 12.6h1.2L9.4 6.3H8.1l8.6 11.3z" },
-  { label: "Instagram", path: "M12 8.9A3.1 3.1 0 1 0 12 15.1 3.1 3.1 0 0 0 12 8.9zm0 5.1A2 2 0 1 1 12 10a2 2 0 0 1 0 4zm3.3-5.3a.72.72 0 1 0 0 1.44.72.72 0 0 0 0-1.44zM12 6.9c1.6 0 1.8 0 2.5.04.9.04 1.4.2 1.7.33.4.16.7.36 1 .66.3.3.5.6.66 1 .13.3.29.8.33 1.7.03.7.04.9.04 2.5s0 1.8-.04 2.5c-.04.9-.2 1.4-.33 1.7a2.8 2.8 0 0 1-1.66 1.66c-.3.13-.8.29-1.7.33-.7.03-.9.04-2.5.04s-1.8 0-2.5-.04c-.9-.04-1.4-.2-1.7-.33a2.8 2.8 0 0 1-1.66-1.66c-.13-.3-.29-.8-.33-1.7C6.9 13.8 6.9 13.6 6.9 12s0-1.8.04-2.5c.04-.9.2-1.4.33-1.7.16-.4.36-.7.66-1 .3-.3.6-.5 1-.66.3-.13.8-.29 1.7-.33C10.2 6.9 10.4 6.9 12 6.9z" },
-  { label: "YouTube", path: "M20.5 8.4a2.2 2.2 0 0 0-1.5-1.5C17.7 6.5 12 6.5 12 6.5s-5.7 0-7 .4A2.2 2.2 0 0 0 3.5 8.4C3.1 9.7 3.1 12 3.1 12s0 2.3.4 3.6A2.2 2.2 0 0 0 5 17.1c1.3.4 7 .4 7 .4s5.7 0 7-.4a2.2 2.2 0 0 0 1.5-1.5c.4-1.3.4-3.6.4-3.6s0-2.3-.4-3.6zM10.3 14.4V9.6l4 2.4-4 2.4z" },
-  { label: "TikTok", path: "M16.5 3c.3 2.1 1.6 3.6 3.6 3.9v2.4c-1.2.1-2.5-.3-3.6-1v5.8c0 3-2.3 5.4-5.2 5.4S6.1 17.1 6.1 14.1c0-2.8 2.1-5.1 4.8-5.4v2.5c-1.3.2-2.4 1.4-2.4 2.9 0 1.6 1.2 2.9 2.7 2.9s2.7-1.3 2.7-2.9V3h2.6z" },
+/**
+ * TODO (para sa club): ilagay ang totoong URL ng bawat account.
+ *
+ * Ang mga icon na `null` ang href ay hindi ipinapakita. Dati silang lahat
+ * `href="#"` — mukhang pindutin pero walang pupuntahan. Mas mabuting wala
+ * muna kaysa limang pangakong hindi natutupad.
+ */
+const SOCIALS: { label: string; href: string | null; path: string }[] = [
+  { label: "Facebook", href: null, path: "M13.5 21v-7h2.3l.4-2.7h-2.7V9.5c0-.8.2-1.3 1.4-1.3h1.4V5.8c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5v1.9H8.6V14h2.3v7h2.6z" },
+  { label: "X", href: null, path: "M17.5 5h2.1l-4.6 5.3L20.5 19h-4.3l-3.3-4.4L9 19H6.9l5-5.7L5.7 5h4.4l3 4 3.4-4zm-.8 12.6h1.2L9.4 6.3H8.1l8.6 11.3z" },
+  { label: "Instagram", href: null, path: "M12 8.9A3.1 3.1 0 1 0 12 15.1 3.1 3.1 0 0 0 12 8.9zm0 5.1A2 2 0 1 1 12 10a2 2 0 0 1 0 4zm3.3-5.3a.72.72 0 1 0 0 1.44.72.72 0 0 0 0-1.44zM12 6.9c1.6 0 1.8 0 2.5.04.9.04 1.4.2 1.7.33.4.16.7.36 1 .66.3.3.5.6.66 1 .13.3.29.8.33 1.7.03.7.04.9.04 2.5s0 1.8-.04 2.5c-.04.9-.2 1.4-.33 1.7a2.8 2.8 0 0 1-1.66 1.66c-.3.13-.8.29-1.7.33-.7.03-.9.04-2.5.04s-1.8 0-2.5-.04c-.9-.04-1.4-.2-1.7-.33a2.8 2.8 0 0 1-1.66-1.66c-.13-.3-.29-.8-.33-1.7C6.9 13.8 6.9 13.6 6.9 12s0-1.8.04-2.5c.04-.9.2-1.4.33-1.7.16-.4.36-.7.66-1 .3-.3.6-.5 1-.66.3-.13.8-.29 1.7-.33C10.2 6.9 10.4 6.9 12 6.9z" },
+  { label: "YouTube", href: null, path: "M20.5 8.4a2.2 2.2 0 0 0-1.5-1.5C17.7 6.5 12 6.5 12 6.5s-5.7 0-7 .4A2.2 2.2 0 0 0 3.5 8.4C3.1 9.7 3.1 12 3.1 12s0 2.3.4 3.6A2.2 2.2 0 0 0 5 17.1c1.3.4 7 .4 7 .4s5.7 0 7-.4a2.2 2.2 0 0 0 1.5-1.5c.4-1.3.4-3.6.4-3.6s0-2.3-.4-3.6zM10.3 14.4V9.6l4 2.4-4 2.4z" },
+  { label: "TikTok", href: null, path: "M16.5 3c.3 2.1 1.6 3.6 3.6 3.9v2.4c-1.2.1-2.5-.3-3.6-1v5.8c0 3-2.3 5.4-5.2 5.4S6.1 17.1 6.1 14.1c0-2.8 2.1-5.1 4.8-5.4v2.5c-1.3.2-2.4 1.4-2.4 2.9 0 1.6 1.2 2.9 2.7 2.9s2.7-1.3 2.7-2.9V3h2.6z" },
 ];
 
 export default function Footer() {
@@ -35,29 +74,33 @@ export default function Footer() {
               <p className="font-semibold text-white/85">CamSur Uptown Golf Club</p>
               <p>Camarines Sur, Philippines</p>
               <p>
-                <a href="tel:+63541234567" className="font-semibold text-[#e7d18d] hover:text-white">
-                  (054) 123 4567
+                <a href={CLUB_PHONE.href} className="font-semibold text-[#e7d18d] hover:text-white">
+                  {CLUB_PHONE.label}
                 </a>
               </p>
             </div>
 
-            <div className="mt-7 flex flex-wrap gap-2.5">
-              {SOCIALS.map((social) => (
-                <a
-                  key={social.label}
-                  href="#"
-                  aria-label={social.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/65 transition hover:border-[#c9a54e]/50 hover:bg-[#c9a54e]/10 hover:text-[#f0dca0]"
-                >
-                  <svg viewBox="0 0 24 24" className="h-[17px] w-[17px]" fill="currentColor">
-                    <path d={social.path} />
-                  </svg>
-                </a>
-              ))}
-            </div>
+            {SOCIALS.some((social) => social.href) ? (
+              <div className="mt-7 flex flex-wrap gap-2.5">
+                {SOCIALS.filter((social) => social.href).map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href as string}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/65 transition hover:border-[#c9a54e]/50 hover:bg-[#c9a54e]/10 hover:text-[#f0dca0]"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-[17px] w-[17px]" fill="currentColor">
+                      <path d={social.path} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </div>
 
-          <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
+          <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
             {LINK_GROUPS.map((group) => (
               <div key={group.title}>
                 <p className="mb-5 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#c9a54e]">
@@ -65,13 +108,13 @@ export default function Footer() {
                 </p>
                 <ul className="space-y-3">
                   {group.links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
                         className="text-[13px] font-medium text-white/68 transition-colors hover:text-[#f0dca0]"
                       >
-                        {link}
-                      </a>
+                        {link.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -90,33 +133,7 @@ export default function Footer() {
               Course updates, event announcements, and occasional offers from CamSur Uptown, sent straight to your inbox.
             </p>
 
-            <div className="mt-6 flex flex-col gap-2 sm:max-w-md sm:flex-row lg:flex-col xl:flex-row">
-              <input
-                type="email"
-                placeholder="Email address"
-                aria-label="Email address"
-                className="min-w-0 flex-1 rounded-full border border-white/15 bg-white/[0.035] px-5 py-3.5 text-sm text-white placeholder-white/35 outline-none transition focus:border-[#c9a54e]/65 focus:bg-white/[0.055]"
-              />
-              <button
-                type="button"
-                className="shrink-0 rounded-full bg-[#e7d18d] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#0a2619] transition hover:bg-[#f3dfa0]"
-              >
-                Subscribe
-              </button>
-            </div>
-
-            <label className="mt-4 flex max-w-md gap-3 text-[11px] leading-5 text-white/42">
-              <input
-                type="checkbox"
-                className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#c9a54e]"
-              />
-              <span>
-                I agree to receive news and offers from CamSur Uptown, and I have read the{" "}
-                <a href="#" className="text-white/80 underline hover:text-[#e9d9a8]">
-                  Privacy Policy
-                </a>.
-              </span>
-            </label>
+            <NewsletterSignup />
           </div>
         </div>
 

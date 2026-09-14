@@ -4,17 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ACCOMMODATIONS, COURSE_PAGES, SITE_SECTIONS } from "@/lib/site-content";
+import { ACCOMMODATIONS, CLUB_PHONE, COURSE_PAGES, SITE_SECTIONS } from "@/lib/site-content";
 
-// TODO: palitan ng totoong contact number ng club
-const PHONE_LABEL = "(054) 123 4567";
-const PHONE_HREF = "tel:+63541234567";
+/* Galing na sa site-content: apat na kopya dati ng parehong placeholder. */
+const { label: PHONE_LABEL, href: PHONE_HREF } = CLUB_PHONE;
 
 function CalendarIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
       <rect x="3" y="4.5" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.8" />
       <path d="M3 9h18M8 3v3M16 3v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ChevronIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
+      <path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -38,12 +45,19 @@ export default function Header() {
   const [showCompactNav, setShowCompactNav] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  /** Slug ng section na binuksan sa loob ng mobile drawer; null = ugat na listahan. */
+  const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [hoveredPreviewIndex, setHoveredPreviewIndex] = useState<number | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const closeMenuTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollY = useRef(0);
   const compactHeader = useRef(false);
   const activeSection = SITE_SECTIONS.find((section) => section.slug === openMenu);
+  const mobileSubsection = SITE_SECTIONS.find((section) => section.slug === mobileSection);
+
+  /* Isinasara lang ang drawer; ang pagbalik sa ugat ay hinahawakan ng effect
+     sa ibaba pagkatapos ng fade, para hindi kumislap ang unang antas. */
+  const closeMobileNav = () => setMobileMenuOpen(false);
   /**
    * Dalawang paraan ng pagkuha ng larawan sa preview.
    *
@@ -153,16 +167,26 @@ export default function Header() {
     return () => window.removeEventListener("scroll", updateHeader);
   }, []);
 
+  /* Ang Escape ay umaatras muna ng isang antas sa mobile drawer bago
+     tuluyang magsara — iyon ang inaasahan sa drill-down na menu. */
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpenMenu(null);
-        setMobileMenuOpen(false);
-      }
+      if (event.key !== "Escape") return;
+      setOpenMenu(null);
+      if (mobileSection) setMobileSection(null);
+      else setMobileMenuOpen(false);
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
-  }, []);
+  }, [mobileSection]);
+
+  /* Ibinabalik sa ugat ang drawer pagkatapos nitong magsara, hindi habang
+     nagsasara, para hindi kumislap ang unang antas sa panahon ng fade. */
+  useEffect(() => {
+    if (mobileMenuOpen) return;
+    const timer = setTimeout(() => setMobileSection(null), 320);
+    return () => clearTimeout(timer);
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const closeOnOutsideClick = (event: PointerEvent) => {
@@ -254,7 +278,7 @@ export default function Header() {
 
         <div className={`${isScrolled ? "translate-y-0 gap-0" : "-translate-y-7 gap-3"} relative hidden w-[min(820px,calc(100vw-3rem))] flex-col items-center justify-self-center lg:flex`}>
           <div className="pointer-events-auto flex items-center gap-4 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.07em] text-white/88 [text-shadow:0_1px_7px_rgba(0,0,0,0.45)] xl:text-[11px]">
-            <Link href="/#contact" className="flex items-center gap-2 transition-colors hover:text-[#f1d98f]">
+            <Link href="/plan-your-visit" className="flex items-center gap-2 transition-colors hover:text-[#f1d98f]">
               <CalendarIcon />
               Plan your visit
             </Link>
@@ -286,8 +310,10 @@ export default function Header() {
           </nav>
         </div>
 
+        {/* Sa /contact ito, hindi sa /plan-your-visit: tanong ang dala ng
+            pipindot nito, hindi pa balak na pagbisita. */}
         <Link
-          href="/#contact"
+          href="/contact"
           className={`${isScrolled ? "translate-y-0 px-5 py-2.5" : "-translate-y-3 px-6 py-3"} pointer-events-auto hidden items-center justify-self-end rounded-full bg-white/90 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.08em] text-[#20362c] shadow-[0_10px_28px_rgba(0,0,0,0.15)] backdrop-blur hover:bg-white lg:inline-flex`}
         >
           Contact Us
@@ -328,38 +354,110 @@ export default function Header() {
         aria-label="Mobile navigation"
         className={`${mobileMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"} ${isScrolled ? "top-[5.5rem]" : "top-[11.5rem] sm:top-[6.5rem]"} fixed inset-x-4 z-30 max-h-[calc(100svh-12.5rem)] overflow-y-auto rounded-[1.75rem] border border-white/12 bg-[#214333]/98 p-3 text-white shadow-[0_30px_80px_rgba(0,0,0,0.34)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out sm:left-auto sm:right-6 sm:w-[390px] sm:max-h-[calc(100svh-7.5rem)] lg:hidden`}
       >
-        <div className="flex items-center justify-between px-3 pb-2 pt-2">
-          <div>
-            <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">CamSur Uptown</p>
-            <p className="mt-1 text-sm font-semibold text-white/90">Explore CamSur Uptown</p>
-          </div>
-          <span className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-white/45">Menu</span>
-        </div>
-
-        <nav aria-label="Mobile primary navigation" className="mt-2 overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.035] p-1.5">
-          {SITE_SECTIONS.map((item, index) => {
-            const href = `/${item.slug}`;
-            const isActive = pathname === href || pathname.startsWith(`${href}/`);
-            return (
-              <Link
-                key={item.slug}
-                href={href}
-                onClick={() => setMobileMenuOpen(false)}
-                aria-current={isActive ? "page" : undefined}
-                className={`${isActive ? "bg-[#56725f] text-[#f1d98f]" : "text-white/82 hover:bg-[#56725f] hover:text-[#f1d98f]"} group flex min-h-12 items-center gap-3 rounded-full px-3.5 transition-colors duration-200`}
+        {mobileSubsection ? (
+          <div key={mobileSubsection.slug} className="nav-panel-enter">
+            <div className="flex items-center justify-between gap-3 px-3.5 pb-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setMobileSection(null)}
+                className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 transition-colors hover:text-[#f1d98f]"
               >
-                <span className={`${isActive ? "text-[#d8b65b]" : "text-white/30"} w-5 text-[9px] xl:text-[10px] font-bold tracking-[0.12em]`}>{String(index + 1).padStart(2, "0")}</span>
-                <span className="flex-1 text-sm font-semibold tracking-[-0.01em]">{item.label.toUpperCase()}</span>
-                <span className={`${isActive ? "translate-x-0 opacity-100" : "-translate-x-1 opacity-35 group-hover:translate-x-0 group-hover:opacity-100"} text-sm transition`}>→</span>
+                <ChevronIcon className="h-3.5 w-3.5 rotate-180" />
+                Go back
+              </button>
+              <span className="border-b-2 border-[#d8b65b] pb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">
+                {mobileSubsection.label}
+              </span>
+            </div>
+
+            <div className="border-t border-white/12 px-3.5 pb-1 pt-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#d8b65b]">
+                {mobileSubsection.slug === "golf" ? "Course holes" : `${mobileSubsection.label} highlights`}
+              </p>
+
+              {/* Dalawang hanay lang kapag marami — ang Golf ay 18 na butas, at
+                  sa isang hanay ay mas mahaba pa iyon kaysa sa screen. */}
+              <ul className={`mt-3.5 grid gap-x-4 ${mobileSubsection.links.length > 6 ? "grid-cols-2 gap-y-3" : "grid-cols-1 gap-y-3.5"}`}>
+                {mobileSubsection.links.map((link) => {
+                  const isExternal = link.href.startsWith("http");
+                  return (
+                    <li key={`${link.href}-${link.label}`}>
+                      <Link
+                        href={link.href}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noreferrer" : undefined}
+                        onClick={closeMobileNav}
+                        className="block text-sm font-medium leading-snug text-white/82 transition-colors hover:text-[#f1d98f]"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <Link
+                href={`/${mobileSubsection.slug}`}
+                onClick={closeMobileNav}
+                className="mt-5 flex min-h-11 items-center justify-center rounded-full border border-white/35 px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#f1d98f] hover:bg-[#f1d98f] hover:text-[#0b281b]"
+              >
+                View all {mobileSubsection.label}
               </Link>
-            );
-          })}
-        </nav>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center justify-between px-3 pb-2 pt-2">
+              <div>
+                <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">CamSur Uptown</p>
+                <p className="mt-1 text-sm font-semibold text-white/90">Explore CamSur Uptown</p>
+              </div>
+              <span className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-white/45">Menu</span>
+            </div>
+
+            <nav aria-label="Mobile primary navigation" className="mt-2 border-t border-white/12">
+              {SITE_SECTIONS.map((item) => {
+                const href = `/${item.slug}`;
+                const isActive = pathname === href || pathname.startsWith(`${href}/`);
+
+                /* Kapag walang sub-link ang section, walang dapat buksan —
+                   dumiretso na lang sa pahina nito. */
+                if (item.links.length === 0) {
+                  return (
+                    <Link
+                      key={item.slug}
+                      href={href}
+                      onClick={closeMobileNav}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`${isActive ? "text-[#f1d98f]" : "text-white"} flex min-h-[52px] items-center justify-between gap-3 border-b border-white/12 px-3.5 transition-colors hover:text-[#f1d98f]`}
+                    >
+                      <span className="text-sm font-bold uppercase tracking-[0.08em]">{item.label}</span>
+                      <ChevronIcon className="h-4 w-4 text-white/45" />
+                    </Link>
+                  );
+                }
+
+                return (
+                  <button
+                    key={item.slug}
+                    type="button"
+                    onClick={() => setMobileSection(item.slug)}
+                    aria-expanded={false}
+                    className={`${isActive ? "text-[#f1d98f]" : "text-white"} group flex min-h-[52px] w-full items-center justify-between gap-3 border-b border-white/12 px-3.5 text-left transition-colors hover:text-[#f1d98f]`}
+                  >
+                    <span className="text-sm font-bold uppercase tracking-[0.08em]">{item.label}</span>
+                    <ChevronIcon className="h-4 w-4 text-white/45 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </button>
+                );
+              })}
+            </nav>
+          </>
+        )}
 
         <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
           <Link
-            href="/#contact"
-            onClick={() => setMobileMenuOpen(false)}
+            href="/plan-your-visit"
+            onClick={closeMobileNav}
             className="flex min-h-12 items-center justify-center rounded-full bg-[#f1d98f] px-5 text-xs font-bold uppercase tracking-[0.08em] text-[#0b281b] transition hover:bg-[#f6e4a9]"
           >
             Plan your visit
@@ -408,7 +506,13 @@ export default function Header() {
                 <div className="relative aspect-[1.35] overflow-hidden rounded-lg bg-[#183d2c]">
                   <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes="220px" className="mega-preview-image object-cover opacity-85 transition duration-500 group-hover:scale-[1.035] group-hover:opacity-100" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#071a12]/65 to-transparent" aria-hidden="true" />
-                  <p className="absolute bottom-3 left-3 right-3 text-base font-semibold uppercase leading-tight tracking-[0.02em]">{previewLabel}</p>
+                  {/* 159px lang ang espasyo dito, kaya sa 16px ay umaapaw na
+                      ang "Accommodations" (171px). Sa 13px ay isang linya ito.
+                      Tatlo ang clamp dahil ang pinakamahabang label ngayon —
+                      "Playground & Outdoor Basketball Court" — ay eksaktong
+                      tatlong linya (49px sa 136px na card); sa dalawa ay
+                      naputol ito. Ang clamp ay para sa mas mahaba pa. */}
+                  <p className="absolute bottom-3 left-3 right-3 line-clamp-3 text-[13px] font-semibold uppercase leading-tight tracking-[0.02em]">{previewLabel}</p>
                 </div>
                 <span className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-white/35 px-4 py-2.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] transition group-hover:border-[#e7d18d] group-hover:bg-[#e7d18d] group-hover:text-[#10281e]">
                   {hoveredLinkImage

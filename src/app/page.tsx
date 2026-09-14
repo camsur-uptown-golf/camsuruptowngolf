@@ -193,7 +193,7 @@ function Introduction() {
           Set beneath the silhouette of Mt. Isarog, CamSur Uptown Golf Club brings together a carefully planned championship course, wide open views, and the warmth that Bicol is known for.
         </p>
         <Link
-          href="/#contact"
+          href="/plan-your-visit"
           data-reveal="up"
           style={delay(330)}
           className="mt-8 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_14px_34px_rgba(20,68,44,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#3a765a]"
@@ -263,7 +263,7 @@ function StayFeature() {
               <Link href="/accommodations" className="inline-flex h-12 items-center gap-4 rounded-full bg-[#2f644b] px-7 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]">
                 Explore stays <ArrowIcon />
               </Link>
-              <Link href="/#contact" className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630]">
+              <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630]">
                 Plan your stay
               </Link>
             </div>

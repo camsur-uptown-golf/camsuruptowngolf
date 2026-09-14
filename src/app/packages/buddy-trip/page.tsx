@@ -165,7 +165,7 @@ export default function BuddyTripPage() {
           <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#f1d98f]">Bring the group</p>
           <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-medium tracking-[-0.045em] sm:text-4xl">Choose the dates. We’ll shape the trip.</h2>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/#contact" className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]">Request a group quote</Link>
+            <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]">Request a group quote</Link>
             <a href={CLUB_PHONE.href} className="inline-flex h-12 items-center rounded-full border border-white/30 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] transition hover:border-[#e7d18d] hover:text-[#f1d98f]">Call {CLUB_PHONE.label}</a>
           </div>
         </section>

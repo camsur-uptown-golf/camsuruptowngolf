@@ -81,11 +81,23 @@ html {
   animation: carousel-reveal 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Ang pagpasok ng pangalawang antas ng mobile nav. Bagong node ito sa bawat
+   section (may `key`), kaya tumatakbo ang animation sa bawat pagbukas. */
+@keyframes nav-panel-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+.nav-panel-enter {
+  animation: nav-panel-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hero-image,
   .carousel-image,
-  .mega-preview-image { animation: none; }
+  .mega-preview-image,
+  .nav-panel-enter { animation: none; }
 }
 
 /* ---------------------------------------------------------------

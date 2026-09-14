@@ -98,7 +98,7 @@ export default function GotaVillageStays() {
           <h2 data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-2xl text-[clamp(2.2rem,3.6vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.05em]">Stay at Gota Village Resort.</h2>
           <p data-reveal="up" style={delay(180)} className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8">Share your preferred dates and group size with the team to ask about current room availability.</p>
           <div data-reveal="up" style={delay(270)} className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/#contact" className="inline-flex h-12 items-center rounded-full bg-[#2f644b] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a] xl:text-[12px]">Inquire about your stay</Link>
+            <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#2f644b] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a] xl:text-[12px]">Inquire about your stay</Link>
             <Link href="/accommodations" className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630] xl:text-[12px]">View all stays</Link>
           </div>
         </div>

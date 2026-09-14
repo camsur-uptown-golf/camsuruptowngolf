@@ -5,7 +5,7 @@ import InteractiveCourseMap from "@/components/InteractiveCourseMap";
 import ConceptCarousel from "@/components/ConceptCarousel";
 import { EditorialHeading, Shell } from "@/components/EditorialKit";
 import { Container, delay } from "@/components/SectionKit";
-import { CLUB_PHONE, COURSE_PAGES } from "@/lib/site-content";
+import { CLUB_PHONE } from "@/lib/site-content";
 
 /**
  * The Golf page.
@@ -198,45 +198,6 @@ function TeeOptions() {
   );
 }
 
-function ConceptGallery() {
-  return (
-    <section id="concepts" className={GOLF_SECTION}>
-      <Shell>
-        <EditorialHeading
-          kicker="The course"
-          title="Eighteen holes. One complete round."
-          intro="Explore each hole individually, with its routing, playing character, and design-stage measurements."
-        />
-
-        <div className="mt-10 grid gap-x-14 gap-y-2 sm:grid-cols-2">
-          {COURSE_PAGES.map((concept, index) => (
-            <Link
-              key={concept.slug}
-              href={`/golf/${concept.slug}`}
-              data-reveal="up"
-              style={delay((index % 2) * 80)}
-              className="group grid grid-cols-[44px_minmax(0,1fr)_auto] items-center gap-4 border-t border-[#173b2a]/12 py-6 transition hover:bg-[#173b2a]/[0.02]"
-            >
-              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="min-w-0 truncate text-lg font-medium tracking-[-0.02em] text-[#14271d] sm:text-xl">
-                {concept.title}
-              </h3>
-              <span
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#2f644b]/25 text-[#2f644b] transition group-hover:border-[#2f644b] group-hover:bg-[#2f644b] group-hover:text-white"
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </Link>
-          ))}
-        </div>
-      </Shell>
-    </section>
-  );
-}
-
 function GolfCta() {
   return (
     <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#1c3b2d] py-14 text-white sm:py-16">
@@ -259,11 +220,13 @@ function GolfCta() {
           </p>
 
           <div data-reveal="up" style={delay(270)} className="mt-7 flex flex-wrap justify-center gap-3">
+            {/* Dating papunta sa /visit — wala na ang section na iyon, kaya
+                sa contact na dumidiretso ang pangunahing aksyon dito. */}
             <Link
-              href="/visit"
+              href="/plan-your-visit"
               className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
             >
-              Visitor information
+              Plan your visit
             </Link>
             <a
               href={CLUB_PHONE.href}
@@ -287,7 +250,6 @@ export default function GolfDetails() {
       <ConceptCarousel />
       <DesignPrinciples />
       <TeeOptions />
-      <ConceptGallery />
       <GolfCta />
     </>
   );

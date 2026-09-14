@@ -65,7 +65,7 @@ export default function ConceptCarousel() {
         <span className="absolute right-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#173126]/55 lg:block" aria-hidden="true" />
 
         <Link
-          href={`/golf/${SLIDES[active].slug}`}
+          href={`/golf/courses/${SLIDES[active].slug}`}
           aria-label={`View ${SLIDES[active].title}`}
           data-reveal="scale"
           className="relative z-10 mx-auto block aspect-[1.94] w-[calc(100%-3rem)] max-w-[1040px] overflow-hidden bg-[#173a29] shadow-[0_18px_42px_rgba(17,44,31,0.1)] sm:w-[52vw]"
@@ -111,7 +111,7 @@ export default function ConceptCarousel() {
           </div>
           <div className="hidden lg:block lg:pt-6" aria-live="polite">
             <p className="text-base leading-7 text-[#536058]">{SLIDES[active].description}</p>
-            <Link href={`/golf/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]">
+            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]">
               Explore this course
             </Link>
           </div>

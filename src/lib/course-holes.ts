@@ -31,3 +31,40 @@ export const HOLE_PROFILES: Record<number, HoleProfile> = {
 export function metresToYards(metres: number) {
   return Math.round(metres * 1.09361);
 }
+
+/**
+ * Posisyon ng bawat butas sa masterplan, bilang porsiyento ng lapad at taas
+ * ng larawan — kaya tama sila kahit anong sukat ng screen.
+ *
+ * Nandito sila sa lib at hindi sa iisang component dahil dalawa na ang
+ * gumagamit: ang CourseRoutingMap at ang maliit na mapa sa Scorecard. Kapag
+ * may dalawang kopya nito, tiyak na maghihiwalay sila.
+ *
+ * TODO (para sa club): tantiya ang mga coordinate na ito — inilagay sila sa
+ * gitna ng bawat nakikitang fairway corridor sa masterplan, hindi galing sa
+ * sinukat na drawing. Kapag dumating ang opisyal na numbered routing, ang
+ * array na ito lang ang kailangang ayusin.
+ */
+export const HOLE_POSITIONS: Record<number, { x: number; y: number }> = {
+  1: { x: 30, y: 27 },
+  2: { x: 41, y: 24 },
+  3: { x: 50, y: 26 },
+  4: { x: 63, y: 16 },
+  5: { x: 73, y: 13 },
+  6: { x: 81, y: 20 },
+  7: { x: 74, y: 25 },
+  8: { x: 64, y: 27 },
+  9: { x: 55, y: 34 },
+  10: { x: 26, y: 36 },
+  11: { x: 24, y: 47 },
+  12: { x: 34, y: 44 },
+  13: { x: 44, y: 43 },
+  14: { x: 37, y: 57 },
+  15: { x: 31, y: 68 },
+  16: { x: 48, y: 70 },
+  17: { x: 63, y: 70 },
+  18: { x: 75, y: 58 },
+};
+
+/** Ang larawan ng masterplan na kasama ng HOLE_POSITIONS sa itaas. */
+export const COURSE_PLAN_IMAGE = "/golf/course-masterplan-revision-2026-course-only-v4.png";

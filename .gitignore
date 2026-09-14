@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Lokal na SQLite: may personal na datos (pangalan, email, cellphone).
+# Huwag itong i-commit.
+/data/

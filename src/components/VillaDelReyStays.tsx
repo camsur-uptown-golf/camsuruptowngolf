@@ -203,7 +203,7 @@ export default function VillaDelReyStays() {
           </p>
           <div data-reveal="up" style={delay(270)} className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
-              href="/#contact"
+              href="/plan-your-visit"
               className="inline-flex h-12 items-center rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a]"
             >
               Inquire about your stay
