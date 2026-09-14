@@ -126,9 +126,7 @@ export const CONCEPTS = [
   },
 ] as const;
 
-/** Individual hole pages. Several holes share the same wider routing artwork,
- * but each route exposes only the marker and course information for that hole.
- */
+/** Shared editorial headline for the individual hole pages. */
 const COURSE_HEADLINE = "A Great Start for CamSur Uptown Golf Club, and for You";
 
 export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
@@ -139,7 +137,7 @@ export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
 
   return {
     slug: `course-${String(hole).padStart(2, "0")}`,
-    image: concept.image,
+    image: `/golf/aerial-holes/hole-${String(hole).padStart(2, "0")}-aerial.png`,
     title: COURSE_HEADLINE,
     description: HOLE_PROFILES[hole].description,
     holes: [hole] as const,

@@ -102,9 +102,11 @@ export default function ConceptCarousel() {
 
         <div className="grid min-w-0 gap-5 lg:grid-cols-2 lg:gap-10">
           <div className="min-w-0 lg:border-r lg:border-[#183e2b]/35 lg:pr-10">
-            <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">Course {String(active + 1).padStart(2, "0")}</p>
-            <h3 className="mt-2 max-w-full font-serif text-[1.625rem] font-medium leading-[0.94] tracking-[-0.05em] sm:text-[clamp(2.25rem,2.7vw,3rem)]">
-              {SLIDES[active].title}
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+              Course
+            </p>
+            <h3 className="mt-2 max-w-full font-serif text-[clamp(3.25rem,5vw,5.5rem)] font-medium leading-[0.9] tracking-[-0.055em]">
+              No. {active + 1}
             </h3>
           </div>
           <div className="hidden lg:block lg:pt-6" aria-live="polite">

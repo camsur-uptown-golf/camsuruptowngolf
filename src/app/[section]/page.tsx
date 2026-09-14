@@ -58,12 +58,12 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
     isVisit || isGolf || isEvents || isPackages || isAccommodations || isExperiences || isDining;
   const usesHeroParallax = isVisit || isGolf || isEvents;
 
-  /* Pareho na sila: bawat pahinang may divider ay may ScrollMotion na rin. */
-  const usesFairwayDivider = usesFairwayHero;
+  /* Patag ang Golf hero; ang ibang editorial heroes lang ang may landscape wave. */
+  const usesFairwayDivider = usesFairwayHero && !isGolf;
 
   /* Ang harapang burol ay dapat eksaktong katumbas ng background ng unang
      section sa ilalim — kahit bahagyang pagkakaiba ay lumilitaw bilang tahi. */
-  const dividerFill = isGolf ? "#f6f5f5" : "#f7f5ee";
+  const dividerFill = "#f7f5ee";
 
   return (
     <>
@@ -71,7 +71,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         <section
           id="top"
           className={`relative isolate flex items-end overflow-hidden bg-[#071d13] text-white ${
-            isGolf ? "min-h-[820px] sm:min-h-[760px] lg:min-h-[700px]" : "min-h-[660px]"
+            isGolf ? "min-h-[620px] sm:min-h-[680px] lg:min-h-[700px]" : "min-h-[660px]"
           }`}
         >
           <Image
@@ -91,29 +91,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             }`}
           />
           {usesFairwayDivider && <FairwayDivider fill={dividerFill} />}
-          {isGolf ? (
-            <div className="mx-auto flex min-h-[820px] w-full max-w-7xl items-center justify-center px-6 pb-24 pt-32 text-center sm:min-h-[760px] lg:min-h-[700px] lg:px-8 lg:pb-24 lg:pt-40">
-              <div className="mx-auto max-w-4xl">
-                <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.26em] text-[#f1d98f] sm:text-[11px]">
-                  Championship golf · beneath Mt. Isarog
-                </p>
-                <h1
-                  data-reveal="up"
-                  style={revealDelay(110)}
-                  className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,4.25vw,4.25rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
-                >
-                  A course shaped by Camarines Sur
-                </h1>
-                <p
-                  data-reveal="up"
-                  style={revealDelay(220)}
-                  className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/72 sm:text-lg"
-                >
-                  Eighteen holes moving through water, tropical fairways, and open views of the mountain—designed for a complete round with a strong sense of place.
-                </p>
-              </div>
-            </div>
-          ) : (
+          {!isGolf ? (
             <div
               className={`mx-auto w-full max-w-7xl px-6 pt-64 lg:px-8 ${usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`}
             >
@@ -138,7 +116,54 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                 {section.description}
               </p>
             </div>
-          )}
+          ) : null}
+
+          {isGolf ? (
+            <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 text-left sm:pb-28 lg:px-8 lg:pb-32">
+              <div className="max-w-3xl">
+                <p
+                  className="font-navigation text-[10px] font-bold uppercase tracking-[0.26em] text-[#e1c56e] sm:text-[11px]"
+                >
+                  Championship golf · beneath Mt. Isarog
+                </p>
+                <h1
+                  className="mt-4 max-w-3xl text-balance text-[clamp(2.75rem,5vw,4.75rem)] font-medium leading-[0.94] tracking-[-0.055em] text-white"
+                >
+                  A course shaped by Camarines Sur
+                </h1>
+                <p
+                  className="mt-5 max-w-2xl text-balance text-sm leading-7 text-white/82 sm:text-base sm:leading-8 lg:text-lg"
+                >
+                  Eighteen holes moving through water, tropical fairways, and open views of the mountain—designed for a
+                  complete round with a strong sense of place.
+                </p>
+              </div>
+            </div>
+          ) : null}
+
+          {isGolf ? (
+            <a
+              href="#the-course"
+              aria-label="Explore the golf course"
+              className="group absolute bottom-0 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-white"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/75 bg-black/[0.04] backdrop-blur-[1px] transition-colors group-hover:border-white group-hover:bg-white/10">
+                <svg viewBox="0 0 24 14" className="h-2.5 w-4" fill="none" aria-hidden="true">
+                  <path
+                    d="M3 2.5 12 11l9-8.5"
+                    stroke="currentColor"
+                    strokeWidth="1.25"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <span
+                className="mt-2 h-3 w-px bg-white/75 transition-colors group-hover:bg-white sm:h-4"
+                aria-hidden="true"
+              />
+            </a>
+          ) : null}
         </section>
 
         {isVisit ? <VisitDetails /> : isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isDining ? <DiningDetails /> : (

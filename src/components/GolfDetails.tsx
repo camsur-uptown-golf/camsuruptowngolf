@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import ScrollMotion from "@/components/ScrollMotion";
 import InteractiveCourseMap from "@/components/InteractiveCourseMap";
+import ConceptCarousel from "@/components/ConceptCarousel";
 import { EditorialHeading, Shell } from "@/components/EditorialKit";
 import { Container, delay } from "@/components/SectionKit";
 import { CLUB_PHONE, COURSE_PAGES } from "@/lib/site-content";
@@ -14,7 +16,7 @@ import { CLUB_PHONE, COURSE_PAGES } from "@/lib/site-content";
  */
 
 /**
- * Sariling background ng Golf: `#f6f5f5`, ang kulay ng `#the-course` sa
+ * Sariling background ng Golf: `#f8f5ea`, ang kulay ng `#the-course` sa
  * itaas, kaya iisa ang tono ng buong pahina.
  *
  * Lokal ito at hindi galing sa EditorialKit dahil `#f7f5ee` ang gamit ng
@@ -26,7 +28,7 @@ import { CLUB_PHONE, COURSE_PAGES } from "@/lib/site-content";
  * hindi ay may lalabas na tahi sa ilalim ng hero.
  */
 const GOLF_SECTION =
-  "relative isolate scroll-mt-24 overflow-hidden bg-[#f6f5f5] py-14 sm:py-16";
+  "relative isolate scroll-mt-24 overflow-hidden bg-[#f8f5ea] py-14 sm:py-16";
 
 const PRINCIPLES = [
   [
@@ -56,24 +58,35 @@ const TEES = [
 
 function Overview() {
   return (
-    <section id="the-course" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f6f5f5] pb-14 pt-3 sm:pb-16 sm:pt-4 lg:pb-20 lg:pt-5">
-      <div className="relative z-10 mx-auto grid w-full max-w-[1500px] items-start gap-10 px-6 sm:px-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12 lg:px-12 xl:gap-16">
-        <div className="max-w-xl lg:pl-4 lg:pt-24 xl:pt-28">
-          <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]">
+    <section id="the-course" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f8f5ea] pb-16 pt-6 sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
+      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-6 sm:px-10 lg:px-12">
+        <div className="mx-auto max-w-4xl text-center">
+          <div data-reveal="up" className="relative mx-auto mb-8 h-48 w-60 overflow-hidden sm:mb-10">
+            <Image
+              src="/camsur-uptown-logo.png"
+              alt="CamSur Uptown Golf Club emblem"
+              width={720}
+              height={958}
+              sizes="230px"
+              className="absolute left-1/2 top-0 h-auto w-[230px] max-w-none -translate-x-1/2"
+            />
+          </div>
+          <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.26em] text-[#98782f] sm:text-[11px]">
             The landscape plan
           </p>
           <h2
             data-reveal="up"
             style={delay(90)}
-            className="mt-4 text-3xl font-medium leading-[0.98] tracking-[-0.05em] text-[#14271d] sm:text-4xl lg:text-5xl"
+            className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#14271d]"
           >
             Eighteen broad holes. One revised footprint.
           </h2>
 
-          <div className="mt-6 space-y-4 text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f] sm:text-base sm:leading-8">
+          <div className="mx-auto mt-6 max-w-3xl space-y-4 text-sm leading-7 text-[#5d685f] sm:text-base sm:leading-8 xl:text-base xl:leading-8">
             <p data-reveal="up" style={delay(180)}>
               The course follows the centre parcel shown in the latest planning revision. Its 18 broad fairway corridors
-              stay within the documented boundary and form one continuous journey from the opening tee to the home green.
+              move through water and tropical fairways, forming one continuous journey from the opening tee to the home
+              green with open views of the mountain.
             </p>
             <p data-reveal="up" style={delay(270)}>
               Seven water features shape the course strategy while preserving the openness of the landscape.
@@ -83,25 +96,34 @@ function Overview() {
           <dl
             data-reveal="up"
             style={delay(360)}
-            className="mt-7 grid grid-cols-3 border-y border-[#173b2a]/12 py-5 font-navigation"
+            className="mx-auto mt-8 grid max-w-3xl grid-cols-3 border-y border-[#173b2a]/12 py-5 font-navigation"
           >
             <div>
               <dt className="font-display text-xl font-semibold text-[#174630]">18</dt>
-              <dd className="mt-1 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.13em] text-[#98782f]">Holes</dd>
+              <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Holes</dd>
             </div>
             <div className="border-l border-[#173b2a]/12 pl-5">
               <dt className="font-display text-xl font-semibold text-[#174630]">54.23</dt>
-              <dd className="mt-1 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.13em] text-[#98782f]">Hectares</dd>
+              <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Hectares</dd>
             </div>
             <div className="border-l border-[#173b2a]/12 pl-5">
               <dt className="font-display text-xl font-semibold text-[#174630]">7</dt>
-              <dd className="mt-1 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.13em] text-[#98782f]">Water features</dd>
+              <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Water features</dd>
             </div>
           </dl>
         </div>
-
-        <InteractiveCourseMap />
       </div>
+    </section>
+  );
+}
+
+function CoursePlan() {
+  return (
+    <section
+      aria-label="CamSur Uptown Golf Club course plan"
+      className="relative isolate overflow-hidden border-t border-[#173b2a]/8 bg-[#f8f5ea] px-6 py-12 sm:px-10 sm:py-16 lg:px-12 lg:py-20"
+    >
+      <InteractiveCourseMap />
     </section>
   );
 }
@@ -261,6 +283,8 @@ export default function GolfDetails() {
     <>
       <ScrollMotion />
       <Overview />
+      <CoursePlan />
+      <ConceptCarousel />
       <DesignPrinciples />
       <TeeOptions />
       <ConceptGallery />

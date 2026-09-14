@@ -6,7 +6,7 @@ import FairwayDivider from "@/components/FairwayDivider";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Container, SECTION, SectionHeading } from "@/components/SectionKit";
-import { HOLE_PROFILES, metresToYards } from "@/lib/course-holes";
+import { HOLE_PROFILES } from "@/lib/course-holes";
 import { COURSE_PAGES } from "@/lib/site-content";
 
 export const dynamicParams = false;
@@ -42,10 +42,22 @@ const COUNT_WORDS: Record<number, string> = {
   5: "Five",
 };
 
-function formatHoleList(holes: readonly number[]) {
-  if (holes.length === 1) return `Hole ${holes[0]}`;
-  return `Holes ${holes.slice(0, -1).join(", ")}, and ${holes.at(-1)}`;
-}
+const ROUTING_STUDIES = {
+  "course-01": {
+    number: 1,
+    src: "/golf/course-01-routing-vertical-v4.png",
+    alt: "Top-to-bottom photorealistic aerial visualization of tree-lined Hole 1 with a white route line from the tee to the green",
+    direction: "top to bottom",
+    orientation: "portrait",
+  },
+  "course-02": {
+    number: 2,
+    src: "/golf/course-02-routing-realistic-v2.png",
+    alt: "Left-to-right photorealistic aerial visualization of Hole 2 and portions of its neighboring fairways with a white route line from the tee to the green",
+    direction: "left to right",
+    orientation: "landscape",
+  },
+} as const;
 
 export function generateStaticParams() {
   return COURSE_PAGES.map((course) => ({ concept: course.slug }));
@@ -66,9 +78,8 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
   const previous = COURSE_PAGES[(index - 1 + COURSE_PAGES.length) % COURSE_PAGES.length];
   const next = COURSE_PAGES[(index + 1) % COURSE_PAGES.length];
   const coverageTitle = `${COUNT_WORDS[concept.holes.length] ?? concept.holes.length} ${concept.holes.length === 1 ? "hole" : "holes"}. One connected landscape.`;
-  const coverageLabel = formatHoleList(concept.holes);
-  const holeProfiles = concept.holes.map((hole) => ({ hole, ...HOLE_PROFILES[hole] }));
   const scorecard = HOLE_PROFILES[concept.holes[0]];
+  const routingStudy = ROUTING_STUDIES[slug as keyof typeof ROUTING_STUDIES];
 
   return (
     <>
@@ -152,78 +163,57 @@ export default async function ConceptPage({ params }: { params: Promise<{ concep
               </dl>
             </div>
 
-            <figure className="mt-10">
-              <div className="relative aspect-[6/5] overflow-hidden rounded-[1.5rem] bg-[#173326] shadow-[0_30px_80px_rgba(18,39,29,0.16)] sm:rounded-[2rem]">
-                <Image
-                  src={concept.image}
-                  alt={`${concept.title} top-down aerial course view showing ${coverageLabel}`}
-                  fill
-                  priority
-                  sizes="(max-width: 1279px) 100vw, 1280px"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#071d13]/10 via-transparent to-[#071d13]/28" />
-                <div className="absolute inset-0" aria-label={`${coverageLabel} shown in this course view`}>
-                  {concept.markers.map((marker) => (
-                    <div
-                      key={marker.hole}
-                      className="absolute -translate-x-1/2 -translate-y-1/2"
-                      style={{ left: marker.left, top: marker.top }}
-                      aria-label={`Hole ${marker.hole} white flag`}
-                    >
-                      <span className="relative flex h-11 w-11 items-center justify-center drop-shadow-[0_4px_5px_rgba(0,0,0,0.5)] sm:h-14 sm:w-14">
-                        <svg viewBox="0 0 42 52" aria-hidden="true" className="h-10 w-9 overflow-visible sm:h-12 sm:w-11">
-                          <path d="M8 49V3" fill="none" stroke="white" strokeLinecap="round" strokeWidth="2.4" />
-                          <path d="M10 4H38L32 12L38 20H10V4Z" fill="white" stroke="rgba(20,39,29,0.28)" strokeLinejoin="round" strokeWidth="0.8" />
-                          <text
-                            x="23.5"
-                            y="14.8"
-                            fill="#173326"
-                            fontFamily="var(--font-montserrat)"
-                            fontSize={marker.hole > 9 ? "7" : "9"}
-                            fontWeight="700"
-                            textAnchor="middle"
-                          >
-                            {marker.hole}
-                          </text>
-                          <ellipse cx="8" cy="49" rx="5" ry="1.8" fill="rgba(255,255,255,0.8)" />
-                        </svg>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <figcaption className="absolute bottom-4 left-4 rounded-full border border-white/20 bg-[#071d13]/82 px-4 py-2 font-navigation text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md sm:bottom-6 sm:left-6 sm:text-[10px]">
-                  {coverageLabel}
-                </figcaption>
-              </div>
-            </figure>
-
-            <div className="mt-10 grid gap-5 sm:grid-cols-2">
-              {holeProfiles.map((profile) => (
-                <article key={profile.hole} className="border border-[#173326]/10 bg-white p-6">
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <p className="font-navigation text-[8px] xl:text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">Hole {profile.hole} · Par {profile.par}</p>
-                      <h3 className="mt-1.5 text-xl font-semibold tracking-[-0.035em]">No. {profile.hole}</h3>
-                    </div>
-                    <div className="shrink-0 text-right">
-                      <p className="text-xl font-semibold leading-none">{profile.blueMetres} m</p>
-                      <p className="mt-1 text-[9px] xl:text-[10px] text-[#748078]">{metresToYards(profile.blueMetres)} yd · blue</p>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-sm leading-7 xl:text-base xl:leading-8 text-[#657169]">{profile.description}</p>
-                  <div className="mt-4 flex items-center gap-2 border-t border-[#173326]/8 pt-3 font-navigation text-[8px] xl:text-[10px] font-bold uppercase tracking-[0.12em] text-[#4d5d54]">
-                    <span className="h-2 w-2 rounded-full bg-[#2c8054]" />
-                    Forward tee {profile.forwardMetres} m · {metresToYards(profile.forwardMetres)} yd
-                  </div>
-                </article>
-              ))}
-            </div>
-            <p className="mt-6 text-center text-[10px] xl:text-[11px] leading-5 text-[#7b847f]">
-              Distances shown are design-stage concept measurements and remain subject to final course surveying and approval.
-            </p>
           </Container>
         </section>
+
+        {routingStudy && (
+          <section id={`hole-${routingStudy.number}-routing`} className="border-t border-[#173b2a]/10 bg-[#fbfaf7] py-16 text-[#14271d] sm:py-20 lg:py-24">
+            <Container>
+              <div className="grid items-center gap-9 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.7fr)] lg:gap-16">
+                <figure className={`mx-auto w-full overflow-hidden border border-[#173b2a]/12 bg-white shadow-[0_20px_55px_rgba(20,45,32,0.08)] ${routingStudy.orientation === "portrait" ? "max-w-[620px]" : "max-w-[760px]"}`}>
+                  <div className={`relative w-full ${routingStudy.orientation === "portrait" ? "aspect-[2/3]" : "aspect-[3/2]"}`}>
+                    <Image
+                      src={routingStudy.src}
+                      alt={routingStudy.alt}
+                      fill
+                      sizes="(max-width: 639px) calc(100vw - 3rem), (max-width: 1023px) 760px, 54vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <figcaption className="border-t border-[#173b2a]/10 px-5 py-3 font-navigation text-[9px] font-bold uppercase tracking-[0.18em] text-[#98782f] sm:px-6 sm:text-[10px]">
+                    Tee to green · Follow the white route line from {routingStudy.direction}
+                  </figcaption>
+                </figure>
+
+                <div className="lg:border-l lg:border-[#173b2a]/30 lg:pl-12">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#667169]">
+                    Course
+                  </p>
+                  <h2 className="mt-2 font-display text-[clamp(4.5rem,9vw,8rem)] font-medium leading-[0.82] tracking-[-0.065em]">
+                    No. {routingStudy.number}
+                  </h2>
+                  <p className="mt-7 text-xl font-semibold tracking-[-0.025em] text-[#284536]">{scorecard.name}</p>
+                  <p className="mt-3 text-sm leading-7 text-[#667169] sm:text-base sm:leading-8">{scorecard.description}</p>
+
+                  <dl className="mt-7 grid grid-cols-3 border-y border-[#173b2a]/12 py-5 text-center font-navigation">
+                    <div>
+                      <dt className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#98782f]">Par</dt>
+                      <dd className="mt-2 font-display text-3xl font-semibold">{scorecard.par}</dd>
+                    </div>
+                    <div className="border-l border-[#173b2a]/12">
+                      <dt className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#98782f]">Metres</dt>
+                      <dd className="mt-2 font-display text-3xl font-semibold">{scorecard.blueMetres}</dd>
+                    </div>
+                    <div className="border-l border-[#173b2a]/12">
+                      <dt className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#98782f]">Yards</dt>
+                      <dd className="mt-2 font-display text-3xl font-semibold">{scorecard.yards}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+            </Container>
+          </section>
+        )}
 
         <section className={SECTION}>
           <Container>
