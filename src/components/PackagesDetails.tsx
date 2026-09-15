@@ -99,9 +99,9 @@ function ThePackages() {
       <Watermark speed={0.12} offsetY="16%" />
       <Shell>
         <EditorialHeading
-          kicker="Golf packages"
+          kicker="Choose your trip"
           title="Two ways to put a trip together."
-          intro="Each one is a starting point rather than a fixed product. Tell the club which is closest and it gets rebuilt around your dates."
+          intro="Choose the format that fits your stay, then open its itinerary for the full day-by-day plan."
         />
 
         <div className="mt-10 grid gap-x-10 gap-y-10 lg:grid-cols-2">

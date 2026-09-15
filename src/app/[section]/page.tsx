@@ -90,6 +90,8 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             className={`absolute inset-0 -z-10 ${
               isPackages
                 ? "bg-[linear-gradient(180deg,rgba(4,20,13,0.48)_0%,rgba(4,20,13,0.08)_40%,rgba(4,20,13,0.88)_100%)]"
+                : isEvents
+                  ? "bg-[linear-gradient(180deg,rgba(5,22,15,0.44)_0%,rgba(5,22,15,0.14)_45%,rgba(5,22,15,0.66)_100%)]"
                 : isExperiences
                   ? "bg-[linear-gradient(180deg,rgba(5,22,15,0.58)_0%,rgba(5,22,15,0.16)_45%,rgba(5,22,15,0.72)_100%)]"
                 : "bg-[linear-gradient(180deg,rgba(5,22,15,0.62)_0%,rgba(5,22,15,0.2)_45%,rgba(5,22,15,0.88)_100%)]"
@@ -98,7 +100,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {usesFairwayDivider && <FairwayDivider fill={dividerFill} />}
           {!isGolf ? (
             <div
-              className={`mx-auto w-full max-w-7xl px-6 pt-64 lg:px-8 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`}
+              className={`mx-auto w-full max-w-7xl px-6 pt-64 text-center lg:px-8 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`}
             >
               <p
                 data-reveal={usesFairwayHero ? "up" : undefined}
@@ -109,44 +111,35 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               <h1
                 data-reveal={usesFairwayHero ? "up" : undefined}
                 style={usesFairwayHero ? ({ "--reveal-delay": "110ms" } as CSSProperties) : undefined}
-                className="mt-5 max-w-4xl text-[clamp(3rem,6vw,6rem)] font-medium leading-[0.92] tracking-[-0.06em]"
+                className="mx-auto mt-5 max-w-4xl text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]"
               >
                 {section.title}
               </h1>
-              <p
-                data-reveal={usesFairwayHero ? "up" : undefined}
-                style={usesFairwayHero ? ({ "--reveal-delay": "220ms" } as CSSProperties) : undefined}
-                className="mt-6 max-w-2xl text-base leading-8 text-white/68 sm:text-lg"
-              >
-                {section.description}
-              </p>
             </div>
           ) : null}
 
           {isGolf ? (
-            <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 text-left sm:pb-28 lg:px-8 lg:pb-32">
-              <div className="max-w-3xl">
+            <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 text-center sm:pb-28 lg:px-8 lg:pb-32">
+              <div className="mx-auto max-w-3xl">
                 <p
+                  data-reveal="up"
                   className="font-navigation text-[10px] font-bold uppercase tracking-[0.26em] text-[#e1c56e] sm:text-[11px]"
                 >
                   Championship golf · beneath Mt. Isarog
                 </p>
                 <h1
-                  className="mt-4 max-w-3xl text-balance text-[clamp(2.75rem,5vw,4.75rem)] font-medium leading-[0.94] tracking-[-0.055em] text-white"
+                  data-reveal="up"
+                  style={{ "--reveal-delay": "120ms" } as CSSProperties}
+                  className="mx-auto mt-4 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
                 >
                   A course shaped by Camarines Sur
                 </h1>
-                <p
-                  className="mt-5 max-w-2xl text-balance text-sm leading-7 text-white/82 sm:text-base sm:leading-8 lg:text-lg"
-                >
-                  Eighteen holes moving through water, tropical fairways, and open views of the mountain—designed for a
-                  complete round with a strong sense of place.
-                </p>
               </div>
             </div>
           ) : null}
 
           {isGolf ? <ScrollCue targetId="the-course" label="Explore the golf course" /> : null}
+          {isExperiences ? <ScrollCue targetId="on-the-water" label="Explore CamSur experiences" /> : null}
         </section>
 
         {isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isDining ? <DiningDetails /> : (
@@ -195,7 +188,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                         alt={`${stay.title} accommodation concept at CamSur Uptown`}
                         fill
                         sizes="(max-width: 767px) calc(100vw - 3rem), (max-width: 1279px) calc(50vw - 2.5rem), 608px"
-                        className="object-cover transition duration-700 group-hover:scale-[1.025]"
+                        className="object-cover"
                       />
                     </div>
                     <div className="p-6 sm:p-7">

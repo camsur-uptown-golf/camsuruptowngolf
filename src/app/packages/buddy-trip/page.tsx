@@ -86,9 +86,6 @@ export default function BuddyTripPage() {
             <h1 className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">
               Your Buddy Golf Trip Itinerary
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/78 sm:text-lg">
-              Three easy-going days of golf, good food, and friendly competition—planned around your group and set beneath Mt. Isarog.
-            </p>
           </div>
         </section>
 

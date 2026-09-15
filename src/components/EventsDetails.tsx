@@ -17,8 +17,8 @@ const OCCASIONS = [
     kicker: "Play together",
     description:
       "From friendly invitationals to full-field club events, the day is shaped around the course, the clubhouse, and an awards finish that does not feel rushed.",
-    image: "/golf/hole-18-home.png",
-    imageAlt: "The finishing hole and clubhouse beneath Mt. Isarog",
+    image: "/events/golf-tournaments-full-logo-2026-clean-4k-v3.png",
+    imageAlt: "CamSur Uptown Golf Club ball and driver on the first tee at sunset",
     inclusions: ["Tournament-day coordination", "Food and beverage options", "Awards-ready clubhouse spaces"],
   },
   {

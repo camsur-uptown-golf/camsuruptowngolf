@@ -179,7 +179,8 @@ export const ACCOMMODATIONS = [
     title: "Clubhouse Lodge",
     eyebrow: "Boutique golf lodge",
     tagline: "A small lodge at the center of the club.",
-    description: "A relaxed lodge within reach of the dining room, the club facilities, and the first tee.",
+    description:
+      "From the first arrival to the last drink upstairs, Clubhouse Lodge keeps the full club experience around you.",
     overview: "Clubhouse Lodge is the more personal option for golfers and weekend guests. Warm interiors, covered verandas, and a central location make it a practical base for early tee times, long dinners, and unhurried evenings.",
     features: [
       { title: "Close to the clubhouse", description: "Golf services, dining, and the club’s shared spaces are all a few steps away." },
@@ -291,12 +292,16 @@ export const SITE_SECTIONS = [
   {
     slug: "dining",
     label: "Dining",
-    eyebrow: "Bicol cooking",
-    title: "Coconut milk, chili, and no translation",
-    description: "The food of Camarines Sur served the way the region serves it — Bicol Express, laing, pinangat, and the chili ice cream that ends the meal.",
+    eyebrow: "Gather, dine, and unwind",
+    title: "Your chill spot after the thrill",
+    description: "Relax, dine, and connect at the heart of the action. With cozy comfort, great food, and stunning park views, it is the perfect spot to unwind, share stories, and soak in the CWC vibe.",
     image: "/fairway-villas/evening-dining.png",
     links: [
-      { label: "Zeach Bar", href: "https://book.visitcamsur.com/cwc/zeach-bar", image: "/dining/zeach-bar.webp" },
+      {
+        label: "VIP Dining & Bar",
+        href: "/dining/vip-dining-bar",
+        image: "/dining/vip-dining-bar-hero-clean-4k-v1.png",
+      },
       { label: "Clubhouse", href: "https://visitcamsur.com/facilities/clubhouse", image: "/dining/clubhouse.webp" },
     ],
   },

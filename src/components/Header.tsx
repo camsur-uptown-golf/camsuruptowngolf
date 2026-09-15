@@ -504,7 +504,7 @@ export default function Header() {
                 className="group block"
               >
                 <div className="relative aspect-[1.35] overflow-hidden rounded-lg bg-[#183d2c]">
-                  <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes="220px" className="mega-preview-image object-cover opacity-85 transition duration-500 group-hover:scale-[1.035] group-hover:opacity-100" />
+                  <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes="220px" className="mega-preview-image object-cover opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#071a12]/65 to-transparent" aria-hidden="true" />
                   {/* 159px lang ang espasyo dito, kaya sa 16px ay umaapaw na
                       ang "Accommodations" (171px). Sa 13px ay isang linya ito.

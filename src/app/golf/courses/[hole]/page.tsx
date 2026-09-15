@@ -90,7 +90,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             <div className="w-full text-center">
               <h1
                 data-reveal="up"
-                className="font-display text-[clamp(2.5rem,5.5vw,4.5rem)] font-medium leading-[0.9] tracking-[-0.05em] text-white"
+                className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
               >
                 No. {index + 1}
               </h1>
@@ -231,7 +231,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                         alt={angle.alt}
                         fill
                         sizes="(max-width: 767px) calc(100vw - 3rem), (max-width: 1279px) calc(50vw - 2.5rem), 608px"
-                        className="object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
+                        className="object-cover"
                       />
                       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#071d13]/55 to-transparent" />
                       <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white sm:p-6">
@@ -263,7 +263,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
 
         <nav aria-label="Course navigation" className="grid bg-[#f3f0e7] sm:grid-cols-2">
           <Link href={`/golf/courses/${previous.slug}`} className="group relative min-h-72 overflow-hidden border-b border-white/15 sm:border-b-0 sm:border-r">
-            <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover transition duration-700 group-hover:scale-[1.035]" />
+            <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover" />
             <div className="absolute inset-0 bg-[#071d13]/65 transition group-hover:bg-[#071d13]/48" />
             <div className="absolute inset-0 flex flex-col justify-end p-8 text-white sm:p-10">
               {/* Dating `previous.title` — iisang editorial headline iyon para
@@ -273,7 +273,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             </div>
           </Link>
           <Link href={`/golf/courses/${next.slug}`} className="group relative min-h-72 overflow-hidden">
-            <Image src={next.image} alt="" fill sizes="50vw" className="object-cover transition duration-700 group-hover:scale-[1.035]" />
+            <Image src={next.image} alt="" fill sizes="50vw" className="object-cover" />
             <div className="absolute inset-0 bg-[#071d13]/65 transition group-hover:bg-[#071d13]/48" />
             <div className="absolute inset-0 flex flex-col items-end justify-end p-8 text-right text-white sm:p-10">
               <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">Next hole →</p>

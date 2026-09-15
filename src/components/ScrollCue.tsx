@@ -4,10 +4,10 @@
  * Ang pababang chevron sa ilalim ng hero.
  *
  * Nananatiling `<a href="#id">` ito, kaya gumagana pa rin kahit walang
- * JavaScript. Ang handler ay nagdadagdag lang ng katiyakan: tinatawag nito
- * ang scrollIntoView nang tuwiran sa halip na umasa sa native na hash
- * behaviour, na naaapektuhan ng scroll-behavior, ng scroll-padding, at ng
- * kung sino pang humahawak sa scroll position ng pahina.
+ * JavaScript. Ang handler ay nagdadagdag lang ng katiyakan: kinukuwenta nito
+ * ang eksaktong target position kasama ang taas ng compact header, sa halip
+ * na umasa sa native hash o scroll-margin na nag-iiba habang nagko-collapse
+ * ang header mula hero mode.
  *
  * Iginagalang nito ang prefers-reduced-motion: agad ang paglipat doon.
  */
@@ -20,7 +20,9 @@ export default function ScrollCue({ targetId, label }: { targetId: string; label
     event.preventDefault();
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    const compactHeaderHeight = 80;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - compactHeaderHeight;
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: reduced ? "auto" : "smooth" });
 
     /* Nailalagay pa rin ang hash para mabalikan at maibahagi ang lugar, pero
        sa replaceState — kung hindi ay muling tatalon ang browser doon. */

@@ -90,10 +90,10 @@ export default function ClubhouseVision() {
 
               <div className={`relative ${flip ? "lg:order-1" : ""}`}>
                 <div data-reveal={flip ? "left" : "right"} className={`relative overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_22px_55px_rgba(20,39,29,0.12)] sm:rounded-[2rem] ${flip ? "ml-auto aspect-[5/4] w-[86%]" : "aspect-[4/5] w-[82%]"}`}>
-                  <Image src={space.primary} alt={space.primaryAlt} fill sizes="(max-width: 1023px) 82vw, 480px" className="object-cover transition duration-700 hover:scale-[1.03]" />
+                  <Image src={space.primary} alt={space.primaryAlt} fill sizes="(max-width: 1023px) 82vw, 480px" className="object-cover" />
                 </div>
                 <div data-reveal="scale" style={delay(200)} className={`absolute bottom-6 overflow-hidden rounded-[1.25rem] bg-[#d9ded8] shadow-[0_18px_45px_rgba(20,39,29,0.16)] ring-4 ring-[#f7f5ee] sm:bottom-8 sm:rounded-[1.5rem] ${flip ? "left-0 aspect-[3/4] w-[38%]" : "right-0 aspect-square w-[42%]"}`}>
-                  <Image src={space.secondary} alt={space.secondaryAlt} fill sizes="(max-width: 1023px) 40vw, 240px" className="object-cover transition duration-700 hover:scale-[1.03]" />
+                  <Image src={space.secondary} alt={space.secondaryAlt} fill sizes="(max-width: 1023px) 40vw, 240px" className="object-cover" />
                 </div>
               </div>
             </div>
@@ -101,14 +101,14 @@ export default function ClubhouseVision() {
         );
       })}
 
-      <div className="border-t border-[#173b2a]/10">
+      <div className="border-t border-white/10 bg-[#1c3b2d] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-8">
-          <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f] xl:text-[11px]">Plan your stay</p>
+          <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#d8b65b] xl:text-[11px]">Plan your stay</p>
           <h2 data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-2xl text-[clamp(2.2rem,3.6vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.05em]">Reserve your room at Clubhouse Lodge.</h2>
-          <p data-reveal="up" style={delay(180)} className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8">Tell the team your dates and group size, and they will help arrange a stay close to the course and club facilities.</p>
+          <p data-reveal="up" style={delay(180)} className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 xl:text-base xl:leading-8">Tell the team your dates and group size, and they will help arrange a stay close to the course and club facilities.</p>
           <div data-reveal="up" style={delay(270)} className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#2f644b] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a] xl:text-[12px]">Inquire about your stay</Link>
-            <Link href="/accommodations" className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630] xl:text-[12px]">View all stays</Link>
+            <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] xl:text-[12px]">Inquire about your stay</Link>
+            <Link href="/accommodations" className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f] xl:text-[12px]">View all stays</Link>
           </div>
         </div>
       </div>

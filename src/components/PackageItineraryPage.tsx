@@ -39,7 +39,6 @@ export default function PackageItineraryPage({ active, eyebrow, title, descripti
           <div className="mx-auto w-full max-w-7xl px-6 pb-28 pt-44 text-center sm:pb-36 lg:px-8">
             <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.26em] text-[#f1d98f] sm:text-[11px]">{eyebrow}</p>
             <h1 className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">{title}</h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/78">{description}</p>
           </div>
         </section>
 

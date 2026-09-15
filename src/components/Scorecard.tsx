@@ -14,20 +14,28 @@ import { HOLE_PROFILES, metresToYards } from "@/lib/course-holes";
  * scorecard ng club. Kapag dumating iyon, ilagay ang bawat tee bilang
  * sariling hanay sa HOLE_PROFILES at alisin ang mga ratio dito.
  */
+/**
+ * Ang `color` ay ang mismong kulay ng tee marker; ang `row` ay ang parehong
+ * kulay na nilapat sa puti sa mga 8% — hindi ito rgba kundi buo nang hex
+ * dahil sticky ang unang haligi ng talahanayan, at kailangang hindi
+ * aninag ang background nito habang dumadaan ang ibang hanay sa ilalim.
+ */
 const TEES = [
-  { name: "Blue", ratio: 1 },
-  { name: "White", ratio: 0.93 },
-  { name: "Green", ratio: 0.86 },
-  { name: "Red", ratio: 0.79 },
-  { name: "Yellow", ratio: 0.72 },
+  { name: "Blue", ratio: 1, color: "#285cce", row: "#eef2fb" },
+  { name: "White", ratio: 0.93, color: "#ffffff", row: "#ffffff" },
+  { name: "Green", ratio: 0.86, color: "#2f644b", row: "#eef4f0" },
+  { name: "Red", ratio: 0.79, color: "#d6322c", row: "#fdf0ef" },
+  { name: "Yellow", ratio: 0.72, color: "#f2d719", row: "#fdfaea" },
 ] as const;
 
 const HOLE_ONE_TEES = [
-  { name: "Yellow", ratio: null, color: "#f2d719", x: 1402, y: 166 },
-  { name: "White", ratio: null, color: "#ffffff", x: 1370, y: 198 },
-  { name: "Blue", ratio: 1, color: "#285cce", x: 1322, y: 268 },
-  { name: "Red", ratio: null, color: "#d6322c", x: 1234, y: 376 },
+  { name: "Yellow", ratio: null, color: "#f2d719", row: "#fdfaea", x: 1402, y: 166 },
+  { name: "White", ratio: null, color: "#ffffff", row: "#ffffff", x: 1370, y: 198 },
+  { name: "Blue", ratio: 1, color: "#285cce", row: "#eef2fb", x: 1322, y: 268 },
+  { name: "Red", ratio: null, color: "#d6322c", row: "#fdf0ef", x: 1234, y: 376 },
 ] as const;
+
+type Tee = { name: string; ratio: number | null; color: string; row: string };
 
 // Mga black na punto sa magkabilang dulo ng course plan; hindi tee choices.
 const HOLE_ONE_BLACK_POINTS = [
@@ -84,20 +92,18 @@ function ChevronIcon({ open }: { open: boolean }) {
 /** Isang siyam na butas. Ang `closing` ang nagdaragdag ng TOTAL na hanay. */
 function Nine({
   holes,
-  teeName,
-  ratio,
+  tee,
   currentHole,
   runningLabel,
   closing,
 }: {
   holes: number[];
-  teeName: string;
-  ratio: number | null;
+  tee: Tee;
   currentHole?: number;
   runningLabel: string;
   closing?: { yards: number | null; par: number };
 }) {
-  const yards = holes.map((hole) => yardsFor(hole, ratio));
+  const yards = holes.map((hole) => yardsFor(hole, tee.ratio));
   const pars = holes.map((hole) => HOLE_PROFILES[hole].par);
   const isCurrent = (hole: number) => hole === currentHole;
 
@@ -133,9 +139,25 @@ function Nine({
         </tr>
       </thead>
       <tbody className="text-[#14271d]">
-        <tr className="bg-white">
-          <th scope="row" className={`${rowLabel} bg-white text-[#4f5d55]`}>
-            {teeName}
+        {/* Sinusundan ng hanay ng distansya ang napiling tee: ang buong linya
+            ay may bahagyang tina ng kulay nito, may tuldok sa tabi ng pangalan,
+            at may makapal na gilid sa kaliwa. Sa kulay mismo hindi puwedeng
+            isulat ang teksto — hindi mababasa ang dilaw at puti sa ganitong
+            background. */}
+        <tr style={{ backgroundColor: tee.row }}>
+          <th
+            scope="row"
+            style={{ backgroundColor: tee.row, boxShadow: `inset 3px 0 0 ${tee.color}` }}
+            className={`${rowLabel} text-[#14271d]`}
+          >
+            <span className="inline-flex items-center gap-2">
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#173b2a]/45"
+                style={{ backgroundColor: tee.color }}
+                aria-hidden="true"
+              />
+              {tee.name}
+            </span>
           </th>
           {yards.map((value, index) => (
             <td key={holes[index]} className={`${cell} ${isCurrent(holes[index]) ? "bg-[#f1d98f]/45 font-semibold" : ""}`}>
@@ -256,7 +278,8 @@ export default function Scorecard({ currentHole, photoSrc }: { currentHole?: num
         >
           <span className="inline-flex items-center gap-2">
             Select tees
-            {holeOne ? <span className="h-3 w-3 rounded-full border border-[#173b2a]/45" style={{ backgroundColor: HOLE_ONE_TEES[teeIndex]?.color }} aria-hidden="true" /> : null}
+            {/* May kulay na ngayon ang lahat ng tee, hindi lang ang sa butas 1. */}
+            <span className="h-3 w-3 rounded-full border border-[#173b2a]/45" style={{ backgroundColor: tee.color }} aria-hidden="true" />
             <span className="text-[#98782f]">{tee.name}</span>
           </span>
           <ChevronIcon open={open} />
@@ -279,7 +302,7 @@ export default function Scorecard({ currentHole, photoSrc }: { currentHole?: num
                   className={`${index === teeIndex ? "bg-[#f1d98f]/40 text-[#0b281b]" : "text-[#14271d] hover:bg-[#f7f5ee]"} block w-full px-5 py-3 text-left font-navigation text-[11px] font-bold uppercase tracking-[0.16em] transition-colors`}
                 >
                   <span className="inline-flex items-center gap-3">
-                    {holeOne ? <span className="h-3.5 w-3.5 rounded-full border border-[#173b2a]/45" style={{ backgroundColor: HOLE_ONE_TEES[index].color }} aria-hidden="true" /> : null}
+                    <span className="h-3.5 w-3.5 rounded-full border border-[#173b2a]/45" style={{ backgroundColor: option.color }} aria-hidden="true" />
                     {option.name}
                   </span>
                 </button>
@@ -293,13 +316,12 @@ export default function Scorecard({ currentHole, photoSrc }: { currentHole?: num
           talahanayan na 18 na hanay ay masyadong makipot ang bawat hanay. */}
       <div className="mt-7 space-y-4">
         <div className="overflow-x-auto border border-[#173b2a]/12">
-          <Nine holes={FRONT_NINE} teeName={tee.name} ratio={tee.ratio} currentHole={currentHole} runningLabel="Out" />
+          <Nine holes={FRONT_NINE} tee={tee} currentHole={currentHole} runningLabel="Out" />
         </div>
         <div className="overflow-x-auto border border-[#173b2a]/12">
           <Nine
             holes={BACK_NINE}
-            teeName={tee.name}
-            ratio={tee.ratio}
+            tee={tee}
             currentHole={currentHole}
             runningLabel="In"
             closing={{ yards: frontYards, par: frontPar }}

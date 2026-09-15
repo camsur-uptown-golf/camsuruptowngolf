@@ -101,7 +101,7 @@ export default function FairwayVillasVision() {
                   alt={feature.alt}
                   fill
                   sizes={index === FEATURES.length - 1 ? "(max-width: 1023px) calc(100vw - 3rem), 896px" : "(max-width: 639px) calc(100vw - 3rem), (max-width: 1023px) calc(50vw - 2.5rem), 438px"}
-                  className="object-cover transition duration-700 hover:scale-[1.025]"
+                  className="object-cover"
                 />
               </div>
               <h3 className="mt-4 text-base font-semibold tracking-[-0.02em] text-[#174630]">{feature.title}</h3>

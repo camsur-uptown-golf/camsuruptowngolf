@@ -46,7 +46,7 @@ export default function PlanYourVisitPage() {
               <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#f1d98f] xl:text-[11px]">
                 Plan your visit
               </p>
-              <h1 className="mt-4 font-display text-[clamp(2.6rem,5.4vw,5.25rem)] font-medium leading-[0.98] tracking-[-0.05em]">
+              <h1 className="mt-4 font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">
                 Let us shape the day around you.
               </h1>
               <p className="mt-5 max-w-xl text-sm leading-7 text-white/85 sm:text-base sm:leading-8">

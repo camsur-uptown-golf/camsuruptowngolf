@@ -84,7 +84,7 @@ export default function VillaDelReyStays() {
           style={delay(180)}
           className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#5d685f] sm:text-lg"
         >
-          Relax by the water, live the moment.
+          A convenient resort option for golf groups, families, and guests exploring Camarines Sur.
         </p>
         {/* Maikling gintong guhit: hudyat na nagsisimula na ang listahan. */}
         <div data-reveal="up" style={delay(270)} className="mx-auto mt-9 h-px w-20 bg-[#98782f]/50" />
@@ -152,7 +152,7 @@ export default function VillaDelReyStays() {
                     alt={`${stayType.name} exterior at Villa Del Rey`}
                     fill
                     sizes="(max-width: 1023px) 82vw, 480px"
-                    className="object-cover transition duration-700 hover:scale-[1.03]"
+                    className="object-cover"
                   />
                 </div>
 
@@ -168,7 +168,7 @@ export default function VillaDelReyStays() {
                     alt={`${stayType.name} room at Villa Del Rey`}
                     fill
                     sizes="(max-width: 1023px) 40vw, 240px"
-                    className="object-cover transition duration-700 hover:scale-[1.03]"
+                    className="object-cover"
                   />
                 </div>
               </div>
@@ -178,11 +178,11 @@ export default function VillaDelReyStays() {
       })}
 
       {/* Wala pang anumang CTA ang pahinang ito bago nito. */}
-      <div className="border-t border-[#173b2a]/10">
+      <div className="border-t border-white/10 bg-[#1c3b2d] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-8">
           <p
             data-reveal="up"
-            className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]"
+            className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#d8b65b]"
           >
             Plan your stay
           </p>
@@ -196,7 +196,7 @@ export default function VillaDelReyStays() {
           <p
             data-reveal="up"
             style={delay(180)}
-            className="mx-auto mt-5 max-w-xl text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]"
+            className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 xl:text-base xl:leading-8"
           >
             Tell the team your dates and how many are travelling, and they will come back with what is
             available across the four stay types.
@@ -204,13 +204,13 @@ export default function VillaDelReyStays() {
           <div data-reveal="up" style={delay(270)} className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href="/plan-your-visit"
-              className="inline-flex h-12 items-center rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a]"
+              className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
             >
               Inquire about your stay
             </Link>
             <Link
               href="/accommodations"
-              className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630]"
+              className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f]"
             >
               View all stays
             </Link>

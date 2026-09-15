@@ -153,7 +153,7 @@ export default function ConceptHoleBreakdown({
                       alt={`Hole ${selectedHole} aerial detail ${index + 1}`}
                       fill
                       sizes="(max-width: 639px) 30vw, 180px"
-                      className="object-cover transition duration-700 hover:scale-105"
+                      className="object-cover"
                       style={{ objectPosition: `${position} ${index === 0 ? marker?.startTop ?? "50%" : index === 1 ? marker?.top ?? "50%" : "50%"}` }}
                     />
                   </div>

@@ -65,6 +65,8 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
               text block kapag malinis at tuwid ang ilalim ng hero. */}
           <div
             className={`relative z-10 mx-auto w-full max-w-7xl px-6 pt-64 lg:px-8 ${
+              hasEditorialStayLayout ? "-translate-y-4 text-center sm:-translate-y-6" : ""
+            } ${
               stay.slug === "villa-del-rey"
                 ? "pb-24 sm:pb-28 lg:pb-32"
                 : stay.slug === "clubhouse-lodge"
@@ -77,16 +79,11 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#e1c56e]">{stay.eyebrow}</p>
             <h1
               className={`mt-4 max-w-5xl font-medium leading-[0.92] tracking-[-0.06em] drop-shadow-[0_3px_14px_rgba(0,0,0,0.55)] ${
-                stay.slug === "villa-del-rey" || stay.slug === "gota-village-resort"
-                  ? "text-[clamp(2.75rem,5vw,4.75rem)]"
-                  : "text-[clamp(3.25rem,6vw,6rem)]"
-              }`}
+                hasEditorialStayLayout ? "mx-auto" : ""
+              } text-[clamp(2.5rem,5vw,4.5rem)]`}
             >
               {stay.title}
             </h1>
-            <p className={`mt-6 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8 ${stay.slug === "villa-del-rey" ? "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]" : "text-white/78"}`}>
-              {stay.description}
-            </p>
           </div>
           {hasEditorialStayLayout ? (
             <a
@@ -116,7 +113,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
 
         <nav aria-label="Accommodation navigation" className="grid bg-[#0b2419] sm:grid-cols-2">
           <Link href={`/accommodations/${previous.slug}`} className="group relative min-h-80 overflow-hidden border-b border-white/15 sm:border-b-0 sm:border-r">
-            <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover transition duration-700 group-hover:scale-[1.035]" />
+            <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover" />
             <div className="absolute inset-0 bg-[#0b2419]/62 transition group-hover:bg-[#0b2419]/48" />
             <div className="absolute inset-0 flex flex-col justify-end p-8 text-white sm:p-10">
               <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">← Previous stay</p>
@@ -124,7 +121,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             </div>
           </Link>
           <Link href={`/accommodations/${next.slug}`} className="group relative min-h-80 overflow-hidden">
-            <Image src={next.image} alt="" fill sizes="50vw" className="object-cover transition duration-700 group-hover:scale-[1.035]" />
+            <Image src={next.image} alt="" fill sizes="50vw" className="object-cover" />
             <div className="absolute inset-0 bg-[#0b2419]/62 transition group-hover:bg-[#0b2419]/48" />
             <div className="absolute inset-0 flex flex-col items-end justify-end p-8 text-right text-white sm:p-10">
               <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">Next stay →</p>

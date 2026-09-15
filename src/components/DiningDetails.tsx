@@ -64,13 +64,13 @@ const GOOD_TO_KNOW = [
 
 const DINING_VENUES = [
   {
-    name: "Zeach Bar",
-    eyebrow: "Eat and unwind",
+    name: "VIP Dining & Bar",
+    eyebrow: "Taste & service",
     description:
-      "Food, drinks, and an easy evening atmosphere beside the CamSur Watersports Complex.",
-    image: "/dining/zeach-bar.webp",
-    href: "https://book.visitcamsur.com/cwc/zeach-bar",
-    action: "Book at Zeach Bar",
+      "An elevated dining experience with fresh dishes from the connected kitchen and cocktails poured at the bar.",
+    image: "/dining/vip-dining-bar-hero-clean-4k-v1.png",
+    href: "/dining/vip-dining-bar",
+    action: "Explore VIP Dining",
   },
   {
     name: "Clubhouse",
@@ -104,7 +104,7 @@ function DiningVenues() {
         <EditorialHeading
           kicker="Where to dine"
           title="Two places to settle in."
-          intro="From an easy night at Zeach Bar to meals and drinks at the Clubhouse, choose the setting that suits the day."
+          intro="From an elevated meal at VIP Dining & Bar to relaxed gatherings at the Clubhouse, choose the setting that suits the day."
         />
 
         <div className="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-2">
@@ -121,7 +121,7 @@ function DiningVenues() {
                   alt={venue.name}
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071d13]/35 via-transparent to-transparent" aria-hidden="true" />
               </div>
@@ -135,15 +135,14 @@ function DiningVenues() {
                 <p className="mt-4 text-sm leading-7 text-[#667269] xl:text-base xl:leading-8">
                   {venue.description}
                 </p>
-                <a
+                <Link
                   href={venue.href}
-                  target="_blank"
-                  rel="noreferrer"
+                  {...(venue.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
                   className="mt-7 inline-flex h-11 items-center gap-3 rounded-full bg-[#2f644b] px-6 text-[10px] font-bold uppercase tracking-[0.13em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#3a765a] hover:shadow-[0_12px_30px_rgba(23,59,42,0.16)] xl:text-[11px]"
                 >
                   {venue.action}
                   <span aria-hidden="true" className="text-[#e7d18d]">↗</span>
-                </a>
+                </Link>
               </div>
             </article>
           ))}

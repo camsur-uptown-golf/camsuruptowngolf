@@ -80,7 +80,7 @@ export default function ContactPage() {
             <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">
               Contact us
             </p>
-            <h1 className="mt-4 font-display text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.05em]">
+            <h1 className="mt-4 font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">
               We are glad to hear from you.
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/68 sm:text-base sm:leading-8">

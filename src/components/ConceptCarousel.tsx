@@ -47,7 +47,7 @@ export default function ConceptCarousel() {
           aria-label={`Previous image: ${SLIDES[previous].title}`}
           className="group absolute left-0 top-1/2 hidden aspect-[1.25] w-[20vw] max-w-[410px] -translate-y-1/2 overflow-hidden bg-[#173a29] lg:block"
         >
-          <Image src={SLIDES[previous].image} alt="" fill sizes="20vw" className="object-cover opacity-80 transition duration-700 group-hover:scale-[1.025] group-hover:opacity-100" />
+          <Image src={SLIDES[previous].image} alt="" fill sizes="20vw" className="object-cover opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
           <span className="absolute inset-0 bg-[#082218]/10" aria-hidden="true" />
         </button>
 
@@ -57,7 +57,7 @@ export default function ConceptCarousel() {
           aria-label={`Next image: ${SLIDES[next].title}`}
           className="group absolute right-0 top-1/2 hidden aspect-[1.25] w-[20vw] max-w-[410px] -translate-y-1/2 overflow-hidden bg-[#173a29] lg:block"
         >
-          <Image src={SLIDES[next].image} alt="" fill sizes="20vw" className="object-cover opacity-80 transition duration-700 group-hover:scale-[1.025] group-hover:opacity-100" />
+          <Image src={SLIDES[next].image} alt="" fill sizes="20vw" className="object-cover opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
           <span className="absolute inset-0 bg-[#082218]/10" aria-hidden="true" />
         </button>
 

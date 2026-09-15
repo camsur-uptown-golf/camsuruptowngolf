@@ -185,7 +185,7 @@ function Group({ group, index }: { group: (typeof GROUPS)[number]; index: number
                   alt={item.name}
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover transition duration-700 ease-out group-hover/card:scale-[1.035]"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071d13]/30 via-transparent to-transparent" aria-hidden="true" />
               </div>
