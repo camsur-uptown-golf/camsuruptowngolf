@@ -306,7 +306,7 @@ export const SITE_SECTIONS = [
     eyebrow: "Events at CamSur",
     title: "A course-side setting for every occasion",
     description: "Tournaments, corporate days, and private celebrations, hosted beside the course.",
-    image: "/course-concepts/concept-06.jpg",
+    image: "/clubhouse-rooftop-pool-gardens-clean-4k-v2.png",
     links: ["Golf Tournaments", "Corporate Events", "Private Celebrations"].map((label) => ({ label, href: "/events" })),
   },
 ] as const;
