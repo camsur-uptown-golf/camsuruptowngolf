@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import ScrollMotion from "@/components/ScrollMotion";
-import InteractiveCourseMap from "@/components/InteractiveCourseMap";
 import ConceptCarousel from "@/components/ConceptCarousel";
 import { EditorialHeading, Shell } from "@/components/EditorialKit";
 import { Container, delay } from "@/components/SectionKit";
@@ -113,17 +112,6 @@ function Overview() {
           </dl>
         </div>
       </div>
-    </section>
-  );
-}
-
-function CoursePlan() {
-  return (
-    <section
-      aria-label="CamSur Uptown Golf Club course plan"
-      className="relative isolate overflow-hidden border-t border-[#173b2a]/8 bg-[#f8f5ea] px-6 py-12 sm:px-10 sm:py-16 lg:px-12 lg:py-20"
-    >
-      <InteractiveCourseMap />
     </section>
   );
 }
@@ -246,7 +234,6 @@ export default function GolfDetails() {
     <>
       <ScrollMotion />
       <Overview />
-      <CoursePlan />
       <ConceptCarousel />
       <DesignPrinciples />
       <TeeOptions />
