@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import ConceptCarousel from "@/components/ConceptCarousel";
+import PackagesCarousel from "@/components/PackagesCarousel";
+import OfferingsShowcase from "@/components/OfferingsShowcase";
 import HeroVideo from "@/components/HeroVideo";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Eyebrow } from "@/components/ImgPlaceholder";
@@ -237,7 +239,17 @@ function StayFeature() {
           </p>
         </div>
 
-        <div className="relative mt-10 shadow-[0_30px_90px_rgba(0,0,0,0.28)] sm:mt-12">
+        {/* Gintong linyang humahaba mula sa gitna kapag dumating ang section.
+            Ito ang naghuhudyat na iba na ang banda — walang ganitong linya ang
+            packages sa itaas o ang discover sa ibaba. */}
+        <span
+          data-reveal="line"
+          style={delay(300)}
+          className="mt-9 block h-px w-full bg-gradient-to-r from-transparent via-[#b38c34]/45 to-transparent sm:mt-11"
+          aria-hidden="true"
+        />
+
+        <div className="relative mt-9 shadow-[0_30px_90px_rgba(0,0,0,0.28)] sm:mt-11">
           <div data-reveal="scale" className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/9] lg:aspect-[2.15/1]">
             <Image
               src="/camsur-stay-villas-isarog.png"
@@ -252,8 +264,12 @@ function StayFeature() {
           <div
             data-reveal="up"
             style={delay(160)}
-            className="bg-[#f5f1e8] p-7 text-[#14271d] sm:p-9 lg:absolute lg:bottom-0 lg:left-0 lg:w-[46%] lg:p-10 xl:w-[42%]"
+            className="relative bg-[#f5f1e8] p-7 text-[#14271d] sm:p-9 lg:absolute lg:bottom-0 lg:left-0 lg:w-[46%] lg:p-10 xl:w-[42%]"
           >
+            {/* Makapal na gintong gilid sa itaas ng panel: mula sa malayo ito
+                ang unang nakikita, at siya ang nag-aangat sa panel mula sa
+                larawang nasa likod nito. */}
+            <span className="absolute inset-x-0 top-0 h-[3px] bg-[#b38c34]" aria-hidden="true" />
             <Eyebrow className="mb-4 text-[#98782f]">Private villas</Eyebrow>
             <h3 className="font-serif text-[clamp(2rem,3vw,3.35rem)] font-medium leading-[0.98] tracking-[-0.05em]">Private villas designed around your stay.</h3>
             <p className="mt-5 max-w-lg text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f] sm:text-base">
@@ -270,15 +286,21 @@ function StayFeature() {
           </div>
         </div>
 
-        <div className="mt-8 grid border-y border-[#173e2b]/12 sm:grid-cols-3">
+        {/* May bilang na ngayon ang tatlo. Dating tatlong walang-kaibahang
+            hanay ng teksto — ang gintong numero ang nagbibigay sa kanila ng
+            ritmo at nagsasabing binabasa sila nang sunod-sunod. */}
+        <div className="mt-8 grid border-t-2 border-[#b38c34]/40 sm:grid-cols-3">
           {stayHighlights.map(([title, description], index) => (
             <div
               key={title}
               data-reveal="up"
               style={delay(index * 110)}
-              className={`py-6 sm:px-7 ${index ? "border-t border-[#173e2b]/12 sm:border-l sm:border-t-0" : ""}`}
+              className={`py-7 sm:px-7 ${index ? "border-t border-[#173e2b]/12 sm:border-l sm:border-t-0" : "sm:pl-0"}`}
             >
-              <h3 className="text-lg font-medium tracking-[-0.025em] text-[#174630]">{title}</h3>
+              <p className="font-navigation text-[10px] font-bold tracking-[0.2em] text-[#b38c34]">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-3 text-lg font-medium tracking-[-0.025em] text-[#174630]">{title}</h3>
               <p className="mt-2 max-w-sm text-sm leading-6 text-[#667269]">{description}</p>
             </div>
           ))}
@@ -300,7 +322,9 @@ export default function Home() {
             section sa loob, kaya kasama siya kapag pinalitan ang kulay. */}
         <div className="bg-[#f7f5ee]">
           <ConceptCarousel />
+          <PackagesCarousel />
           <StayFeature />
+          <OfferingsShowcase />
         </div>
       </main>
       <Footer />

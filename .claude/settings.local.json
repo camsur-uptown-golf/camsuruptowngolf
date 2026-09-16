@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($f = \"C:\\\\Users\\\\User\\\\Downloads\\\\4k golf club vid.mp4\"; if \\(-not \\(Test-Path $f\\)\\) { Write-Output \"FILE NOT FOUND\"; exit }; $sz = \\(Get-Item $f\\).Length; Write-Output \\(\"Size: {0:N2} MB\" -f \\($sz/1MB\\)\\); $probe = Get-ChildItem \"$env:LOCALAPPDATA\\\\Microsoft\\\\WinGet\\\\Links\\\\ffprobe.exe\"; & $probe.FullName -v error -show_entries format=duration:stream=index,codec_type,codec_name,width,height,avg_frame_rate,bit_rate -of default=noprint_wrappers=0 $f)",
+      "Skill(fewer-permission-prompts)",
+      "Skill(fewer-permission-prompts:*)",
+      "PowerShell(npx tsc --noEmit)",
+      "PowerShell(npm run lint)",
+      "PowerShell(npm run build)",
+      "PowerShell($out = npm run build 2>&1 | Out-String; Write-Output \"EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Compiled|34/34|Error|Failed\" | Select-Object -First 5\\) -join \"`n\")",
+      "PowerShell(npx tsc --noEmit; if \\($?\\) { npm run lint; if \\($?\\) { $out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Error|Failed|Compiled successfully|Generating static pages using \\\\d+ workers \\\\\\(\\\\d+/\\\\d+\\\\\\) in\" | Select-Object -First 4\\) -join \"`n\" } })"
+    ]
+  }
+}

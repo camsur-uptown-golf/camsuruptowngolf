@@ -153,6 +153,7 @@ export const CONCEPTS = [
 
 /** Shared editorial headline for the individual hole pages. */
 const COURSE_HEADLINE = "A Great Start for CamSur Uptown Golf Club, and for You";
+const LANDSCAPE_ROUTING_HOLES = new Set([1, 2, 3, 4, 7, 11, 12, 13, 14, 18]);
 
 export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
   const hole = index + 1;
@@ -165,6 +166,8 @@ export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
        leading zero — "no-1", hindi "no-01". */
     slug: `no-${hole}`,
     image: `/golf/aerial-holes/hole-${String(hole).padStart(2, "0")}-aerial.png`,
+    routingImage: `/golf/map-hole-crops-highlight-v3/hole-${String(hole).padStart(2, "0")}-map.webp`,
+    routingOrientation: LANDSCAPE_ROUTING_HOLES.has(hole) ? "landscape" as const : "portrait" as const,
     title: COURSE_HEADLINE,
     description: HOLE_PROFILES[hole].description,
     holes: [hole] as const,
@@ -262,7 +265,7 @@ export const SITE_SECTIONS = [
     eyebrow: "Beyond the course",
     title: "There is a great deal here that is not golf",
     description: "Wakepark, ATV trails, a bike track, pickle ball courts, and the quieter corners of the resort — for the days between rounds, and for everyone not playing.",
-    image: "/gota-village-resort/hero.jpg",
+    image: "/experiences/banner11-dehazed.jpg",
     /* Isa-isa ang bawat pasilidad dito, hindi ang apat na pangkat: ito ang
        aktwal na hinahanap ng bisita sa menu. Ang bawat anchor ay tumuturo sa
        `id` ng hilera sa ExperiencesDetails.tsx — kapag may binago doon,

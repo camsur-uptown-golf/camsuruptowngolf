@@ -211,7 +211,8 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           <div data-reveal="up" className="mx-auto mt-10 w-full max-w-7xl px-6 sm:px-10 lg:px-12">
             <Scorecard
               currentHole={concept.holes[0]}
-              photoSrc={concept.image}
+              photoSrc={concept.routingImage}
+              photoOrientation={concept.routingOrientation}
             />
           </div>
         </section>

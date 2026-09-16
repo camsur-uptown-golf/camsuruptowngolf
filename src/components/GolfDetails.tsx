@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ScrollMotion from "@/components/ScrollMotion";
 import ConceptCarousel from "@/components/ConceptCarousel";
+import PackagesCarousel from "@/components/PackagesCarousel";
 import { EditorialHeading, Shell } from "@/components/EditorialKit";
 import { Container, delay } from "@/components/SectionKit";
 import { CLUB_PHONE } from "@/lib/site-content";
@@ -235,6 +236,7 @@ export default function GolfDetails() {
       <ScrollMotion />
       <Overview />
       <ConceptCarousel />
+      <PackagesCarousel />
       <DesignPrinciples />
       <TeeOptions />
       <GolfCta />

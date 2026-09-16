@@ -7,9 +7,9 @@ import { HOLE_PROFILES, metresToYards } from "@/lib/course-holes";
 /**
  * Buong 18-hole scorecard na may tee selector.
  *
- * TODO (para sa club): ang Blue lang ang totoong datos — galing iyon sa
- * `blueMetres` sa course-holes.ts. Ang White, Green, Red, at Yellow ay
- * hinango mula sa Blue sa pamamagitan ng ratio, at ang HCP ay heuristic
+ * TODO (para sa club): ang Black back tee lang ang totoong datos — galing iyon sa
+ * `blueMetres` sa course-holes.ts. Ang Blue, White, Green, Red, at Yellow ay
+ * hinango mula sa Black sa pamamagitan ng ratio, at ang HCP ay heuristic
  * lamang. Pansamantala silang lahat hanggang maibigay ang opisyal na
  * scorecard ng club. Kapag dumating iyon, ilagay ang bawat tee bilang
  * sariling hanay sa HOLE_PROFILES at alisin ang mga ratio dito.
@@ -21,7 +21,8 @@ import { HOLE_PROFILES, metresToYards } from "@/lib/course-holes";
  * aninag ang background nito habang dumadaan ang ibang hanay sa ilalim.
  */
 const TEES = [
-  { name: "Blue", ratio: 1, color: "#285cce", row: "#eef2fb" },
+  { name: "Black", ratio: 1, color: "#111713", row: "#eef0ee" },
+  { name: "Blue", ratio: 0.97, color: "#285cce", row: "#eef2fb" },
   { name: "White", ratio: 0.93, color: "#ffffff", row: "#ffffff" },
   { name: "Green", ratio: 0.86, color: "#2f644b", row: "#eef4f0" },
   { name: "Red", ratio: 0.79, color: "#d6322c", row: "#fdf0ef" },
@@ -29,19 +30,14 @@ const TEES = [
 ] as const;
 
 const HOLE_ONE_TEES = [
+  { name: "Black", ratio: 1, color: "#111713", row: "#eef0ee", x: 1430, y: 138 },
   { name: "Yellow", ratio: null, color: "#f2d719", row: "#fdfaea", x: 1402, y: 166 },
   { name: "White", ratio: null, color: "#ffffff", row: "#ffffff", x: 1370, y: 198 },
-  { name: "Blue", ratio: 1, color: "#285cce", row: "#eef2fb", x: 1322, y: 268 },
+  { name: "Blue", ratio: null, color: "#285cce", row: "#eef2fb", x: 1322, y: 268 },
   { name: "Red", ratio: null, color: "#d6322c", row: "#fdf0ef", x: 1234, y: 376 },
 ] as const;
 
 type Tee = { name: string; ratio: number | null; color: string; row: string };
-
-// Mga black na punto sa magkabilang dulo ng course plan; hindi tee choices.
-const HOLE_ONE_BLACK_POINTS = [
-  { x: 1448, y: 99, radius: 12 },
-  { x: 191, y: 715, radius: 9 },
-] as const;
 
 const HOLES = Array.from({ length: 18 }, (_, index) => index + 1);
 const FRONT_NINE = HOLES.slice(0, 9);
@@ -61,7 +57,7 @@ const STROKE_INDEX: Record<number, number> = (() => {
 })();
 
 /**
- * Para sa Blue ay ang nakatalang `yards` ang ginagamit, hindi ang muling
+ * Para sa Black back tee ay ang nakatalang `yards` ang ginagamit, hindi ang muling
  * pagku-kuwenta mula sa metres: may tatlong butas (1, 11, 13) na nagkakaiba
  * ng isang yarda kapag kinuwenta, at lalabas iyon bilang magkasalungat na
  * bilang sa scorecard at sa stat bar sa itaas ng pahina.
@@ -196,10 +192,19 @@ function Nine({
   );
 }
 
-export default function Scorecard({ currentHole, photoSrc }: { currentHole?: number; photoSrc: string }) {
+export default function Scorecard({
+  currentHole,
+  photoSrc,
+  photoOrientation,
+}: {
+  currentHole?: number;
+  photoSrc: string;
+  photoOrientation: "landscape" | "portrait";
+}) {
   const holeOne = currentHole === 1;
+  const landscapePlan = photoOrientation === "landscape";
   const teeOptions = holeOne ? HOLE_ONE_TEES : TEES;
-  const [teeIndex, setTeeIndex] = useState(holeOne ? 2 : 0);
+  const [teeIndex, setTeeIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const selectorRef = useRef<HTMLDivElement>(null);
   const tee = teeOptions[teeIndex] ?? teeOptions[0];
@@ -226,42 +231,19 @@ export default function Scorecard({ currentHole, photoSrc }: { currentHole?: num
   const frontPar = sum(FRONT_NINE.map((hole) => HOLE_PROFILES[hole].par));
 
   return (
-    <div className={`grid gap-8 lg:items-start lg:gap-10 ${holeOne ? "lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[420px_minmax(0,1fr)]" : "lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]"}`}>
-      <figure className={`mx-auto w-full lg:mx-0 lg:sticky lg:top-28 ${holeOne ? "max-w-[420px]" : "max-w-[340px]"}`}>
-        {holeOne ? (
-          <div className="relative aspect-[3/2] w-full overflow-hidden border border-[#173b2a]/12 bg-[#d9e2d2]">
-            <Image
-              src="/golf/course-01-detailed-plan-v1.png"
-              alt="Top-down plan of Hole 1, with the lake, four colored tee positions, and black points at each end"
-              fill
-              sizes="(max-width: 1023px) min(100vw - 3rem, 450px), 450px"
-              className="object-cover"
-            />
-            <svg viewBox="0 0 1536 1024" className="absolute inset-0 h-full w-full" role="img" aria-label="Hole 1 tee positions: yellow, white, blue, and red, with two black end points; no route line">
-              {HOLE_ONE_BLACK_POINTS.map((point) => (
-                <circle key={`${point.x}-${point.y}`} cx={point.x} cy={point.y} r={point.radius} fill="#050706" />
-              ))}
-              {HOLE_ONE_TEES.map((marker) => (
-                <g key={marker.name}>
-                  <circle cx={marker.x} cy={marker.y} r={marker.name === tee.name ? 23 : 18} fill="#ffffff" opacity="0.96" />
-                  <circle cx={marker.x} cy={marker.y} r={marker.name === tee.name ? 17 : 13} fill={marker.color} stroke="#18392b" strokeWidth="3" />
-                </g>
-              ))}
-            </svg>
-          </div>
-        ) : (
-          <div className="relative aspect-[8/5] w-full overflow-hidden border border-[#173b2a]/12 bg-[#d9e2d2]">
-            <Image
-              src={photoSrc}
-              alt={currentHole ? `Aerial course view of CamSur Uptown Hole ${currentHole}` : "Aerial view of the CamSur Uptown golf course"}
-              fill
-              sizes="(max-width: 1023px) min(100vw - 3rem, 360px), 360px"
-              className="object-cover"
-            />
-          </div>
-        )}
+    <div className={`grid gap-8 lg:items-start lg:gap-10 ${landscapePlan ? "lg:grid-cols-[400px_minmax(0,1fr)] xl:grid-cols-[520px_minmax(0,1fr)]" : holeOne ? "lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[420px_minmax(0,1fr)]" : "lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]"}`}>
+      <figure className={`mx-auto w-full lg:mx-0 lg:sticky lg:top-28 ${landscapePlan ? "max-w-[720px]" : holeOne ? "max-w-[420px]" : "max-w-[340px]"}`}>
+        <div className={`relative w-full overflow-hidden border border-[#173b2a]/12 bg-[#f7f5ee] ${landscapePlan ? "aspect-[8/3]" : "aspect-[2/3]"}`}>
+          <Image
+            src={photoSrc}
+            alt={currentHole ? `Top-down routing plan for CamSur Uptown Hole ${currentHole}` : "Top-down routing plan of the CamSur Uptown golf course"}
+            fill
+            sizes={landscapePlan ? "(max-width: 1023px) min(100vw - 3rem, 720px), 520px" : "(max-width: 1023px) min(100vw - 3rem, 420px), 420px"}
+            className="object-contain"
+          />
+        </div>
         <figcaption className="mt-3 text-center font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f] lg:text-left">
-          {holeOne ? "Hole 01 · Tee positions" : currentHole ? `Hole ${String(currentHole).padStart(2, "0")} · Course view` : "Course view"}
+          {currentHole ? `Hole ${String(currentHole).padStart(2, "0")} · Top-down routing plan` : "Top-down routing plan"}
         </figcaption>
       </figure>
 
@@ -330,7 +312,7 @@ export default function Scorecard({ currentHole, photoSrc }: { currentHole?: num
       </div>
 
         <p className="mt-4 font-navigation text-[10px] font-medium uppercase tracking-[0.14em] text-[#8a938c]">
-          {holeOne ? "Blue concept distance only · Other tee distances pending survey" : "Distances in yards · Provisional concept values"}
+          {holeOne ? "Black back-tee concept distance only · Other tee distances pending survey" : "Distances in yards · Provisional concept values"}
         </p>
       </div>
     </div>

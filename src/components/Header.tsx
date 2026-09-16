@@ -494,7 +494,7 @@ export default function Header() {
           className={`${isScrolled ? "top-[110px]" : "top-[121px]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-3rem))] -translate-x-1/2 overflow-hidden rounded-t-none rounded-b-[1.6rem] border border-t-0 border-white/10 bg-[#254936] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block`}
         >
           <div className="grid min-h-[285px] grid-cols-[0.82fr_1.18fr_1fr]">
-            <div className="border-r border-white/12 p-5">
+            <div className="border-r border-white/12 px-5 pb-5 pt-7">
               <p className="mb-3 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.18em] text-[#d8b65b]">{activeSection.eyebrow}</p>
               <Link
                 href={previewHref}
@@ -528,7 +528,7 @@ export default function Header() {
               </Link>
             </div>
 
-            <div className="border-r border-white/12 p-5">
+            <div className="border-r border-white/12 px-5 pb-5 pt-7">
               <p className="mb-3 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white/92">
                 {activeSection.slug === "golf" ? "Course holes" : `${activeSection.label} highlights`}
               </p>
@@ -559,7 +559,7 @@ export default function Header() {
               </div>
             </div>
 
-            <div className="flex flex-col justify-between p-5">
+            <div className="flex flex-col justify-between px-5 pb-5 pt-7">
               <div>
                 <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.16em] text-[#d8b65b]">Discover CamSur Uptown</p>
                 <h2 className="mt-3 text-xl font-semibold uppercase leading-tight tracking-[0.01em]">{activeSection.title}</h2>
