@@ -10,7 +10,7 @@ import { CLUB_PHONE } from "@/lib/site-content";
  * labing-apat na link na walang patutunguhan.
  *
  * TODO: wala pang pahina ang Our Story, Membership, FAQs, Golf Academy,
- * News & Blog, Careers, Accessibility, at Terms, kaya inalis muna sila.
+ * News & Blog, Careers, at Accessibility, kaya inalis muna sila.
  * Ibalik ang bawat isa kapag may pahina na. Ang Privacy Policy ang
  * pinakaunang kailangan — nag-iimbak na tayo ng personal na datos.
  */
@@ -137,8 +137,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-white/10 pt-6 text-[11px] text-white/35 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 CamSur Uptown Golf Club. All rights reserved.</p>
+        <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-[11px] text-white/35 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p>© 2026 CamSur Uptown Golf Club. All rights reserved.</p>
+            <Link href="/terms-of-use" className="font-medium text-white/50 transition-colors hover:text-[#f0dca0]">
+              Terms of Use
+            </Link>
+          </div>
           <p>Championship golf in the heart of Camarines Sur.</p>
         </div>
       </div>

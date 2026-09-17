@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ScrollMotion from "@/components/ScrollMotion";
 import ConceptCarousel from "@/components/ConceptCarousel";
+import CourseRoutingMap from "@/components/CourseRoutingMap";
 import PackagesCarousel from "@/components/PackagesCarousel";
 import { EditorialHeading, Shell } from "@/components/EditorialKit";
 import { Container, delay } from "@/components/SectionKit";
@@ -235,6 +236,7 @@ export default function GolfDetails() {
     <>
       <ScrollMotion />
       <Overview />
+      <CourseRoutingMap />
       <ConceptCarousel />
       <PackagesCarousel />
       <DesignPrinciples />

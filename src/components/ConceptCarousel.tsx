@@ -73,7 +73,7 @@ export default function ConceptCarousel() {
           <Image
             key={SLIDES[active].image}
             src={SLIDES[active].image}
-            alt={`${SLIDES[active].title} — CamSur Uptown Golf Club course`}
+            alt={`${SLIDES[active].title} — CamSur Uptown Golf Club hole`}
             fill
             priority={active === 0}
             sizes="(min-width: 640px) 52vw, calc(100vw - 3rem)"
@@ -94,7 +94,7 @@ export default function ConceptCarousel() {
         <button
           type="button"
           onClick={goPrevious}
-          aria-label="Previous course image"
+          aria-label="Previous hole image"
           className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#2f644b]/35 text-[#2f644b] transition hover:border-[#2f644b] hover:bg-[#2f644b] hover:text-white"
         >
           <Arrow direction="left" />
@@ -103,16 +103,16 @@ export default function ConceptCarousel() {
         <div className="grid min-w-0 gap-5 lg:grid-cols-2 lg:gap-10">
           <div className="min-w-0 lg:border-r lg:border-[#183e2b]/35 lg:pr-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
-              Course
+              Hole
             </p>
             <h3 className="mt-2 max-w-full font-serif text-[clamp(3.25rem,5vw,5.5rem)] font-medium leading-[0.9] tracking-[-0.055em]">
               No. {active + 1}
             </h3>
           </div>
           <div className="hidden lg:block lg:pt-6" aria-live="polite">
-            <p className="text-base leading-7 text-[#536058]">{SLIDES[active].description}</p>
+            <p className="text-sm leading-6 text-[#536058]">{SLIDES[active].description}</p>
             <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]">
-              Explore this course
+              Explore this hole
             </Link>
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function ConceptCarousel() {
         <button
           type="button"
           onClick={goNext}
-          aria-label="Next course image"
+          aria-label="Next hole image"
           className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#2f644b]/35 text-[#2f644b] transition hover:border-[#2f644b] hover:bg-[#2f644b] hover:text-white"
         >
           <Arrow direction="right" />
@@ -131,7 +131,7 @@ export default function ConceptCarousel() {
         data-reveal="up"
         style={{ "--reveal-delay": "260ms" } as CSSProperties}
         className="mx-auto mt-6 flex max-w-[1040px] justify-center gap-2 px-6 sm:w-[52vw]"
-        aria-label="Choose course image"
+        aria-label="Choose hole image"
       >
         {SLIDES.map((slide, index) => (
           <button

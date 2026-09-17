@@ -59,7 +59,7 @@ export const HOLE_POSITIONS: Record<number, { x: number; y: number }> = {
   11: { x: 70.57, y: 13.06 },
   12: { x: 74.09, y: 21.98 },
   13: { x: 33.7, y: 24.1 },
-  14: { x: 28.6, y: 34.8 },
+  14: { x: 34.5, y: 30 },
   15: { x: 38, y: 52.8 },
   16: { x: 24.9, y: 37.1 },
   17: { x: 18.41, y: 44.92 },
@@ -67,4 +67,4 @@ export const HOLE_POSITIONS: Record<number, { x: number; y: number }> = {
 };
 
 /** Ang pinakabagong masterplan na kasama ng HOLE_POSITIONS sa itaas. */
-export const COURSE_PLAN_IMAGE = "/golf/golf-course-map-base.svg";
+export const COURSE_PLAN_IMAGE = "/golf/course-map-master-source-v1.png";

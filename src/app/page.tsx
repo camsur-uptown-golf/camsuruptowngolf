@@ -4,7 +4,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import ConceptCarousel from "@/components/ConceptCarousel";
 import PackagesCarousel from "@/components/PackagesCarousel";
-import OfferingsShowcase from "@/components/OfferingsShowcase";
+import OffCourseSection from "@/components/OffCourseSection";
 import HeroVideo from "@/components/HeroVideo";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Eyebrow } from "@/components/ImgPlaceholder";
@@ -207,109 +207,6 @@ function Introduction() {
   );
 }
 
-function StayFeature() {
-  const stayHighlights = [
-    ["Private outdoor spaces", "A terrace of your own for quiet mornings and unhurried evenings."],
-    ["Close to the course", "A short walk to the fairways, in a setting that still feels private."],
-    ["Warm local hospitality", "Attentive service and a genuine Bicolano welcome for the length of your stay."],
-  ] as const;
-
-  return (
-    <section id="stays" className="bg-[#f7f5ee] pb-16 pt-6 text-[#14271d] sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid gap-7 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <div>
-            <div data-reveal="up">
-              <Eyebrow className="mb-5 text-[#98782f]">Stay at CamSur</Eyebrow>
-            </div>
-            <h2
-              data-reveal="up"
-              style={delay(110)}
-              className="max-w-2xl text-[clamp(2.7rem,5vw,5.5rem)] font-medium leading-[0.92] tracking-[-0.06em]"
-            >
-              Stay close to the course.
-            </h2>
-          </div>
-          <p
-            data-reveal="up"
-            style={delay(220)}
-            className="max-w-2xl text-base leading-8 text-[#5d685f] sm:text-lg sm:leading-9 lg:justify-self-end"
-          >
-            Private villas beside the course, planned for easy mornings, quick access to the fairways, and a fuller stay at CamSur Uptown.
-          </p>
-        </div>
-
-        {/* Gintong linyang humahaba mula sa gitna kapag dumating ang section.
-            Ito ang naghuhudyat na iba na ang banda — walang ganitong linya ang
-            packages sa itaas o ang discover sa ibaba. */}
-        <span
-          data-reveal="line"
-          style={delay(300)}
-          className="mt-9 block h-px w-full bg-gradient-to-r from-transparent via-[#b38c34]/45 to-transparent sm:mt-11"
-          aria-hidden="true"
-        />
-
-        <div className="relative mt-9 shadow-[0_30px_90px_rgba(0,0,0,0.28)] sm:mt-11">
-          <div data-reveal="scale" className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/9] lg:aspect-[2.15/1]">
-            <Image
-              src="/camsur-stay-villas-isarog.png"
-              alt="Private tropical guest villas beside the CamSur Uptown golf course with Mt. Isarog in the distance"
-              fill
-              sizes="(max-width: 1279px) calc(100vw - 3rem), 1280px"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,18,11,0.2),transparent_55%),linear-gradient(0deg,rgba(2,18,11,0.32),transparent_42%)]" />
-          </div>
-
-          <div
-            data-reveal="up"
-            style={delay(160)}
-            className="relative bg-[#f5f1e8] p-7 text-[#14271d] sm:p-9 lg:absolute lg:bottom-0 lg:left-0 lg:w-[46%] lg:p-10 xl:w-[42%]"
-          >
-            {/* Makapal na gintong gilid sa itaas ng panel: mula sa malayo ito
-                ang unang nakikita, at siya ang nag-aangat sa panel mula sa
-                larawang nasa likod nito. */}
-            <span className="absolute inset-x-0 top-0 h-[3px] bg-[#b38c34]" aria-hidden="true" />
-            <Eyebrow className="mb-4 text-[#98782f]">Private villas</Eyebrow>
-            <h3 className="font-serif text-[clamp(2rem,3vw,3.35rem)] font-medium leading-[0.98] tracking-[-0.05em]">Private villas designed around your stay.</h3>
-            <p className="mt-5 max-w-lg text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f] sm:text-base">
-              Wake to quiet garden paths and fairway views, then reach the first tee without rushing your morning.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/accommodations" className="inline-flex h-12 items-center gap-4 rounded-full bg-[#2f644b] px-7 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]">
-                Explore stays <ArrowIcon />
-              </Link>
-              <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full border border-[#174630]/25 px-7 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#174630]">
-                Plan your stay
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* May bilang na ngayon ang tatlo. Dating tatlong walang-kaibahang
-            hanay ng teksto — ang gintong numero ang nagbibigay sa kanila ng
-            ritmo at nagsasabing binabasa sila nang sunod-sunod. */}
-        <div className="mt-8 grid border-t-2 border-[#b38c34]/40 sm:grid-cols-3">
-          {stayHighlights.map(([title, description], index) => (
-            <div
-              key={title}
-              data-reveal="up"
-              style={delay(index * 110)}
-              className={`py-7 sm:px-7 ${index ? "border-t border-[#173e2b]/12 sm:border-l sm:border-t-0" : "sm:pl-0"}`}
-            >
-              <p className="font-navigation text-[10px] font-bold tracking-[0.2em] text-[#b38c34]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="mt-3 text-lg font-medium tracking-[-0.025em] text-[#174630]">{title}</h3>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-[#667269]">{description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function Home() {
   return (
     <>
@@ -323,8 +220,7 @@ export default function Home() {
         <div className="bg-[#f7f5ee]">
           <ConceptCarousel />
           <PackagesCarousel />
-          <StayFeature />
-          <OfferingsShowcase />
+          <OffCourseSection />
         </div>
       </main>
       <Footer />
