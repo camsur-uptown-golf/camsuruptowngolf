@@ -7,6 +7,7 @@ export type HoleProfile = {
   description: string;
 };
 
+/** Official back-tee figures transcribed from the supplied CamSur Golf Course scorecard. */
 export const HOLE_PROFILES: Record<number, HoleProfile> = {
   1: { name: "Opening Fairway", par: 4, blueMetres: 411, yards: 450, forwardMetres: 330, description: "The opening drive begins close to the club precinct and moves into a generous fairway. The preferred side leaves a clear angle to a green protected by a measured arrangement of bunkers." },
   2: { name: "Villa Corridor", par: 5, blueMetres: 526, yards: 575, forwardMetres: 445, description: "A long, flowing hole beside the villa edge. Players can advance safely in stages or challenge the narrowing landing area to create a shorter approach." },

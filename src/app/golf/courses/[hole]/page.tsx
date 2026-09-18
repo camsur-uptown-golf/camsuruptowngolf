@@ -158,7 +158,6 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               {[
                 { label: "Yards", value: scorecard.yards.toLocaleString() },
                 { label: "Par", value: String(scorecard.par) },
-                /* Walang laman hangga't hindi pa kumpirmado ng club. */
                 { label: "Opening year", value: "" },
               ].map(({ label, value }, statIndex) => (
                 <div
@@ -175,8 +174,6 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                       {value}
                     </dd>
                   ) : (
-                    /* Dating sr-only, kaya blangkong hanay ang nakikita at
-                       mukhang sira. Nakasulat na kung bakit ito walang laman. */
                     <dd className="mt-5 font-navigation text-[11px] font-semibold uppercase tracking-[0.12em] text-[#9aa39d]">
                       To be confirmed
                     </dd>
@@ -200,7 +197,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             <SectionHeading
               eyebrow="Scorecard"
               title="The full eighteen."
-              intro="Every hole from each set of tees. This hole is highlighted across the card."
+              intro="All tee colors are shown, with confirmed yardages displayed for the Black tees only. This hole is highlighted across the card."
             />
           </Container>
 
@@ -213,6 +210,8 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               currentHole={concept.holes[0]}
               photoSrc={concept.routingImage}
               photoOrientation={concept.routingOrientation}
+              photoWidth={concept.routingWidth}
+              photoHeight={concept.routingHeight}
             />
           </div>
         </section>

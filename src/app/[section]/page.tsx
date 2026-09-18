@@ -180,25 +180,32 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                   <Link
                     id={`option-${index + 1}`}
                     href={`/accommodations/${stay.slug}`}
-                    className="group block overflow-hidden bg-white shadow-[0_14px_34px_rgba(20,45,32,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(20,45,32,0.14)]"
+                    className="group relative isolate block aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[#173b2a]/12 bg-[#173b2a] shadow-[0_18px_55px_rgba(20,39,29,0.1)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(20,45,32,0.18)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f644b] sm:aspect-[3/2]"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden bg-[#173a29]">
-                      <Image
-                        src={stay.image}
-                        alt={`${stay.title} accommodation concept at CamSur Uptown`}
-                        fill
-                        sizes="(max-width: 767px) calc(100vw - 3rem), (max-width: 1279px) calc(50vw - 2.5rem), 608px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="p-6 sm:p-7">
-                      <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">{stay.eyebrow}</p>
-                      <div className="mt-4 flex items-start justify-between gap-5">
-                        <div>
-                          <h3 className="text-2xl font-semibold leading-tight tracking-[-0.04em]">{stay.title}</h3>
-                          <p className="mt-3 max-w-xl text-sm leading-6 text-[#5d685f]">{stay.description}</p>
-                        </div>
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#2f644b]/25 transition group-hover:bg-[#2f644b] group-hover:text-white" aria-hidden="true">→</span>
+                    <Image
+                      src={stay.image}
+                      alt={`${stay.title} accommodation concept at CamSur Uptown`}
+                      fill
+                      sizes="(max-width: 767px) calc(100vw - 3rem), (max-width: 1279px) calc(50vw - 2.5rem), 608px"
+                      className="-z-20 object-cover transition duration-700 ease-out group-hover:scale-[1.035] group-focus-visible:scale-[1.035]"
+                    />
+                    <div
+                      className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(4,20,13,0.04)_22%,rgba(4,20,13,0.9)_100%)] transition duration-500 lg:group-hover:bg-[linear-gradient(180deg,rgba(4,20,13,0.3)_0%,rgba(4,20,13,0.95)_100%)] lg:group-focus-visible:bg-[linear-gradient(180deg,rgba(4,20,13,0.3)_0%,rgba(4,20,13,0.95)_100%)]"
+                      aria-hidden="true"
+                    />
+
+                    <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#e7d18d] xl:text-[11px]">
+                        {stay.eyebrow}
+                      </p>
+                      <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-[-0.04em] sm:text-3xl">
+                        {stay.title}
+                      </h3>
+                      <div className="mt-3 max-h-44 translate-y-0 overflow-hidden opacity-100 transition-[max-height,opacity,transform] duration-500 ease-out lg:max-h-0 lg:translate-y-5 lg:opacity-0 lg:group-hover:max-h-44 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-focus-visible:max-h-44 lg:group-focus-visible:translate-y-0 lg:group-focus-visible:opacity-100">
+                        <p className="max-w-xl text-sm leading-6 text-white/78">{stay.description}</p>
+                        <span className="mt-5 inline-flex h-10 items-center gap-3 rounded-full bg-[#e7d18d] px-5 font-navigation text-[10px] font-bold uppercase tracking-[0.13em] text-[#10281e]">
+                          Explore this stay <span aria-hidden="true">→</span>
+                        </span>
                       </div>
                     </div>
                   </Link>

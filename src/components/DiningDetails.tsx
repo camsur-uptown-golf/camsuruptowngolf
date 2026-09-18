@@ -100,7 +100,7 @@ function DiningVenues() {
   return (
     <section id="dining-venues" className={EDITORIAL_SECTION_ALT}>
       <Watermark speed={0.12} />
-      <Shell>
+      <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-12">
         <EditorialHeading
           kicker="Where to dine"
           title="Two places to settle in."
@@ -113,41 +113,46 @@ function DiningVenues() {
               key={venue.name}
               data-reveal="up"
               style={delay(index * 100)}
-              className="group overflow-hidden rounded-[1.5rem] border border-[#173b2a]/12 bg-[#f8f6ef] shadow-[0_18px_55px_rgba(20,39,29,0.07)]"
+              className="group relative isolate aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[#173b2a]/12 bg-[#173b2a] shadow-[0_18px_55px_rgba(20,39,29,0.1)] sm:aspect-[3/2]"
             >
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#173b2a]">
-                <Image
-                  src={venue.image}
-                  alt={venue.name}
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#071d13]/35 via-transparent to-transparent" aria-hidden="true" />
-              </div>
-              <div className="p-7 sm:p-9">
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f] xl:text-[11px]">
+              <Image
+                src={venue.image}
+                alt={venue.name}
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="-z-20 object-cover transition duration-700 ease-out group-hover:scale-[1.035] group-focus-within:scale-[1.035]"
+              />
+              <div
+                className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(4,20,13,0.04)_22%,rgba(4,20,13,0.88)_100%)] transition duration-500 lg:group-hover:bg-[linear-gradient(180deg,rgba(4,20,13,0.3)_0%,rgba(4,20,13,0.94)_100%)] lg:group-focus-within:bg-[linear-gradient(180deg,rgba(4,20,13,0.3)_0%,rgba(4,20,13,0.94)_100%)]"
+                aria-hidden="true"
+              />
+
+              <div className="absolute inset-x-0 bottom-0 p-7 text-white sm:p-9">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#e7d18d] xl:text-[11px]">
                   {venue.eyebrow}
                 </p>
-                <h3 className="mt-3 text-3xl font-medium tracking-[-0.04em] text-[#14271d] sm:text-4xl">
+                <h3 className="mt-3 text-3xl font-medium tracking-[-0.04em] sm:text-4xl">
                   {venue.name}
                 </h3>
-                <p className="mt-4 text-sm leading-7 text-[#667269] xl:text-base xl:leading-8">
-                  {venue.description}
-                </p>
-                <Link
-                  href={venue.href}
-                  {...(venue.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
-                  className="mt-7 inline-flex h-11 items-center gap-3 rounded-full bg-[#2f644b] px-6 text-[10px] font-bold uppercase tracking-[0.13em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#3a765a] hover:shadow-[0_12px_30px_rgba(23,59,42,0.16)] xl:text-[11px]"
-                >
-                  {venue.action}
-                  <span aria-hidden="true" className="text-[#e7d18d]">↗</span>
-                </Link>
+
+                <div className="mt-4 max-h-52 translate-y-0 overflow-hidden opacity-100 transition-[max-height,opacity,transform] duration-500 ease-out lg:max-h-0 lg:translate-y-5 lg:opacity-0 lg:group-hover:max-h-52 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-focus-within:max-h-52 lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100">
+                  <p className="max-w-xl text-sm leading-7 text-white/78 xl:text-base xl:leading-8">
+                    {venue.description}
+                  </p>
+                  <Link
+                    href={venue.href}
+                    {...(venue.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                    className="mt-6 inline-flex h-11 w-fit items-center gap-3 rounded-full bg-[#e7d18d] px-6 text-[10px] font-bold uppercase tracking-[0.13em] text-[#10281e] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f3dfa0] hover:shadow-[0_12px_30px_rgba(0,0,0,0.22)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white xl:text-[11px]"
+                  >
+                    {venue.action}
+                    <span aria-hidden="true">↗</span>
+                  </Link>
+                </div>
               </div>
             </article>
           ))}
         </div>
-      </Shell>
+      </div>
     </section>
   );
 }

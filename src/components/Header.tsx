@@ -491,9 +491,11 @@ export default function Header() {
       {activeSection && (
         <div
           id="desktop-mega-menu"
-          className={`${isScrolled ? "top-[110px]" : "top-[121px]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-3rem))] -translate-x-1/2 overflow-hidden rounded-t-none rounded-b-[1.6rem] border border-t-0 border-white/10 bg-[#254936] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block`}
+          className={`${isScrolled ? "top-[109px]" : "top-[120px]"} absolute left-1/2 z-30 hidden h-[360px] w-[min(820px,calc(100vw-3rem))] -translate-x-1/2 overflow-hidden rounded-t-none rounded-b-[1.6rem] border border-t-0 border-white/10 bg-[#254936] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block`}
         >
-          <div className="grid min-h-[285px] grid-cols-[0.82fr_1.18fr_1fr]">
+          {/* Fixed height and fixed column proportions keep every section's
+              mega menu aligned, regardless of how many highlight links it has. */}
+          <div className="grid h-full grid-cols-[0.82fr_1.18fr_1fr]">
             <div className="border-r border-white/12 px-5 pb-5 pt-7">
               <p className="mb-3 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.18em] text-[#d8b65b]">{activeSection.eyebrow}</p>
               <Link
@@ -551,7 +553,7 @@ export default function Header() {
                     onFocus={() => {
                       if (sectionHasLinkPreviews) setHoveredPreviewIndex(index);
                     }}
-                    className={`${sectionHasLinkPreviews && hoveredPreviewIndex === index ? "bg-[#56725f] text-[#f1d98f]" : "text-white/72"} rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase leading-4 tracking-[0.04em] transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f1d98f]`}
+                    className={`${sectionHasLinkPreviews && hoveredPreviewIndex === index ? "bg-[#56725f] text-[#f1d98f]" : "text-white/72"} rounded-full px-3 py-1 text-[11px] font-semibold uppercase leading-4 tracking-[0.04em] transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f1d98f]`}
                   >
                     {link.label}
                   </Link>

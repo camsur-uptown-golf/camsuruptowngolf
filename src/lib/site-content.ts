@@ -153,21 +153,45 @@ export const CONCEPTS = [
 
 /** Shared editorial headline for the individual hole pages. */
 const COURSE_HEADLINE = "A Great Start for CamSur Uptown Golf Club, and for You";
-const LANDSCAPE_ROUTING_HOLES = new Set([1, 2, 3, 4, 7, 11, 12, 13, 14, 18]);
+const ROUTING_IMAGE_DIMENSIONS = [
+  { width: 2880, height: 1814 },
+  { width: 2880, height: 1171 },
+  { width: 1440, height: 2880 },
+  { width: 1648, height: 2880 },
+  { width: 2173, height: 2880 },
+  { width: 1360, height: 2880 },
+  { width: 1895, height: 2880 },
+  { width: 2034, height: 2880 },
+  { width: 1672, height: 2880 },
+  { width: 1218, height: 2880 },
+  { width: 2880, height: 1520 },
+  { width: 2880, height: 1879 },
+  { width: 2880, height: 1294 },
+  { width: 2880, height: 1777 },
+  { width: 1348, height: 2880 },
+  { width: 2188, height: 2880 },
+  { width: 1728, height: 2566 },
+  { width: 2880, height: 1532 },
+] as const;
 
 export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
   const hole = index + 1;
   const concept = CONCEPTS.find((item) => item.holes.some((itemHole) => itemHole === hole));
+  const routingImageDimensions = ROUTING_IMAGE_DIMENSIONS[index];
 
   if (!concept) throw new Error(`Missing course artwork for hole ${hole}`);
+  if (!routingImageDimensions) throw new Error(`Missing routing image dimensions for hole ${hole}`);
 
   return {
     /* Ang slug ang huling bahagi ng /golf/courses/no-1 … no-18. Walang
        leading zero — "no-1", hindi "no-01". */
     slug: `no-${hole}`,
     image: `/golf/aerial-holes/hole-${String(hole).padStart(2, "0")}-aerial.png`,
-    routingImage: `/golf/map-hole-crops-highlight-v3/hole-${String(hole).padStart(2, "0")}-map.webp`,
-    routingOrientation: LANDSCAPE_ROUTING_HOLES.has(hole) ? "landscape" as const : "portrait" as const,
+    /* Direct PNG exports with routing lines: 1.png = Hole 1, and so on. */
+    routingImage: `/golf/official-hole-maps/hole-${String(hole).padStart(2, "0")}-with-lines.png`,
+    routingOrientation: routingImageDimensions.width >= routingImageDimensions.height ? "landscape" as const : "portrait" as const,
+    routingWidth: routingImageDimensions.width,
+    routingHeight: routingImageDimensions.height,
     title: COURSE_HEADLINE,
     description: HOLE_PROFILES[hole].description,
     holes: [hole] as const,

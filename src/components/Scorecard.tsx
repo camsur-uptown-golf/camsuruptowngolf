@@ -1,43 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { HOLE_PROFILES, metresToYards } from "@/lib/course-holes";
+import { HOLE_PROFILES } from "@/lib/course-holes";
 
 /**
- * Buong 18-hole scorecard na may tee selector.
- *
- * TODO (para sa club): ang Black back tee lang ang totoong datos — galing iyon sa
- * `blueMetres` sa course-holes.ts. Ang Blue, White, Green, Red, at Yellow ay
- * hinango mula sa Black sa pamamagitan ng ratio, at ang HCP ay heuristic
- * lamang. Pansamantala silang lahat hanggang maibigay ang opisyal na
- * scorecard ng club. Kapag dumating iyon, ilagay ang bawat tee bilang
- * sariling hanay sa HOLE_PROFILES at alisin ang mga ratio dito.
- */
-/**
- * Ang `color` ay ang mismong kulay ng tee marker; ang `row` ay ang parehong
- * kulay na nilapat sa puti sa mga 8% — hindi ito rgba kundi buo nang hex
- * dahil sticky ang unang haligi ng talahanayan, at kailangang hindi
- * aninag ang background nito habang dumadaan ang ibang hanay sa ilalim.
+ * Buong 18-hole scorecard. Nakikita ang lahat ng tee colors, pero Black
+ * back-tee distances lang ang ipinapakita dahil iyon lang ang kasalukuyang
+ * kumpirmadong set ng yardages.
  */
 const TEES = [
   { name: "Black", ratio: 1, color: "#111713", row: "#eef0ee" },
-  { name: "Blue", ratio: 0.97, color: "#285cce", row: "#eef2fb" },
-  { name: "White", ratio: 0.93, color: "#ffffff", row: "#ffffff" },
-  { name: "Green", ratio: 0.86, color: "#2f644b", row: "#eef4f0" },
-  { name: "Red", ratio: 0.79, color: "#d6322c", row: "#fdf0ef" },
-  { name: "Yellow", ratio: 0.72, color: "#f2d719", row: "#fdfaea" },
+  { name: "Blue", ratio: null, color: "#285cce", row: "#eef2fb" },
+  { name: "White", ratio: null, color: "#ffffff", row: "#ffffff" },
+  { name: "Red", ratio: null, color: "#d6322c", row: "#fdf0ef" },
+  { name: "Yellow", ratio: null, color: "#f2d719", row: "#fdfaea" },
 ] as const;
 
-const HOLE_ONE_TEES = [
-  { name: "Black", ratio: 1, color: "#111713", row: "#eef0ee", x: 1430, y: 138 },
-  { name: "Yellow", ratio: null, color: "#f2d719", row: "#fdfaea", x: 1402, y: 166 },
-  { name: "White", ratio: null, color: "#ffffff", row: "#ffffff", x: 1370, y: 198 },
-  { name: "Blue", ratio: null, color: "#285cce", row: "#eef2fb", x: 1322, y: 268 },
-  { name: "Red", ratio: null, color: "#d6322c", row: "#fdf0ef", x: 1234, y: 376 },
-] as const;
-
-type Tee = { name: string; ratio: number | null; color: string; row: string };
+type Tee = (typeof TEES)[number];
 
 const HOLES = Array.from({ length: 18 }, (_, index) => index + 1);
 const FRONT_NINE = HOLES.slice(0, 9);
@@ -63,14 +43,11 @@ const STROKE_INDEX: Record<number, number> = (() => {
  * bilang sa scorecard at sa stat bar sa itaas ng pahina.
  */
 const yardsFor = (hole: number, ratio: number | null) =>
-  ratio === null
-    ? null
-    : ratio === 1
-    ? HOLE_PROFILES[hole].yards
-    : metresToYards(Math.round(HOLE_PROFILES[hole].blueMetres * ratio));
+  ratio === 1 ? HOLE_PROFILES[hole].yards : null;
 
 const sum = (values: number[]) => values.reduce((total, value) => total + value, 0);
-const sumKnown = (values: (number | null)[]) => values.every((value): value is number => value !== null) ? sum(values) : null;
+const sumKnown = (values: (number | null)[]) =>
+  values.every((value): value is number => value !== null) ? sum(values) : null;
 
 function ChevronIcon({ open }: { open: boolean }) {
   return (
@@ -135,11 +112,6 @@ function Nine({
         </tr>
       </thead>
       <tbody className="text-[#14271d]">
-        {/* Sinusundan ng hanay ng distansya ang napiling tee: ang buong linya
-            ay may bahagyang tina ng kulay nito, may tuldok sa tabi ng pangalan,
-            at may makapal na gilid sa kaliwa. Sa kulay mismo hindi puwedeng
-            isulat ang teksto — hindi mababasa ang dilaw at puti sa ganitong
-            background. */}
         <tr style={{ backgroundColor: tee.row }}>
           <th
             scope="row"
@@ -152,16 +124,20 @@ function Nine({
                 style={{ backgroundColor: tee.color }}
                 aria-hidden="true"
               />
-              {tee.name}
+              Yards
             </span>
           </th>
           {yards.map((value, index) => (
             <td key={holes[index]} className={`${cell} ${isCurrent(holes[index]) ? "bg-[#f1d98f]/45 font-semibold" : ""}`}>
-              {value ?? "—"}
+              {value ?? ""}
             </td>
           ))}
-          <td className={`${cell} font-semibold`}>{sumKnown(yards) ?? "—"}</td>
-          {closing ? <td className={`${cell} font-semibold`}>{closing.yards !== null && sumKnown(yards) !== null ? closing.yards + (sumKnown(yards) ?? 0) : "—"}</td> : null}
+          <td className={`${cell} font-semibold`}>{sumKnown(yards) ?? ""}</td>
+          {closing ? (
+            <td className={`${cell} font-semibold`}>
+              {closing.yards !== null && sumKnown(yards) !== null ? closing.yards + (sumKnown(yards) ?? 0) : ""}
+            </td>
+          ) : null}
         </tr>
         <tr className="bg-[#f7f5ee]">
           <th scope="row" className={`${rowLabel} bg-[#f7f5ee] text-[#4f5d55]`}>
@@ -196,61 +172,55 @@ export default function Scorecard({
   currentHole,
   photoSrc,
   photoOrientation,
+  photoWidth,
+  photoHeight,
 }: {
   currentHole?: number;
   photoSrc: string;
   photoOrientation: "landscape" | "portrait";
+  photoWidth: number;
+  photoHeight: number;
 }) {
-  const holeOne = currentHole === 1;
   const landscapePlan = photoOrientation === "landscape";
-  const teeOptions = holeOne ? HOLE_ONE_TEES : TEES;
+  const holeOne = currentHole === 1;
   const [teeIndex, setTeeIndex] = useState(0);
   const [open, setOpen] = useState(false);
-  const selectorRef = useRef<HTMLDivElement>(null);
-  const tee = teeOptions[teeIndex] ?? teeOptions[0];
-
-  useEffect(() => {
-    if (!open) return;
-
-    const closeOnOutside = (event: PointerEvent) => {
-      if (selectorRef.current && !selectorRef.current.contains(event.target as Node)) setOpen(false);
-    };
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-
-    document.addEventListener("pointerdown", closeOnOutside);
-    window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.removeEventListener("pointerdown", closeOnOutside);
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [open]);
-
+  const tee = TEES[teeIndex] ?? TEES[0];
+  const currentProfile = currentHole ? HOLE_PROFILES[currentHole] : undefined;
   const frontYards = sumKnown(FRONT_NINE.map((hole) => yardsFor(hole, tee.ratio)));
   const frontPar = sum(FRONT_NINE.map((hole) => HOLE_PROFILES[hole].par));
 
   return (
     <div className={`grid gap-8 lg:items-start lg:gap-10 ${landscapePlan ? "lg:grid-cols-[400px_minmax(0,1fr)] xl:grid-cols-[520px_minmax(0,1fr)]" : holeOne ? "lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[420px_minmax(0,1fr)]" : "lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]"}`}>
       <figure className={`mx-auto w-full lg:mx-0 lg:sticky lg:top-28 ${landscapePlan ? "max-w-[720px]" : holeOne ? "max-w-[420px]" : "max-w-[340px]"}`}>
-        <div className={`relative w-full overflow-hidden border border-[#173b2a]/12 bg-[#f7f5ee] ${landscapePlan ? "aspect-[8/3]" : "aspect-[2/3]"}`}>
+        <div
+          className="relative w-full overflow-hidden border border-[#173b2a]/12 bg-white"
+          style={{ aspectRatio: photoWidth / photoHeight }}
+        >
           <Image
             src={photoSrc}
-            alt={currentHole ? `Top-down routing plan for CamSur Uptown Hole ${currentHole}` : "Top-down routing plan of the CamSur Uptown golf course"}
+            alt={currentHole ? `CamSur Uptown course masterplan with Hole ${currentHole} highlighted` : "CamSur Uptown golf course masterplan"}
             fill
             sizes={landscapePlan ? "(max-width: 1023px) min(100vw - 3rem, 720px), 520px" : "(max-width: 1023px) min(100vw - 3rem, 420px), 420px"}
             className="object-contain"
           />
         </div>
-        <figcaption className="mt-3 text-center font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f] lg:text-left">
-          {currentHole ? `Hole ${String(currentHole).padStart(2, "0")} · Top-down routing plan` : "Top-down routing plan"}
+        <figcaption className="mt-3 flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 text-center font-navigation uppercase lg:justify-start lg:text-left">
+          <span className="text-[10px] font-bold tracking-[0.16em] text-[#98782f]">
+            {currentHole ? `Hole ${String(currentHole).padStart(2, "0")} · Official course masterplan` : "Official course masterplan"}
+          </span>
+          {currentProfile ? (
+            <span className="text-sm font-bold tracking-[0.08em] text-[#14271d]">
+              {currentProfile.blueMetres} m · Black tee
+            </span>
+          ) : null}
         </figcaption>
       </figure>
 
       {/* min-w-0: kung wala ito, lumalaki ang grid column hanggang sa
           min-w ng talahanayan (560px) at naputol ang card sa telepono. */}
       <div className="min-w-0">
-      <div ref={selectorRef} className="relative max-w-md">
+      <div className="relative max-w-md">
         <button
           type="button"
           onClick={() => setOpen((current) => !current)}
@@ -260,7 +230,6 @@ export default function Scorecard({
         >
           <span className="inline-flex items-center gap-2">
             Select tees
-            {/* May kulay na ngayon ang lahat ng tee, hindi lang ang sa butas 1. */}
             <span className="h-3 w-3 rounded-full border border-[#173b2a]/45" style={{ backgroundColor: tee.color }} aria-hidden="true" />
             <span className="text-[#98782f]">{tee.name}</span>
           </span>
@@ -273,7 +242,7 @@ export default function Scorecard({
             aria-label="Select tees"
             className="absolute inset-x-0 top-full z-20 border border-t-0 border-[#173b2a]/15 bg-white shadow-[0_18px_44px_rgba(20,45,32,0.14)]"
           >
-            {teeOptions.map((option, index) => (
+            {TEES.map((option, index) => (
               <li key={option.name} role="option" aria-selected={index === teeIndex}>
                 <button
                   type="button"
@@ -312,7 +281,7 @@ export default function Scorecard({
       </div>
 
         <p className="mt-4 font-navigation text-[10px] font-medium uppercase tracking-[0.14em] text-[#8a938c]">
-          {holeOne ? "Black back-tee concept distance only · Other tee distances pending survey" : "Distances in yards · Provisional concept values"}
+          Black tee distances only · Other tee distances to be confirmed
         </p>
       </div>
     </div>
