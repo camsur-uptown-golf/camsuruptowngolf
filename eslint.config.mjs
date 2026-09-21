@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Mga scratch script na hindi kasama sa app at hindi rin naka-commit.
+    "tmp/**",
+    "output/**",
   ]),
 ]);
 

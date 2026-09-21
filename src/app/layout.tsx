@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Geist, Geist_Mono, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
+import PageCurtain from "@/components/PageCurtain";
 import RouteScrollReset from "@/components/RouteScrollReset";
 import "./globals.css";
 
@@ -42,6 +43,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Nauuna sa RouteScrollReset: pareho silang nakikinig sa capture
+            phase, at kailangang makansela muna ng kurtina ang click bago
+            mag-scroll pataas ang kasalukuyang pahina. */}
+        <PageCurtain />
         <RouteScrollReset />
         <Header />
         {children}

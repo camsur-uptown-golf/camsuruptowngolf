@@ -25,6 +25,10 @@ export default function RouteScrollReset() {
 
   useEffect(() => {
     const resetBeforeInternalNavigation = (event: MouseEvent) => {
+      /* Kinakansela ng PageCurtain ang click para ito na ang maghatid sa
+         bagong ruta. Kung mag-i-scroll pa rin tayo dito, tatalon ang pahina
+         bago pa man tumakip ang kurtina at kitang-kita iyon. */
+      if (event.defaultPrevented) return;
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
       const target = event.target;

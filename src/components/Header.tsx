@@ -247,7 +247,10 @@ export default function Header() {
       <div className={`${isScrolled ? "py-3 lg:py-3" : "py-5 lg:py-6"} pointer-events-none relative z-40 mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-5 px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8`}>
         <Link
           href="/"
-          className={`${isScrolled ? "h-14 w-14" : pathname === "/" ? "h-44 w-[132px] lg:h-52 lg:w-[156px]" : "h-36 w-[108px] lg:h-44 lg:w-[132px]"} pointer-events-auto relative block shrink-0 justify-self-start`}
+          /* Iisang sukat sa lahat ng route. Dati ay may hiwalay na mas maliit
+             na sukat ang lahat maliban sa "/", kaya lumiliit ang buong header
+             sa bawat paglipat ng pahina. Ang sukat ng homepage ang sinusunod. */
+          className={`${isScrolled ? "h-14 w-14" : "h-44 w-[132px] lg:h-52 lg:w-[156px]"} pointer-events-auto relative block shrink-0 justify-self-start`}
           aria-label="Camsur Uptown Golf Club — home"
         >
           <span data-logo="full" className={`${isScrolled ? "invisible opacity-0" : "visible opacity-100"} absolute inset-0`}>
@@ -352,7 +355,7 @@ export default function Header() {
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
-        className={`${mobileMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"} ${isScrolled ? "top-[5.5rem]" : "top-[11.5rem] sm:top-[6.5rem]"} fixed inset-x-4 z-30 max-h-[calc(100svh-12.5rem)] overflow-y-auto rounded-[1.75rem] border border-white/12 bg-[#214333]/98 p-3 text-white shadow-[0_30px_80px_rgba(0,0,0,0.34)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out sm:left-auto sm:right-6 sm:w-[390px] sm:max-h-[calc(100svh-7.5rem)] lg:hidden`}
+        className={`${mobileMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"} ${isScrolled ? "top-[5.5rem]" : "top-[13rem] sm:top-[6.5rem]"} fixed inset-x-4 z-30 max-h-[calc(100svh-12.5rem)] overflow-y-auto rounded-[1.75rem] border border-white/12 bg-[#214333]/98 p-3 text-white shadow-[0_30px_80px_rgba(0,0,0,0.34)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out sm:left-auto sm:right-6 sm:w-[390px] sm:max-h-[calc(100svh-7.5rem)] lg:hidden`}
       >
         {mobileSubsection ? (
           <div key={mobileSubsection.slug} className="nav-panel-enter">
@@ -471,7 +474,7 @@ export default function Header() {
       <nav
         data-nav="compact"
         aria-label="Compact primary navigation"
-        className={`${isScrolled && (showCompactNav || openMenu) ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} ${openMenu ? "lg:flex w-[min(820px,calc(100vw-3rem))] items-center justify-between gap-0.5 rounded-t-[1.6rem] rounded-b-none border-b-white/25 bg-[#254936] px-5 py-2 shadow-none" : "lg:grid w-[min(740px,calc(100vw-3rem))] grid-flow-col auto-cols-max items-center justify-evenly rounded-full border-b-[#d8b65b]/25 bg-[#2b553f] p-1 shadow-[0_10px_28px_rgba(0,0,0,0.18)]"} absolute left-1/2 top-[70px] z-50 hidden -translate-x-1/2 border border-[#d8b65b]/25 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
+        className={`${isScrolled && (showCompactNav || openMenu) ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} ${openMenu ? "lg:flex w-[min(820px,calc(100vw-3rem))] items-center justify-between gap-0.5 rounded-t-[1.6rem] rounded-b-none border-b-white/25 bg-[#254936] px-5 py-2 shadow-none" : "lg:grid w-[min(740px,calc(100vw-3rem))] grid-flow-col auto-cols-max items-center justify-evenly rounded-full border-b-[#d8b65b]/25 bg-[#2b553f] p-1 shadow-[0_10px_28px_rgba(0,0,0,0.18)]"} absolute left-1/2 top-[70px] z-50 hidden h-12 -translate-x-1/2 border border-[#d8b65b]/25 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
       >
         {SITE_SECTIONS.map((item) => (
           <button
@@ -481,7 +484,9 @@ export default function Header() {
             aria-expanded={openMenu === item.slug}
             aria-haspopup="true"
             aria-controls="desktop-mega-menu"
-            className={`${openMenu === item.slug ? "bg-[#56725f] text-[#f3dda0]" : ""} pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-3 py-2 transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f3dda0] xl:px-3.5`}
+            /* Dapat tumugma ang py sa hero nav sa itaas: doon ay py-2.5.
+               Kapag nagkaiba, mas masikip ang pills kapag naka-scroll. */
+            className={`${openMenu === item.slug ? "bg-[#56725f] text-[#f3dda0]" : ""} pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-3 py-2.5 transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f3dda0] xl:px-3.5`}
           >
             {item.label.toUpperCase()}
           </button>
@@ -491,6 +496,10 @@ export default function Header() {
       {activeSection && (
         <div
           id="desktop-mega-menu"
+          /* Magkaibang `top` kada estado dahil magkaiba ang ibaba ng dalawang
+             nav: 138px ang hero, 120px ang compact. Ang panel ay nakapatong
+             nang ilang pixel sa ilalim ng nav (z-50, kaparehong #254936) para
+             walang tahi sa dugtungan — huwag itong gawing eksaktong magkadikit. */
           className={`${isScrolled ? "top-[109px]" : "top-[120px]"} absolute left-1/2 z-30 hidden h-[360px] w-[min(820px,calc(100vw-3rem))] -translate-x-1/2 overflow-hidden rounded-t-none rounded-b-[1.6rem] border border-t-0 border-white/10 bg-[#254936] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block`}
         >
           {/* Fixed height and fixed column proportions keep every section's

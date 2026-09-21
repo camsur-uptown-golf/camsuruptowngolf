@@ -73,7 +73,7 @@ export default function PackageItineraryPage({ active, eyebrow, title, descripti
                       <p className="font-navigation text-[9px] font-bold uppercase tracking-[0.2em] text-[#98782f]">{day.label}</p>
                       <h3 className="mt-3 text-xl font-semibold leading-snug tracking-[-0.025em] sm:text-2xl">{day.title}</h3>
                       <p className="mt-3 text-sm leading-7 text-[#5d685f]">{day.intro}</p>
-                      <div className="mt-6 space-y-4">{day.moments.map(([label, copy]) => <div key={label} className="grid gap-1 sm:grid-cols-[70px_1fr] sm:gap-4"><p className="font-navigation text-[9px] font-bold uppercase tracking-[0.15em] text-[#2f644b]">{label}</p><p className="text-sm leading-7 text-[#59665e]">{copy}</p></div>)}</div>
+                      <div className="mt-6 space-y-4">{day.moments.map(([label, copy]) => <div key={label} className="grid gap-1 sm:grid-cols-[70px_1fr] sm:items-baseline sm:gap-4"><p className="font-navigation text-[9px] font-bold uppercase tracking-[0.15em] text-[#2f644b]">{label}</p><p className="text-sm leading-7 text-[#59665e]">{copy}</p></div>)}</div>
                     </div>
                   </details>
                 ))}

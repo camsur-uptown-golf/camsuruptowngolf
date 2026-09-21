@@ -60,15 +60,22 @@ export default function Footer() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" />
       <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-[#c9a54e]/[0.035] blur-3xl" aria-hidden="true" />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:px-8 lg:py-20">
+      {/* Hiwalay ang pt at pb: ang itaas lang ang hiniggpitan. Maluwag pa rin
+          ang ibaba dahil may copyright bar pang kasunod. */}
+      <div className="relative mx-auto max-w-7xl px-6 pb-14 pt-8 sm:pb-16 sm:pt-10 lg:px-8 lg:pb-20 lg:pt-12">
         <div className="grid gap-14 lg:grid-cols-[0.9fr_1.8fr_1.15fr] lg:gap-12">
           <div>
+            {/* Kasinlaki ng logo sa header (h-44 / lg:h-52) para iisa ang
+                sukat ng marka sa itaas at ibaba ng pahina. Ang width at
+                height ay katumbas ng aktwal na lapad na ipinapakita, kung
+                hindi ay masyadong maliit ang srcset na binubuo ng Next at
+                lumalabo ito sa mga screen na 2x. */}
             <Image
               src="/camsur-uptown-logo.png"
               alt="Camsur Uptown Golf Club"
-              width={130}
-              height={173}
-              className="h-32 w-auto"
+              width={176}
+              height={234}
+              className="h-44 w-auto lg:h-52"
             />
             <div className="mt-6 space-y-1.5 text-sm leading-6 text-white/62">
               <p className="font-semibold text-white/85">CamSur Uptown Golf Club</p>
