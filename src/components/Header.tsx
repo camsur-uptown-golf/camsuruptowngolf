@@ -894,11 +894,13 @@ export default function Header() {
                 ng kilos ng gitnang haligi pag-hover, pero hiwalay na state
                 (`hoveredExtra`) para hindi madagdagan ang bilang doon.
 
-                Walang `border-l`: ang hairline sa ilalim ng heading na ang
-                naghahati ngayon, at ang patayong guhit ay bumabalangkas lang
-                sa kawalan sa ilalim ng iisang link dito. */}
+                May `border-l` gaya ng `border-r` ng unang haligi: tatlong
+                hanay ito, kaya dalawa ang dapat na hati. Inalis ito nang
+                minsan sa akala na mas malinis kapag hairline lang sa ilalim
+                ng heading ang naghahati — pero kulang ang hitsura kapag
+                may guhit ang isang gilid at wala sa kabila. */}
             {sectionExtras && (
-              <div className="px-6 pb-6 pt-9" onMouseLeave={() => setHoveredExtra(null)}>
+              <div className="border-l border-white/10 px-6 pb-6 pt-9" onMouseLeave={() => setHoveredExtra(null)}>
                 <p className={MEGA_HEADING}>{sectionExtras.heading}</p>
                 <div className="grid grid-cols-1">
                   {sectionExtras.items.map((extra) => {

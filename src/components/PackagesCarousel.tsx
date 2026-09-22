@@ -14,7 +14,10 @@ export default function PackagesCarousel() {
     <section id="home-packages" className="bg-[#f7f5ee] py-20 text-[#1b2730] sm:py-24 lg:py-28">
       <div className="mx-auto grid max-w-[1120px] gap-12 px-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-start lg:gap-16 lg:px-8 xl:gap-20">
         <div className="lg:pt-2">
-          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#5b625f] sm:text-[11px]">
+          {/* `#98782f`: kaparehong ginto ng eyebrow sa hero. Dating kulay-abo
+              ito (`#5b625f`) at mukhang label na lang sa halip na bahagi ng
+              tatak. Sundan din ang OffCourseSection kapag binago ito. */}
+          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f] sm:text-[11px]">
             Packages
           </p>
           <h2 className="mt-5 font-serif text-[clamp(3rem,5vw,5rem)] font-normal leading-[0.96] tracking-[-0.045em]">

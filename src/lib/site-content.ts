@@ -17,8 +17,10 @@ export const CALL_WINDOWS = [
   "4:00 – 6:00 PM",
 ] as const;
 
-// TODO: palitan ng totoong contact number ng club
-export const CLUB_PHONE = { label: "(054) 123 4567", href: "tel:+63541234567" } as const;
+/* Totoong numero na ito ng club. Ang `href` ay nasa E.164 — `+63` at
+   walang unang zero — para tumawag ito nang tama mula sa ibang bansa;
+   ang `label` ang lokal na anyo na nakikita ng bumibisita. */
+export const CLUB_PHONE = { label: "09163007914", href: "tel:+639163007914" } as const;
 
 /* TODO (para sa club): palitan ng totoong inbox na tumatanggap ng inquiry. */
 export const CLUB_EMAIL = { label: "inquiries@camsuruptown.com", href: "mailto:inquiries@camsuruptown.com" } as const;

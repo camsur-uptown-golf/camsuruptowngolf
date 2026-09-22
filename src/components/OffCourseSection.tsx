@@ -42,7 +42,8 @@ export default function OffCourseSection() {
             Dating nakagitna ito at walang eyebrow, kaya mukhang galing sa
             ibang pahina. Kapag binago ang isa, sundan ang isa. */}
         <header className="max-w-[760px]">
-          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#5b625f] sm:text-[11px]">
+          {/* `#98782f`: kaparehong ginto ng eyebrow sa hero at ng Packages. */}
+          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f] sm:text-[11px]">
             More at CamSur
           </p>
           <h2 className="mt-5 font-serif text-[clamp(3rem,5vw,5rem)] font-normal leading-[0.96] tracking-[-0.045em]">

@@ -186,9 +186,14 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
 
         {/* Kaparehong cream ng aerial-study sa itaas at ng call-back form sa
             ibaba. Dating `#edf0e8` — banayad na sage iyon, pero sapat ang
-            pagkakaiba para magmukhang ibang banda sa gitna ng pahina. Ang
-            border-t at ang mga naka-border na table ang naghihiwalay. */}
-        <section className="relative isolate scroll-mt-24 overflow-hidden border-t border-[#173b2a]/10 bg-[#f7f5ee] py-14 sm:py-16">
+            pagkakaiba para magmukhang ibang banda sa gitna ng pahina.
+
+            Walang `border-t` dito, hindi tulad ng mga section sa ibaba: may
+            sariling `border-y` na ang stat bar sa itaas, kaya dalawang guhit
+            ang nabubuo na may 56px na walang laman sa pagitan. Ang ibabang
+            guhit ng stat bar at ang mga naka-border na table ang naghihiwalay
+            nito. Kapag inalis ang stat bar, ibalik ang `border-t` dito. */}
+        <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] py-14 sm:py-16">
           <Container>
             {/* Dating inuulit lang nito ang parehong description na nasa
                 itaas, kasama ang "Hole 1" na chip na hindi na kailangan sa
