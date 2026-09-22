@@ -1,3 +1,4 @@
+import { CLUBHOUSE_SPACES } from "@/lib/clubhouse";
 import { HOLE_PROFILES } from "@/lib/course-holes";
 
 /**
@@ -185,9 +186,15 @@ export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
   if (!routingImageDimensions) throw new Error(`Missing routing image dimensions for hole ${hole}`);
 
   return {
-    /* Ang slug ang huling bahagi ng /golf/courses/no-1 … no-18. Walang
-       leading zero — "no-1", hindi "no-01". */
-    slug: `no-${hole}`,
+    /* Ang slug ang huling bahagi ng /golf/courses/hole-no.1 … hole-no.18.
+       Walang leading zero — "hole-no.1", hindi "hole-no.01".
+
+       May tuldok ito bago ang bilang. Tandaan: ang huling bahagi ng path na
+       may tuldok ay mukhang file sa ilang host at proxy, at may naghahain
+       ng static file muna bago ang ruta. Kapag may napansing 404 sa
+       production na wala sa dev, ito ang unang tingnan — `hole-no-1` ang
+       ligtas na anyo. */
+    slug: `hole-no.${hole}`,
     image: `/golf/aerial-holes/hole-${String(hole).padStart(2, "0")}-aerial.png`,
     /* Direct PNG exports with routing lines: 1.png = Hole 1, and so on. */
     routingImage: `/golf/official-hole-maps/hole-${String(hole).padStart(2, "0")}-with-lines.png`,
@@ -202,21 +209,6 @@ export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
 });
 
 export const ACCOMMODATIONS = [
-  {
-    slug: "clubhouse-lodge",
-    image: "/clubhouse/clubhouse-hero.jpg",
-    title: "Clubhouse Lodge",
-    eyebrow: "Boutique golf lodge",
-    tagline: "A small lodge at the center of the club.",
-    description:
-      "From the first arrival to the last drink upstairs, Clubhouse Lodge keeps the full club experience around you.",
-    overview: "Clubhouse Lodge is the more personal option for golfers and weekend guests. Warm interiors, covered verandas, and a central location make it a practical base for early tee times, long dinners, and unhurried evenings.",
-    features: [
-      { title: "Close to the clubhouse", description: "Golf services, dining, and the club’s shared spaces are all a few steps away." },
-      { title: "Warm, intimate design", description: "Natural wood, local stone, and comfortable lounges give the lodge its character." },
-      { title: "Relaxed veranda living", description: "Shaded seating for morning coffee or a quiet end to the day." },
-    ],
-  },
   {
     slug: "villa-del-rey",
     image: "/villa-del-rey/hero-4k-cropped.jpg",
@@ -255,7 +247,31 @@ export const SITE_SECTIONS = [
     title: "A landmark clubhouse at the heart of the course",
     description: "A championship golf experience shaped around play, arrival, dining, recovery, and the landscape of Camarines Sur.",
     image: "/golf-hero-aerial-clean-4k.jpg",
-    links: COURSE_PAGES.map((course, index) => ({ label: `No. ${index + 1}`, href: `/golf/courses/${course.slug}` })),
+    links: COURSE_PAGES.map((course, index) => ({ label: `Hole No. ${index + 1}`, href: `/golf/courses/${course.slug}` })),
+  },
+  /* Kasunod ng Golf: dito natatapos ang round, at ang mga espasyong ito ang
+     nakapalibot sa unang tee.
+
+     Diretso sa sariling ruta ang bawat link — `/clubhouse/<id>`. Anchor
+     ito dati (`/clubhouse#<id>`) noong walang sariling pahina ang bawat
+     espasyo. Nananatili pa rin ang mga anchor sa `/clubhouse` kaya hindi
+     nasisira ang lumang link, pero hindi na sila ang tinuturo dito.
+
+     Ang `CLUBHOUSE_SPACES` sa lib/clubhouse.ts ang pinagmulan ng parehong
+     listahan. Ang eyebrow at title ay salita sa salita mula sa architectural
+     concept ng VM·STUDIO — huwag palitan nang hindi tinitingnan doon. */
+  {
+    slug: "clubhouse",
+    label: "Clubhouse",
+    eyebrow: "A landscape that became a building",
+    title: "At the heart of the course",
+    description: "A single sculpted volume in four layers — practice and events below, welcome and shop at grade, lounges above, and a bar, pool and gardens on the roof.",
+    image: "/clubhouse/concept/aerial-heart-of-the-course.jpg",
+    links: CLUBHOUSE_SPACES.map((space) => ({
+      label: space.name,
+      href: `/clubhouse/${space.id}`,
+      image: space.image,
+    })),
   },
   {
     slug: "packages",
@@ -269,7 +285,7 @@ export const SITE_SECTIONS = [
        label at ang slug sa href ay dapat tumugma sa PACKAGES doon. */
     links: [
       { label: "Stay & Play", href: "/packages/stay-and-play", image: "/stay-and-play-hero-option-2.png" },
-      { label: "Buddy Golf Trip", href: "/packages/buddy-trip", image: "/buddy-golf-trip-hero-v2.png" },
+      { label: "Buddy Golf Trip", href: "/packages/buddy-trip", image: "/buddy-golf-trip-hero-v4.png" },
     ],
   },
   {
@@ -277,7 +293,7 @@ export const SITE_SECTIONS = [
     label: "Accommodations",
     eyebrow: "Stay at CamSur",
     title: "Three distinctive ways to stay in CamSur",
-    description: "Choose Clubhouse Lodge, Villa Del Rey, or Gota Village Resort for a stay that fits your CamSur visit.",
+    description: "Choose Clubhouse, Villa Del Rey, or Gota Village Resort for a stay that fits your CamSur visit.",
     image: ACCOMMODATIONS[0].image,
     links: ACCOMMODATIONS.map((stay) => ({ label: stay.title, href: `/accommodations/${stay.slug}` })),
   },
@@ -331,7 +347,6 @@ export const SITE_SECTIONS = [
         href: "/dining/vip-dining-bar",
         image: "/dining/vip-dining-bar-hero-clean-4k-v1.png",
       },
-      { label: "Clubhouse", href: "https://visitcamsur.com/facilities/clubhouse", image: "/dining/clubhouse.webp" },
     ],
   },
   {

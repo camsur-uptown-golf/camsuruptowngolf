@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import FairwayDivider from "@/components/FairwayDivider";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import { CLUB_PHONE } from "@/lib/site-content";
@@ -13,7 +14,9 @@ export type PackageDay = {
 };
 
 type Props = {
-  active: "stay-and-play";
+  /* Pareho nang gumagamit nito ang dalawang package. Dati ay "stay-and-play"
+     lang ang tinatanggap, at kinopya ng buddy-trip ang buong markup nito. */
+  active: "stay-and-play" | "buddy-trip";
   eyebrow: string;
   title: string;
   description: string;
@@ -24,7 +27,7 @@ type Props = {
 
 const PACKAGE_LINKS = [
   ["stay-and-play", "Stay & Play"],
-  ["buddy-trip", "Your Buddy Golf Trip"],
+  ["buddy-trip", "Buddy Golf Trip"],
 ] as const;
 
 export default function PackageItineraryPage({ active, eyebrow, title, description, image, days, inclusions }: Props) {
@@ -41,6 +44,10 @@ export default function PackageItineraryPage({ active, eyebrow, title, descripti
             <h1 className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">{title}</h1>
           </div>
         </section>
+
+        <div className="bg-[#f7f5ee]">
+          <Breadcrumbs />
+        </div>
 
         <section className="overflow-hidden bg-[#f7f5ee] py-14 sm:py-18 lg:py-20">
           <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[250px_minmax(0,1fr)] lg:gap-16 lg:px-8">

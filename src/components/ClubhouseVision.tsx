@@ -11,8 +11,8 @@ const LODGE_SPACES = [
       "A sheltered arrival leads into a warm welcome hall, creating a calm transition from the course to the lodge.",
     primary: "/clubhouse/arrival.jpg",
     secondary: "/clubhouse/welcome-hall.jpg",
-    primaryAlt: "Sheltered arrival at Clubhouse Lodge",
-    secondaryAlt: "Welcome hall at Clubhouse Lodge",
+    primaryAlt: "Sheltered arrival at Clubhouse ",
+    secondaryAlt: "Welcome hall at Clubhouse",
   },
   {
     name: "Golf & Lounge",
@@ -21,7 +21,7 @@ const LODGE_SPACES = [
       "The golf shop and members’ lounge keep equipment, coffee, conversation, and fairway views within easy reach.",
     primary: "/clubhouse/pro-shop.jpg",
     secondary: "/clubhouse/members-lounge.jpg",
-    primaryAlt: "Golf shop at Clubhouse Lodge",
+    primaryAlt: "Golf shop at Clubhouse",
     secondaryAlt: "Members lounge overlooking the course",
   },
   {
@@ -59,7 +59,7 @@ export default function ClubhouseVision() {
           Stay close to every part of the day.
         </h2>
         <p data-reveal="up" style={delay(180)} className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#5d685f] sm:text-lg">
-          From the first arrival to the last drink upstairs, Clubhouse Lodge keeps the full club experience around you.
+          From the first arrival to the last drink upstairs, Clubhouse keeps the full club experience around you.
         </p>
         <div data-reveal="up" style={delay(270)} className="mx-auto mt-9 h-px w-20 bg-[#98782f]/50" />
       </div>

@@ -72,15 +72,6 @@ const DINING_VENUES = [
     href: "/dining/vip-dining-bar",
     action: "Explore VIP Dining",
   },
-  {
-    name: "Clubhouse",
-    eyebrow: "Gather at the club",
-    description:
-      "A relaxed gathering place for meals and drinks, close to the activities and the wider resort grounds.",
-    image: "/dining/clubhouse.webp",
-    href: "https://visitcamsur.com/facilities/clubhouse",
-    action: "View the Clubhouse",
-  },
 ] as const;
 
 function PhoneIcon() {
@@ -103,23 +94,23 @@ function DiningVenues() {
       <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-12">
         <EditorialHeading
           kicker="Where to dine"
-          title="Two places to settle in."
-          intro="From an elevated meal at VIP Dining & Bar to relaxed gatherings at the Clubhouse, choose the setting that suits the day."
+          title="A place to settle in."
+          intro="Settle in for an elevated meal at VIP Dining & Bar, with fresh dishes from the connected kitchen and cocktails poured at the bar."
         />
 
-        <div className="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-2">
+        <div className="mt-10 lg:mt-12">
           {DINING_VENUES.map((venue, index) => (
             <article
               key={venue.name}
               data-reveal="up"
               style={delay(index * 100)}
-              className="group relative isolate aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[#173b2a]/12 bg-[#173b2a] shadow-[0_18px_55px_rgba(20,39,29,0.1)] sm:aspect-[3/2]"
+              className="group relative isolate aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[#173b2a]/12 bg-[#173b2a] shadow-[0_18px_55px_rgba(20,39,29,0.1)] sm:aspect-[16/7]"
             >
               <Image
                 src={venue.image}
                 alt={venue.name}
                 fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
+                sizes="(min-width: 1280px) 1184px, 100vw"
                 className="-z-20 object-cover transition duration-700 ease-out group-hover:scale-[1.035] group-focus-within:scale-[1.035]"
               />
               <div

@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import ClubhouseVision from "@/components/ClubhouseVision";
 import FairwayDivider from "@/components/FairwayDivider";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import GotaVillageStays from "@/components/GotaVillageStays";
 import VillaDelReyStays from "@/components/VillaDelReyStays";
@@ -35,7 +35,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
   const previous = ACCOMMODATIONS[(index - 1 + ACCOMMODATIONS.length) % ACCOMMODATIONS.length];
   const next = ACCOMMODATIONS[(index + 1) % ACCOMMODATIONS.length];
   const hasEditorialStayLayout =
-    stay.slug === "clubhouse-lodge" || stay.slug === "villa-del-rey" || stay.slug === "gota-village-resort";
+    stay.slug === "villa-del-rey" || stay.slug === "gota-village-resort";
 
   return (
     <>
@@ -69,8 +69,6 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             } ${
               stay.slug === "villa-del-rey"
                 ? "pb-24 sm:pb-28 lg:pb-32"
-                : stay.slug === "clubhouse-lodge"
-                  ? "pb-24 sm:pb-28 lg:pb-32"
                 : stay.slug === "gota-village-resort"
                   ? "pb-16 sm:pb-20 lg:pb-24"
                   : "pb-28 sm:pb-36 lg:pb-44"
@@ -88,11 +86,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
           {hasEditorialStayLayout ? (
             <a
               href={
-                stay.slug === "villa-del-rey"
-                  ? "#villa-stays"
-                  : stay.slug === "clubhouse-lodge"
-                    ? "#clubhouse-stays"
-                    : "#gota-stays"
+                stay.slug === "villa-del-rey" ? "#villa-stays" : "#gota-stays"
               }
               aria-label={`Explore ${stay.title} stays`}
               className="group absolute bottom-0 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-white"
@@ -107,7 +101,15 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
           ) : null}
         </section>
 
-        {stay.slug === "clubhouse-lodge" ? <ClubhouseVision /> : null}
+        <div className="bg-[#f7f5ee]">
+          <Breadcrumbs />
+        </div>
+
+        {/* Walang <section> dito pagkatapos ng hero — component agad ang
+            kasunod. Cream ang simula ng dalawang stay component, kaya iyon
+            ang ibinibigay dito; kung hindi, lumilitaw ang puti ng body
+            bilang guhit sa pagitan. */}
+
         {stay.slug === "villa-del-rey" ? <VillaDelReyStays /> : null}
         {stay.slug === "gota-village-resort" ? <GotaVillageStays /> : null}
 

@@ -9,6 +9,10 @@ import { ACCOMMODATIONS, CLUB_PHONE, COURSE_PAGES, SITE_SECTIONS } from "@/lib/s
 /* Galing na sa site-content: apat na kopya dati ng parehong placeholder. */
 const { label: PHONE_LABEL, href: PHONE_HREF } = CLUB_PHONE;
 
+/* Nananatiling bahagi ng site ang Dining at gumagana pa rin ang diretsong
+   /dining link, pero hindi na ito ipinapakita sa pangunahing navigation. */
+const NAV_SECTIONS = SITE_SECTIONS.filter((section) => section.slug !== "dining");
+
 /**
  * Anyo ng listahan ng highlight sa mega menu, isa sa bawat section.
  *
@@ -26,6 +30,10 @@ const { label: PHONE_LABEL, href: PHONE_HREF } = CLUB_PHONE;
  */
 const MEGA_STYLES: Record<string, "cards" | "names" | "rules"> = {
   golf: "names",
+  /* Anim na espasyo na may sariling larawan. Hindi `cards`: tatlong haligi
+     ang grid doon, kaya dalawang hilera na may butas sa dulo ang anim.
+     Sa `names` ay lumalabas ang larawan ng espasyo sa preview pag-hover. */
+  clubhouse: "names",
   packages: "cards",
   accommodations: "cards",
   experiences: "names",
@@ -74,25 +82,42 @@ function namesGridClass(count: number) {
  */
 const SECTION_EXTRAS: Record<
   string,
-  { heading: string; items: readonly { label: string; href: string; image?: string }[] }
+  readonly { heading: string; items: readonly { label: string; href: string; image?: string }[] }[]
 > = {
-  golf: {
-    heading: "Competition",
-    items: [
-      {
-        label: "Tournaments",
-        href: "/events",
-        image: "/events/golf-tournaments-full-logo-2026-clean-4k-v3.png",
-      },
-    ],
-  },
-  experiences: {
-    heading: "Discover",
-    /* Maiksi ang label dahil 159px lang ang haligi: sa "CamSur Uptown" ay
-       naiiwan ang arrow sa sariling linya. Wala itong `image` — larawan ng
-       section ang nananatili sa preview, at "Visit the site" ang button. */
-    items: [{ label: "Visit CamSur", href: "https://visitcamsur.com/" }],
-  },
+  golf: [
+    {
+      heading: "Competition",
+      items: [
+        {
+          label: "Tournaments",
+          href: "/events",
+          image: "/events/golf-tournaments-full-logo-2026-clean-4k-v3.png",
+        },
+      ],
+    },
+  ],
+  experiences: [
+    {
+      heading: "Discover",
+      /* Maiksi ang label dahil 159px lang ang haligi: sa "CamSur Uptown" ay
+         naiiwan ang arrow sa sariling linya. Wala itong `image` — larawan ng
+         section ang nananatili sa preview, at "Visit the site" ang button. */
+      items: [{ label: "Visit CamSur", href: "https://visitcamsur.com/" }],
+    },
+    {
+      heading: "Dining",
+      /* Kaparehong link ng CWC Clubhouse sa Dining section. Nandito rin ito
+         dahil pasilidad ng CWC ang lahat ng nasa gitnang haligi, at doon
+         din ito. Kapag pinalitan doon, palitan dito. */
+      items: [
+        {
+          label: "CWC Clubhouse",
+          href: "https://visitcamsur.com/facilities/clubhouse",
+          image: "/dining/clubhouse.webp",
+        },
+      ],
+    },
+  ],
 };
 
 function CalendarIcon() {
@@ -140,8 +165,8 @@ export default function Header() {
   const closeMenuTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollY = useRef(0);
   const compactHeader = useRef(false);
-  const activeSection = SITE_SECTIONS.find((section) => section.slug === openMenu);
-  const mobileSubsection = SITE_SECTIONS.find((section) => section.slug === mobileSection);
+  const activeSection = NAV_SECTIONS.find((section) => section.slug === openMenu);
+  const mobileSubsection = NAV_SECTIONS.find((section) => section.slug === mobileSection);
   const megaStyle = activeSection ? MEGA_STYLES[activeSection.slug] ?? "rules" : "rules";
   /* Ito ang nagpapasya kung tatlo o dalawa ang haligi ng panel. */
   const sectionExtras = activeSection ? SECTION_EXTRAS[activeSection.slug] : undefined;
@@ -481,9 +506,12 @@ export default function Header() {
           <nav
             data-nav="hero"
             aria-label="Primary navigation"
-            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : openMenu ? "visible max-h-16 w-[min(820px,calc(100vw-3rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#254936] px-5 py-2 opacity-100 shadow-none" : "visible max-h-16 w-[min(690px,calc(100vw-3rem))] rounded-full border border-[#d8b65b]/20 bg-[#214936]/88 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.16)]"} ${openMenu ? "flex items-center justify-between gap-0.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
+            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : openMenu ? "visible max-h-16 w-[min(820px,calc(100vw-3rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#254936] px-5 py-2 opacity-100 shadow-none" : /* 760px, hindi 690: 701px ang pitong pindutan sa `xl` plus 12px na
+                   `p-1.5`, kaya lumalabas ng 18px ang EVENTS sa 690. Kapag
+                   may idinagdag sa SITE_SECTIONS, sukatin ulit ito. */
+                "visible max-h-16 w-[min(760px,calc(100vw-3rem))] rounded-full border border-[#d8b65b]/20 bg-[#214936]/88 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.16)]"} ${openMenu ? "flex items-center justify-between gap-0.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
           >
-            {SITE_SECTIONS.map((item) => (
+            {NAV_SECTIONS.map((item) => (
               <button
                 type="button"
                 key={item.slug}
@@ -648,7 +676,7 @@ export default function Header() {
             </div>
 
             <nav aria-label="Mobile primary navigation" className="mt-2 border-t border-white/12">
-              {SITE_SECTIONS.map((item) => {
+              {NAV_SECTIONS.map((item) => {
                 const href = `/${item.slug}`;
                 const isActive = pathname === href || pathname.startsWith(`${href}/`);
 
@@ -704,7 +732,7 @@ export default function Header() {
         aria-label="Compact primary navigation"
         className={`${isScrolled && (showCompactNav || openMenu) ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} ${openMenu ? "lg:flex w-[min(820px,calc(100vw-3rem))] items-center justify-between gap-0.5 rounded-t-[1.6rem] rounded-b-none border-b-white/25 bg-[#254936] px-5 py-2 shadow-none" : "lg:grid w-[min(740px,calc(100vw-3rem))] grid-flow-col auto-cols-max items-center justify-evenly rounded-full border-b-[#d8b65b]/25 bg-[#2b553f] p-1 shadow-[0_10px_28px_rgba(0,0,0,0.18)]"} absolute left-1/2 top-[70px] z-50 hidden h-12 -translate-x-1/2 border border-[#d8b65b]/25 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
       >
-        {SITE_SECTIONS.map((item) => (
+        {NAV_SECTIONS.map((item) => (
           <button
             type="button"
             key={item.slug}
@@ -901,27 +929,35 @@ export default function Header() {
                 may guhit ang isang gilid at wala sa kabila. */}
             {sectionExtras && (
               <div className="border-l border-white/10 px-6 pb-6 pt-9" onMouseLeave={() => setHoveredExtra(null)}>
-                <p className={MEGA_HEADING}>{sectionExtras.heading}</p>
-                <div className="grid grid-cols-1">
-                  {sectionExtras.items.map((extra) => {
-                    const isExternal = extra.href.startsWith("http");
-                    return (
-                      <Link
-                        key={extra.href}
-                        href={extra.href}
-                        target={isExternal ? "_blank" : undefined}
-                        rel={isExternal ? "noreferrer" : undefined}
-                        onClick={closeDesktopMenu}
-                        onMouseEnter={() => setHoveredExtra(extra)}
-                        onFocus={() => setHoveredExtra(extra)}
-                        className={`${hoveredExtra?.href === extra.href ? "text-[#f1d98f]" : "text-white/72"} inline-flex min-h-[34px] items-center gap-1.5 whitespace-nowrap text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#f1d98f]`}
-                      >
-                        {extra.label}
-                        {isExternal && <span aria-hidden="true">↗</span>}
-                      </Link>
-                    );
-                  })}
-                </div>
+                {/* Maaaring maramihan ang pangkat dito. Ang una ay walang
+                    `mt`; ang susunod ay may puwang sa itaas para hindi
+                    magdikit ang hairline ng heading nito sa listahan sa
+                    itaas. */}
+                {sectionExtras.map((group, groupIndex) => (
+                  <div key={group.heading} className={groupIndex > 0 ? "mt-8" : undefined}>
+                    <p className={MEGA_HEADING}>{group.heading}</p>
+                    <div className="grid grid-cols-1">
+                      {group.items.map((extra) => {
+                        const isExternal = extra.href.startsWith("http");
+                        return (
+                          <Link
+                            key={extra.href}
+                            href={extra.href}
+                            target={isExternal ? "_blank" : undefined}
+                            rel={isExternal ? "noreferrer" : undefined}
+                            onClick={closeDesktopMenu}
+                            onMouseEnter={() => setHoveredExtra(extra)}
+                            onFocus={() => setHoveredExtra(extra)}
+                            className={`${hoveredExtra?.href === extra.href ? "text-[#f1d98f]" : "text-white/72"} inline-flex min-h-[34px] items-center gap-1.5 text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#f1d98f]`}
+                          >
+                            {extra.label}
+                            {isExternal && <span aria-hidden="true">↗</span>}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>

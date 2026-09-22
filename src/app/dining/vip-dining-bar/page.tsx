@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import FairwayDivider from "@/components/FairwayDivider";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import { CLUB_PHONE } from "@/lib/site-content";
@@ -72,6 +73,10 @@ export default function VipDiningBarPage() {
             </h1>
           </div>
         </section>
+
+        <div className="bg-[#f7f5ee]">
+          <Breadcrumbs />
+        </div>
 
         <section className="relative overflow-hidden bg-[#f7f5ee] py-16 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">

@@ -40,8 +40,8 @@ export default function PackagesCarousel() {
         <div className="relative pb-[18%] sm:pb-[16%]">
           <div className="relative aspect-[1.48/1] w-[86%] overflow-hidden bg-[#dfe4df]">
             <Image
-              src="/buddy-golf-trip-hero-v2.png"
-              alt="Friends enjoying a golf getaway at CamSur Uptown Golf Club"
+              src="/buddy-golf-trip-hero-v4.png"
+              alt="Four friends enjoying a golf getaway at CamSur Uptown Golf Club"
               fill
               sizes="(max-width: 1023px) 86vw, 660px"
               className="object-cover object-center"

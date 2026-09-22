@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Container } from "@/components/SectionKit";
@@ -121,6 +122,10 @@ export default function TermsOfUsePage() {
             </p>
           </div>
         </section>
+
+        <div className="bg-[#f7f5ee]">
+          <Breadcrumbs />
+        </div>
 
         <section className="py-14 sm:py-20">
           <Container>

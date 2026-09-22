@@ -4,7 +4,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import FairwayDivider from "@/components/FairwayDivider";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
+import ClubhouseDetails from "@/components/ClubhouseDetails";
 import EventsDetails from "@/components/EventsDetails";
 import GolfDetails from "@/components/GolfDetails";
 import DiningDetails from "@/components/DiningDetails";
@@ -38,6 +40,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
   const isPackages = section.slug === "packages";
   const isExperiences = section.slug === "experiences";
   const isDining = section.slug === "dining";
+  const isClubhouse = section.slug === "clubhouse";
 
   /**
    * Ang mga pahinang may sariling detail component: sila ang may fairway
@@ -54,11 +57,14 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
      nakatago ito sa CSS hangga't walang naglalagay ng .is-in, kaya sa
      pahinang walang motion driver ay mananatiling blangko ang teksto. */
   const usesFairwayHero =
-    isGolf || isEvents || isPackages || isAccommodations || isExperiences || isDining;
+    isGolf || isEvents || isPackages || isAccommodations || isExperiences || isDining || isClubhouse;
   const usesHeroParallax = isGolf || isEvents;
 
-  /* Patag ang Golf at Experiences heroes; ang iba lang ang may landscape wave. */
-  const usesFairwayDivider = usesFairwayHero && !isGolf && !isExperiences;
+  /* Patag ang Golf, Experiences at Clubhouse heroes; ang iba lang ang may
+     landscape wave. Sa Clubhouse ay may anim na pahina ng kuwarto sa ilalim
+     nito na patag ang hero — kapag may alon dito, dalawang magkaibang anyo
+     ang isang seksyon. */
+  const usesFairwayDivider = usesFairwayHero && !isGolf && !isExperiences && !isClubhouse;
 
   /* Ang harapang burol ay dapat eksaktong katumbas ng background ng unang
      section sa ilalim — kahit bahagyang pagkakaiba ay lumilitaw bilang tahi. */
@@ -100,7 +106,14 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {usesFairwayDivider && <FairwayDivider fill={dividerFill} />}
           {!isGolf ? (
             <div
-              className={`mx-auto w-full max-w-7xl px-6 pt-64 text-center lg:px-8 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`}
+              /* Naka-kaliwa at nasa lapad ng Shell ang Clubhouse, tugma sa
+                 anim na pahina ng kuwarto. Sa `max-w-7xl` ay hindi tumatapat
+                 ang kaliwang gilid nito sa laman sa ibaba. */
+              className={
+                isClubhouse
+                  ? "mx-auto w-full max-w-4xl px-6 pb-16 pt-56 sm:px-10 sm:pb-20 lg:px-12 xl:max-w-5xl"
+                  : `mx-auto w-full max-w-7xl px-6 pt-64 text-center lg:px-8 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`
+              }
             >
               <p
                 data-reveal={usesFairwayHero ? "up" : undefined}
@@ -111,7 +124,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               <h1
                 data-reveal={usesFairwayHero ? "up" : undefined}
                 style={usesFairwayHero ? ({ "--reveal-delay": "110ms" } as CSSProperties) : undefined}
-                className="mx-auto mt-5 max-w-4xl text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]"
+                className={`mt-5 max-w-4xl text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] ${isClubhouse ? "" : "mx-auto"}`}
               >
                 {section.title}
               </h1>
@@ -142,7 +155,17 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {isExperiences ? <ScrollCue targetId="on-the-water" label="Explore CamSur experiences" /> : null}
         </section>
 
-        {isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isDining ? <DiningDetails /> : (
+        <div className="bg-[#f7f5ee]">
+          <Breadcrumbs />
+        </div>
+
+        {/* Lahat ng landas dito — ang limang detail component at ang
+            fallback — ay nagsisimula sa EDITORIAL_SECTION_ALT (#f7f5ee),
+            kaya iyon ang ibinibigay sa balot na ito. Hindi ito pwedeng
+            ilagay sa loob ng susunod na section: iba-iba ang component
+            kada section, at ang fallback lang ang may <section> dito. */}
+
+        {isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isDining ? <DiningDetails /> : isClubhouse ? <ClubhouseDetails /> : (
         <section className="bg-[#f7f5ee] py-20 text-[#14271d] sm:py-24 lg:py-28">
           {/* Ang ScrollMotion ang naglalagay ng .is-in. Kung wala siya ay
               mananatiling opacity: 0 ang lahat ng data-reveal dito. */}

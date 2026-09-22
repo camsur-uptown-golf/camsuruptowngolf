@@ -81,59 +81,68 @@ function PhoneIcon() {
   );
 }
 
+/**
+ * Ang bilang bilang salita, para sa pamagat.
+ *
+ * Galing sa `OCCASIONS` at hindi naka-sulat: "Four ways to gather well."
+ * ang nakalagay dati samantalang tatlo lang ang nasa listahan.
+ */
+function occasionCountWord() {
+  const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six"];
+  return words[OCCASIONS.length] ?? String(OCCASIONS.length);
+}
+
 function Occasions() {
   return (
     <section id="occasions" className={EDITORIAL_SECTION_ALT}>
-      <Shell>
+      {/* Mas malapad kaysa sa `Shell`: ang larawan ang pangunahing laman
+          dito, at dating 560px lang ito sa dalawang haligi. Buong lapad na
+          ngayon at nasa 1100px, kaya hindi na kailangan ng lightbox. */}
+      <div className="relative mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-12">
         <EditorialHeading
           kicker="Events at CamSur"
-          title="Four ways to gather well."
+          title={`${occasionCountWord()} ways to gather well.`}
           intro="Each of these can be tailored around your group, your schedule, and the occasion. Nothing here is a fixed package."
         />
 
-        <div className="mt-10 space-y-12 sm:space-y-14">
+        <div className="mt-12 space-y-16 sm:mt-14 sm:space-y-24">
           {OCCASIONS.map((occasion, index) => (
-            <article
-              key={occasion.title}
-              className="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-16"
-            >
-              {/* Salitan ang panig ng larawan, kaya may ritmo ang pahina sa
-                  halip na apat na magkakaparehong hilera. */}
-              <div
-                data-reveal={index % 2 === 0 ? "left" : "right"}
-                className={`relative aspect-[4/3] w-full overflow-hidden bg-[#173a29] ${index % 2 === 0 ? "" : "lg:order-2"}`}
-              >
+            <article key={occasion.title} className="scroll-mt-28">
+              <div data-reveal="up" className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-[#173a29] sm:aspect-[16/9]">
                 <Image
                   src={occasion.image}
                   alt={occasion.imageAlt}
                   fill
-                  sizes="(max-width: 1023px) calc(100vw - 3rem), 560px"
+                  sizes="(max-width: 1151px) calc(100vw - 3rem), 1104px"
                   className="object-cover"
                 />
               </div>
 
-              <div className={index % 2 === 0 ? "" : "lg:order-1"}>
-                <p
-                  data-reveal="up"
-                  className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]"
-                >
-                  {String(index + 1).padStart(2, "0")} · {occasion.kicker}
-                </p>
-                <h3
-                  data-reveal="up"
-                  style={delay(90)}
-                  className="mt-5 text-xl font-semibold tracking-[-0.03em] text-[#174630]"
-                >
-                  {occasion.title}
-                </h3>
-                <p
-                  data-reveal="up"
-                  style={delay(180)}
-                  className="mt-3 max-w-lg text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]"
-                >
-                  {occasion.description}
-                </p>
-                <ul data-reveal="up" style={delay(270)} className="mt-7 space-y-3 border-t border-[#173b2a]/12 pt-6">
+              <div className="mt-7 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+                <div>
+                  <p
+                    data-reveal="up"
+                    className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]"
+                  >
+                    {String(index + 1).padStart(2, "0")} · {occasion.kicker}
+                  </p>
+                  <h3
+                    data-reveal="up"
+                    style={delay(90)}
+                    className="mt-4 text-2xl font-semibold tracking-[-0.035em] text-[#174630] sm:text-3xl"
+                  >
+                    {occasion.title}
+                  </h3>
+                  <p
+                    data-reveal="up"
+                    style={delay(180)}
+                    className="mt-4 max-w-xl text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]"
+                  >
+                    {occasion.description}
+                  </p>
+                </div>
+
+                <ul data-reveal="up" style={delay(270)} className="space-y-3 self-start border-t border-[#173b2a]/12 pt-6 lg:border-l lg:border-t-0 lg:pl-16 lg:pt-0">
                   {occasion.inclusions.map((item) => (
                     <li key={item} className="flex gap-3 text-sm leading-7 xl:text-base xl:leading-8 text-[#4b5a51] sm:text-base">
                       <span className="text-[#2f7a52]">
@@ -147,11 +156,10 @@ function Occasions() {
             </article>
           ))}
         </div>
-      </Shell>
+      </div>
     </section>
   );
 }
-
 function HowPlanningWorks() {
   return (
     <section

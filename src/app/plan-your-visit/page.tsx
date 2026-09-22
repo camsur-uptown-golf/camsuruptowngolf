@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import RequestCallback from "@/components/RequestCallback";
 import ScrollMotion from "@/components/ScrollMotion";
@@ -62,6 +63,10 @@ export default function PlanYourVisitPage() {
             </div>
           </div>
         </section>
+
+        <div className="bg-[#f7f5ee]">
+          <Breadcrumbs />
+        </div>
 
         <section id="request-call-back" className="scroll-mt-24 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
           <Container>

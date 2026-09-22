@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import RequestCallback from "@/components/RequestCallback";
 import ScrollMotion from "@/components/ScrollMotion";
@@ -89,6 +90,10 @@ export default function ContactPage() {
             </p>
           </div>
         </section>
+
+        <div className="bg-[#f7f5ee]">
+          <Breadcrumbs />
+        </div>
 
         <section className="bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
           <Container>

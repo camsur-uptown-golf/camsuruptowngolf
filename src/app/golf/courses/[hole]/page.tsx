@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import FairwayDivider from "@/components/FairwayDivider";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import RequestCallback from "@/components/RequestCallback";
 import Scorecard from "@/components/Scorecard";
@@ -11,10 +12,10 @@ import { Container, SectionHeading, delay } from "@/components/SectionKit";
 import { HOLE_PROFILES } from "@/lib/course-holes";
 import { COURSE_PAGES } from "@/lib/site-content";
 
-/** "No. 4 · Upper Green" — ginagamit sa metadata at sa prev/next na card. */
+/** "Hole No. 4 · Upper Green" — sa metadata at sa prev/next na card. */
 function holeLabel(course: (typeof COURSE_PAGES)[number]) {
   const hole = course.holes[0];
-  return `No. ${hole} · ${HOLE_PROFILES[hole].name}`;
+  return `Hole No. ${hole} · ${HOLE_PROFILES[hole].name}`;
 }
 
 export const dynamicParams = false;
@@ -92,7 +93,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                 data-reveal="up"
                 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
               >
-                No. {index + 1}
+                Hole No. {index + 1}
               </h1>
               <span
                 data-reveal="line"
@@ -103,6 +104,10 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             </div>
           </div>
         </section>
+
+        <div className="bg-[#f7f5ee]">
+          <Breadcrumbs />
+        </div>
 
         <section id="aerial-study" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] pb-14 pt-0 text-[#14271d] sm:pb-16 sm:pt-0">
           <Container>
