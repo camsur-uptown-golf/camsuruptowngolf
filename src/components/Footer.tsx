@@ -65,26 +65,37 @@ export default function Footer() {
       <div className="relative mx-auto max-w-7xl px-6 pb-14 pt-8 sm:pb-16 sm:pt-10 lg:px-8 lg:pb-20 lg:pt-12">
         <div className="grid gap-14 lg:grid-cols-[0.9fr_1.8fr_1.15fr] lg:gap-12">
           <div>
-            {/* Kasinlaki ng logo sa header (h-44 / lg:h-52) para iisa ang
-                sukat ng marka sa itaas at ibaba ng pahina. Ang width at
-                height ay katumbas ng aktwal na lapad na ipinapakita, kung
-                hindi ay masyadong maliit ang srcset na binubuo ng Next at
-                lumalabo ito sa mga screen na 2x. */}
-            <Image
-              src="/camsur-uptown-logo.png"
-              alt="Camsur Uptown Golf Club"
-              width={176}
-              height={234}
-              className="h-44 w-auto lg:h-52"
-            />
-            <div className="mt-6 space-y-1.5 text-sm leading-6 text-white/62">
-              <p className="font-semibold text-white/85">CamSur Uptown Golf Club</p>
-              <p>Camarines Sur, Philippines</p>
-              <p>
-                <a href={CLUB_PHONE.href} className="font-semibold text-[#e7d18d] hover:text-white">
-                  {CLUB_PHONE.label}
-                </a>
-              </p>
+            {/* Katabi ng logo ang pangalan, lugar, at telepono sa cellphone;
+                nakasalansan lang sila mula sa `lg`. Ang dahilan ng hati:
+                sa `lg` ay 262px lang ang haligi nito sa tatlong-hanay na
+                grid, at 156px na roon ang logo — hindi kasya ang teksto sa
+                natitirang 90px. Sa cellphone ay buong lapad ang mayroon. */}
+            <div className="flex items-center gap-5 lg:block">
+              {/* Kasinlaki ng logo sa header (h-44 / lg:h-52) para iisa ang
+                  sukat ng marka sa itaas at ibaba ng pahina. Ang width at
+                  height ay katumbas ng aktwal na lapad na ipinapakita, kung
+                  hindi ay masyadong maliit ang srcset na binubuo ng Next at
+                  lumalabo ito sa mga screen na 2x. */}
+              <Image
+                src="/camsur-uptown-logo.png"
+                alt="Camsur Uptown Golf Club"
+                width={176}
+                height={234}
+                className="h-44 w-auto shrink-0 lg:h-52"
+              />
+              {/* 13px sa cellphone: 175px lang ang teksto sa tabi ng logo, at
+                  sa 14px ay naghahati sa dalawang linya ang "CamSur Uptown
+                  Golf Club". Sa `lg` ay nakasalansan na ito at buo ang lapad,
+                  kaya 14px na muli. */}
+              <div className="space-y-1.5 text-[13px] leading-6 text-white/62 lg:mt-6 lg:text-sm">
+                <p className="font-semibold text-white/85">CamSur Uptown Golf Club</p>
+                <p>Camarines Sur, Philippines</p>
+                <p>
+                  <a href={CLUB_PHONE.href} className="font-semibold text-[#e7d18d] hover:text-white">
+                    {CLUB_PHONE.label}
+                  </a>
+                </p>
+              </div>
             </div>
 
             {SOCIALS.some((social) => social.href) ? (

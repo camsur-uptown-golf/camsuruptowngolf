@@ -113,22 +113,27 @@ export default function PageCurtain() {
   return (
     <div
       aria-hidden="true"
-      className={`${phase === "idle" ? "invisible" : "visible"} pointer-events-none fixed inset-0 z-[200] flex items-center justify-center bg-[#071d13]`}
+      /* `#173b2a` ang pangunahing green ng site — ito ang laman ng mga dark
+         green na section block at ang pinakamadalas na kulay sa buong
+         codebase. Dating `#071d13` ito: halos itim na, at halatang hindi
+         kapareho ng kulay na iniiwan at binubuksan ng kurtina. */
+      className={`${phase === "idle" ? "invisible" : "visible"} pointer-events-none fixed inset-0 z-[200] flex items-center justify-center bg-[#173b2a]`}
       style={{
         transform,
         transition: `transform ${phase === "leaving" ? SLIDE_OUT_MS : SLIDE_IN_MS}ms cubic-bezier(0.76, 0, 0.24, 1)`,
       }}
     >
       {/* Buong screen ang panel, kaya kaya nitong magdala ng malaking marka.
-          Ang width at height ay katumbas ng pinakamalaking ipinapakita, kung
-          hindi ay maliit ang srcset na binubuo ng Next at lumalabo ito. */}
+          Sa 26rem na taas ay 313px ang lapad; 400 ang ibinibigay dito para
+          may 800px na entry sa srcset na binubuo ng Next — iyon ang
+          kailangan ng mga screen na 2x, kung hindi ay lumalabo ito. */}
       <Image
         src="/camsur-uptown-logo.png"
         alt=""
-        width={320}
-        height={427}
+        width={400}
+        height={532}
         priority
-        className="h-40 w-auto sm:h-56 lg:h-72 xl:h-80"
+        className="h-48 w-auto sm:h-64 lg:h-[22rem] xl:h-[26rem]"
         /* Nakabatay sa SLIDE_IN_MS ang mga oras dito sa halip na naka-hardcode:
            dapat tapos nang lumitaw ang marka bago pa matapos tumakip ang panel.
            Kapag naka-hardcode, tahimik itong naghihiwalay kapag binago ang

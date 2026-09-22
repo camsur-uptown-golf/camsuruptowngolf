@@ -8,7 +8,9 @@
       "PowerShell(npm run lint)",
       "PowerShell(npm run build)",
       "PowerShell($out = npm run build 2>&1 | Out-String; Write-Output \"EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Compiled|34/34|Error|Failed\" | Select-Object -First 5\\) -join \"`n\")",
-      "PowerShell(npx tsc --noEmit; if \\($?\\) { npm run lint; if \\($?\\) { $out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Error|Failed|Compiled successfully|Generating static pages using \\\\d+ workers \\\\\\(\\\\d+/\\\\d+\\\\\\) in\" | Select-Object -First 4\\) -join \"`n\" } })"
+      "PowerShell(npx tsc --noEmit; if \\($?\\) { npm run lint; if \\($?\\) { $out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Error|Failed|Compiled successfully|Generating static pages using \\\\d+ workers \\\\\\(\\\\d+/\\\\d+\\\\\\) in\" | Select-Object -First 4\\) -join \"`n\" } })",
+      "PowerShell($out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Compiled|Generating static pages using|Failed\" | Select-Object -First 3\\) -join \"`n\"; Write-Output \"--- recheck ---\"; npx tsc --noEmit; if \\($?\\) { Write-Output \"tsc OK\"; npm run lint })",
+      "PowerShell(npx tsc --noEmit; if \\($?\\) { npm run lint; if \\($?\\) { $out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Compiled|Generating static pages using|Failed\" | Select-Object -First 3\\) -join \"`n\" } })"
     ]
   }
 }

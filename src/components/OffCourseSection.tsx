@@ -37,11 +37,18 @@ export default function OffCourseSection() {
   return (
     <section className="bg-[#f7f5ee] py-20 text-[#1b2730] sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1120px] px-6 lg:px-8">
-        <header className="mx-auto max-w-[760px] text-center">
-          <h2 className="font-serif text-[clamp(2.75rem,5vw,4.7rem)] font-normal leading-[0.98] tracking-[-0.045em]">
+        {/* Katabi nito ang PackagesCarousel sa homepage, kaya pareho sila ng
+            treatment ng header: eyebrow, naka-kaliwa, at iisang type scale.
+            Dating nakagitna ito at walang eyebrow, kaya mukhang galing sa
+            ibang pahina. Kapag binago ang isa, sundan ang isa. */}
+        <header className="max-w-[760px]">
+          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#5b625f] sm:text-[11px]">
+            More at CamSur
+          </p>
+          <h2 className="mt-5 font-serif text-[clamp(3rem,5vw,5rem)] font-normal leading-[0.96] tracking-[-0.045em]">
             Beyond the Course
           </h2>
-          <p className="mx-auto mt-5 max-w-[720px] text-sm leading-6 text-[#465159] sm:text-[15px] sm:leading-7">
+          <p className="mt-6 max-w-[620px] text-sm leading-7 text-[#465159] sm:text-[15px]">
             Set the clubs down and discover more of CamSur—from relaxed clubhouse dining and outdoor adventures to comfortable stays close to the fairways.
           </p>
         </header>
