@@ -1,0 +1,39 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "description": "QA Task 1 — spelling scan for CamSur Uptown Golf Club content.",
+  "words": [
+    "CamSur",
+    "Uptown",
+    "Bicol",
+    "Isarog",
+    "clubhouse",
+    "yardage",
+    "yardages",
+    "scorecard",
+    "Wakepark",
+    "Lago",
+    "Gota",
+    "Villa",
+    "Rey",
+    "Pickleball",
+    "Naga",
+    "Filipino",
+    "metres",
+    "birdie",
+    "bogey",
+    "eagle",
+    "fairway",
+    "fairways",
+    "tee",
+    "greens"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "**/*.min.*",
+    "**/dist/**",
+    "**/.next/**",
+    "test/automation/**"
+  ],
+  "allowCompoundWords": true
+}

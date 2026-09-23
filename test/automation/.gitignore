@@ -1,0 +1,7 @@
+node_modules/
+playwright-report/
+test-results/
+lighthouse-reports/
+.lighthouseci/
+*.log
+# Visual baselines ARE committed (tests/**/__screenshots__) — do not ignore them.

@@ -1,0 +1,53 @@
+# Sample CI workflow for the CamSur Uptown Golf QA suite.
+# To activate: copy this file to <repo-root>/.github/workflows/qa.yml
+name: QA Automation
+
+on:
+  push:
+    branches: [main, argenio, 'test/**']
+  pull_request:
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: test/automation
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Build & start the Next.js app (adjust if your start script differs)
+      - name: Install app deps
+        run: npm ci
+        working-directory: .
+      - name: Build app
+        run: npm run build
+        working-directory: .
+      - name: Start app
+        run: npm run start &
+        working-directory: .
+      - name: Wait for app
+        run: npx --yes wait-on http://localhost:3000
+
+      # QA suite
+      - name: Install QA deps
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox
+      - name: Run Playwright (Chrome + Firefox)
+        run: npx playwright test --project=chrome --project=firefox
+        env:
+          BASE_URL: http://localhost:3000
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: test/automation/playwright-report
+
+  # Opera GX + Edge run on a cloud grid (BrowserStack/LambdaTest) — add a job here
+  # with your grid credentials, or run them manually per the README.

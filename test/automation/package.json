@@ -1,0 +1,34 @@
+{
+  "name": "camsur-uptown-golf-qa-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Focused QA suite for copy, accessibility, responsive layouts, and header navigation.",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test --project=opera-gx",
+    "test:headed": "playwright test --headed --project=opera-gx",
+    "test:ui": "playwright test --ui --project=opera-gx",
+    "test:chrome": "playwright test --project=chrome",
+    "test:edge": "playwright test --project=edge",
+    "test:firefox": "playwright test --project=firefox",
+    "test:opera": "playwright test --project=opera-gx",
+    "test:mobile": "playwright test --project=mobile-chrome",
+    "test:content": "playwright test tests/task01-content-spelling.spec.ts --project=opera-gx",
+    "test:responsive": "playwright test tests/task03-responsive-layouts.spec.ts --project=opera-gx",
+    "test:nav": "playwright test tests/task04-header-mega-nav.spec.ts --project=opera-gx",
+    "test:a11y": "playwright test tests/task10-accessibility.spec.ts --project=opera-gx",
+    "spell": "cspell \"../../app/**/*.{ts,tsx,md,mdx}\" \"../../content/**/*.{md,mdx,json}\" --no-must-find-files",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@lhci/cli": "^0.14.0",
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.7.0",
+    "cspell": "^8.15.0",
+    "lighthouse": "^12.2.1",
+    "linkinator": "^6.1.0",
+    "playwright-lighthouse": "^4.0.0",
+    "typescript": "^5.6.2"
+  }
+}
