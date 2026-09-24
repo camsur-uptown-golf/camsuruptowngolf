@@ -129,13 +129,13 @@ function CourseSnapshot() {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" aria-hidden="true" />
       {/* No reveal on the scroll cue: it already carries a translate, and a
           reveal would reset that transform when it lands. */}
-      <a href="#course-snapshot" aria-label="Discover the course" className="group absolute left-1/2 top-0 z-30 flex -translate-x-1/2 -translate-y-full flex-col items-center text-[#d1af58]">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d1af58]/80 bg-black/[0.04] backdrop-blur-[1px] transition-colors group-hover:border-[#f1d98f] group-hover:bg-[#d1af58]/10 group-hover:text-[#f1d98f]">
-          <span className="flex items-center justify-center">
+      <a href="#story" aria-label="Continue to the course introduction" className="group absolute left-1/2 top-0 z-30 flex -translate-x-1/2 -translate-y-full flex-col items-center text-[#d1af58] outline-none">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d1af58]/80 bg-[#10281e]/20 shadow-[0_8px_22px_rgba(0,0,0,0.12)] backdrop-blur-[2px] transition duration-300 group-hover:-translate-y-0.5 group-hover:border-[#f1d98f] group-hover:bg-[#d1af58]/15 group-hover:text-[#f1d98f] group-focus-visible:ring-2 group-focus-visible:ring-[#f1d98f] group-focus-visible:ring-offset-4 group-focus-visible:ring-offset-transparent">
+          <span className="flex items-center justify-center transition-transform duration-300 group-hover:translate-y-0.5">
             <ScrollArrowIcon />
           </span>
         </span>
-        <span className="mt-2 h-3 w-px bg-[#d1af58]/80 transition-colors group-hover:bg-[#f1d98f] sm:h-4" aria-hidden="true" />
+        <span className="mt-2 h-4 w-px bg-[#d1af58]/80 transition-colors group-hover:bg-[#f1d98f]" aria-hidden="true" />
       </a>
       <div className="mx-auto grid max-w-7xl grid-cols-2 px-6 sm:grid-cols-4 lg:h-full lg:px-8">
         {COURSE_FACTS.map(({ value, count, label, Icon }, index) => (

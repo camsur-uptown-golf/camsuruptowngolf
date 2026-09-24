@@ -15,7 +15,7 @@ export default function CourseRoutingMap() {
     <section
       id="course-map"
       aria-label="Interactive CamSur Uptown golf course map"
-      className="relative isolate overflow-hidden bg-[#f8f5ea] py-6 sm:py-8 lg:py-10"
+      className="relative isolate scroll-mt-24 overflow-hidden bg-[#f8f5ea] py-6 sm:py-8 lg:py-10"
     >
       <div className="mx-auto w-full max-w-[1500px] px-4 sm:px-8 lg:px-12">
         <div

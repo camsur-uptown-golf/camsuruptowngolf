@@ -107,7 +107,7 @@ export default function ClubhouseDetails() {
           pangunahing laman dito, at dating 480px lang ito sa dalawang
           haligi. Buong lapad na ngayon at nasa 1152px — mahigit dalawang
           beses — kaya hindi na kailangan ng maximize o lightbox. */}
-      <section className={EDITORIAL_SECTION}>
+      <section id="facilities" className={`${EDITORIAL_SECTION} scroll-mt-24`}>
         <div className="relative mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-12">
           <EditorialHeading kicker="Inside" title={`${roomCountWord()} rooms in the building.`} />
 

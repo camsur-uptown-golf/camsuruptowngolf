@@ -138,20 +138,24 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                   data-reveal="up"
                   className="font-navigation text-[10px] font-bold uppercase tracking-[0.26em] text-[#e1c56e] sm:text-[11px]"
                 >
-                  Championship golf · beneath Mt. Isarog
+                  Play Near Mt. Isarog
                 </p>
                 <h1
                   data-reveal="up"
                   style={{ "--reveal-delay": "120ms" } as CSSProperties}
                   className="mx-auto mt-4 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
                 >
-                  A course shaped by Camarines Sur
+                  Golf Course
                 </h1>
+                <p
+                  className="relative z-10 mx-auto mt-5 max-w-xl text-sm font-medium leading-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] sm:text-base"
+                >
+                  Championship fairways, open views, and the striking silhouette of Mt. Isarog.
+                </p>
               </div>
             </div>
           ) : null}
 
-          {isGolf ? <ScrollCue targetId="the-course" label="Explore the golf course" /> : null}
           {isExperiences ? <ScrollCue targetId="on-the-water" label="Explore CamSur experiences" /> : null}
         </section>
 
