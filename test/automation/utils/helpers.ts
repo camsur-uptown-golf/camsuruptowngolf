@@ -1,10 +1,35 @@
 import { Page, expect, Locator } from '@playwright/test';
 
+/** The desktop navigation that is currently exposed to the user. */
+export function visibleDesktopNavigation(page: Page): Locator {
+  return page.locator('nav[data-nav="hero"]:visible, nav[data-nav="compact"]:visible').first();
+}
+
+/** The single desktop mega-menu panel rendered by the header. */
+export function desktopMegaMenu(page: Page): Locator {
+  return page.locator('#desktop-mega-menu');
+}
+
+/** The mobile navigation toggle exposed at mobile breakpoints. */
+export function mobileNavigationButton(page: Page): Locator {
+  return page.getByRole('button', { name: /^(open|close) navigation$/i });
+}
+
+/** The mobile navigation dialog controlled by the header toggle. */
+export function mobileNavigation(page: Page): Locator {
+  return page.locator('#mobile-navigation');
+}
+
 /** Open a header mega-menu by its trigger label and return the opened panel scope. */
 export async function openMegaMenu(page: Page, label: string): Promise<void> {
-  const trigger = page.getByRole('button', { name: new RegExp(`^${label}$`, 'i') });
+  const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const trigger = visibleDesktopNavigation(page).getByRole('button', {
+    name: new RegExp(`^${escapedLabel}$`, 'i'),
+  });
   await expect(trigger).toBeVisible();
   await trigger.click();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  await expect(desktopMegaMenu(page)).toBeVisible();
 }
 
 /** Close any open mega-menu via Escape. */
