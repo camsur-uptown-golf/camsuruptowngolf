@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist, Geist_Mono, Montserrat } from "next/font/google";
+import { Cormorant_SC, Geist_Mono, Manrope, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
-import PageCurtain from "@/components/PageCurtain";
 import RouteScrollReset from "@/components/RouteScrollReset";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -20,12 +20,10 @@ const montserrat = Montserrat({
   subsets: ["latin"],
 });
 
-/**
- * Editorial display face. Variable ito, kaya isang file lang ang nadadala
- * para sa buong hanay ng bigat na ginagamit ng mga pamagat.
- */
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+/** Editorial display face for hero, image, and section titles. */
+const cormorantSC = Cormorant_SC({
+  variable: "--font-cormorant-sc",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -40,13 +38,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${manrope.variable} ${geistMono.variable} ${montserrat.variable} ${cormorantSC.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* Nauuna sa RouteScrollReset: pareho silang nakikinig sa capture
-            phase, at kailangang makansela muna ng kurtina ang click bago
-            mag-scroll pataas ang kasalukuyang pahina. */}
-        <PageCurtain />
+        {/* Naka-off muna ang PageCurtain (`components/PageCurtain.tsx`).
+            Naiwan ang file — hindi ito binura — kaya isang import at isang
+            linya lang ang kailangan para ibalik. Kapag ibinalik, dapat
+            nauuna ito sa RouteScrollReset: pareho silang nakikinig sa
+            capture phase, at kailangang makansela muna ng kurtina ang click
+            bago mag-scroll pataas ang kasalukuyang pahina. Basahin din ang
+            comment sa loob ng RouteScrollReset — may inalis doon na
+            kaakibat nito. */}
         <RouteScrollReset />
         <Header />
         {children}

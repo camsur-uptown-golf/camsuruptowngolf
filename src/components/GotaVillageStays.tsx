@@ -6,7 +6,6 @@ import { delay } from "@/components/EditorialKit";
 const GOTA_SPACES = [
   {
     name: "Living Spaces",
-    eyebrow: "Resort space 01",
     description: "Warm timber interiors create an easy place to gather, settle in, and slow down after a day outdoors.",
     primary: "/gota-village-resort/gallery/living-room.jpg",
     secondary: "/gota-village-resort/gallery/living-area.jpg",
@@ -15,7 +14,6 @@ const GOTA_SPACES = [
   },
   {
     name: "Rest & Welcome",
-    eyebrow: "Resort space 02",
     description: "Simple private rooms and a welcoming lodge interior keep the village stay relaxed and connected to its setting.",
     primary: "/gota-village-resort/gallery/minibar-bedroom.jpg",
     secondary: "/gota-village-resort/gallery/lobby.jpg",
@@ -24,7 +22,6 @@ const GOTA_SPACES = [
   },
   {
     name: "Village Grounds",
-    eyebrow: "Resort space 03",
     description: "Cabins follow the contours of the landscape, linked by garden paths and framed by dense tropical hills.",
     primary: "/gota-village-resort/gallery/grounds-village.jpg",
     secondary: "/gota-village-resort/gallery/grounds-rainbow.jpg",
@@ -33,7 +30,6 @@ const GOTA_SPACES = [
   },
   {
     name: "Bay Outlook",
-    eyebrow: "Resort space 04",
     description: "The elevated grounds open toward the sheltered bay, bringing the village, forest, and coastline into one view.",
     primary: "/gota-village-resort/gallery/grounds-bay.jpg",
     secondary: "/gota-village-resort/hero-4k.jpg",
@@ -67,23 +63,21 @@ export default function GotaVillageStays() {
       {GOTA_SPACES.map((space, index) => {
         const flip = index % 2 === 1;
         return (
-          <article key={space.name} className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#173b2a]/10" : ""}`}>
+          <article key={space.name} className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#1f3f2e]/10" : ""}`}>
             <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-16 lg:px-8">
               <div className={`relative ${flip ? "lg:order-2" : ""}`}>
-                <span aria-hidden="true" className="pointer-events-none absolute -top-10 left-0 select-none font-display text-[clamp(5rem,9vw,8.5rem)] font-medium leading-none tracking-[-0.06em] text-[#0b2419]/[0.06] sm:-top-14">{String(index + 1).padStart(2, "0")}</span>
                 <div className="relative">
-                  <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f] xl:text-[11px]">{space.eyebrow}</p>
-                  <h3 data-reveal="up" style={delay(90)} className="mt-4 font-display text-[clamp(2.6rem,5vw,4.8rem)] font-medium leading-[0.92] tracking-[-0.055em]">{space.name}</h3>
-                  <p data-reveal="up" style={delay(180)} className="mt-6 max-w-xl text-base leading-8 text-[#5d685f] sm:text-lg sm:leading-9">{space.description}</p>
-                  <div data-reveal="up" style={delay(270)} className="mt-8 h-px w-14 bg-[#98782f]/45" />
+                  <h3 data-reveal="up" className="font-display text-[clamp(2.6rem,5vw,4.8rem)] font-medium leading-[0.92] tracking-[-0.055em]">{space.name}</h3>
+                  <p data-reveal="up" style={delay(90)} className="mt-6 max-w-xl text-base leading-8 text-[#5d685f] sm:text-lg sm:leading-9">{space.description}</p>
+                  <div data-reveal="up" style={delay(180)} className="mt-8 h-px w-14 bg-[#98782f]/45" />
                 </div>
               </div>
 
               <div className={`relative ${flip ? "lg:order-1" : ""}`}>
-                <div data-reveal={flip ? "left" : "right"} className={`relative overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_22px_55px_rgba(20,39,29,0.12)] sm:rounded-[2rem] ${flip ? "ml-auto aspect-[5/4] w-[86%]" : "aspect-[4/5] w-[82%]"}`}>
+                <div data-lightbox data-src={space.primary} data-alt={space.primaryAlt} data-reveal={flip ? "left" : "right"} className={`relative overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_22px_55px_rgba(20,39,29,0.12)] sm:rounded-[2rem] ${flip ? "ml-auto aspect-[5/4] w-[86%]" : "aspect-[4/5] w-[82%]"}`}>
                   <Image src={space.primary} alt={space.primaryAlt} fill sizes="(max-width: 1023px) 82vw, 480px" className="object-cover" />
                 </div>
-                <div data-reveal="scale" style={delay(200)} className={`absolute bottom-6 overflow-hidden rounded-[1.25rem] bg-[#d9ded8] shadow-[0_18px_45px_rgba(20,39,29,0.16)] ring-4 ring-[#f7f5ee] sm:bottom-8 sm:rounded-[1.5rem] ${flip ? "left-0 aspect-[3/4] w-[38%]" : "right-0 aspect-square w-[42%]"}`}>
+                <div data-lightbox data-src={space.secondary} data-alt={space.secondaryAlt} data-reveal="scale" style={delay(200)} className={`absolute bottom-6 overflow-hidden rounded-[1.25rem] bg-[#d9ded8] shadow-[0_18px_45px_rgba(20,39,29,0.16)] ring-4 ring-[#f7f5ee] sm:bottom-8 sm:rounded-[1.5rem] ${flip ? "left-0 aspect-[3/4] w-[38%]" : "right-0 aspect-square w-[42%]"}`}>
                   <Image src={space.secondary} alt={space.secondaryAlt} fill sizes="(max-width: 1023px) 40vw, 240px" className="object-cover" />
                 </div>
               </div>
@@ -92,7 +86,7 @@ export default function GotaVillageStays() {
         );
       })}
 
-      <div className="border-t border-white/10 bg-[#1c3b2d] text-white">
+      <div className="border-t border-white/10 bg-[#1f3f2e] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-8">
           <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#d8b65b] xl:text-[11px]">Plan your stay</p>
           <h2 data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-2xl text-[clamp(2.2rem,3.6vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.05em]">Stay at Gota Village Resort.</h2>

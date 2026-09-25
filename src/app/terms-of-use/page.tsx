@@ -105,7 +105,7 @@ export default function TermsOfUsePage() {
       <main className="bg-[#f7f5ee] text-[#14271d]">
         <ScrollMotion />
 
-        <section className="bg-[#1c3b2d] px-6 pb-16 pt-40 text-white sm:pb-20 sm:pt-44 lg:px-8">
+        <section className="bg-[#1f3f2e] px-6 pb-16 pt-40 text-white sm:pb-20 sm:pt-44 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
             <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">
               Legal information
@@ -131,7 +131,7 @@ export default function TermsOfUsePage() {
           <Container>
             <div className="grid gap-10 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-16">
               <aside className="lg:sticky lg:top-28 lg:self-start">
-                <div className="border border-[#173b2a]/12 bg-white p-6">
+                <div className="border border-[#1f3f2e]/12 bg-white p-6">
                   <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
                     On this page
                   </p>
@@ -141,7 +141,7 @@ export default function TermsOfUsePage() {
                         <li key={section.id}>
                           <a
                             href={`#${section.id}`}
-                            className="group flex gap-3 text-sm leading-6 text-[#59665e] transition-colors hover:text-[#174630]"
+                            className="group flex gap-3 text-sm leading-6 text-[#59665e] transition-colors hover:text-[#265136]"
                           >
                             <span className="font-navigation text-[10px] font-bold text-[#b49343]">
                               {String(index + 1).padStart(2, "0")}
@@ -161,7 +161,7 @@ export default function TermsOfUsePage() {
                   provided when you make a reservation.
                 </div>
 
-                <div className="mt-10 divide-y divide-[#173b2a]/12">
+                <div className="mt-10 divide-y divide-[#1f3f2e]/12">
                   {SECTIONS.map((section, index) => (
                     <section key={section.id} id={section.id} className="scroll-mt-28 py-9 first:pt-0 sm:py-11">
                       <div className="grid gap-4 sm:grid-cols-[52px_minmax(0,1fr)] sm:gap-6">
@@ -183,7 +183,7 @@ export default function TermsOfUsePage() {
                   ))}
                 </div>
 
-                <div className="mt-6 border border-[#173b2a]/12 bg-white p-7 sm:p-9">
+                <div className="mt-6 border border-[#1f3f2e]/12 bg-white p-7 sm:p-9">
                   <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
                     Questions about these terms
                   </p>
@@ -195,19 +195,19 @@ export default function TermsOfUsePage() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     <a
                       href={CLUB_EMAIL.href}
-                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#2f644b] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#265136] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#1f3f2e]"
                     >
                       {CLUB_EMAIL.label}
                     </a>
                     <a
                       href={CLUB_PHONE.href}
-                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#2f644b]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#2f644b]"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:border-[#265136]"
                     >
                       {CLUB_PHONE.label}
                     </a>
                     <Link
                       href="/contact"
-                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#2f644b]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#174630] transition hover:border-[#2f644b]"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:border-[#265136]"
                     >
                       Contact page
                     </Link>

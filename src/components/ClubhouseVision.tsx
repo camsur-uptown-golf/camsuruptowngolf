@@ -68,7 +68,7 @@ export default function ClubhouseVision() {
         const flip = index % 2 === 1;
 
         return (
-          <article key={space.name} className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#173b2a]/10" : ""}`}>
+          <article key={space.name} className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#1f3f2e]/10" : ""}`}>
             <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-16 lg:px-8">
               <div className={`relative ${flip ? "lg:order-2" : ""}`}>
                 <span aria-hidden="true" className="pointer-events-none absolute -top-10 left-0 select-none font-display text-[clamp(5rem,9vw,8.5rem)] font-medium leading-none tracking-[-0.06em] text-[#0b2419]/[0.06] sm:-top-14">
@@ -101,7 +101,7 @@ export default function ClubhouseVision() {
         );
       })}
 
-      <div className="border-t border-white/10 bg-[#1c3b2d] text-white">
+      <div className="border-t border-white/10 bg-[#1f3f2e] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-8">
           <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#d8b65b] xl:text-[11px]">Plan your stay</p>
           <h2 data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-2xl text-[clamp(2.2rem,3.6vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.05em]">Reserve your room at Clubhouse Lodge.</h2>

@@ -71,7 +71,6 @@ export default function BuddyTripPage() {
   return (
     <PackageItineraryPage
       active="buddy-trip"
-      eyebrow="Golf package · friends getaway"
       title="Buddy Golf Trip"
       description="A three-day trip for a foursome or a larger group: two nights close to the course, two full rounds, and enough unscheduled time between them that the trip does not feel like an itinerary."
       image="/buddy-golf-trip-hero-v4.png"

@@ -177,7 +177,7 @@ function Group({ group, index }: { group: (typeof GROUPS)[number]; index: number
               id={item.id}
               data-reveal="up"
               style={delay(itemIndex * 90)}
-              className="group/card grid scroll-mt-28 overflow-hidden rounded-[1.5rem] border border-[#173b2a]/12 bg-[#f8f6ef] shadow-[0_18px_55px_rgba(20,39,29,0.06)] lg:grid-cols-2"
+              className="group/card grid scroll-mt-28 overflow-hidden rounded-[1.5rem] border border-[#1f3f2e]/12 bg-[#f8f6ef] shadow-[0_18px_55px_rgba(20,39,29,0.06)] lg:grid-cols-2"
             >
               <div className={`relative min-h-64 overflow-hidden sm:min-h-80 lg:min-h-[22rem] ${itemIndex % 2 ? "lg:order-2" : ""}`}>
                 <Image
@@ -203,7 +203,7 @@ function Group({ group, index }: { group: (typeof GROUPS)[number]; index: number
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-7 inline-flex h-11 w-fit items-center gap-3 rounded-full bg-[#2f644b] px-6 text-[10px] font-bold uppercase tracking-[0.13em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#3a765a] hover:shadow-[0_12px_30px_rgba(23,59,42,0.16)] xl:text-[11px]"
+                  className="mt-7 inline-flex h-11 w-fit items-center gap-3 rounded-full bg-[#265136] px-6 text-[10px] font-bold uppercase tracking-[0.13em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#1f3f2e] hover:shadow-[0_12px_30px_rgba(23,59,42,0.16)] xl:text-[11px]"
                 >
                   View facility
                   <span aria-hidden="true" className="text-[#e7d18d]">↗</span>
@@ -228,14 +228,14 @@ function GoodToKnow() {
           intro="Three things that make the difference between a full day and a day spent waiting for something to be ready."
         />
 
-        <div className="mt-10 border-t border-[#173b2a]/12">
+        <div className="mt-10 border-t border-[#1f3f2e]/12">
           {GOOD_TO_KNOW.map(([title, description], index) => (
             <div
               key={title}
               data-reveal="up"
               style={delay(index * 90)}
               className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${
-                index ? "border-t border-[#173b2a]/12" : ""
+                index ? "border-t border-[#1f3f2e]/12" : ""
               }`}
             >
               <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
@@ -255,7 +255,7 @@ function GoodToKnow() {
 
 function ExperiencesCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#1c3b2d] py-14 text-white sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#1f3f2e] py-14 text-white sm:py-16">
       <div
         data-parallax="0.14"
         className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"

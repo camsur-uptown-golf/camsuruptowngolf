@@ -6,6 +6,7 @@ import FairwayDivider from "@/components/FairwayDivider";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import GotaVillageStays from "@/components/GotaVillageStays";
+import ImageLightbox from "@/components/ImageLightbox";
 import VillaDelReyStays from "@/components/VillaDelReyStays";
 import { ACCOMMODATIONS } from "@/lib/site-content";
 
@@ -74,9 +75,8 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
                   : "pb-28 sm:pb-36 lg:pb-44"
             }`}
           >
-            <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#e1c56e]">{stay.eyebrow}</p>
             <h1
-              className={`mt-4 max-w-5xl font-medium leading-[0.92] tracking-[-0.06em] drop-shadow-[0_3px_14px_rgba(0,0,0,0.55)] ${
+              className={`max-w-5xl font-medium leading-[0.92] tracking-[-0.06em] drop-shadow-[0_3px_14px_rgba(0,0,0,0.55)] ${
                 hasEditorialStayLayout ? "mx-auto" : ""
               } text-[clamp(2.5rem,5vw,4.5rem)]`}
             >
@@ -132,6 +132,11 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
           </Link>
         </nav>
       </main>
+      {/* Isa lang ito para sa buong pahina. Nakikinig ito sa pagpindot sa
+          kahit anong `[data-lightbox]` sa loob ng dokumento, kaya walang
+          kailangang ipasa mula rito patungo sa VillaDelReyStays at sa
+          GotaVillageStays — nananatiling server component ang dalawa. */}
+      <ImageLightbox />
       <Footer />
     </>
   );

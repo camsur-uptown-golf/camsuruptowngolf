@@ -30,7 +30,7 @@ const TIMEFRAMES = [
 ] as const;
 
 const FIELD =
-  "w-full border border-[#173b2a]/25 bg-white px-4 py-3 text-sm text-[#14271d] outline-none transition placeholder:text-[#9aa39d] focus:border-[#2f644b] focus:ring-2 focus:ring-[#2f644b]/20";
+  "w-full border border-[#1f3f2e]/25 bg-white px-4 py-3 text-sm text-[#14271d] outline-none transition placeholder:text-[#9aa39d] focus:border-[#265136] focus:ring-2 focus:ring-[#265136]/20";
 const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d]";
 
 function Required() {
@@ -86,7 +86,7 @@ export default function RequestCallback({ context }: { context?: string }) {
 
   if (status === "sent") {
     return (
-      <div className="mx-auto max-w-lg border border-[#173b2a]/15 bg-white p-8 text-center sm:p-10">
+      <div className="mx-auto max-w-lg border border-[#1f3f2e]/15 bg-white p-8 text-center sm:p-10">
         <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">Thank you</p>
         <h3 className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#14271d]">Your request is on its way.</h3>
         <p className="mt-4 text-sm leading-7 text-[#5d685f]">
@@ -94,7 +94,7 @@ export default function RequestCallback({ context }: { context?: string }) {
         </p>
         <a
           href={CLUB_PHONE.href}
-          className="mt-6 inline-flex h-11 items-center rounded-full border border-[#2f644b]/30 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#2f644b] transition hover:border-[#2f644b] hover:bg-[#2f644b] hover:text-white"
+          className="mt-6 inline-flex h-11 items-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
         >
           {CLUB_PHONE.label}
         </a>
@@ -192,7 +192,7 @@ export default function RequestCallback({ context }: { context?: string }) {
                   name="callWindow"
                   value={option}
                   onChange={() => setWindowError(false)}
-                  className="h-4 w-4 shrink-0 accent-[#2f644b]"
+                  className="h-4 w-4 shrink-0 accent-[#265136]"
                 />
                 {option}
               </label>
@@ -233,7 +233,7 @@ export default function RequestCallback({ context }: { context?: string }) {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#2f644b] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#265136] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "sending" ? "Sending…" : "Submit"}
         </button>

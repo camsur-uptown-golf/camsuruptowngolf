@@ -21,15 +21,162 @@ export const CALL_WINDOWS = [
 /* Totoong numero na ito ng club. Ang `href` ay nasa E.164 — `+63` at
    walang unang zero — para tumawag ito nang tama mula sa ibang bansa;
    ang `label` ang lokal na anyo na nakikita ng bumibisita. */
-export const CLUB_PHONE = { label: "09163007914", href: "tel:+639163007914" } as const;
+export const CLUB_PHONE = { label: "+63 916 300 7914", href: "tel:+639163007914" } as const;
 
-/* TODO (para sa club): palitan ng totoong inbox na tumatanggap ng inquiry. */
-export const CLUB_EMAIL = { label: "inquiries@camsuruptown.com", href: "mailto:inquiries@camsuruptown.com" } as const;
+/* Ibinigay ng club. Isang pinagmumulan lang ito: ginagamit ng footer, ng
+   /contact at ng /terms-of-use, kaya hindi sila maaaring maghiwalay.
+
+   PAKITINGNAN: "info.camsuruptowngolf.com" ang naipasa — tuldok, hindi
+   "@". Domain iyon at hindi email, kaya hindi gagana ang `mailto:`.
+   "info@camsuruptowngolf.com" ang inilagay dito. Kapag mali ang hula,
+   dito lang ang palitan. */
+export const CLUB_EMAIL = { label: "info@camsuruptowngolf.com", href: "mailto:info@camsuruptowngolf.com" } as const;
 
 /* TODO (para sa club): kumpletuhin ang address — barangay, bayan, at ZIP. */
 export const CLUB_ADDRESS = {
   lines: ["CamSur Uptown Golf Club", "Camarines Sur, Philippines"],
 } as const;
+
+/**
+ * Paano makakarating sa club.
+ *
+ * DALAWANG LUGAR ANG GUMAGAMIT NITO: ang buong seksyon sa /plan-your-visit
+ * at ang maikling listahan sa footer. Nasa isang lugar lang ang mga minuto
+ * para hindi sila maghiwalay — kapag nasa dalawang file ang parehong
+ * "25 min", isa lang ang naaalala kapag binago ng club.
+ *
+ * TODO (para sa club): kumpirmahin ang mga travel time bago i-publish.
+ */
+export const TRAVEL_ROUTES = [
+  {
+    icon: "plane",
+    time: 25,
+    unit: "min",
+    from: "Naga Airport (Pili)",
+    note: "Daily flights from Manila, roughly one hour each way. Taxis and club transfers wait at arrivals.",
+  },
+  {
+    icon: "pin",
+    time: 20,
+    unit: "min",
+    from: "Naga City center",
+    note: "Follow the road toward Mt. Isarog and watch for the club gate on your right.",
+  },
+  {
+    icon: "car",
+    time: 2,
+    unit: "hrs",
+    from: "Legazpi City",
+    note: "Via the Maharlika Highway. A straightforward drive, best made in daylight.",
+  },
+] as const;
+
+/**
+ * Mga tala sa pagdating, katabi ng mga ruta sa /getting-here.
+ *
+ * TODO (para sa club): kumpirmahin ang oras ng gate at ang patakaran sa
+ * parking bago i-publish.
+ */
+export const ARRIVAL_NOTES = [
+  {
+    icon: "parking",
+    title: "Parking",
+    note: "Free on-site parking beside the clubhouse for guests and visitors. No pass or registration needed.",
+  },
+  {
+    icon: "shuttle",
+    title: "Transfers",
+    note: "Airport and hotel transfers can be arranged with 24 hours’ notice. Tell the club your flight number and they will meet you at arrivals.",
+  },
+] as const;
+
+/**
+ * Ang FAQ ng club, nakapangkat.
+ *
+ * MAY SARILING PAHINA ITO (/faq) at isang pindutan sa footer. Hindi ito
+ * ipinapakita nang buo sa footer: hindi pahina ng impormasyon ang footer,
+ * at labing-isang tanong doon ay pader.
+ *
+ * DITO NA ANG DATING "Before you enquire" NG /packages. Tatlo sa mga tanong
+ * sa "Booking & rates" ang parehong tatlong bagay na nasa ilalim ng
+ * /packages noon, nakasulat lang bilang tanong. Inalis na sila roon — isang
+ * lugar lang ang sagot para hindi sila maghiwalay.
+ *
+ * TODO (para sa club): kumpirmahin ang lahat ng nasa ibaba bago i-publish,
+ * lalo na ang tatlong araw na abiso sa weekend at ang patakaran sa panahon.
+ */
+export const FAQ_GROUPS = [
+  {
+    title: "Booking & rates",
+    faqs: [
+      {
+        question: "How much is a round or a package?",
+        answer:
+          "Rates are quoted, not listed. Every package is priced on your dates, your group size, and the accommodation you choose, so send those three things and the club comes back with a figure.",
+      },
+      {
+        question: "How far ahead should we book?",
+        answer:
+          "Weekend mornings fill first because members and their guests have priority, so book at least three days ahead for weekends and public holidays. Weekday rounds and packages can usually be arranged on shorter notice.",
+      },
+      {
+        question: "Can I play if I am not a member?",
+        answer:
+          "Yes. Visitors are welcome throughout the week. Members and their guests have priority on weekend mornings, so visitor tee times on those days are limited.",
+      },
+      {
+        question: "Can a package be changed to fit our group?",
+        answer:
+          "Yes. None of the packages are fixed. If the shape is close but the nights or the number of rounds are wrong, say so and the club will rebuild it around you.",
+      },
+    ],
+  },
+  {
+    title: "On the day",
+    faqs: [
+      {
+        question: "Is a caddie required?",
+        answer:
+          "Yes, one caddie per bag on every round. Carts and club rental are optional and are reserved together with your tee time.",
+      },
+      {
+        question: "What is the dress code?",
+        answer:
+          "Collared shirts, tailored shorts or trousers, and soft-spike or spikeless golf shoes. Denim, sleeveless shirts for men, and metal spikes are not permitted on the course.",
+      },
+      {
+        question: "Is there a handicap requirement?",
+        answer:
+          "No handicap certificate is needed to play. We only ask that first-time and higher-handicap players keep pace with the group in front of them.",
+      },
+      {
+        question: "What happens if play is suspended for weather?",
+        answer:
+          "If lightning or heavy rain stops play, the siren sounds and every player returns to the clubhouse. The club will rebook your round or settle the unplayed holes with you.",
+      },
+    ],
+  },
+  {
+    title: "Staying & getting here",
+    faqs: [
+      {
+        question: "Where do guests stay?",
+        answer:
+          "Villa Del Rey and Gota Village Resort both sit within reach of the course, and a package can be built around either one. Tell the club how many rooms you need and they will hold what fits.",
+      },
+      {
+        question: "Can you arrange airport transfers?",
+        answer:
+          "Yes. Collection from Naga Airport or from your hotel can be arranged with 24 hours’ notice. Naga Airport is roughly twenty-five minutes from the gate.",
+      },
+      {
+        question: "Is there anything for people who do not play golf?",
+        answer:
+          "Yes. Partners and family can spend the day around the clubhouse or on the wider CamSur grounds, and the club can put together a separate itinerary alongside your rounds.",
+      },
+    ],
+  },
+] as const;
 
 /**
  * "Golf Club" hero clip — direktang 4K MP4 (3840x2160, 60fps, ~20s, 48 MB),
@@ -239,11 +386,17 @@ export const ACCOMMODATIONS = [
   },
 ] as const;
 
+/**
+ * Bilang bilang salita, para sa mga pamagat na nagsasabi kung ilan.
+ * Naiwan na ang "Three" sa Accommodations nang maging dalawa ang listahan.
+ */
+const COUNT_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five"] as const;
+
 export const SITE_SECTIONS = [
   {
     slug: "golf",
     label: "Golf",
-    eyebrow: "Golf and clubhouse",
+    eyebrow: "Opening fairway to home green",
     title: "A landmark clubhouse at the heart of the course",
     description: "A championship golf experience shaped around play, arrival, dining, recovery, and the landscape of Camarines Sur.",
     image: "/golf-hero-aerial-clean-4k.jpg",
@@ -263,7 +416,7 @@ export const SITE_SECTIONS = [
   {
     slug: "clubhouse",
     label: "Clubhouse",
-    eyebrow: "A landscape that became a building",
+    eyebrow: "A landscape that became a clubhouse",
     title: "At the heart of the course",
     description: "A single sculpted volume in four layers — practice and events below, welcome and shop at grade, lounges above, and a bar, pool and gardens on the roof.",
     image: "/clubhouse/concept/aerial-heart-of-the-course.jpg",
@@ -276,9 +429,9 @@ export const SITE_SECTIONS = [
   {
     slug: "packages",
     label: "Packages",
-    eyebrow: "Golf packages",
+    eyebrow: "Featured",
     title: "Plan a golf trip that fits your schedule",
-    description: "Golf, dining, and accommodation combined into packages for weekends, groups, and special occasions.",
+    description: "Rounds, accommodation, and transfers combined into packages for weekends, groups, and longer stays.",
     image: "/packages-main-hero-option-3-4k-v2.jpg",
     /* Highlights lang ito, hindi ang buong listahan — anim ang package sa
        PackagesDetails.tsx, dalawa lang ang ipinapakita sa mega menu. Ang
@@ -289,18 +442,16 @@ export const SITE_SECTIONS = [
     ],
   },
   {
-    slug: "accommodations",
-    label: "Accommodations",
-    eyebrow: "Stay at CamSur",
-    title: "Three distinctive ways to stay in CamSur",
-    description: "Choose Clubhouse, Villa Del Rey, or Gota Village Resort for a stay that fits your CamSur visit.",
-    image: ACCOMMODATIONS[0].image,
-    links: ACCOMMODATIONS.map((stay) => ({ label: stay.title, href: `/accommodations/${stay.slug}` })),
+    slug: "events",
+    label: "Events",
+    eyebrow: "Events at CamSur Uptown Golf Club",
+    title: "A course-side setting for every occasion",
+    description: "Tournaments, corporate days, and private celebrations, hosted beside the course.",
+    image: "/clubhouse-rooftop-pool-gardens-clean-4k-v2.png",
+    links: ["Golf Tournaments", "Corporate Events", "Private Celebrations"].map((label) => ({ label, href: "/events" })),
   },
-  /* Ang Experiences at Dining ay tungkol sa hinahandog sa labas ng golf
-     course. Hiwalay sila sa halip na isang item na may Dining sa loob:
-     sariling dahilan ng pagbisita ang pagkaing Bicol, at ang unang
-     hinahanap ng bisita sa nav ay hindi nakatago sa loob ng ibang menu. */
+  /* Tungkol sa hinahandog sa labas ng golf course. May kasamang Dining
+     dito dati bilang hiwalay na section; inalis ito kasama ng /dining. */
   {
     slug: "experiences",
     label: "Experiences",
@@ -335,28 +486,31 @@ export const SITE_SECTIONS = [
     ],
   },
   {
-    slug: "dining",
-    label: "Dining",
-    eyebrow: "Gather, dine, and unwind",
-    title: "Your chill spot after the thrill",
-    description: "Relax, dine, and connect at the heart of the action. With cozy comfort, great food, and stunning park views, it is the perfect spot to unwind, share stories, and soak in the CWC vibe.",
-    image: "/fairway-villas/evening-dining.png",
-    links: [
-      {
-        label: "VIP Dining & Bar",
-        href: "/dining/vip-dining-bar",
-        image: "/dining/vip-dining-bar-hero-clean-4k-v1.png",
-      },
-    ],
-  },
-  {
-    slug: "events",
-    label: "Events",
-    eyebrow: "Events at CamSur",
-    title: "A course-side setting for every occasion",
-    description: "Tournaments, corporate days, and private celebrations, hosted beside the course.",
-    image: "/clubhouse-rooftop-pool-gardens-clean-4k-v2.png",
-    links: ["Golf Tournaments", "Corporate Events", "Private Celebrations"].map((label) => ({ label, href: "/events" })),
+    slug: "accommodations",
+    label: "Accommodations",
+    eyebrow: "Stay at CamSur",
+    /* Galing sa bilang mismo ng ACCOMMODATIONS: "Three" ang nakasulat dito
+       dati at naiwan nang maging dalawa ang listahan. Nakalista rin dati ang
+       Clubhouse na wala na. */
+    title: `${COUNT_WORDS[ACCOMMODATIONS.length] ?? ACCOMMODATIONS.length} distinctive ways to stay in CamSur`,
+    description: `Choose ${ACCOMMODATIONS.map((stay) => stay.title).join(" or ")} for a stay that fits your CamSur visit.`,
+    /* Sariling larawan, hindi `ACCOMMODATIONS[0].image`. Ang hero ng Villa
+       Del Rey iyon — malayong kuha ng buong resort, at sa 175px na preview
+       sa mega menu ay hindi na mabasa kung ano ang tinitingnan.
+
+       Ito ang "Villas" (stay option 04) sa `VillaDelReyStays.tsx` — isang
+       villa at ang sariling pool nito, kaya may makikitang tunay na tuluyan
+       kahit maliit ang card. Kung papalitan, pumili ng malapitang kuha at
+       hindi ng aerial.
+
+       ANG 4K ANG GINAGAMIT DITO, HINDI ANG MALIIT NA KOPYA. Dalawa ang
+       kumukuha ng field na ito: ang 175px na preview sa mega menu at ang
+       buong-lapad na hero ng /accommodations, na `sizes="100vw"` at
+       `priority`. Sa 900px na kopya ay malinaw ang preview pero malabo
+       ang hero. Ang `sizes="220px"` ng mega menu ang bahalang pumili ng
+       maliit na entry sa srcset — iyon naman ang trabaho ng next/image. */
+    image: "/villa-del-rey/stays/villa-pool-4k.jpg",
+    links: ACCOMMODATIONS.map((stay) => ({ label: stay.title, href: `/accommodations/${stay.slug}` })),
   },
 ] as const;
 

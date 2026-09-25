@@ -5,7 +5,7 @@
   --foreground: #171717;
 
   /* Camsur Uptown Golf Club brand */
-  --brand-green: #14442c;
+  --brand-green: #265136;
   --brand-green-deep: #0a2418;
   --brand-gold: #c9a54e;
   --brand-gold-light: #f0dca0;
@@ -22,9 +22,9 @@
   --color-gold-light: var(--brand-gold-light);
   --color-cream: var(--brand-cream);
 
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-manrope);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-cormorant-sc);
   --font-navigation: var(--font-montserrat);
 }
 
@@ -38,20 +38,28 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
 }
 
-/* Editorial display face for every major title across the site. Navigation,
-   labels, body copy, and compact card headings stay sans-serif for clarity.
+/* All prose uses Manrope site-wide. Display figures and compact navigation
+   labels retain their dedicated brand faces. */
+main p:not(.font-display):not(.font-navigation) {
+  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Cormorant SC is the shared editorial face for hero, image, and section
+   titles. Navigation, labels, body copy, and compact cards stay sans-serif.
 
    Dumaraan ito sa --font-display, hindi sa pangalan ng font mismo: iisang
    linya lang sa @theme sa itaas ang kailangang baguhin para mapalitan ang
    display face ng buong site. */
 main h1,
-main h2 {
+main h2,
+main h3.font-display,
+main h3.font-serif {
   font-family: var(--font-display), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  /* Walang epekto ito sa font na walang optical size axis. */
-  font-optical-sizing: auto;
+  letter-spacing: -0.04em;
 }
 
 html {

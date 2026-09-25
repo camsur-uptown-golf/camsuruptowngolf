@@ -57,7 +57,6 @@ export default function Page() {
   return (
     <PackageItineraryPage
       active="stay-and-play"
-      eyebrow="Golf package · one night, one round"
       title="Stay & Play"
       description="A two-day course-side package for golfers who want a complete round at CamSur Uptown without taking a week off. One night, one full eighteen, and enough time around it that nothing feels rushed."
       image="/stay-and-play-hero-option-2.png"

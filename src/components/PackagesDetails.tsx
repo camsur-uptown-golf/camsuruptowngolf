@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
-import { EDITORIAL_SECTION_ALT, EditorialHeading, Kicker, Shell, Watermark, delay } from "@/components/EditorialKit";
+import { EDITORIAL_SECTION_ALT, Kicker, Shell, delay } from "@/components/EditorialKit";
 import { CLUB_PHONE } from "@/lib/site-content";
 
 /**
@@ -23,6 +24,7 @@ const PACKAGES = [
   {
     slug: "stay-and-play",
     href: "/packages/stay-and-play",
+    image: "/stay-and-play-hero-option-2.png",
     name: "Stay & Play",
     summary: "One night, one round",
     who: "The simplest way to see the course",
@@ -35,10 +37,11 @@ const PACKAGES = [
   },
   {
     slug: "buddy-trip",
+    href: "/packages/buddy-trip",
+    image: "/buddy-golf-trip-hero-v4.png",
     name: "Buddy Golf Trip",
     summary: "Two nights, two rounds, one memorable group escape",
     who: "Golf, meals, and good company",
-    href: "/packages/buddy-trip",
     inclusions: [
       "A flexible three-day itinerary for your group",
       "Two rounds with caddies",
@@ -48,29 +51,10 @@ const PACKAGES = [
   },
 ] as const;
 
-const ADD_ONS = [
-  ["Airport transfers", "Collection from Naga Airport or your hotel, arranged with 24 hours’ notice."],
-  ["Additional rounds", "Extra rounds added to any package at the resident guest rate."],
-  ["Club rental", "Full sets in right- and left-handed configurations, reserved with your tee time."],
-  ["Private dining", "A separate room and a menu built for your group rather than the day’s service."],
-  ["Extra nights", "Add nights on either side of a package at the package room rate."],
-  ["Non-golfer itinerary", "For partners and family who would rather be anywhere but the fairway."],
-] as const;
-
-const GOOD_TO_KNOW = [
-  [
-    "Rates are quoted, not listed",
-    "Every package is priced on the dates, the group, and the accommodation you choose. Send the details and the club comes back with a figure.",
-  ],
-  [
-    "Book earlier for weekends",
-    "Weekend mornings fill first because members and their guests have priority. Weekday packages can usually be arranged on shorter notice.",
-  ],
-  [
-    "Packages can be rebuilt",
-    "None of these are fixed. If the shape is close but the nights or rounds are wrong, say so and the club will adjust it.",
-  ],
-] as const;
+/* NASA /faq NA ANG DATING "Before you enquire". Tatlong tanong tungkol sa
+   buong club ang mga iyon — presyo, abiso, at kung nababago ang package —
+   at hindi lang sa mga package. Nasa FAQ_GROUPS sila ngayon sa
+   site-content.ts, at may pindutan ang footer papunta roon. */
 
 function CheckIcon() {
   return (
@@ -96,136 +80,102 @@ function PhoneIcon() {
 function ThePackages() {
   return (
     <section id="packages" className={EDITORIAL_SECTION_ALT}>
-      <Watermark speed={0.12} offsetY="16%" />
-      <Shell>
-        <EditorialHeading
-          kicker="Choose your trip"
-          title="Two ways to put a trip together."
-          intro="Choose the format that fits your stay, then open its itinerary for the full day-by-day plan."
-        />
-
-        <div className="mt-10 grid gap-x-10 gap-y-10 lg:grid-cols-2">
-          {PACKAGES.map((pack, index) => (
-            <article
-              key={pack.slug}
-              id={pack.slug}
+      <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-12">
+        <div className="grid gap-8 border-b border-[#1f3f2e]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f] xl:text-[11px]">
+              Choose your trip
+            </p>
+            <h2
               data-reveal="up"
-              style={delay((index % 2) * 90)}
-              className="scroll-mt-28 border-t border-[#173b2a]/12 pt-8"
+              style={delay(110)}
+              className="mt-4 text-[clamp(2.25rem,4vw,4rem)] font-medium leading-none tracking-[-0.055em] text-[#14271d]"
             >
-              <p className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">
-                {String(index + 1).padStart(2, "0")} · {pack.who}
-              </p>
-              <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em] text-[#174630]">
-                {pack.name}
-              </h3>
-              <p className="mt-2 text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">{pack.summary}</p>
+              Two ways to put a trip together.
+            </h2>
+          </div>
+          <p
+            data-reveal="up"
+            style={delay(220)}
+            className="max-w-2xl text-base leading-8 text-[#56625b] lg:justify-self-end"
+          >
+            Choose the format that fits your stay, then open its itinerary for the full day-by-day plan.
+          </p>
+        </div>
 
-              <ul className="mt-6 space-y-3">
-                {pack.inclusions.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-7 xl:text-base xl:leading-8 text-[#4b5a51] sm:text-base">
-                    <span className="text-[#2f7a52]">
-                      <CheckIcon />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <p className="mt-6 font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
-                Rate on request
-              </p>
-              {"href" in pack && (
-                <Link href={pack.href} className="mt-5 inline-flex h-11 items-center rounded-full bg-[#2f644b] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.13em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a]">
-                  View itinerary →
+        <div className="mt-12 space-y-20 lg:mt-20 lg:space-y-32">
+          {PACKAGES.map((pack, index) => {
+            const imageOnRight = index % 2 === 1;
+            return (
+              <article
+                key={pack.slug}
+                id={pack.slug}
+                data-reveal="up"
+                style={delay(index * 120)}
+                className={`${imageOnRight ? "lg:grid-cols-[1fr_3fr]" : "lg:grid-cols-[3fr_1fr]"} grid scroll-mt-28 items-center gap-10 lg:gap-12`}
+              >
+                <Link
+                  href={pack.href}
+                  className={`${imageOnRight ? "lg:order-2" : ""} group relative isolate block aspect-[3/2] overflow-hidden bg-[#1f3f2e] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
+                >
+                  <Image
+                    src={pack.image}
+                    alt={`${pack.name} at CamSur Uptown Golf Club`}
+                    fill
+                    sizes="(max-width: 1023px) calc(100vw - 3rem), 800px"
+                    className="object-cover transition duration-700 group-hover:scale-[1.02]"
+                  />
                 </Link>
-              )}
-            </article>
-          ))}
+
+                <div className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -top-10 left-0 select-none font-display text-[clamp(4.5rem,7vw,7rem)] font-medium leading-none tracking-[-0.05em] text-[#1f3f2e]/[0.07]"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <p className="relative text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+                    {pack.who}
+                  </p>
+                  <h3 className="relative mt-3 text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#14271d]">
+                    {pack.name}
+                  </h3>
+                  <p className="relative mt-4 text-[17px] leading-8 text-[#3f4c45]">{pack.summary}</p>
+
+                  <ul className="relative mt-7 border-t border-[#1f3f2e]/12">
+                    {pack.inclusions.map((item) => (
+                      <li key={item} className="flex gap-3 border-b border-[#1f3f2e]/12 py-3 text-[13px] font-semibold uppercase leading-6 tracking-[0.06em] text-[#3f4c45]">
+                        <span className="text-[#265136]">
+                          <CheckIcon />
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="relative mt-6 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f] xl:text-[11px]">
+                    Rate on request
+                  </p>
+                  <Link
+                    href={pack.href}
+                    className="relative mt-5 inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] xl:text-[11px]"
+                  >
+                    View itinerary →
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
-      </Shell>
-    </section>
-  );
-}
-
-function AddOns() {
-  return (
-    <section
-      id="add-ons"
-      className={EDITORIAL_SECTION_ALT}
-    >
-      <div
-        data-parallax="-0.1"
-        className="pointer-events-none absolute -left-24 top-8 -z-10 h-72 w-72 rounded-full bg-[#c9a54e]/[0.09] blur-3xl"
-        aria-hidden="true"
-      />
-      <Shell>
-        <EditorialHeading
-          kicker="Add to any package"
-          title="The parts you bolt on."
-          intro="These sit on top of whichever package you start from, and none of them require a different booking."
-        />
-
-        <div className="mt-10 grid gap-x-14 gap-y-2 sm:grid-cols-2">
-          {ADD_ONS.map(([title, description], index) => (
-            <div
-              key={title}
-              data-reveal="up"
-              style={delay((index % 2) * 90)}
-              className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-[#173b2a]/12 py-7"
-            >
-              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <div>
-                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">{title}</h3>
-                <p className="mt-1.5 max-w-sm text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Shell>
-    </section>
-  );
-}
-
-function GoodToKnow() {
-  return (
-    <section id="good-to-know" className={EDITORIAL_SECTION_ALT}>
-      <Watermark speed={-0.09} offsetY="16%" />
-      <Shell>
-        <EditorialHeading
-          kicker="Good to know"
-          title="Before you enquire."
-          intro="Three things worth knowing so the first email gets you a useful answer rather than a follow-up question."
-        />
-
-        <div className="mt-10 border-t border-[#173b2a]/12">
-          {GOOD_TO_KNOW.map(([title, description], index) => (
-            <div
-              key={title}
-              data-reveal="up"
-              style={delay(index * 90)}
-              className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#173b2a]/12" : ""}`}
-            >
-              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <div className="min-w-0">
-                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#14271d]">{title}</h3>
-                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Shell>
+      </div>
     </section>
   );
 }
 
 function PackagesCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#1c3b2d] py-14 text-white sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#1f3f2e] py-14 text-white sm:py-16">
       <div
         data-parallax="0.14"
         className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"
@@ -275,8 +225,6 @@ export default function PackagesDetails() {
     <>
       <ScrollMotion />
       <ThePackages />
-      <AddOns />
-      <GoodToKnow />
       <PackagesCta />
     </>
   );

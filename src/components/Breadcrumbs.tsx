@@ -68,7 +68,7 @@ export default function Breadcrumbs() {
                 ) : (
                   <Link
                     href={crumb.href}
-                    className="underline-offset-4 transition-colors hover:text-[#2f644b] hover:underline"
+                    className="underline-offset-4 transition-colors hover:text-[#265136] hover:underline"
                   >
                     {crumb.label}
                   </Link>

@@ -88,8 +88,8 @@ function Nine({
   return (
     <table className="w-full min-w-[520px] border-collapse text-sm">
       <thead>
-        <tr className="bg-[#254936] text-white">
-          <th scope="col" className={`${rowLabel} bg-[#254936]`}>
+        <tr className="bg-[#1f3f2e] text-white">
+          <th scope="col" className={`${rowLabel} bg-[#1f3f2e]`}>
             Hole
           </th>
           {holes.map((hole) => (
@@ -120,7 +120,7 @@ function Nine({
           >
             <span className="inline-flex items-center gap-2">
               <span
-                className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#173b2a]/45"
+                className="h-2.5 w-2.5 shrink-0 rounded-full border border-[#1f3f2e]/45"
                 style={{ backgroundColor: tee.color }}
                 aria-hidden="true"
               />
@@ -194,7 +194,7 @@ export default function Scorecard({
     <div className={`grid gap-8 lg:items-start lg:gap-10 ${landscapePlan ? "lg:grid-cols-[400px_minmax(0,1fr)] xl:grid-cols-[520px_minmax(0,1fr)]" : holeOne ? "lg:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[420px_minmax(0,1fr)]" : "lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]"}`}>
       <figure className={`mx-auto w-full lg:mx-0 lg:sticky lg:top-28 ${landscapePlan ? "max-w-[720px]" : holeOne ? "max-w-[420px]" : "max-w-[340px]"}`}>
         <div
-          className="relative w-full overflow-hidden border border-[#173b2a]/12 bg-white"
+          className="relative w-full overflow-hidden border border-[#1f3f2e]/12 bg-white"
           style={{ aspectRatio: photoWidth / photoHeight }}
         >
           <Image
@@ -226,11 +226,11 @@ export default function Scorecard({
           onClick={() => setOpen((current) => !current)}
           aria-expanded={open}
           aria-haspopup="listbox"
-          className="flex w-full items-center justify-between gap-3 border border-[#173b2a]/15 bg-white px-5 py-3.5 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#14271d] transition-colors hover:border-[#173b2a]/35"
+          className="flex w-full items-center justify-between gap-3 border border-[#1f3f2e]/15 bg-white px-5 py-3.5 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#14271d] transition-colors hover:border-[#1f3f2e]/35"
         >
           <span className="inline-flex items-center gap-2">
             Select tees
-            <span className="h-3 w-3 rounded-full border border-[#173b2a]/45" style={{ backgroundColor: tee.color }} aria-hidden="true" />
+            <span className="h-3 w-3 rounded-full border border-[#1f3f2e]/45" style={{ backgroundColor: tee.color }} aria-hidden="true" />
             <span className="text-[#98782f]">{tee.name}</span>
           </span>
           <ChevronIcon open={open} />
@@ -240,7 +240,7 @@ export default function Scorecard({
           <ul
             role="listbox"
             aria-label="Select tees"
-            className="absolute inset-x-0 top-full z-20 border border-t-0 border-[#173b2a]/15 bg-white shadow-[0_18px_44px_rgba(20,45,32,0.14)]"
+            className="absolute inset-x-0 top-full z-20 border border-t-0 border-[#1f3f2e]/15 bg-white shadow-[0_18px_44px_rgba(20,45,32,0.14)]"
           >
             {TEES.map((option, index) => (
               <li key={option.name} role="option" aria-selected={index === teeIndex}>
@@ -253,7 +253,7 @@ export default function Scorecard({
                   className={`${index === teeIndex ? "bg-[#f1d98f]/40 text-[#0b281b]" : "text-[#14271d] hover:bg-[#f7f5ee]"} block w-full px-5 py-3 text-left font-navigation text-[11px] font-bold uppercase tracking-[0.16em] transition-colors`}
                 >
                   <span className="inline-flex items-center gap-3">
-                    <span className="h-3.5 w-3.5 rounded-full border border-[#173b2a]/45" style={{ backgroundColor: option.color }} aria-hidden="true" />
+                    <span className="h-3.5 w-3.5 rounded-full border border-[#1f3f2e]/45" style={{ backgroundColor: option.color }} aria-hidden="true" />
                     {option.name}
                   </span>
                 </button>
@@ -266,10 +266,10 @@ export default function Scorecard({
       {/* Dalawang hiwalay na siyam, gaya ng nakalimbag na scorecard — sa isang
           talahanayan na 18 na hanay ay masyadong makipot ang bawat hanay. */}
       <div className="mt-7 space-y-4">
-        <div className="overflow-x-auto border border-[#173b2a]/12">
+        <div className="overflow-x-auto border border-[#1f3f2e]/12">
           <Nine holes={FRONT_NINE} tee={tee} currentHole={currentHole} runningLabel="Out" />
         </div>
-        <div className="overflow-x-auto border border-[#173b2a]/12">
+        <div className="overflow-x-auto border border-[#1f3f2e]/12">
           <Nine
             holes={BACK_NINE}
             tee={tee}

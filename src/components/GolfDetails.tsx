@@ -97,18 +97,18 @@ function Overview() {
           <dl
             data-reveal="up"
             style={delay(360)}
-            className="mx-auto mt-8 grid max-w-3xl grid-cols-3 border-y border-[#173b2a]/12 py-5 font-navigation"
+            className="mx-auto mt-8 grid max-w-3xl grid-cols-3 border-y border-[#1f3f2e]/12 py-5 font-navigation"
           >
             <div>
-              <dt className="font-display text-xl font-semibold text-[#174630]">18</dt>
+              <dt className="font-display text-xl font-semibold text-[#265136]">18</dt>
               <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Holes</dd>
             </div>
-            <div className="border-l border-[#173b2a]/12 pl-5">
-              <dt className="font-display text-xl font-semibold text-[#174630]">54.23</dt>
+            <div className="border-l border-[#1f3f2e]/12 pl-5">
+              <dt className="font-display text-xl font-semibold text-[#265136]">54.23</dt>
               <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Hectares</dd>
             </div>
-            <div className="border-l border-[#173b2a]/12 pl-5">
-              <dt className="font-display text-xl font-semibold text-[#174630]">7</dt>
+            <div className="border-l border-[#1f3f2e]/12 pl-5">
+              <dt className="font-display text-xl font-semibold text-[#265136]">7</dt>
               <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Water features</dd>
             </div>
           </dl>
@@ -121,76 +121,14 @@ function Overview() {
 function DesignPrinciples() {
   return (
     <section id="design" className={GOLF_SECTION}>
-      <Shell>
-        <EditorialHeading
-          kicker="Design"
-          title="Four ideas the course keeps returning to."
-          intro="None of these are unusual on their own. Holding all four across the whole course is the harder part."
-        />
-
-        <div className="mt-10 border-t border-[#173b2a]/12">
-          {PRINCIPLES.map(([title, description], index) => (
-            <div
-              key={title}
-              data-reveal="up"
-              style={delay(index * 90)}
-              className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#173b2a]/12" : ""}`}
-            >
-              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <div className="min-w-0">
-                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#14271d]">{title}</h3>
-                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Shell>
     </section>
   );
 }
 
-function TeeOptions() {
-  return (
-    <section id="tees" className={GOLF_SECTION}>
-      <Shell>
-        <EditorialHeading
-          kicker="Tees"
-          title="Four ways to play the same course."
-          intro="The strategy stays the same from every tee. Only the length of the carry changes, so a group of mixed handicaps can still play together."
-        />
-
-        <div className="mt-10 border-t border-[#173b2a]/12">
-          {TEES.map((tee, index) => (
-            <div
-              key={tee.name}
-              data-reveal="up"
-              style={delay(index * 90)}
-              className={`flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 py-5 ${index ? "border-t border-[#173b2a]/12" : ""}`}
-            >
-              <div className="min-w-0">
-                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#14271d]">{tee.name}</h3>
-                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{tee.note}</p>
-              </div>
-              <p className="shrink-0 font-navigation text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
-                {tee.profile}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <p data-reveal="up" className="mt-8 text-sm leading-7 xl:text-base xl:leading-8 text-[#8a938c]">
-          Final tee locations will be confirmed when the course routing is measured and approved.
-        </p>
-      </Shell>
-    </section>
-  );
-}
 
 function GolfCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#1c3b2d] py-14 text-white sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#1f3f2e] py-14 text-white sm:py-16">
       <div
         data-parallax="0.14"
         className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-80 w-80 rounded-full bg-[#c9a54e]/[0.06] blur-3xl"
@@ -239,8 +177,6 @@ export default function GolfDetails() {
       <CourseRoutingMap />
       <ConceptCarousel />
       <PackagesCarousel />
-      <DesignPrinciples />
-      <TeeOptions />
       <GolfCta />
     </>
   );

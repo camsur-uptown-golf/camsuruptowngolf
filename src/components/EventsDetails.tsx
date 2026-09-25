@@ -108,7 +108,7 @@ function Occasions() {
         <div className="mt-12 space-y-16 sm:mt-14 sm:space-y-24">
           {OCCASIONS.map((occasion, index) => (
             <article key={occasion.title} className="scroll-mt-28">
-              <div data-reveal="up" className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-[#173a29] sm:aspect-[16/9]">
+              <div data-reveal="up" className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-[#1f3f2e] sm:aspect-[16/9]">
                 <Image
                   src={occasion.image}
                   alt={occasion.imageAlt}
@@ -129,7 +129,7 @@ function Occasions() {
                   <h3
                     data-reveal="up"
                     style={delay(90)}
-                    className="mt-4 text-2xl font-semibold tracking-[-0.035em] text-[#174630] sm:text-3xl"
+                    className="mt-4 text-2xl font-semibold tracking-[-0.035em] text-[#265136] sm:text-3xl"
                   >
                     {occasion.title}
                   </h3>
@@ -142,10 +142,10 @@ function Occasions() {
                   </p>
                 </div>
 
-                <ul data-reveal="up" style={delay(270)} className="space-y-3 self-start border-t border-[#173b2a]/12 pt-6 lg:border-l lg:border-t-0 lg:pl-16 lg:pt-0">
+                <ul data-reveal="up" style={delay(270)} className="space-y-3 self-start border-t border-[#1f3f2e]/12 pt-6 lg:border-l lg:border-t-0 lg:pl-16 lg:pt-0">
                   {occasion.inclusions.map((item) => (
                     <li key={item} className="flex gap-3 text-sm leading-7 xl:text-base xl:leading-8 text-[#4b5a51] sm:text-base">
-                      <span className="text-[#2f7a52]">
+                      <span className="text-[#265136]">
                         <CheckIcon />
                       </span>
                       {item}
@@ -178,13 +178,13 @@ function HowPlanningWorks() {
           intro="The club handles the running order so the day belongs to your group rather than to a schedule someone else wrote."
         />
 
-        <div className="mt-10 border-t border-[#173b2a]/12">
+        <div className="mt-10 border-t border-[#1f3f2e]/12">
           {PLANNING_STEPS.map(([title, description], index) => (
             <div
               key={title}
               data-reveal="up"
               style={delay(index * 90)}
-              className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#173b2a]/12" : ""}`}
+              className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#1f3f2e]/12" : ""}`}
             >
               <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
                 {String(index + 1).padStart(2, "0")}
@@ -203,7 +203,7 @@ function HowPlanningWorks() {
 
 function EventsCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#1c3b2d] py-14 text-white sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#1f3f2e] py-14 text-white sm:py-16">
       <div
         data-parallax="0.14"
         className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"
@@ -253,7 +253,6 @@ export default function EventsDetails() {
     <>
       <ScrollMotion />
       <Occasions />
-      <HowPlanningWorks />
       <EventsCta />
     </>
   );

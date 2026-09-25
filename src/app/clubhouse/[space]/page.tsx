@@ -64,13 +64,9 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             aria-hidden="true"
           />
           <div className="mx-auto w-full max-w-4xl px-6 pb-16 pt-56 sm:px-10 sm:pb-20 lg:px-12 xl:max-w-5xl">
-            <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e] xl:text-[11px]">
-              {space.floor}
-            </p>
             <h1
               data-reveal="up"
-              style={delay(110)}
-              className="mt-4 max-w-3xl text-[clamp(2.25rem,4.5vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]"
+              className="max-w-3xl text-[clamp(2.25rem,4.5vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]"
             >
               {space.name}
             </h1>
@@ -93,7 +89,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             <p data-reveal="up" style={delay(120)} className="mt-8 text-center">
               <Link
                 href="/clubhouse"
-                className="inline-flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#2f644b] xl:text-[11px]"
+                className="inline-flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#265136] xl:text-[11px]"
               >
                 <span aria-hidden="true">←</span> All {roomCountWord().toLowerCase()} rooms
               </Link>
@@ -112,7 +108,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
               <div className="mt-12 space-y-10 sm:mt-14 sm:space-y-14">
                 {space.gallery.map((shot, shotIndex) => (
                   <figure key={shot.src} data-reveal="up" style={delay(shotIndex * 90)}>
-                    <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-[#173b2a]">
+                    <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-[#1f3f2e]">
                       <Image
                         src={shot.src}
                         alt={shot.alt}
@@ -141,7 +137,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
               <Link
                 href="/plan-your-visit"
                 data-reveal="up"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#2f644b] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#3a765a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f644b] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#265136] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
               >
                 Plan your visit
               </Link>
@@ -149,7 +145,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
                 href={CLUB_PHONE.href}
                 data-reveal="up"
                 style={delay(90)}
-                className="inline-flex h-12 items-center justify-center rounded-full border border-[#173b2a]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#2f644b] hover:text-[#2f644b] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3f2e]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#265136] hover:text-[#265136] xl:text-[11px]"
               >
                 {CLUB_PHONE.label}
               </a>
@@ -158,7 +154,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
         </section>
 
         {/* Pabalik-balik sa anim na kuwarto, gaya ng sa mga butas ng golf. */}
-        <nav aria-label="Other rooms" className="grid border-t border-[#173b2a]/10 sm:grid-cols-2">
+        <nav aria-label="Other rooms" className="grid border-t border-[#1f3f2e]/10 sm:grid-cols-2">
           {[
             { space: previous, label: "Previous" },
             { space: next, label: "Next" },

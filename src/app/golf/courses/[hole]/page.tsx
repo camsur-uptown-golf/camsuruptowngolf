@@ -143,7 +143,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                   ibang pahina — nandoon na ang hinahanap ng pipindot nito. */}
               <Link
                 href="#request-call-back"
-                className="mt-7 inline-flex h-11 min-w-[170px] items-center justify-center rounded-full bg-[#2f644b] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a] sm:h-12 sm:min-w-[190px] sm:text-[11px]"
+                className="mt-7 inline-flex h-11 min-w-[170px] items-center justify-center rounded-full bg-[#265136] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e] sm:h-12 sm:min-w-[190px] sm:text-[11px]"
               >
                 Request a call back
               </Link>
@@ -158,7 +158,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               overflow-hidden ng section). Walang vw dito, walang pagkaputol. */}
           {/* Walang sariling background: minamana nito ang cream ng section,
               kaya tiyak na magkatugma. Ang border-y na lang ang naghihiwalay. */}
-          <div className="mt-14 border-y border-[#173b2a]/10 px-6 py-9 text-[#14271d] sm:mt-16 sm:px-10 sm:py-11">
+          <div className="mt-14 border-y border-[#1f3f2e]/10 px-6 py-9 text-[#14271d] sm:mt-16 sm:px-10 sm:py-11">
             <dl className="mx-auto grid max-w-6xl grid-cols-3 text-center">
               {[
                 { label: "Yards", value: scorecard.yards.toLocaleString() },
@@ -169,7 +169,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                   key={label}
                   data-reveal="up"
                   style={delay(statIndex * 90)}
-                  className={`flex min-h-20 flex-col items-center justify-start px-3 sm:min-h-24 sm:px-8 ${statIndex ? "border-l border-[#173b2a]/15" : ""}`}
+                  className={`flex min-h-20 flex-col items-center justify-start px-3 sm:min-h-24 sm:px-8 ${statIndex ? "border-l border-[#1f3f2e]/15" : ""}`}
                 >
                   <dt className="font-navigation text-[10px] font-semibold uppercase tracking-[0.13em] text-[#4f5d55] sm:text-xs">
                     {label}
@@ -228,7 +228,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
 
 
         {slug === "no-6" && (
-          <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+          <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
             <Container>
               <SectionHeading eyebrow="Lakeside course views" title="See the lakeside course from every angle." />
 
@@ -258,7 +258,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           </section>
         )}
 
-        <section id="request-call-back" className="scroll-mt-24 border-t border-[#173b2a]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+        <section id="request-call-back" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
           <Container>
             <SectionHeading
               eyebrow="Plan your round"

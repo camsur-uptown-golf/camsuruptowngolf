@@ -15,7 +15,7 @@ const COURSE_FACTS = [
   { value: "18", count: 18, label: "Championship holes", Icon: FlagIcon },
   { value: "72", count: 72, label: "Course par", Icon: ScorecardIcon },
   { value: "54.23", count: null, label: "Hectares", Icon: AreaIcon },
-  { value: "Mt. Isarog", count: null, label: "Signature backdrop", Icon: MountainIcon },
+  { value: "", count: null, label: "Golf course designer", Icon: ImgDesignerMark },
 ] as const;
 
 /** Stagger helper — reads back out in CSS as `transition-delay`. */
@@ -76,11 +76,16 @@ function AreaIcon() {
   );
 }
 
-function MountainIcon() {
+function ImgDesignerMark() {
   return (
-    <StatIcon>
-      <path d="M2.5 19.5 9 10l4.2 5.4L16 12l5.5 7.5z" />
-    </StatIcon>
+    <Image
+      src="/branding/mc-gold.png"
+      alt=""
+      width={32}
+      height={18}
+      className="h-5 w-9 shrink-0 object-contain object-left"
+      aria-hidden="true"
+    />
   );
 }
 
@@ -124,7 +129,7 @@ function Hero() {
 // ibabang gilid ng hero nang hindi nagbabago ang taas ng hero.
 function CourseSnapshot() {
   return (
-    <section id="course-snapshot" className="relative z-20 border-y border-[#d1af58]/22 bg-[#1c3b2d] font-navigation text-white lg:-mt-[68px] lg:h-[68px]" aria-label="Course snapshot">
+    <section id="course-snapshot" className="relative z-20 border-y border-[#d1af58]/22 bg-[#1f3f2e] font-navigation text-white lg:-mt-[68px] lg:h-[68px]" aria-label="Course snapshot">
       {/* The band sits on the hero, so a gold hairline reads as its edge. */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" aria-hidden="true" />
       {/* No reveal on the scroll cue: it already carries a translate, and a
@@ -147,11 +152,20 @@ function CourseSnapshot() {
           >
             <div className="flex items-center gap-2">
               <Icon />
-              <p
-                className={`${count === null ? "text-xs sm:text-sm" : "text-lg sm:text-xl"} font-semibold leading-none tracking-[-0.02em] text-[#f2d98d]`}
-              >
-                {count === null ? value : <span data-count={count}>{value}</span>}
-              </p>
+              {/* IISANG SUKAT ANG APAT. Nakadikit dati ang laki sa `count`:
+                  maliit (`text-xs`) kapag `null`, malaki kapag may bilang.
+                  May silbi iyon noong "Mt. Isarog" ang ikaapat — mahabang
+                  salita na hindi kasya sa 20px. Ngayong marka na ang ikaapat,
+                  ang 54.23 na lang ang tinatamaan niyon: numero rin ito gaya
+                  ng 18 at 72, pero 14px habang 20px ang dalawa.
+
+                  Para sa count-up na lang ang `count`, hindi na para sa
+                  laki — dalawang magkaibang bagay ang pinagsasama niyon. */}
+              {value ? (
+                <p className="text-lg font-semibold leading-none tracking-[-0.02em] text-[#f2d98d] sm:text-xl">
+                  {count === null ? value : <span data-count={count}>{value}</span>}
+                </p>
+              ) : null}
             </div>
             <p className="mt-1.5 text-[8px] font-medium uppercase leading-tight tracking-[0.14em] text-white/55 sm:text-[9px] xl:text-[10px]">{label}</p>
           </div>
@@ -163,7 +177,7 @@ function CourseSnapshot() {
 
 function Introduction() {
   return (
-    <section id="story" className="relative isolate flex min-h-[520px] items-center overflow-hidden bg-[#f7f5ee] text-[#14271d]">
+    <section id="story" className="relative isolate flex min-h-[480px] items-center overflow-hidden bg-[#f7f5ee] text-[#14271d]">
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center" aria-hidden="true">
         {/* Safe to parallax: a floating watermark has no container edge to expose. */}
         <div data-parallax="0.1" className="relative h-[290px] w-[340px] overflow-hidden opacity-[0.075] sm:h-[350px] sm:w-[420px]">
@@ -176,29 +190,30 @@ function Introduction() {
           />
         </div>
       </div>
-      <div className="mx-auto flex max-w-[1280px] flex-col items-center px-6 py-16 text-center sm:py-20 lg:px-10 lg:py-20">
+      <div className="mx-auto flex max-w-[1280px] flex-col items-center px-6 py-14 text-center sm:py-16 lg:px-10 lg:py-18">
         <div data-reveal="up">
-          <Eyebrow className="mb-5 text-[#98782f]">A New Golf Destination in Bicol</Eyebrow>
         </div>
         <h1
           data-reveal="up"
           style={delay(110)}
-          className="max-w-[1080px] font-display text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.96] tracking-[-0.055em] text-[#17251e]"
+          className="max-w-[1120px] font-display text-[#17251e]"
         >
-          Championship golf in the heart of Bicol.
+          <span className="block text-[clamp(2.5rem,4.2vw,4.5rem)] font-medium leading-[0.94] tracking-[-0.055em]">
+            CAMSUR UPTOWN GOLF CLUB
+          </span>
+          <span className="mx-auto mt-3 block max-w-[1040px] text-[clamp(1.35rem,2.5vw,2.65rem)] font-normal leading-[1.08] tracking-[-0.035em] text-[#26362e] sm:mt-4">
+            DESIGNED BY <span className="text-[#98782f]">IMG</span> — THE GLOBAL LEADER IN GOLF COURSE DESIGN
+          </span>
         </h1>
-        <p
-          data-reveal="up"
-          style={delay(220)}
-          className="mt-7 max-w-4xl text-base font-medium leading-8 text-[#56625b] sm:text-lg sm:leading-9"
-        >
-          Set beneath the silhouette of Mt. Isarog, CamSur Uptown Golf Club brings together a carefully planned championship course, wide open views, and the warmth that Bicol is known for.
-        </p>
+
+        {/* Hindi inuulit ang headline: inilalarawan nito ang karakter ng
+            laro at ang balanse ng accessibility at strategy. */}
+
         <Link
-          href="/plan-your-visit"
+          href="/golf"
           data-reveal="up"
           style={delay(330)}
-          className="mt-8 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_14px_34px_rgba(20,68,44,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#3a765a]"
+          className="mt-7 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#265136] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_14px_34px_rgba(20,68,44,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#1f3f2e] xl:text-[12px]"
         >
           Plan your round <ArrowIcon />
         </Link>
@@ -220,7 +235,6 @@ export default function Home() {
         <div className="bg-[#f7f5ee]">
           <ConceptCarousel />
           <PackagesCarousel />
-          <OffCourseSection />
         </div>
       </main>
       <Footer />

@@ -45,7 +45,7 @@ export default function ConceptCarousel() {
           type="button"
           onClick={goPrevious}
           aria-label={`Previous image: ${SLIDES[previous].title}`}
-          className="group absolute left-0 top-1/2 hidden aspect-[1.25] w-[20vw] max-w-[410px] -translate-y-1/2 overflow-hidden bg-[#173a29] lg:block"
+          className="group absolute left-0 top-1/2 hidden aspect-[1.25] w-[20vw] max-w-[410px] -translate-y-1/2 overflow-hidden bg-[#1f3f2e] lg:block"
         >
           <Image src={SLIDES[previous].image} alt="" fill sizes="20vw" className="object-cover opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
           <span className="absolute inset-0 bg-[#082218]/10" aria-hidden="true" />
@@ -55,20 +55,20 @@ export default function ConceptCarousel() {
           type="button"
           onClick={goNext}
           aria-label={`Next image: ${SLIDES[next].title}`}
-          className="group absolute right-0 top-1/2 hidden aspect-[1.25] w-[20vw] max-w-[410px] -translate-y-1/2 overflow-hidden bg-[#173a29] lg:block"
+          className="group absolute right-0 top-1/2 hidden aspect-[1.25] w-[20vw] max-w-[410px] -translate-y-1/2 overflow-hidden bg-[#1f3f2e] lg:block"
         >
           <Image src={SLIDES[next].image} alt="" fill sizes="20vw" className="object-cover opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
           <span className="absolute inset-0 bg-[#082218]/10" aria-hidden="true" />
         </button>
 
-        <span className="absolute left-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#173126]/55 lg:block" aria-hidden="true" />
-        <span className="absolute right-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#173126]/55 lg:block" aria-hidden="true" />
+        <span className="absolute left-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#1f3f2e]/55 lg:block" aria-hidden="true" />
+        <span className="absolute right-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#1f3f2e]/55 lg:block" aria-hidden="true" />
 
         <Link
           href={`/golf/courses/${SLIDES[active].slug}`}
           aria-label={`View ${SLIDES[active].title}`}
           data-reveal="scale"
-          className="relative z-10 mx-auto block aspect-[1.94] w-[calc(100%-3rem)] max-w-[1040px] overflow-hidden bg-[#173a29] shadow-[0_18px_42px_rgba(17,44,31,0.1)] sm:w-[52vw]"
+          className="relative z-10 mx-auto block aspect-[1.94] w-[calc(100%-3rem)] max-w-[1040px] overflow-hidden bg-[#1f3f2e] shadow-[0_18px_42px_rgba(17,44,31,0.1)] sm:w-[52vw]"
         >
           <Image
             key={SLIDES[active].image}
@@ -95,24 +95,43 @@ export default function ConceptCarousel() {
           type="button"
           onClick={goPrevious}
           aria-label="Previous hole image"
-          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#2f644b]/35 text-[#2f644b] transition hover:border-[#2f644b] hover:bg-[#2f644b] hover:text-white"
+          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#265136]/35 text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
         >
           <Arrow direction="left" />
         </button>
 
         <div className="grid min-w-0 gap-5 lg:grid-cols-2 lg:gap-10">
-          <div className="min-w-0 lg:border-r lg:border-[#183e2b]/35 lg:pr-10">
+          <div className="min-w-0 lg:border-r lg:border-[#1f3f2e]/35 lg:pr-10">
+            {/* NASA PAMAGAT ANG "HOLE", HINDI SA EYEBROW. Dating "Hole" ang
+                eyebrow at "No. 1" lang ang pamagat, kaya nasa 10px na
+                teksto nakasabit ang pinakamahalagang salita. "Hole No. N"
+                din ang tawag dito sa nav, sa breadcrumb at sa ruta, kaya
+                iisa na ang pangalan nito sa buong site.
+
+                NANATILING HINDI NAGBABAGO ANG EYEBROW. Sinubukan dito ang
+                sariling pangalan ng bawat butas ("Opening Fairway"), pero
+                dalawang gumagalaw na teksto iyon nang magkapatong — lumilipat
+                ang eyebrow at ang pamagat nang sabay, at nagulo ang mata.
+                Label ng section ito, hindi bahagi ng datos ng butas, kaya
+                iisa lang ito sa labing-walo. */}
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
-              Hole
+              The Course
             </p>
-            <h3 className="mt-2 max-w-full font-serif text-[clamp(3.25rem,5vw,5.5rem)] font-medium leading-[0.9] tracking-[-0.055em]">
-              No. {active + 1}
+            {/* 3.1vw AT HINDI HIGIT PA. Ang hanay na ito ay 238px lang sa
+                1440px. Sa 3.6vw (51.8px) ay pumuputol sa dalawang linya ang
+                butas 10 at 18 habang nananatiling isang linya ang iba, kaya
+                tumatalon ang taas habang pinapalitan ang butas. Sa 3.1vw
+                (44.6px) ay kasya ang lahat ng labing-walo sa isang linya —
+                sinubukan ko ang bawat isa. Kapag pinalaki ito o pinaliit ang
+                hanay, subukan muli ang 10 at ang 18, hindi lang ang 1. */}
+            <h3 className="mt-2 max-w-full font-serif text-[clamp(2.5rem,3.1vw,4rem)] font-medium leading-[0.9] tracking-[-0.055em]">
+              Hole No. {active + 1}
             </h3>
           </div>
           <div className="hidden lg:block lg:pt-6" aria-live="polite">
             <p className="text-sm leading-6 text-[#536058]">{SLIDES[active].description}</p>
-            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#3a765a]">
-              Explore this hole
+            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[130px] items-center justify-center rounded-full bg-[#265136] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#1f3f2e]">
+              Explore
             </Link>
           </div>
         </div>
@@ -121,7 +140,7 @@ export default function ConceptCarousel() {
           type="button"
           onClick={goNext}
           aria-label="Next hole image"
-          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#2f644b]/35 text-[#2f644b] transition hover:border-[#2f644b] hover:bg-[#2f644b] hover:text-white"
+          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#265136]/35 text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
         >
           <Arrow direction="right" />
         </button>
@@ -140,7 +159,7 @@ export default function ConceptCarousel() {
             onClick={() => setActive(index)}
             aria-label={`Show ${slide.title}`}
             aria-current={active === index ? "true" : undefined}
-            className={`h-1.5 rounded-full transition-all ${active === index ? "w-8 bg-[#b38c34]" : "w-1.5 bg-[#183e2b]/20 hover:bg-[#183e2b]/45"}`}
+            className={`h-1.5 rounded-full transition-all ${active === index ? "w-8 bg-[#b38c34]" : "w-1.5 bg-[#1f3f2e]/20 hover:bg-[#1f3f2e]/45"}`}
           />
         ))}
       </div>

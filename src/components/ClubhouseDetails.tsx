@@ -45,7 +45,7 @@ export default function ClubhouseDetails() {
             intro="Everything that happens around a round is in this one building — arriving, getting ready, warming up, and sitting down afterwards."
           />
 
-          <dl className="mx-auto mt-12 grid max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#173b2a]/10 bg-[#173b2a]/10 sm:mt-14 sm:grid-cols-4">
+          <dl className="mx-auto mt-12 grid max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#1f3f2e]/10 bg-[#1f3f2e]/10 sm:mt-14 sm:grid-cols-4">
             {VISITOR_FACTS.map((fact, index) => (
               <div key={fact.label} data-reveal="up" style={delay(index * 70)} className="bg-white px-4 py-6 text-center">
                 <dt className="font-display text-3xl font-medium leading-none tracking-[-0.04em] text-[#14271d] sm:text-4xl">
@@ -70,7 +70,7 @@ export default function ClubhouseDetails() {
             intro="Three floors and a roof terrace. The practice bays are lowest, closest to the grass; the bar is highest, looking back over the holes you have just played."
           />
 
-          <div className="mt-12 space-y-px overflow-hidden rounded-2xl border border-[#173b2a]/10 bg-[#173b2a]/10 sm:mt-14">
+          <div className="mt-12 space-y-px overflow-hidden rounded-2xl border border-[#1f3f2e]/10 bg-[#1f3f2e]/10 sm:mt-14">
             {CLUBHOUSE_LEVELS.map((level, index) => (
               <div
                 key={level.code}
@@ -88,7 +88,7 @@ export default function ClubhouseDetails() {
                   <p className="mt-3 text-sm leading-7 text-[#5d685f]">{level.summary}</p>
                 </div>
                 {level.plan.length > 0 ? (
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5 self-start border-t border-[#173b2a]/10 pt-5 text-sm leading-6 text-[#56625b] lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+                <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5 self-start border-t border-[#1f3f2e]/10 pt-5 text-sm leading-6 text-[#56625b] lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
                   {level.plan.map((room) => (
                     <li key={room}>{room}</li>
                   ))}
@@ -114,7 +114,7 @@ export default function ClubhouseDetails() {
           <div className="mt-12 space-y-16 sm:mt-14 sm:space-y-24">
             {CLUBHOUSE_SPACES.map((space) => (
               <article key={space.id} id={space.id} className="scroll-mt-28">
-                <div data-reveal="up" className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-[#173b2a] sm:aspect-[16/9]">
+                <div data-reveal="up" className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-[#1f3f2e] sm:aspect-[16/9]">
                   <Image
                     src={space.image}
                     alt={space.imageAlt}
@@ -140,7 +140,7 @@ export default function ClubhouseDetails() {
                       CLUBHOUSE_SPACES. Nananatili rin itong anchor dito. */}
                   <Link
                     href={`/clubhouse/${space.id}`}
-                    className="inline-flex h-11 shrink-0 items-center justify-center justify-self-start whitespace-nowrap rounded-full border border-[#173b2a]/25 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition-colors hover:border-[#2f644b] hover:bg-[#2f644b] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f644b] xl:text-[11px]"
+                    className="inline-flex h-11 shrink-0 items-center justify-center justify-self-start whitespace-nowrap rounded-full border border-[#1f3f2e]/25 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition-colors hover:border-[#265136] hover:bg-[#265136] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
                   >
                     See {space.name.toLowerCase()}
                   </Link>
@@ -158,7 +158,7 @@ export default function ClubhouseDetails() {
           <div className="mt-12 grid gap-8 sm:mt-14 sm:grid-cols-3 sm:gap-10">
             {CLUBHOUSE_DAY.map((part, index) => (
               <div key={part.time} data-reveal="up" style={delay(index * 110)}>
-                <div className="relative mb-5 aspect-[4/3] overflow-hidden rounded-2xl bg-[#173b2a]">
+                <div className="relative mb-5 aspect-[4/3] overflow-hidden rounded-2xl bg-[#1f3f2e]">
                   <Image
                     src={part.image}
                     alt={`${part.title} at the CamSur Uptown clubhouse`}
@@ -190,7 +190,7 @@ export default function ClubhouseDetails() {
             <Link
               href="/plan-your-visit"
               data-reveal="up"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[#2f644b] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#3a765a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f644b] xl:text-[11px]"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#265136] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
             >
               Plan your visit
             </Link>
@@ -198,7 +198,7 @@ export default function ClubhouseDetails() {
               href={CLUB_PHONE.href}
               data-reveal="up"
               style={delay(90)}
-              className="inline-flex h-12 items-center justify-center rounded-full border border-[#173b2a]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#2f644b] hover:text-[#2f644b] xl:text-[11px]"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3f2e]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#265136] hover:text-[#265136] xl:text-[11px]"
             >
               {CLUB_PHONE.label}
             </a>
@@ -213,7 +213,7 @@ export default function ClubhouseDetails() {
           pinto papunta roon. Iisa ang pinagmulan: CLUBHOUSE_DESIGNER. */}
       <section className={EDITORIAL_SECTION}>
         <Shell>
-          <div className="border-t border-[#173b2a]/12 pt-12 text-center sm:pt-14">
+          <div className="border-t border-[#1f3f2e]/12 pt-12 text-center sm:pt-14">
             <p
               data-reveal="up"
               className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]"
@@ -238,7 +238,7 @@ export default function ClubhouseDetails() {
                 href={CLUBHOUSE_DESIGNER.websiteHref}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#2f644b] xl:text-[11px]"
+                className="inline-flex items-center gap-1.5 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#265136] xl:text-[11px]"
               >
                 {CLUBHOUSE_DESIGNER.website} <span aria-hidden="true">↗</span>
               </a>
@@ -246,7 +246,7 @@ export default function ClubhouseDetails() {
                 data-reveal="up"
                 style={delay(280)}
                 href="/clubhouse/architecture"
-                className="inline-flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#2f644b] xl:text-[11px]"
+                className="inline-flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#265136] xl:text-[11px]"
               >
                 The architecture behind it <span aria-hidden="true">→</span>
               </Link>

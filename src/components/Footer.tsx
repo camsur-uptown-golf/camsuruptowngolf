@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import NewsletterSignup from "@/components/NewsletterSignup";
-import { CLUB_PHONE } from "@/lib/site-content";
+import { CLUB_EMAIL, CLUB_PHONE } from "@/lib/site-content";
 
 /**
  * Ang mga link ng footer.
@@ -9,8 +9,9 @@ import { CLUB_PHONE } from "@/lib/site-content";
  * Bawat isa dito ay may totoong pupuntahan. Dati silang lahat `href="#"` —
  * labing-apat na link na walang patutunguhan.
  *
- * TODO: wala pang pahina ang Our Story, Membership, FAQs, Golf Academy,
+ * TODO: wala pang pahina ang Our Story, Membership, Golf Academy,
  * News & Blog, Careers, at Accessibility, kaya inalis muna sila.
+ * Nasa sariling "Before you book" column ang FAQs at directions.
  * Ibalik ang bawat isa kapag may pahina na. Ang Privacy Policy ang
  * pinakaunang kailangan — nag-iimbak na tayo ng personal na datos.
  */
@@ -23,18 +24,36 @@ const LINK_GROUPS: { title: string; links: { label: string; href: string }[] }[]
     ],
   },
   {
-    title: "Stay & Play",
+    /* "More at CamSur" din ang tawag dito sa homepage (OffCourseSection),
+       kaya iisa ang bokabularyo ng dalawa. "The Club" ito dati — hindi
+       nagsasabi kung ano ang laman, at hindi rin naman lahat ng nasa loob
+       ay tungkol sa club. */
+    title: "More at CamSur",
     links: [
-      { label: "Accommodations", href: "/accommodations" },
-      { label: "Dining", href: "/dining" },
+      /* Wala ang Clubhouse sa footer noon kahit pangunahing section ito. */
+      { label: "Clubhouse", href: "/clubhouse" },
+      { label: "Experiences", href: "/experiences" },
+      { label: "Events", href: "/events" },
     ],
   },
   {
-    title: "The Club",
+    /* Lahat ng kailangan bago pa dumating: saan matutulog, paano makarating,
+       at kanino magtatanong. "Stay & Play" ang hanay na ito dati — isang
+       item lang ang laman, at kapangalan pa ng isang package
+       (/packages/stay-and-play), kaya dalawang magkaibang bagay ang
+       iisa ang pangalan. */
+    title: "Visit",
     links: [
-      { label: "Experiences", href: "/experiences" },
-      { label: "Events", href: "/events" },
+      { label: "Accommodations", href: "/accommodations" },
+      { label: "Plan Your Visit", href: "/plan-your-visit" },
       { label: "Contact Us", href: "/contact" },
+    ],
+  },
+  {
+    title: "Before you book",
+    links: [
+      { label: "Frequently asked questions", href: "/faq" },
+      { label: "How to get here", href: "/getting-here" },
     ],
   },
 ];
@@ -56,20 +75,16 @@ const SOCIALS: { label: string; href: string | null; path: string }[] = [
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative overflow-hidden bg-[#1c3b2d] text-white">
+    <footer id="contact" className="relative overflow-hidden bg-[#1f3f2e] text-white">
       <div className="h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" />
       <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-[#c9a54e]/[0.035] blur-3xl" aria-hidden="true" />
 
-      {/* Hiwalay ang pt at pb: ang itaas lang ang hiniggpitan. Maluwag pa rin
-          ang ibaba dahil may copyright bar pang kasunod. */}
-      <div className="relative mx-auto max-w-7xl px-6 pb-14 pt-8 sm:pb-16 sm:pt-10 lg:px-8 lg:pb-20 lg:pt-12">
-        <div className="grid gap-14 lg:grid-cols-[0.9fr_1.8fr_1.15fr] lg:gap-12">
+      <div className="relative mx-auto max-w-7xl px-6 pb-14 pt-12 sm:pb-16 sm:pt-14 lg:px-8 lg:pb-20 lg:pt-16">
+        <div className="grid items-start gap-14 lg:grid-cols-[minmax(210px,0.75fr)_minmax(360px,1.55fr)_minmax(280px,1fr)] lg:gap-10 xl:gap-14">
           <div>
             {/* Katabi ng logo ang pangalan, lugar, at telepono sa cellphone;
-                nakasalansan lang sila mula sa `lg`. Ang dahilan ng hati:
-                sa `lg` ay 262px lang ang haligi nito sa tatlong-hanay na
-                grid, at 156px na roon ang logo — hindi kasya ang teksto sa
-                natitirang 90px. Sa cellphone ay buong lapad ang mayroon. */}
+                nakasalansan sila mula sa `lg` para maging malinaw ang
+                paghihiwalay ng club details at navigation. */}
             <div className="flex items-center gap-5 lg:block">
               {/* Kasinlaki ng logo sa header (h-44 / lg:h-52) para iisa ang
                   sukat ng marka sa itaas at ibaba ng pahina. Ang width at
@@ -90,11 +105,27 @@ export default function Footer() {
               <div className="space-y-1.5 text-[13px] leading-6 text-white/62 lg:mt-6 lg:text-sm">
                 <p className="font-semibold text-white/85">CamSur Uptown Golf Club</p>
                 <p>Camarines Sur, Philippines</p>
-                <p>
-                  <a href={CLUB_PHONE.href} className="font-semibold text-[#e7d18d] hover:text-white">
-                    {CLUB_PHONE.label}
-                  </a>
-                </p>
+                {/* May sariling label na ngayon ang dalawang paraan ng
+                    pagtawag. Ang numero lang ang nandito dati, nakadikit sa
+                    address at walang nagsasabi kung para saan ito. */}
+                <div className="pt-2.5">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40">Booking line</p>
+                  <p className="mt-0.5">
+                    <a href={CLUB_PHONE.href} className="font-semibold text-[#e7d18d] hover:text-white">
+                      {CLUB_PHONE.label}
+                    </a>
+                  </p>
+                </div>
+                <div className="pt-2">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40">Email</p>
+                  {/* `break-words`: 25 karakter ang address at 200px lang ang
+                      haliging ito sa `lg` — umaapaw ito kung hindi. */}
+                  <p className="mt-0.5">
+                    <a href={CLUB_EMAIL.href} className="font-semibold break-words text-[#e7d18d] hover:text-white">
+                      {CLUB_EMAIL.label}
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -118,7 +149,7 @@ export default function Footer() {
             ) : null}
           </div>
 
-          <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
+          <nav aria-label="Footer navigation" className="grid min-w-0 grid-cols-2 gap-x-10 gap-y-12">
             {LINK_GROUPS.map((group) => (
               <div key={group.title}>
                 <p className="mb-5 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#c9a54e]">
@@ -140,19 +171,24 @@ export default function Footer() {
             ))}
           </nav>
 
-          <div className="lg:border-l lg:border-white/10 lg:pl-10">
-            <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#c9a54e]">
+          <section
+            aria-labelledby="footer-newsletter-title"
+            className="min-w-0 lg:border-l lg:border-white/10 lg:pl-8 xl:pl-10"
+          >
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#c9a54e] xl:text-[11px]">
               News & offers
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-white">
+            <h2
+              id="footer-newsletter-title"
+              className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-white"
+            >
               Stay connected to the club.
             </h2>
-            <p className="mt-3 max-w-sm text-sm leading-6 text-white/55">
-              Course updates, event announcements, and occasional offers from CamSur Uptown, sent straight to your inbox.
+            <p className="mt-3 max-w-md text-sm leading-6 text-white/55">
+              Course updates, event announcements, and occasional offers sent straight to your inbox.
             </p>
-
             <NewsletterSignup />
-          </div>
+          </section>
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-[11px] text-white/35 sm:flex-row sm:items-center sm:justify-between">

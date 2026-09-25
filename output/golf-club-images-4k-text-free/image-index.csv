@@ -1,0 +1,61 @@
+﻿page,image_index,title,source_object,source_dimensions,output_dimensions,resize_action,filename
+1,1,Cover Artwork,X5.png,1536x864,3840x2160,upscaled,Page 01 - Cover Artwork.png
+2,1,The Golf Club,X14.jpg,5504x3072,3840x2143,downscaled,Page 02 - The Golf Club.jpg
+3,1,The Game,X38.jpg,2752x1536,3840x2143,upscaled,Page 03 - The Game.jpg
+7,1,The Idea,X81.jpg,2752x1536,3840x2143,upscaled,Page 07 - The Idea.jpg
+8,1,Site Context Masterplan,X93.png,3372x2653,3840x3021,upscaled,Page 08 - Site Context Masterplan.png
+9,1,Aerial Overview - Clubhouse and Pool Deck,X104.jpg,2752x1536,3840x2143,upscaled,Page 09 - Aerial Overview - Clubhouse and Pool Deck.jpg
+10,1,Landscape and Water,X123.jpg,2752x1536,3840x2143,upscaled,Page 10 - Landscape and Water.jpg
+11,1,The Estate - CamSur,X135.jpg,2752x1536,3840x2143,upscaled,Page 11 - The Estate - CamSur.jpg
+13,1,Aerial View - Heart of the Pitch,X158.jpg,2752x1536,3840x2143,upscaled,Page 13 - Aerial View - Heart of the Pitch.jpg
+14,1,Form and Concept,X182.jpg,2752x1536,3840x2143,upscaled,Page 14 - Form and Concept.jpg
+15,1,Material 01 - Bronze,X188.png,1360x1156,3840x3264,upscaled,Page 15 - Material 01 - Bronze.png
+15,2,Material 02 - Travertine,X189.jpg,1024x1024,3840x3840,upscaled,Page 15 - Material 02 - Travertine.jpg
+15,3,Material 03 - Walnut,X190.png,1051x832,3840x3040,upscaled,Page 15 - Material 03 - Walnut.png
+15,4,Material 04 - Glass,X191.png,1122x1402,3073x3840,upscaled,Page 15 - Material 04 - Glass.png
+16,1,The Stack - Section Axonometric,X203.png,1376x768,3840x2143,upscaled,Page 16 - The Stack - Section Axonometric.png
+17,1,Environmental Strategy - Sun Daylight Landscape,X215.png,1774x786,3840x1701,upscaled,Page 17 - Environmental Strategy - Sun Daylight Landscape.png
+18,1,Ground Floor Plan,X229.png,3502x2615,3840x2867,upscaled,Page 18 - Ground Floor Plan.png
+19,1,Lower Floor -1 Plan,X244.png,3502x2640,3840x2895,upscaled,Page 19 - Lower Floor -1 Plan.png
+20,1,Rooftop +1 Plan,X259.png,3502x2653,3840x2909,upscaled,Page 20 - Rooftop +1 Plan.png
+21,1,Key Section A,X274.png,3690x937,3840x975,upscaled,Page 21 - Key Section A.png
+21,2,Key Section B,X277.png,3690x1074,3840x1118,upscaled,Page 21 - Key Section B.png
+24,1,The Approach - West Elevation,X301.jpg,2752x1536,3840x2143,upscaled,Page 24 - The Approach - West Elevation.jpg
+25,1,Porte-Cochere Drop-Off,X320.jpg,2752x1536,3840x2143,upscaled,Page 25 - Porte-Cochere Drop-Off.jpg
+26,1,Arrival Sequence - Bronze Drum,X345.png,1677x938,3840x2148,upscaled,Page 26 - Arrival Sequence - Bronze Drum.png
+26,2,Arrival Sequence - Drop-Off and Threshold,X346.jpg,2752x1536,3840x2143,upscaled,Page 26 - Arrival Sequence - Drop-Off and Threshold.jpg
+26,3,Arrival Sequence - Welcome Hall,X347.png,1677x938,3840x2148,upscaled,Page 26 - Arrival Sequence - Welcome Hall.png
+28,1,Entrance Hall - The Oculus,X357.jpg,2752x1536,3840x2143,upscaled,Page 28 - Entrance Hall - The Oculus.jpg
+29,1,Reception Desk,X382.jpg,2752x1536,3840x2143,upscaled,Page 29 - Reception Desk.jpg
+30,1,Golf Shop - Retail,X388.jpg,2752x1536,3840x2143,upscaled,Page 30 - Golf Shop - Retail.jpg
+31,1,Golf Shop - Fitting and Display,X413.jpg,2752x1536,3840x2143,upscaled,Page 31 - Golf Shop - Fitting and Display.jpg
+31,2,Golf Shop - Counter and Apparel,X414.jpg,2752x1536,3840x2143,upscaled,Page 31 - Golf Shop - Counter and Apparel.jpg
+33,1,Locker Rooms Plan,X430.png,2428x2653,3514x3840,upscaled,Page 33 - Locker Rooms Plan.png
+34,1,Locker Room - Walnut,X439.jpg,2752x1536,3840x2143,upscaled,Page 34 - Locker Room - Walnut.jpg
+35,1,Showers and Wellness,X463.jpg,2752x1536,3840x2143,upscaled,Page 35 - Showers and Wellness.jpg
+36,1,Trophy Corridor - Heritage,X469.jpg,2752x1536,3840x2143,upscaled,Page 36 - Trophy Corridor - Heritage.jpg
+38,1,Members Lounge - Upper Floor,X491.jpg,2752x1536,3840x2143,upscaled,Page 38 - Members Lounge - Upper Floor.jpg
+39,1,Coffee Bar - Lounge Detail,X515.jpg,2752x1536,3840x2143,upscaled,Page 39 - Coffee Bar - Lounge Detail.jpg
+40,1,Rear Terrace - Al Fresco Dining,X521.jpg,2752x1536,3840x2143,upscaled,Page 40 - Rear Terrace - Al Fresco Dining.jpg
+42,1,Practice Bays - T-Point,X543.jpg,2752x1536,3840x2143,upscaled,Page 42 - Practice Bays - T-Point.jpg
+43,1,Lower Floor Program,X567.png,3784x2453,3840x2489,upscaled,Page 43 - Lower Floor Program.png
+44,1,The Practice Bay,X582.jpg,2752x1536,3840x2143,upscaled,Page 44 - The Practice Bay.jpg
+46,1,VIP Entrance - Private Drum,X592.jpg,2752x1536,3840x2143,upscaled,Page 46 - VIP Entrance - Private Drum.jpg
+47,1,VIP Lounge - Overlooking the Pitch,X610.jpg,2752x1536,3840x2143,upscaled,Page 47 - VIP Lounge - Overlooking the Pitch.jpg
+48,1,VIP Dining - From the Kitchen,X634.jpg,2752x1536,3840x2143,upscaled,Page 48 - VIP Dining - From the Kitchen.jpg
+48,2,VIP Bar - Cocktails and Fine Pours,X635.jpg,2752x1536,3840x2143,upscaled,Page 48 - VIP Bar - Cocktails and Fine Pours.jpg
+49,1,VIP Suites,X647.jpg,2752x1536,3840x2143,upscaled,Page 49 - VIP Suites.jpg
+51,1,Rooftop Bar and Restaurant,X657.jpg,2752x1536,3840x2143,upscaled,Page 51 - Rooftop Bar and Restaurant.jpg
+52,1,Rooftop - Lounge Terrace,X681.jpg,2752x1536,3840x2143,upscaled,Page 52 - Rooftop - Lounge Terrace.jpg
+52,2,Rooftop - Sunset Dining,X682.jpg,2752x1536,3840x2143,upscaled,Page 52 - Rooftop - Sunset Dining.jpg
+53,1,Pool and Sky Gardens,X688.jpg,2752x1536,3840x2143,upscaled,Page 53 - Pool and Sky Gardens.jpg
+56,1,Material Palette,X722.png,1672x361,3840x829,upscaled,Page 56 - Material Palette.png
+57,1,Detail - Bronze Fins,X735.png,1360x1156,3840x3264,upscaled,Page 57 - Detail - Bronze Fins.png
+57,2,Detail - Topographic Textiles,X736.png,1254x861,3840x2637,upscaled,Page 57 - Detail - Topographic Textiles.png
+57,3,Detail - Sculpted Stone,X737.jpg,736x1104,2560x3840,upscaled,Page 57 - Detail - Sculpted Stone.jpg
+58,1,Landscape and Climate,X14.jpg,5504x3072,3840x2143,downscaled,Page 58 - Landscape and Climate.jpg
+59,1,A Day at the Club - Morning,X760.jpg,2752x1536,3840x2143,upscaled,Page 59 - A Day at the Club - Morning.jpg
+59,2,A Day at the Club - Afternoon,X761.jpg,2752x1536,3840x2143,upscaled,Page 59 - A Day at the Club - Afternoon.jpg
+59,3,A Day at the Club - Evening,X762.jpg,2752x1536,3840x2143,upscaled,Page 59 - A Day at the Club - Evening.jpg
+60,1,The Vision Realised,X767.jpg,2752x1536,3840x2143,upscaled,Page 60 - The Vision Realised.jpg
+61,1,VM Studio Logo,X784.png,1792x312,3840x669,upscaled,Page 61 - VM Studio Logo.png
