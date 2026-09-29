@@ -112,7 +112,7 @@ export const FAQ_GROUPS = [
       {
         question: "How much is a round or a package?",
         answer:
-          "Rates are quoted, not listed. Every package is priced on your dates, your group size, and the accommodation you choose, so send those three things and the club comes back with a figure.",
+          "Rates are quoted, not listed. Every package is priced on your dates, your group size, and the rooms you need at Villa Del Rey, so send those details and the club will come back with a figure.",
       },
       {
         question: "How far ahead should we book?",
@@ -162,7 +162,7 @@ export const FAQ_GROUPS = [
       {
         question: "Where do guests stay?",
         answer:
-          "Villa Del Rey and Gota Village Resort both sit within reach of the course, and a package can be built around either one. Tell the club how many rooms you need and they will hold what fits.",
+          "Guests stay at Villa Del Rey, within easy reach of the course. Tell the club how many rooms you need and they will help arrange the stay.",
       },
       {
         question: "Can you arrange airport transfers?",
@@ -370,27 +370,7 @@ export const ACCOMMODATIONS = [
       { title: "Convenient access", description: "Positioned as a useful base for exploring the destination and nearby attractions." },
     ],
   },
-  {
-    slug: "gota-village-resort",
-    image: "/gota-village-resort/hero-4k.jpg",
-    title: "Gota Village Resort",
-    eyebrow: "Nature-side resort stay",
-    tagline: "A village retreat shaped by the landscape.",
-    description: "A nature-oriented resort option for guests looking to extend their CamSur journey beyond the course.",
-    overview: "Gota Village Resort brings guests closer to the natural character of Camarines Sur in a relaxed village setting. Official accommodation details, amenities, and booking information will be added when confirmed.",
-    features: [
-      { title: "Natural surroundings", description: "A resort setting framed by the distinctive landscape of Camarines Sur." },
-      { title: "Relaxed village atmosphere", description: "An easy-going environment for quieter mornings and unhurried evenings." },
-      { title: "Extended CamSur experience", description: "A complementary stay for guests combining golf with a wider regional visit." },
-    ],
-  },
 ] as const;
-
-/**
- * Bilang bilang salita, para sa mga pamagat na nagsasabi kung ilan.
- * Naiwan na ang "Three" sa Accommodations nang maging dalawa ang listahan.
- */
-const COUNT_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five"] as const;
 
 export const SITE_SECTIONS = [
   {
@@ -438,7 +418,7 @@ export const SITE_SECTIONS = [
        label at ang slug sa href ay dapat tumugma sa PACKAGES doon. */
     links: [
       { label: "Stay & Play", href: "/packages/stay-and-play", image: "/stay-and-play-hero-option-2.png" },
-      { label: "Buddy Golf Trip", href: "/packages/buddy-trip", image: "/buddy-golf-trip-hero-v4.png" },
+      { label: "Group Golf Getaway", href: "/packages/buddy-trip", image: "/buddy-golf-trip-hero-v4.png" },
     ],
   },
   {
@@ -488,12 +468,9 @@ export const SITE_SECTIONS = [
   {
     slug: "accommodations",
     label: "Accommodations",
-    eyebrow: "Stay at CamSur",
-    /* Galing sa bilang mismo ng ACCOMMODATIONS: "Three" ang nakasulat dito
-       dati at naiwan nang maging dalawa ang listahan. Nakalista rin dati ang
-       Clubhouse na wala na. */
-    title: `${COUNT_WORDS[ACCOMMODATIONS.length] ?? ACCOMMODATIONS.length} distinctive ways to stay in CamSur`,
-    description: `Choose ${ACCOMMODATIONS.map((stay) => stay.title).join(" or ")} for a stay that fits your CamSur visit.`,
+    eyebrow: "Villa Del Rey",
+    title: "Stay at Villa Del Rey",
+    description: "A comfortable resort base for golf groups, families, and guests exploring Camarines Sur.",
     /* Sariling larawan, hindi `ACCOMMODATIONS[0].image`. Ang hero ng Villa
        Del Rey iyon — malayong kuha ng buong resort, at sa 175px na preview
        sa mega menu ay hindi na mabasa kung ano ang tinitingnan.

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PackageItineraryPage from "@/components/PackageItineraryPage";
 
 export const metadata: Metadata = {
-  title: "Buddy Golf Trip | CamSur Uptown Golf Club",
+  title: "Group Golf Getaway | CamSur Uptown Golf Club",
   description:
     "Two nights, two rounds. A three-day golf trip for a group of friends, with course-side stays, shared tables, and time between rounds.",
 };
@@ -71,12 +71,12 @@ export default function BuddyTripPage() {
   return (
     <PackageItineraryPage
       active="buddy-trip"
-      title="Buddy Golf Trip"
+      title="Group Golf Getaway"
       description="A three-day trip for a foursome or a larger group: two nights close to the course, two full rounds, and enough unscheduled time between them that the trip does not feel like an itinerary."
       image="/buddy-golf-trip-hero-v4.png"
       days={days}
       inclusions={[
-        "Two nights in your choice of available accommodation",
+        "Two nights at Villa Del Rey",
         "Two 18-hole rounds with caddies",
         "Breakfast each morning and one group dinner",
         "Range balls before both rounds",

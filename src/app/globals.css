@@ -41,6 +41,36 @@ body {
   font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
 }
 
+/* ── Font-switching kada wika (i18n) ─────────────────────────────────────────
+   Inilalagay ng LanguageProvider ang `data-locale` sa <html>. Para sa CJK
+   (Korean/Chinese/Japanese) ay walang glyph ang mga Latin na brand face
+   (Cormorant/Manrope/Montserrat), kaya ini-override natin dito ang mismong
+   `--font-*` variables papunta sa SYSTEM CJK font stacks — agad na nagre-render,
+   walang dinadownload. Dahil sa `[data-locale=…]` selector ay mas mataas ang
+   specificity kaysa sa next/font na class, panalo ang override na ito.
+
+   Ang Vietnamese ay Latin — hindi kailangan ng override; ang `vietnamese`
+   subset sa layout.tsx ang bumabalot sa diacritics nito. Ang English/Filipino/
+   Bikol ay ang orihinal na brand face pa rin. */
+html[data-locale="KO"] {
+  --font-manrope: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-montserrat: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-cormorant-sc: "Nanum Myeongjo", "Apple SD Gothic Neo", "Noto Serif KR", serif;
+  --font-cormorant-garamond: "Nanum Myeongjo", "Apple SD Gothic Neo", "Noto Serif KR", serif;
+}
+html[data-locale="JA"] {
+  --font-manrope: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
+  --font-montserrat: "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
+  --font-cormorant-sc: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  --font-cormorant-garamond: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+}
+html[data-locale="ZH"] {
+  --font-manrope: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --font-montserrat: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-cormorant-sc: "Songti SC", "SimSun", "Noto Serif SC", serif;
+  --font-cormorant-garamond: "Songti SC", "SimSun", "Noto Serif SC", serif;
+}
+
 /* All prose uses Manrope site-wide. Display figures and compact navigation
    labels retain their dedicated brand faces. */
 main p:not(.font-display):not(.font-navigation) {

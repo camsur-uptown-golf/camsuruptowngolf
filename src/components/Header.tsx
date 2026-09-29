@@ -5,6 +5,22 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ACCOMMODATIONS, CLUB_PHONE, COURSE_PAGES, SITE_SECTIONS } from "@/lib/site-content";
+import HeaderUtilities from "@/components/HeaderUtilities";
+import { useTranslation } from "@/i18n/LanguageProvider";
+import type { TranslationKey } from "@/i18n/dictionaries";
+
+/* Slug ng section → translation key. Nasa data (SITE_SECTIONS) ang English na
+   label; dito isinasalin ang bawat isa sa piniling wika. Kapag may bagong
+   section na walang key dito, ang orihinal na `label` ang fallback. */
+const NAV_KEYS: Record<string, TranslationKey> = {
+  golf: "nav.golf",
+  clubhouse: "nav.clubhouse",
+  packages: "nav.packages",
+  events: "nav.events",
+  experiences: "nav.experiences",
+  accommodations: "nav.accommodations",
+};
+import { VILLA_DEL_REY_STAYS } from "@/lib/villa-del-rey";
 
 /* Galing na sa site-content: apat na kopya dati ng parehong placeholder. */
 const { label: PHONE_LABEL, href: PHONE_HREF } = CLUB_PHONE;
@@ -50,7 +66,7 @@ const MEGA_STYLES: Record<string, "cards" | "names" | "rules"> = {
  * kailangang pumuti ang teksto para mabasa ito bilang pamuno.
  */
 const MEGA_HEADING =
-  "mb-4 border-b border-white/10 pb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]";
+  "mb-4 border-b border-white/10 pb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]";
 
 /**
  * Hugis ng listahan sa `names`, batay sa bilang ng link. Fixed ang lapad ng
@@ -184,12 +200,16 @@ function PhoneIcon() {
 
 export default function Header() {
   const pathname = usePathname();
+  const { t } = useTranslation();
+  /* Isinasalin ang label ng section; kung walang key, ang orihinal ang gamit. */
+  const sectionLabel = (slug: string, fallback: string) => (slug in NAV_KEYS ? t(NAV_KEYS[slug]) : fallback);
   const [isScrolled, setIsScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   /** Slug ng section na binuksan sa loob ng mobile drawer; null = ugat na listahan. */
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [hoveredPreviewIndex, setHoveredPreviewIndex] = useState<number | null>(null);
+  const [accommodationSlideIndex, setAccommodationSlideIndex] = useState(0);
   /** Naka-hover na item sa pangatlong hanay; nauuna ito sa preview. */
   const [hoveredExtra, setHoveredExtra] = useState<{ label: string; href: string; image?: string } | null>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -201,6 +221,12 @@ export default function Header() {
   const megaStyle = activeSection ? MEGA_STYLES[activeSection.slug] ?? "rules" : "rules";
   /* Ito ang nagpapasya kung tatlo o dalawa ang haligi ng panel. */
   const sectionExtras = activeSection ? SECTION_EXTRAS[activeSection.slug] : undefined;
+  /* Kapag iisa lang ang accommodation, hindi na kailangan ng duplicate na
+     Highlights card. Villa overview sa kaliwa at help links sa kanan. */
+  const hidesHighlights = megaStyle === "cards" && activeSection?.links.length === 1;
+  const accommodationSlide = activeSection?.slug === "accommodations"
+    ? VILLA_DEL_REY_STAYS[accommodationSlideIndex]
+    : null;
   /**
    * Padding sa itaas ng tatlong haligi ng mega panel, at iba ito kada estado.
    *
@@ -279,7 +305,7 @@ export default function Header() {
 
   /* Nauuna ang pangatlong hanay: kapag doon ang daliri, iyon ang dapat
      nasa preview kahit may naiwang naka-hover na butas sa gitna. */
-  const previewImage = hoveredExtra?.image ?? hoveredLinkImage ?? hoveredPreview?.image ?? activeSection?.image;
+  const previewImage = hoveredExtra?.image ?? hoveredLinkImage ?? hoveredPreview?.image ?? accommodationSlide?.exterior ?? activeSection?.image;
   /* WALANG LABEL KAPAG WALANG NAKA-HOVER. Ang pangalan ng section ang
      nakalagay dito dati ("GOLF" sa ibabaw ng larawan ng golf) — pangalawang
      kopya iyon ng naka-highlight nang tab sa itaas mismo nito. Pangalan lang
@@ -298,7 +324,9 @@ export default function Header() {
     : hoveredLink
       ? hoveredLink.href
       : activeSection
-        ? `/${activeSection.slug}`
+        ? hidesHighlights
+          ? activeSection.links[0]?.href ?? `/${activeSection.slug}`
+          : `/${activeSection.slug}`
         : "/";
 
   /**
@@ -361,8 +389,17 @@ export default function Header() {
   const toggleDesktopMenu = (slug: string) => {
     cancelScheduledClose();
     clearPreview();
+    if (slug === "accommodations") setAccommodationSlideIndex(0);
     setOpenMenu((currentMenu) => currentMenu === slug ? null : slug);
   };
+
+  useEffect(() => {
+    if (openMenu !== "accommodations") return;
+    const timer = window.setInterval(() => {
+      setAccommodationSlideIndex((current) => (current + 1) % VILLA_DEL_REY_STAYS.length);
+    }, 3600);
+    return () => window.clearInterval(timer);
+  }, [openMenu]);
 
   const scheduleDesktopMenuClose = () => {
     cancelScheduledClose();
@@ -590,11 +627,11 @@ export default function Header() {
             nito iyon. Ang `top-[104px]` ang dating posisyon nito sa hilera;
             hindi nagbabago ang taas ng header dahil ang marka (208px) ang
             nagtatakda niyon, hindi ang nav. */}
-        <div className={`${isScrolled ? "w-auto" : "w-[min(820px,calc(100vw-34rem))]"} hidden -translate-x-1/2 flex-col items-center gap-0 lg:absolute lg:left-1/2 lg:top-[92px] lg:flex xl:-ml-[34px]`}>
+        <div className={`${isScrolled ? "w-auto" : "w-[min(820px,calc(100vw-34rem))] 2xl:w-[900px]"} hidden -translate-x-1/2 flex-col items-center gap-0 lg:absolute lg:left-1/2 lg:top-[92px] lg:flex`}>
           <nav
             data-nav="hero"
             aria-label="Primary navigation"
-            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : openMenu ? "visible max-h-16 w-[min(820px,calc(100vw-34rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#265136] px-5 py-2 opacity-100 shadow-none" : /* `w-auto`, HINDI NAKATAKDANG LAPAD. Nakapirmi ito sa 760px dati —
+            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : openMenu ? "visible max-h-16 w-[min(820px,calc(100vw-34rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#265136] px-5 py-2 opacity-100 shadow-none 2xl:w-[900px]" : /* `w-auto`, HINDI NAKATAKDANG LAPAD. Nakapirmi ito sa 760px dati —
                    sukat para sa pitong item. Sa anim ay 625px na lang ang
                    laman, kaya 123px na bakante ang ipinapamahagi ng
                    `justify-evenly` bilang 17px na puwang sa pagitan ng bawat
@@ -605,11 +642,11 @@ export default function Header() {
                    hindi na kailangang sukatin muli kapag may idinagdag o
                    inalis sa SITE_SECTIONS. Ang `max-w` ang humahawak nito sa
                    loob ng screen kapag marami na ang item. */
-                "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-[#d8b65b]/20 bg-[#265136]/88 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.16)]"} ${openMenu ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
+                "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-[#d8b65b]/20 bg-[#265136]/88 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.16)]"} ${openMenu ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-[#f3dda0] backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
           >
             {isAwayFromHome ? (
               <Link href="/" onClick={closeDesktopMenu} className={NAV_ITEM_CLASS}>
-                Home
+                {t("nav.home")}
               </Link>
             ) : null}
             {NAV_SECTIONS.map((item) => (
@@ -622,20 +659,38 @@ export default function Header() {
                 aria-controls="desktop-mega-menu"
                 className={`${openMenu === item.slug ? "bg-[#56725f] text-[#f3dda0]" : ""} ${NAV_ITEM_CLASS}`}
               >
-                {item.label.toUpperCase()}
+                {sectionLabel(item.slug, item.label).toUpperCase()}
               </button>
             ))}
           </nav>
         </div>
+
+        {/* Weather + language — naka-center sa itaas ng nav pill. Kaparehong
+            angkla ng nav (`absolute left-1/2 -translate-x-1/2` sa container),
+            kaya iisa ang sentro nila. `top-[52px]` — sa ibabaw ng nav na nasa
+            `top-[92px]`. Sa hero lang; pagka-scroll ay nawawala para bumalik sa
+            dating compact header. `hidden lg:block` — cellphone ay may sariling
+            pill. */}
+        {isScrolled ? null : (
+          <div className="pointer-events-auto absolute left-1/2 top-[52px] hidden -translate-x-1/2 lg:block">
+            <HeaderUtilities />
+          </div>
+        )}
 
         {/* "Contact Us" ito dati at ang "Plan your visit" ay nasa maliit na
             hilera sa itaas ng nav. Pinagpalit: isang pangunahing pindutan
             lang ang header, at ang pagpaplano ng pagbisita ang hinihiling
             nito — hindi ang pagtatanong. Nananatili ang /contact sa footer
             at sa loob ng /plan-your-visit. */}
-        <Link
-          href="/plan-your-visit"
-          /* GINTO NG MARKA, HINDI PUTI. Sinipsip ko ang kulay mula mismo sa
+        {/* "Plan Your Visit" — nasa kanan. Ang weather + language ay hindi na
+            dito; nakalutang na sila nang naka-center sa itaas ng nav pill sa
+            ibaba. */}
+        <div
+          className={`${isScrolled ? "translate-y-0" : "-translate-y-3"} pointer-events-auto hidden justify-self-end lg:col-start-3 lg:block`}
+        >
+          <Link
+            href="/plan-your-visit"
+            /* GINTO NG MARKA, HINDI PUTI. Sinipsip ko ang kulay mula mismo sa
              `camsur-uptown-logo.png` — #e0c878 hanggang #e8d088 ang
              pinakamaraming pixel doon, at ang #e7d18d na matagal nang nasa
              site (CTA ng packages, mga eyebrow) ay nasa gitna niyon. Kaya
@@ -653,7 +708,7 @@ export default function Header() {
              sa maliwanag na langit ay parang malabo ang gilid nito. Ang
              malambot na itim ang natira: iyon lang naman ang kailangan para
              bumukod ito sa larawan sa likod. */
-          className={`${isScrolled ? "translate-y-0" : "-translate-y-3"} pointer-events-auto hidden items-center justify-self-end gap-1.5 whitespace-nowrap rounded-full bg-[#e7d18d] px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.08em] text-[#14271d] shadow-[0_10px_28px_rgba(0,0,0,0.22)] transition duration-200 hover:bg-[#f3dfa0] hover:shadow-[0_12px_32px_rgba(0,0,0,0.28)] lg:col-start-3 lg:inline-flex xl:text-[11px]`}
+          className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[#e7d18d] px-7 py-3 text-[10px] font-bold uppercase tracking-[0.08em] text-[#265136] shadow-[0_10px_28px_rgba(0,0,0,0.22)] transition duration-200 hover:bg-[#f3dfa0] hover:shadow-[0_12px_32px_rgba(0,0,0,0.28)] xl:px-8 xl:py-3.5 xl:text-[11px]"
         >
           {/* NAKATAGO ANG ICON SA IBABA NG `xl`. Nasa gitna ng screen ang
               nav at naka-angkla sa dalawang gilid ang marka at ito, kaya
@@ -662,8 +717,9 @@ export default function Header() {
               34px kasi ang idinadagdag nito sa lapad. Sa `xl` pataas ay
               sagana na ang puwang. */}
           <CalendarIcon className="hidden h-3.5 w-3.5 shrink-0 xl:block" />
-          Plan Your Visit
-        </Link>
+          {t("action.planVisit")}
+          </Link>
+        </div>
 
         {/* Cellphone lang: isang pill na may tatlong sona — marka sa kaliwa,
             MENU sa gitna, telepono sa kanan. Ito na ang buong header sa lapad
@@ -705,7 +761,7 @@ export default function Header() {
             onClick={() => setMobileMenuOpen((open) => !open)}
             className={`${mobileMenuOpen ? "text-[#f1d98f]" : "text-white"} flex items-center gap-3 font-navigation text-xs font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#f1d98f]`}
           >
-            Menu
+            {t("mobile.menu")}
             <span className="relative flex h-4 w-6 shrink-0 items-center justify-center" aria-hidden="true">
               <span className={`${mobileMenuOpen ? "rotate-45" : "-translate-y-[5px]"} absolute h-0.5 w-6 rounded-full bg-current transition-transform duration-300`} />
               <span className={`${mobileMenuOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"} absolute h-0.5 w-6 rounded-full bg-current transition duration-200`} />
@@ -751,16 +807,16 @@ export default function Header() {
                 className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 transition-colors hover:text-[#f1d98f]"
               >
                 <ChevronIcon className="h-3.5 w-3.5 rotate-180" />
-                Go back
+                {t("mega.goBack")}
               </button>
               <span className="border-b-2 border-[#d8b65b] pb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                {mobileSubsection.label}
+                {sectionLabel(mobileSubsection.slug, mobileSubsection.label)}
               </span>
             </div>
 
             <div className="border-t border-white/12 px-3.5 pb-1 pt-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#d8b65b]">
-                {"Highlights"}
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0]">
+                {t("mega.highlights")}
               </p>
 
               {/* Dalawang hanay lang kapag marami — ang Golf ay 18 na butas, at
@@ -789,7 +845,7 @@ export default function Header() {
                 onClick={closeMobileNav}
                 className="mt-5 flex min-h-11 items-center justify-center rounded-full border border-white/35 px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#f1d98f] hover:bg-[#f1d98f] hover:text-[#0b281b]"
               >
-                View all {mobileSubsection.label}
+                {t("mega.viewAll")} {sectionLabel(mobileSubsection.slug, mobileSubsection.label)}
               </Link>
             </div>
           </div>
@@ -798,10 +854,10 @@ export default function Header() {
             <div className="flex items-center justify-between px-3 pb-2 pt-2">
               <div>
                 {/* Buong pangalan ng club, gaya ng sa footer — hindi pinaikli. */}
-                <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">CamSur Uptown Golf Club</p>
-                <p className="mt-1 text-sm font-semibold text-white/90">Explore CamSur Uptown</p>
+                <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]">CamSur Uptown Golf Club</p>
+                <p className="mt-1 text-sm font-semibold text-white/90">{t("mobile.explore")}</p>
               </div>
-              <span className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-white/45">Menu</span>
+              <span className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-white/45">{t("mobile.menu")}</span>
             </div>
 
             <nav aria-label="Mobile primary navigation" className="mt-2 border-t border-white/12">
@@ -820,7 +876,7 @@ export default function Header() {
                       aria-current={isActive ? "page" : undefined}
                       className={`${isActive ? "text-[#f1d98f]" : "text-white"} flex min-h-[52px] items-center justify-between gap-3 border-b border-white/12 px-3.5 transition-colors hover:text-[#f1d98f]`}
                     >
-                      <span className="text-sm font-bold uppercase tracking-[0.08em]">{item.label}</span>
+                      <span className="text-sm font-bold uppercase tracking-[0.08em]">{sectionLabel(item.slug, item.label)}</span>
                       <ChevronIcon className="h-4 w-4 text-white/45" />
                     </Link>
                   );
@@ -834,7 +890,7 @@ export default function Header() {
                     aria-expanded={false}
                     className={`${isActive ? "text-[#f1d98f]" : "text-white"} group flex min-h-[52px] w-full items-center justify-between gap-3 border-b border-white/12 px-3.5 text-left transition-colors hover:text-[#f1d98f]`}
                   >
-                    <span className="text-sm font-bold uppercase tracking-[0.08em]">{item.label}</span>
+                    <span className="text-sm font-bold uppercase tracking-[0.08em]">{sectionLabel(item.slug, item.label)}</span>
                     <ChevronIcon className="h-4 w-4 text-white/45 transition-transform duration-200 group-hover:translate-x-0.5" />
                   </button>
                 );
@@ -852,7 +908,7 @@ export default function Header() {
           onClick={closeMobileNav}
           className="mt-3 flex min-h-12 items-center justify-center rounded-full bg-[#f1d98f] px-5 text-xs font-bold uppercase tracking-[0.08em] text-[#0b281b] transition hover:bg-[#f6e4a9]"
         >
-          Plan your visit
+          {t("action.planVisit")}
         </Link>
       </div>
 
@@ -872,11 +928,11 @@ export default function Header() {
 
            `xl:-ml-[34px]`: kaparehong offset ng hero nav at ng panel, para
            magkatapat pa rin ang gilid ng nav at ng panel. */
-        className={`${isScrolled ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} absolute left-1/2 top-[16px] z-50 hidden h-12 w-auto max-w-[calc(100vw-3rem)] -translate-x-1/2 grid-flow-col auto-cols-max items-center gap-1 xl:gap-1.5 text-[10px] font-semibold uppercase tracking-[0.07em] text-white/90 lg:grid xl:-ml-[34px] xl:text-[11px] xl:tracking-[0.09em]`}
+        className={`${isScrolled ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} absolute left-1/2 top-[16px] z-50 hidden h-12 w-auto max-w-[calc(100vw-3rem)] -translate-x-1/2 grid-flow-col auto-cols-max items-center gap-1 xl:gap-1.5 text-[10px] font-semibold uppercase tracking-[0.07em] text-[#f3dda0] lg:grid xl:text-[11px] xl:tracking-[0.09em]`}
       >
         {isAwayFromHome ? (
           <Link href="/" onClick={closeDesktopMenu} className={NAV_ITEM_CLASS}>
-            Home
+            {t("nav.home")}
           </Link>
         ) : null}
         {NAV_SECTIONS.map((item) => (
@@ -943,7 +999,7 @@ export default function Header() {
 
              Nananatiling 820px mula 1376px pataas — doon lang naman ito
              nagiging mas makitid kaysa sa cap. */
-          className={`${isScrolled ? "top-[80px]" : "top-[122px]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-t-none rounded-b-[1.6rem] border border-t-0 border-white/10 bg-[#265136] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block xl:-ml-[34px] 2xl:w-[900px]`}
+          className={`${isScrolled ? "top-[80px]" : "top-[122px]"} ${hidesHighlights ? "rounded-b-[2rem]" : "rounded-b-[1.6rem]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-t-none border border-t-0 border-white/10 bg-[#265136] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block 2xl:w-[900px]`}
         >
           {/* Walang fixed na taas: sumusukat ang panel sa laman ng section.
               Dati ay 360px ang lahat, kaya may 140px na walang laman sa ilalim
@@ -955,7 +1011,7 @@ export default function Header() {
               ang preview column sa lahat ng tab, kaya hindi nagbabago ang
               laki ng card kapag nagpalit ng section. */}
           <div
-            className={`${sectionExtras ? "grid-cols-[240px_minmax(0,1fr)_160px] 2xl:grid-cols-[280px_minmax(0,1fr)_180px]" : "grid-cols-[240px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)]"} grid`}
+            className={`${sectionExtras ? "grid-cols-[240px_minmax(0,1fr)_160px] 2xl:grid-cols-[280px_minmax(0,1fr)_180px]" : hidesHighlights ? "grid-cols-[minmax(0,3fr)_minmax(240px,2fr)]" : "grid-cols-[240px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)]"} grid`}
           >
             {/* UMUUNAT ANG LARAWAN, HINDI NAKATAKDA ANG HUGIS. `aspect-[1.35]`
                 ito dati — 175×129 anuman ang taas ng panel — kaya may patay
@@ -969,8 +1025,10 @@ export default function Header() {
 
                 Iisa ang haliging ito sa anim na section, kaya pareho ang
                 anyo ng lahat — walang kaso kada section dito. */}
-            <div className={`flex flex-col border-r border-white/10 px-6 pb-6 ${megaColumnTop}`}>
+            <div className="flex flex-col border-r border-white/10 px-6 pb-6">
+              <div className={megaColumnTop}>
               <p className={MEGA_HEADING}>{activeSection.eyebrow}</p>
+              </div>
               <Link
                 href={previewHref}
                 target={previewHref.startsWith("http") ? "_blank" : undefined}
@@ -988,11 +1046,28 @@ export default function Header() {
                    pumuputol sa dalawang linya ang mahahabang pangalan.
                    Isang salita na lang ito, kaya 36px na ang lahat.
                    Kapag ibinalik ang pangalan ng section, itaas ulit. */
-                className="group flex min-h-[229px] flex-1 flex-col"
+                className={`${hidesHighlights ? "min-h-[360px]" : "min-h-[229px]"} group flex flex-1 flex-col`}
               >
-                <div className="relative min-h-[129px] flex-1 overflow-hidden rounded-lg bg-[#265136]">
-                  <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes="220px" className="mega-preview-image object-cover opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className={`${hidesHighlights ? "min-h-[245px] rounded-xl" : "min-h-[129px] rounded-lg"} relative flex-1 overflow-hidden bg-[#265136]`}>
+                  <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes={hidesHighlights ? "600px" : "220px"} className="mega-preview-image object-cover opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#071a12]/78 via-[#071a12]/25 to-transparent" aria-hidden="true" />
+                  {accommodationSlide ? (
+                    <div className="absolute inset-x-3 bottom-3">
+                      <div className="flex items-end justify-between gap-4">
+                        <p className="text-sm font-semibold uppercase tracking-[0.04em] text-white">
+                          {accommodationSlide.name}
+                        </p>
+                        <span className="flex gap-1" aria-hidden="true">
+                          {VILLA_DEL_REY_STAYS.map((stay, index) => (
+                            <span
+                              key={stay.name}
+                              className={`${index === accommodationSlideIndex ? "w-4 bg-[#f3dda0]" : "w-1.5 bg-white/45"} h-1.5 rounded-full transition-all duration-300`}
+                            />
+                          ))}
+                        </span>
+                      </div>
+                    </div>
+                  ) : null}
                   {/* Pangalan lang ng naka-hover ang nasa loob ng larawan.
                       Wala ito kapag walang naka-hover — pangalan ng section
                       iyon dati, na nakasulat na sa naka-highlight na tab.
@@ -1057,7 +1132,9 @@ export default function Header() {
                     magkabangga ito at ang `hidden` at ang pagkakasunod sa
                     stylesheet ang mananalo — hindi ang nakasulat dito. */}
                 {previewLabel ? null : (
-                  <p className="mt-3 line-clamp-2 text-[11px] leading-5 text-white/65">{activeSection.description}</p>
+                  <p className={`${hidesHighlights ? "line-clamp-3" : "line-clamp-2"} mt-3 text-[11px] leading-5 text-white/65`}>
+                    {hidesHighlights ? accommodationSlide?.description ?? ACCOMMODATIONS[0]?.overview : activeSection.description}
+                  </p>
                 )}
                 {/* GINTONG PILL, HINDI OUTLINE. Isang manipis na puting
                     balangkas ito dati na napupuno lang ng ginto pag-hover,
@@ -1066,7 +1143,7 @@ export default function Header() {
                     at ng pill sa mga image card sa gitnang haligi — iisang
                     anyo na ang lahat ng CTA sa mega menu. */}
                 <span
-                  className={`${previewLabel ? "hidden" : "inline-flex"} mt-3 w-full shrink-0 items-center justify-center gap-2 rounded-full bg-[#e7d18d] px-4 py-2.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition duration-200 group-hover:bg-[#f3dfa0] xl:text-[10px]`}
+                  className={`${previewLabel ? "hidden" : "inline-flex"} ${hidesHighlights ? "max-w-[280px]" : "w-full"} mt-3 shrink-0 items-center justify-center gap-2 rounded-full bg-[#e7d18d] px-4 py-2.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition duration-200 group-hover:bg-[#f3dfa0] xl:text-[10px]`}
                 >
                   Explore
                   <ArrowRightIcon />
@@ -1074,9 +1151,30 @@ export default function Header() {
               </Link>
             </div>
 
-            <div className={`flex flex-col px-6 pb-6 ${megaColumnTop}`}>
+            {hidesHighlights ? (
+              <div className={`flex flex-col px-6 pb-6 ${megaColumnTop}`}>
+                <p className={MEGA_HEADING}>Plan your stay</p>
+                <div className="grid flex-1 content-start">
+                  <Link
+                    href="/faq"
+                    onClick={closeDesktopMenu}
+                    className="group/help border-b border-white/10 py-5 text-white/75 transition-colors hover:text-[#f1d98f]"
+                  >
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="text-[12px] font-semibold uppercase tracking-[0.06em]">FAQ</span>
+                      <span className="text-[#e7d18d] transition-transform group-hover/help:translate-x-1" aria-hidden="true">→</span>
+                    </span>
+                    <span className="mt-2 block text-[11px] leading-5 text-white/50">
+                      Booking, rates, and what to expect.
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            ) : null}
+
+            {!hidesHighlights ? <div className={`flex flex-col px-6 pb-6 ${megaColumnTop}`}>
               <p className={MEGA_HEADING}>
-                {"Highlights"}
+                {t("mega.highlights")}
               </p>
               {/* Pantay sa preview column ang available area, pero natural
                   at fixed ang pagitan ng mga link sa loob. */}
@@ -1089,7 +1187,7 @@ export default function Header() {
                   /* Isang aspect na lang: sumusukat na ang panel sa laman,
                      kaya hindi na kailangang unatin ang card para punan ang
                      ilalim. Ang lapad ng card ang nagtatakda ng taas. */
-                  <div className={`${activeSection.links.length > 2 ? "grid-cols-3" : "grid-cols-2"} grid gap-3`}>
+                  <div className={`${activeSection.links.length > 2 ? "grid-cols-3" : activeSection.links.length === 2 ? "grid-cols-2" : "grid-cols-1"} grid gap-3`}>
                     {activeSection.links.map((link, index) => {
                       const image = linkImageAt(index);
                       return (
@@ -1192,7 +1290,7 @@ export default function Header() {
                   </div>
                 )}
               </div>
-            </div>
+            </div> : null}
 
             {/* Pangatlong hanay: ang hindi kabilang sa listahan ng section —
                 Tournaments sa Golf, ang official site sa Experiences. Pareho

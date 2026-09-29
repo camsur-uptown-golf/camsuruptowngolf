@@ -124,7 +124,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             <div className="mx-auto max-w-4xl text-center">
               {/* Pareho ng SectionHeading ang sukat at tracking — 0.24em at
                   sm: ang dati, kaya bahagyang iba sa ibang eyebrow ng pahina. */}
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d1af58] xl:text-[11px]">
                 Aerial routing study · {String(index + 1).padStart(2, "0")} / 18
               </p>
               {/* Ang pangalan ng butas, hindi ang dating iisang editorial na
@@ -139,14 +139,6 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               <p className="mx-auto mt-6 max-w-3xl text-sm font-medium leading-7 text-[#536058] sm:text-base sm:leading-8 lg:text-lg lg:leading-9">
                 {concept.description}
               </p>
-              {/* Tumuturo na sa form sa ibaba ng mismong pahina, hindi sa
-                  ibang pahina — nandoon na ang hinahanap ng pipindot nito. */}
-              <Link
-                href="#request-call-back"
-                className="mt-7 inline-flex h-11 min-w-[170px] items-center justify-center rounded-full bg-[#265136] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e] sm:h-12 sm:min-w-[190px] sm:text-[11px]"
-              >
-                Request a call back
-              </Link>
             </div>
 
           </Container>
@@ -158,7 +150,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               overflow-hidden ng section). Walang vw dito, walang pagkaputol. */}
           {/* Walang sariling background: minamana nito ang cream ng section,
               kaya tiyak na magkatugma. Ang border-y na lang ang naghihiwalay. */}
-          <div className="mt-14 border-y border-[#1f3f2e]/10 px-6 py-9 text-[#14271d] sm:mt-16 sm:px-10 sm:py-11">
+          <div className="mt-14 border-y border-[#1f3f2e]/10 px-6 py-6 text-[#14271d] sm:mt-16 sm:px-10 sm:py-8">
             <dl className="mx-auto grid max-w-6xl grid-cols-3 text-center">
               {[
                 { label: "Yards", value: scorecard.yards.toLocaleString() },
@@ -169,13 +161,13 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                   key={label}
                   data-reveal="up"
                   style={delay(statIndex * 90)}
-                  className={`flex min-h-20 flex-col items-center justify-start px-3 sm:min-h-24 sm:px-8 ${statIndex ? "border-l border-[#1f3f2e]/15" : ""}`}
+                  className={`flex min-h-16 flex-col items-center justify-start px-3 sm:min-h-20 sm:px-8 ${statIndex ? "border-l border-[#1f3f2e]/15" : ""}`}
                 >
                   <dt className="font-navigation text-[10px] font-semibold uppercase tracking-[0.13em] text-[#4f5d55] sm:text-xs">
                     {label}
                   </dt>
                   {value ? (
-                    <dd className="mt-4 font-display text-4xl font-medium leading-none tracking-[-0.04em] text-[#14271d] sm:text-5xl">
+                    <dd className="mt-3 font-display text-3xl font-medium leading-none tracking-[-0.04em] text-[#14271d] sm:text-4xl">
                       {value}
                     </dd>
                   ) : (
@@ -205,6 +197,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                 pahinang iisang butas lang naman. Buong scorecard na ngayon,
                 at naka-highlight ang butas ng pahinang ito. */}
             <SectionHeading
+              size="lg"
               eyebrow="Scorecard"
               title="The full eighteen."
               intro="All tee colors are shown, with confirmed yardages displayed for the Black tees only. This hole is highlighted across the card."
@@ -258,19 +251,6 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           </section>
         )}
 
-        <section id="request-call-back" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
-          <Container>
-            <SectionHeading
-              eyebrow="Plan your round"
-              title="Request a call back."
-              intro="Tell us a bit more about the trip you have in mind and the club will call you back within 48 hours, at the time you choose."
-            />
-            <div className="mt-10">
-              <RequestCallback context={`${holeLabel(concept)}`} />
-            </div>
-          </Container>
-        </section>
-
         <nav aria-label="Course navigation" className="grid bg-[#f3f0e7] sm:grid-cols-2">
           <Link href={`/golf/courses/${previous.slug}`} className="group relative min-h-72 overflow-hidden border-b border-white/15 sm:border-b-0 sm:border-r">
             <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover" />
@@ -291,6 +271,19 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             </div>
           </Link>
         </nav>
+
+        <section id="request-call-back" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+          <Container>
+            <SectionHeading
+              eyebrow="Plan your round"
+              title="Request a call back."
+              intro="Tell us a bit more about the trip you have in mind and the club will call you back within 48 hours, at the time you choose."
+            />
+            <div className="mt-10">
+              <RequestCallback context={`${holeLabel(concept)}`} />
+            </div>
+          </Container>
+        </section>
       </main>
       <Footer />
     </>

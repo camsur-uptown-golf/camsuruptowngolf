@@ -62,7 +62,7 @@ export default function Page() {
       image="/stay-and-play-hero-option-2.png"
       days={days}
       inclusions={[
-        "One night in your choice of available accommodation",
+        "One night at Villa Del Rey",
         "One 18-hole round with a caddie",
         "Breakfast on the morning of the round",
         "Range balls before the round",

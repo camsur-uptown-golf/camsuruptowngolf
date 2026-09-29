@@ -80,9 +80,9 @@ export const CLUBHOUSE_BRIEF =
 /** "THE ESTATE" sa pahina 11, at ang lockers sa pahina 33. */
 export const CLUBHOUSE_FACTS = [
   { value: "4", label: "Lakes" },
-  { value: "3", label: "Floors, plus a roof" },
+  { value: "3", label: "Levels + rooftop" },
   { value: "9", label: "Main areas" },
-  { value: "300", label: "Lockers" },
+  { value: "300", label: "Member lockers" },
   { value: "2,695", label: "Square metres" },
 ] as const;
 
@@ -181,7 +181,7 @@ export const CLUBHOUSE_SPACES = [
       { src: "/clubhouse/concept/arrival-bronze-drum.jpg", alt: "The bronze drum that shelters the drop-off" },
       { src: "/clubhouse/concept/arrival-threshold.jpg", alt: "The timber-lined threshold between the drop-off and the hall" },
     ],
-    name: "Arrival canopy",
+    name: "The bronze canopy",
     floor: "Arrival",
     image: "/clubhouse/concept/arrival-canopy.jpg",
     imageAlt: "Bronze-clad porte-cochère at the clubhouse drop-off",
@@ -286,7 +286,7 @@ export const CLUBHOUSE_SPACES = [
       { src: "/clubhouse/concept/rooftop-sunset-dining.jpg", alt: "Dining on the roof as the light goes" },
       { src: "/clubhouse/concept/rooftop-pool-gardens.jpg", alt: "The stepped pool and the planted sky gardens" },
     ],
-    name: "Rooftop",
+    name: "Sky bar & gardens",
     floor: "Rooftop",
     image: "/clubhouse/concept/rooftop-bar.jpg",
     imageAlt: "Rooftop bar and gardens around the pool oculus",
@@ -388,13 +388,13 @@ export const CLUBHOUSE_DAY = [
   {
     time: "Afternoon",
     image: "/clubhouse/concept/day-afternoon.jpg",
-    title: "Shower & lounge",
+    title: "Lounge",
     detail: "The spa, the trophy corridor and the members’ lounge, across the upper floor.",
   },
   {
     time: "Evening",
     image: "/clubhouse/concept/day-evening.jpg",
-    title: "Rooftop & table",
+    title: "Rooftop & bar",
     detail: "Drinks on the roof among the trees, then dinner with the course lit up below.",
   },
 ] as const;

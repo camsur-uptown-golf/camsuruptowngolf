@@ -1,11 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import FairwayDivider from "@/components/FairwayDivider";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
-import GotaVillageStays from "@/components/GotaVillageStays";
 import ImageLightbox from "@/components/ImageLightbox";
 import VillaDelReyStays from "@/components/VillaDelReyStays";
 import { ACCOMMODATIONS } from "@/lib/site-content";
@@ -33,10 +31,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
   if (index < 0) notFound();
 
   const stay = ACCOMMODATIONS[index];
-  const previous = ACCOMMODATIONS[(index - 1 + ACCOMMODATIONS.length) % ACCOMMODATIONS.length];
-  const next = ACCOMMODATIONS[(index + 1) % ACCOMMODATIONS.length];
-  const hasEditorialStayLayout =
-    stay.slug === "villa-del-rey" || stay.slug === "gota-village-resort";
+  const hasEditorialStayLayout = stay.slug === "villa-del-rey";
 
   return (
     <>
@@ -58,7 +53,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             className="-z-20 h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(4,20,13,0.48)_0%,rgba(4,20,13,0.08)_40%,rgba(4,20,13,0.88)_100%)]" />
-          {/* #f7f5ee ang unang section sa ilalim sa parehong stay, kaya
+          {/* #f7f5ee ang unang section sa ilalim ng stay, kaya
               ganoon din ang harapang burol — kung hindi magkatugma ay may
               lumalabas na tahi sa dugtungan. */}
           {!hasEditorialStayLayout ? <FairwayDivider fill="#f7f5ee" /> : null}
@@ -68,11 +63,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             className={`relative z-10 mx-auto w-full max-w-7xl px-6 pt-64 lg:px-8 ${
               hasEditorialStayLayout ? "-translate-y-4 text-center sm:-translate-y-6" : ""
             } ${
-              stay.slug === "villa-del-rey"
-                ? "pb-24 sm:pb-28 lg:pb-32"
-                : stay.slug === "gota-village-resort"
-                  ? "pb-16 sm:pb-20 lg:pb-24"
-                  : "pb-28 sm:pb-36 lg:pb-44"
+              stay.slug === "villa-del-rey" ? "pb-24 sm:pb-28 lg:pb-32" : "pb-28 sm:pb-36 lg:pb-44"
             }`}
           >
             <h1
@@ -85,9 +76,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
           </div>
           {hasEditorialStayLayout ? (
             <a
-              href={
-                stay.slug === "villa-del-rey" ? "#villa-stays" : "#gota-stays"
-              }
+              href="#villa-stays"
               aria-label={`Explore ${stay.title} stays`}
               className="group absolute bottom-0 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center text-white"
             >
@@ -111,31 +100,12 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             bilang guhit sa pagitan. */}
 
         {stay.slug === "villa-del-rey" ? <VillaDelReyStays /> : null}
-        {stay.slug === "gota-village-resort" ? <GotaVillageStays /> : null}
 
-        <nav aria-label="Accommodation navigation" className="grid bg-[#0b2419] sm:grid-cols-2">
-          <Link href={`/accommodations/${previous.slug}`} className="group relative min-h-80 overflow-hidden border-b border-white/15 sm:border-b-0 sm:border-r">
-            <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover" />
-            <div className="absolute inset-0 bg-[#0b2419]/62 transition group-hover:bg-[#0b2419]/48" />
-            <div className="absolute inset-0 flex flex-col justify-end p-8 text-white sm:p-10">
-              <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">← Previous stay</p>
-              <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{previous.title}</p>
-            </div>
-          </Link>
-          <Link href={`/accommodations/${next.slug}`} className="group relative min-h-80 overflow-hidden">
-            <Image src={next.image} alt="" fill sizes="50vw" className="object-cover" />
-            <div className="absolute inset-0 bg-[#0b2419]/62 transition group-hover:bg-[#0b2419]/48" />
-            <div className="absolute inset-0 flex flex-col items-end justify-end p-8 text-right text-white sm:p-10">
-              <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">Next stay →</p>
-              <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{next.title}</p>
-            </div>
-          </Link>
-        </nav>
       </main>
       {/* Isa lang ito para sa buong pahina. Nakikinig ito sa pagpindot sa
           kahit anong `[data-lightbox]` sa loob ng dokumento, kaya walang
-          kailangang ipasa mula rito patungo sa VillaDelReyStays at sa
-          GotaVillageStays — nananatiling server component ang dalawa. */}
+          kailangang ipasa mula rito patungo sa VillaDelReyStays, kaya
+          nananatili itong server component. */}
       <ImageLightbox />
       <Footer />
     </>

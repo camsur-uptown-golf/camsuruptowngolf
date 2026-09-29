@@ -5,8 +5,9 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
-import { EDITORIAL_SECTION, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
-import { CLUBHOUSE_SPACES, roomCountWord } from "@/lib/clubhouse";
+import ClubhouseGallery from "@/components/ClubhouseGallery";
+import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
+import { CLUBHOUSE_SPACES } from "@/lib/clubhouse";
 import { CLUB_PHONE } from "@/lib/site-content";
 
 /**
@@ -73,78 +74,63 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
           </div>
         </section>
 
-        <div className="bg-[#ffffff]">
+        <div className="bg-[#f7f5ee]">
           <Breadcrumbs />
         </div>
 
-        <section className={EDITORIAL_SECTION}>
+        <section className="relative isolate bg-[#f7f5ee] pt-10 pb-6 sm:pt-12 sm:pb-8">
           <Shell>
             <p
               data-reveal="up"
-              className="mx-auto max-w-3xl text-base leading-8 text-[#14271d] sm:text-lg sm:leading-9"
+              className="mx-auto max-w-3xl text-center text-base leading-8 text-[#14271d] sm:text-lg sm:leading-9"
             >
               {space.description}
-            </p>
-
-            <p data-reveal="up" style={delay(120)} className="mt-8 text-center">
-              <Link
-                href="/clubhouse"
-                className="inline-flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#265136] xl:text-[11px]"
-              >
-                <span aria-hidden="true">←</span> All {roomCountWord().toLowerCase()} rooms
-              </Link>
             </p>
           </Shell>
         </section>
 
         {/* Wala pang dagdag na render ang ibang espasyo sa dokumento, kaya
             nawawala nang buo ang section na ito sa halip na mag-iwan ng
-            blangkong ulo. */}
-        {space.gallery.length > 0 ? (
-          <section className={EDITORIAL_SECTION}>
-            <Shell>
-              <EditorialHeading kicker="In detail" title={`More of ${space.name.toLowerCase()}.`} />
+            blangkong ulo.
 
-              <div className="mt-12 space-y-10 sm:mt-14 sm:space-y-14">
-                {space.gallery.map((shot, shotIndex) => (
-                  <figure key={shot.src} data-reveal="up" style={delay(shotIndex * 90)}>
-                    <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-[#1f3f2e]">
-                      <Image
-                        src={shot.src}
-                        alt={shot.alt}
-                        fill
-                        sizes="(max-width: 1023px) calc(100vw - 3rem), 960px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <figcaption className="mt-4 text-sm leading-7 text-[#5d685f]">{shot.alt}</figcaption>
-                  </figure>
-                ))}
-              </div>
-            </Shell>
-          </section>
+            Scrollytelling ang mga kuha — kapareho ng mga kuwarto sa
+            `/clubhouse`. Ang ulo ay nasa walang-overflow na section (sinisira
+            ng overflow-hidden ang sticky), at sariling seksyon na ang mga
+            larawan sa ClubhouseGallery. */}
+        {space.gallery.length > 0 ? (
+          <>
+            <section className="relative isolate scroll-mt-24 bg-[#f7f5ee] pt-4 pb-10 sm:pt-6 sm:pb-14">
+              <Shell>
+                <EditorialHeading size="lg" kicker="In detail" title={`More of ${space.name.toLowerCase()}.`} />
+              </Shell>
+            </section>
+
+            <ClubhouseGallery label={space.name} shots={space.gallery} />
+          </>
         ) : null}
 
-        <section className={EDITORIAL_SECTION}>
+        <section className={EDITORIAL_SECTION_ALT}>
           <Shell>
             <EditorialHeading
+              size="lg"
               kicker="Plan a visit"
               title="Come and see it."
               intro="Opening hours, dress code, and which rooms visitors can use are not settled yet — call the club and we will tell you what is."
             />
 
+            {/* Nagtatagpo sa gitna: ang una ay pumapasok mula kaliwa, ang
+                pangalawa mula kanan, habang nag-scroll pababa. */}
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
               <Link
                 href="/plan-your-visit"
-                data-reveal="up"
+                data-reveal="left"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#265136] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
               >
                 Plan your visit
               </Link>
               <a
                 href={CLUB_PHONE.href}
-                data-reveal="up"
-                style={delay(90)}
+                data-reveal="right"
                 className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3f2e]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#265136] hover:text-[#265136] xl:text-[11px]"
               >
                 {CLUB_PHONE.label}

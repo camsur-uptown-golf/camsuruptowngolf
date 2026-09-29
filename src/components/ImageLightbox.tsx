@@ -1,35 +1,60 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Shot = { src: string; alt: string; width: number; height: number };
+type GalleryShot = Pick<Shot, "src" | "alt">;
 
 /**
- * Fullscreen na tingin sa mga larawan ng tuluyan.
- *
- * HINDI NITO KAILANGANG GAWING CLIENT ANG MGA PAHINA. Nakikinig ito sa
- * `click` sa buong dokumento at hinahanap ang pinakamalapit na
- * `[data-lightbox]`. Kaya ang mga server component ng tuluyan ay kailangan
- * lang magdagdag ng tatlong attribute sa balot ng larawan:
- *
- *     data-lightbox data-src="/…jpg" data-alt="…"
- *
- * Kung ipinasa ko ang isang function bilang laman nito, kailangang maging
- * client component ang VillaDelReyStays at ang GotaVillageStays — hindi
- * naipapasa ang function mula sa server patungo sa client.
- *
- * ISANG LARAWAN LANG ANG HAWAK NITO. May pasulong at paurong ito sandali,
- * pero iisa ang hinihiling dito: ang malapitang tingin sa pinindot.
+ * Reusable fullscreen lightbox. Server components only need data-lightbox,
+ * data-src, and data-alt. Triggers with the same data-lightbox-group become
+ * one gallery with previous/next controls.
  */
 export default function ImageLightbox() {
   const [shot, setShot] = useState<Shot | null>(null);
-  const close = useCallback(() => setShot(null), []);
+  const [gallery, setGallery] = useState<GalleryShot[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const loadToken = useRef(0);
+
+  const loadShot = useCallback((nextShot: GalleryShot) => {
+    const token = ++loadToken.current;
+    const probe = new window.Image();
+
+    probe.onload = () => {
+      if (token !== loadToken.current) return;
+      setShot({
+        ...nextShot,
+        width: probe.naturalWidth,
+        height: probe.naturalHeight,
+      });
+    };
+    probe.onerror = () => {
+      if (token !== loadToken.current) return;
+      setShot({ ...nextShot, width: 1600, height: 1000 });
+    };
+    probe.src = nextShot.src;
+  }, []);
+
+  const close = useCallback(() => {
+    loadToken.current += 1;
+    setShot(null);
+    setGallery([]);
+    setActiveIndex(0);
+  }, []);
+
+  const move = useCallback(
+    (direction: -1 | 1) => {
+      if (gallery.length < 2) return;
+      const nextIndex = (activeIndex + direction + gallery.length) % gallery.length;
+      setActiveIndex(nextIndex);
+      loadShot(gallery[nextIndex]);
+    },
+    [activeIndex, gallery, loadShot],
+  );
 
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
-      /* Ang mga pinindot na may modifier ay para sa bagong tab, at ang
-         hindi kaliwang pindot ay para sa menu ng browser. Huwag agawin. */
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
       const target = event.target;
@@ -40,39 +65,38 @@ export default function ImageLightbox() {
       const src = trigger.dataset.src;
       if (!src) return;
 
-      /* Pagkatapos lang ng lahat ng maaaring magpabalik: sa puntong ito ay
-         tayo na ang humahawak ng pindot, kaya hindi na dapat sumunod ang
-         anumang link sa paligid nito. */
       event.preventDefault();
-      const alt = trigger.dataset.alt ?? "";
+      const groupName = trigger.dataset.lightboxGroup;
+      const triggers = groupName
+        ? Array.from(document.querySelectorAll<HTMLElement>("[data-lightbox]")).filter(
+            (item) => item.dataset.lightboxGroup === groupName,
+          )
+        : [trigger];
+      const nextGallery = triggers.flatMap((item) => {
+        const itemSrc = item.dataset.src;
+        return itemSrc ? [{ src: itemSrc, alt: item.dataset.alt ?? "" }] : [];
+      });
+      const nextIndex = Math.max(0, triggers.indexOf(trigger));
+      const nextShot = nextGallery[nextIndex] ?? { src, alt: trigger.dataset.alt ?? "" };
 
-      /* KAILANGAN ANG TUNAY NA SUKAT BAGO IGUHIT. Sa `fill` ay sumasakop
-         ang balot sa buong container at ang `object-contain` na lang ang
-         pumipigil sa larawan sa loob — kaya may bakanteng gilid sa magkabila
-         na hindi bahagi ng larawan. Doon dumadausdos palabas ang paliwanag,
-         at iyon ang dahilan kung bakit ito naputol sa gilid.
-         Sa tunay na sukat ay kasinlaki mismo ng larawan ang balot. */
-      const probe = new window.Image();
-      probe.onload = () => setShot({ src, alt, width: probe.naturalWidth, height: probe.naturalHeight });
-      probe.src = src;
+      setGallery(nextGallery);
+      setActiveIndex(nextIndex);
+      loadShot(nextShot);
     };
 
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
-  }, []);
+  }, [loadShot]);
 
   useEffect(() => {
     if (!shot) return;
 
-    /* Nananatili ang Escape kahit walang pindutang pansara: iyon lang ang
-       paraan ng gumagamit ng keyboard para makalabas dito. */
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
+      if (event.key === "ArrowLeft") move(-1);
+      if (event.key === "ArrowRight") move(1);
     };
 
-    /* Hindi dapat gumalaw ang pahina sa likod habang bukas ito. Ibinabalik
-       ang dating halaga sa halip na `""` — may sariling `overflow` ang
-       `body` sa ilang pahina at mawawala iyon. */
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKey);
@@ -81,30 +105,53 @@ export default function ImageLightbox() {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", onKey);
     };
-  }, [shot, close]);
+  }, [shot, close, move]);
 
   if (!shot) return null;
 
-  return (
-    /* NAGSASARA ANG KAHIT SAANG PINDOT, KASAMA ANG LARAWAN MISMO. Walang
-       `stopPropagation` kahit saan sa loob nito — walang pindutang pansara,
-       kaya ang buong screen ang pindutang pansara.
+  const hasMultipleShots = gallery.length > 1;
 
-       MALABONG SALAMIN, HINDI ITIM NA PANTAKIP. Manipis na dilim lang at
-       8px na blur: nananatiling nababasa ang pahina sa likod, kaya ramdam
-       na nakapatong lang ito at hindi ibang pahina. */
+  return (
     <div
       data-lightbox-overlay
       role="dialog"
       aria-modal="true"
-      aria-label={shot.alt || "Photo"}
+      aria-label={shot.alt || "Photo gallery"}
       onClick={close}
       className="fixed inset-0 z-[120] flex cursor-zoom-out items-center justify-center bg-[#0b1a12]/45 p-4 backdrop-blur-[8px] sm:p-10"
     >
-      {/* `inline-block` at tunay na sukat: kasinlaki ng larawan ang balot,
-          kaya tumutugma ang `inset-x-0` ng paliwanag sa gilid nito. */}
-      <span className="relative inline-block max-h-full max-w-full leading-none">
+      <button
+        type="button"
+        aria-label="Close photo"
+        onClick={(event) => {
+          event.stopPropagation();
+          close();
+        }}
+        className="absolute right-4 top-4 z-20 grid size-11 cursor-pointer place-items-center rounded-full border border-white/35 bg-[#10251a]/70 text-2xl leading-none text-white transition hover:bg-[#10251a] sm:right-7 sm:top-7"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+      {hasMultipleShots ? (
+        <button
+          type="button"
+          aria-label="Previous photo"
+          onClick={(event) => {
+            event.stopPropagation();
+            move(-1);
+          }}
+          className="absolute left-3 top-1/2 z-20 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-white/35 bg-[#10251a]/70 text-3xl leading-none text-white transition hover:bg-[#10251a] sm:left-7 sm:size-13"
+        >
+          <span aria-hidden="true">‹</span>
+        </button>
+      ) : null}
+
+      <span
+        onClick={(event) => event.stopPropagation()}
+        className="relative inline-block max-h-full max-w-full cursor-default leading-none"
+      >
         <Image
+          key={shot.src}
           src={shot.src}
           alt={shot.alt}
           width={shot.width}
@@ -114,10 +161,6 @@ export default function ImageLightbox() {
           className="h-auto max-h-[86vh] w-auto max-w-full object-contain"
         />
 
-        {/* NASA LOOB NA NG LARAWAN ANG PALIWANAG. Nasa ilalim ito ng larawan
-            dati, sa gitna ng malabong background — lumulutang at walang
-            kinabibilangan. Ang gradient lang ang nagpapabasa nito; walang
-            kahon, walang sariling background. */}
         {shot.alt ? (
           <span className="pointer-events-none absolute inset-x-0 bottom-0 block bg-gradient-to-t from-[#050d09]/85 via-[#050d09]/35 to-transparent px-5 pb-5 pt-16 sm:px-7 sm:pb-6">
             <span className="block text-[13px] font-semibold uppercase leading-tight tracking-[0.08em] text-white sm:text-sm">
@@ -126,6 +169,20 @@ export default function ImageLightbox() {
           </span>
         ) : null}
       </span>
+
+      {hasMultipleShots ? (
+        <button
+          type="button"
+          aria-label="Next photo"
+          onClick={(event) => {
+            event.stopPropagation();
+            move(1);
+          }}
+          className="absolute right-3 top-1/2 z-20 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-white/35 bg-[#10251a]/70 text-3xl leading-none text-white transition hover:bg-[#10251a] sm:right-7 sm:size-13"
+        >
+          <span aria-hidden="true">›</span>
+        </button>
+      ) : null}
     </div>
   );
 }

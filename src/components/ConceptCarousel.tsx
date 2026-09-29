@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { COURSE_PAGES as SLIDES } from "@/lib/site-content";
+import { useTranslation } from "@/i18n/LanguageProvider";
 
 function Arrow({ direction }: { direction: "left" | "right" }) {
   return (
@@ -21,6 +22,7 @@ function Arrow({ direction }: { direction: "left" | "right" }) {
 }
 
 export default function ConceptCarousel() {
+  const { t } = useTranslation();
   const [active, setActive] = useState(0);
   const previous = (active - 1 + SLIDES.length) % SLIDES.length;
   const next = (active + 1) % SLIDES.length;
@@ -31,7 +33,7 @@ export default function ConceptCarousel() {
   return (
     <section
       id="concepts"
-      className="overflow-hidden bg-[#f7f5ee] pb-6 pt-8 text-[#14271d] sm:pb-8 sm:pt-10 lg:pb-10 lg:pt-12"
+      className="overflow-hidden bg-[#f7f5ee] pb-6 pt-5 text-[#14271d] sm:pb-8 sm:pt-6 lg:pb-10 lg:pt-8"
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") goPrevious();
         if (event.key === "ArrowRight") goNext();
@@ -115,7 +117,7 @@ export default function ConceptCarousel() {
                 Label ng section ito, hindi bahagi ng datos ng butas, kaya
                 iisa lang ito sa labing-walo. */}
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
-              The Course
+              {t("course.eyebrow")}
             </p>
             {/* 3.1vw AT HINDI HIGIT PA. Ang hanay na ito ay 238px lang sa
                 1440px. Sa 3.6vw (51.8px) ay pumuputol sa dalawang linya ang
@@ -125,13 +127,13 @@ export default function ConceptCarousel() {
                 sinubukan ko ang bawat isa. Kapag pinalaki ito o pinaliit ang
                 hanay, subukan muli ang 10 at ang 18, hindi lang ang 1. */}
             <h3 className="mt-2 max-w-full font-serif text-[clamp(2.5rem,3.1vw,4rem)] font-medium leading-[0.9] tracking-[-0.055em]">
-              Hole No. {active + 1}
+              {t("course.holeNo")} {active + 1}
             </h3>
           </div>
           <div className="hidden lg:block lg:pt-6" aria-live="polite">
             <p className="text-sm leading-6 text-[#536058]">{SLIDES[active].description}</p>
             <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[130px] items-center justify-center rounded-full bg-[#265136] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#1f3f2e]">
-              Explore
+              {t("action.explore")}
             </Link>
           </div>
         </div>

@@ -34,7 +34,7 @@ const FIELD =
 const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d]";
 
 function Required() {
-  return <span className="ml-1.5 font-normal normal-case italic tracking-normal text-[#98782f]">(required)</span>;
+  return <span className="ml-1.5 font-normal normal-case italic tracking-normal text-[#d1af58]">(required)</span>;
 }
 
 export default function RequestCallback({ context }: { context?: string }) {
@@ -87,7 +87,7 @@ export default function RequestCallback({ context }: { context?: string }) {
   if (status === "sent") {
     return (
       <div className="mx-auto max-w-lg border border-[#1f3f2e]/15 bg-white p-8 text-center sm:p-10">
-        <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">Thank you</p>
+        <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d1af58]">Thank you</p>
         <h3 className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#14271d]">Your request is on its way.</h3>
         <p className="mt-4 text-sm leading-7 text-[#5d685f]">
           The club will call you back within 48 hours, during the window you chose. You can also reach us directly.

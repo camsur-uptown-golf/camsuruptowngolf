@@ -175,12 +175,7 @@ function ThePackages() {
 
 function PackagesCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#1f3f2e] py-14 text-white sm:py-16">
-      <div
-        data-parallax="0.14"
-        className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"
-        aria-hidden="true"
-      />
+    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
       <Shell>
         <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
           <div>
@@ -194,20 +189,20 @@ function PackagesCta() {
             </h2>
           </div>
           <div data-reveal="up" style={delay(180)}>
-            <p className="text-sm leading-7 xl:text-base xl:leading-8 text-white/60">
+            <p className="text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">
               Tell the club your dates, how many are playing, and which package is closest to what you want. You will
               get back a quote built around those three things.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
                 href="/plan-your-visit"
-                className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                className="inline-flex h-11 items-center rounded-full bg-[#265136] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e]"
               >
                 Request a quote
               </Link>
               <a
                 href={CLUB_PHONE.href}
-                className="inline-flex h-11 items-center gap-2.5 rounded-full border border-white/22 px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white/85 transition hover:border-[#e7d18d]/60 hover:text-[#f1d98f]"
+                className="inline-flex h-11 items-center gap-2.5 rounded-full border border-[#1f3f2e]/20 px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:border-[#265136] hover:text-[#265136]"
               >
                 <PhoneIcon />
                 {CLUB_PHONE.label}

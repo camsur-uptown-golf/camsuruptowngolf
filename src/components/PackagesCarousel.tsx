@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { useTranslation } from "@/i18n/LanguageProvider";
 
 function ArrowIcon() {
   return (
@@ -43,27 +44,24 @@ const SLIDES = [
     image: "/packages-main-hero-option-3-4k-v2.jpg",
     alt: "Golfers walking back to the clubhouse at sunset, CamSur Uptown Golf Club",
     title: "CamSur Uptown Golf Packages",
-    blurb:
-      "Whether you are planning a quick round, a one-night escape, or a golf trip with friends, our packages make it easy to play and stay at CamSur Uptown.",
-    cta: "Explore packages",
+    blurbKey: "packages.blurbMain",
+    ctaKey: "packages.ctaExplore",
   },
   {
     href: "/packages/stay-and-play",
     image: "/stay-and-play-hero-option-2.png",
     alt: "A golfer on the fairway beneath Mt. Isarog at CamSur Uptown",
     title: "Stay & Play",
-    blurb:
-      "A two-day package for golfers who want a complete round without taking a week off. One night, one full eighteen, and enough time around it that nothing feels rushed.",
-    cta: "See the itinerary",
+    blurbKey: "packages.blurbStayPlay",
+    ctaKey: "packages.ctaView",
   },
   {
     href: "/packages/buddy-trip",
     image: "/buddy-golf-trip-hero-v4.png",
     alt: "Four friends walking the fairway together at CamSur Uptown",
-    title: "Buddy Golf Trip",
-    blurb:
-      "A three-day trip for a foursome or a larger group: two nights close to the course, two full rounds, and enough unscheduled time between them that it does not feel like an itinerary.",
-    cta: "See the itinerary",
+    title: "Group Golf Getaway",
+    blurbKey: "packages.blurbGroup",
+    ctaKey: "packages.ctaView",
   },
 ] as const;
 
@@ -71,6 +69,7 @@ const SLIDES = [
 const INTERVAL_MS = 6500;
 
 export default function PackagesCarousel() {
+  const { t } = useTranslation();
   const [active, setActive] = useState(0);
   /* Humihinto kapag may daliri o cursor sa ibabaw, o kapag may naka-focus
      sa loob — hindi dapat mawala sa ilalim ng kamay ang binabasa. */
@@ -164,12 +163,12 @@ export default function PackagesCarousel() {
                   <h2 className="font-serif text-[clamp(2.25rem,4vw,3.5rem)] font-normal leading-[0.98] tracking-[-0.04em]">
                     {slide.title}
                   </h2>
-                  <p className="mt-5 max-w-[460px] text-sm leading-7 text-white/80 sm:text-[15px]">{slide.blurb}</p>
+                  <p className="mt-5 max-w-[460px] text-sm leading-7 text-white/80 sm:text-[15px]">{t(slide.blurbKey)}</p>
                   <Link
                     href={slide.href}
                     className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d]"
                   >
-                    {slide.cta}
+                    {t(slide.ctaKey)}
                     <ArrowIcon />
                   </Link>
                 </div>

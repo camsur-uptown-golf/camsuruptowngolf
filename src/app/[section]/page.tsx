@@ -7,13 +7,15 @@ import FairwayDivider from "@/components/FairwayDivider";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ClubhouseDetails from "@/components/ClubhouseDetails";
+import ClubhouseHeroOverlay from "@/components/ClubhouseHeroOverlay";
 import EventsDetails from "@/components/EventsDetails";
 import GolfDetails from "@/components/GolfDetails";
 import ExperiencesDetails from "@/components/ExperiencesDetails";
 import PackagesDetails from "@/components/PackagesDetails";
 import ScrollCue from "@/components/ScrollCue";
 import ScrollMotion from "@/components/ScrollMotion";
-import { ACCOMMODATIONS, SITE_SECTIONS } from "@/lib/site-content";
+import { EDITORIAL_SECTION, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
+import { ACCOMMODATIONS, CLUB_PHONE, SITE_SECTIONS } from "@/lib/site-content";
 
 export const dynamicParams = false;
 
@@ -71,11 +73,22 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
   return (
     <>
       <main>
+        {/* Naka-pin ang clubhouse hero: nananatili ang larawan sa sukat ng
+            viewport habang tumatakbo ang sequence (title out → stats in →
+            hold), saka lang bumibitaw papunta sa section sa ilalim. Ang balot
+            na `h-[220svh]` ang nagbibigay ng scroll distance; sa ibang pahina
+            ay `contents` — parang walang balot, kaya walang naaapektuhan. */}
+        <div
+          id={isClubhouse ? "clubhouse-hero-track" : undefined}
+          className={isClubhouse ? "relative h-[220svh]" : "contents"}
+        >
         <section
           id="top"
           className={`relative isolate flex items-end overflow-hidden bg-[#071d13] text-white ${
             isGolf
               ? "min-h-[620px] sm:min-h-[680px] lg:min-h-[700px]"
+              : isClubhouse
+                ? "sticky top-0 h-svh min-h-[680px]"
               : isExperiences
                 ? "h-[80svh] min-h-[620px]"
                 : "min-h-[660px]"
@@ -102,25 +115,20 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             }`}
           />
           {usesFairwayDivider && <FairwayDivider fill={dividerFill} />}
-          {!isGolf ? (
+          {!isGolf && !isClubhouse ? (
             <div
-              /* Naka-kaliwa at nasa lapad ng Shell ang Clubhouse, tugma sa
-                 anim na pahina ng kuwarto. Sa `max-w-7xl` ay hindi tumatapat
-                 ang kaliwang gilid nito sa laman sa ibaba. */
-              className={
-                isClubhouse
-                  ? "mx-auto w-full max-w-4xl px-6 pb-16 pt-56 sm:px-10 sm:pb-20 lg:px-12 xl:max-w-5xl"
-                  : `mx-auto w-full max-w-7xl px-6 pt-64 text-center lg:px-8 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`
-              }
+              className={`mx-auto w-full max-w-7xl px-6 pt-64 text-center lg:px-8 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`}
             >
               <h1
                 data-reveal={usesFairwayHero ? "up" : undefined}
-                className={`max-w-4xl text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] ${isClubhouse ? "" : "mx-auto"}`}
+                className="mx-auto max-w-4xl text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]"
               >
                 {section.title}
               </h1>
             </div>
           ) : null}
+
+          {isClubhouse ? <ClubhouseHeroOverlay /> : null}
 
           {isGolf ? (
             <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 text-center sm:pb-28 lg:px-8 lg:pb-32">
@@ -138,6 +146,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {isGolf ? <ScrollCue targetId="the-course" label="Explore the golf course" /> : null}
           {isExperiences ? <ScrollCue targetId="on-the-water" label="Explore CamSur experiences" /> : null}
         </section>
+        </div>
 
         <div className="bg-[#f7f5ee]">
           <Breadcrumbs />
@@ -150,6 +159,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             kada section, at ang fallback lang ang may <section> dito. */}
 
         {isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isClubhouse ? <ClubhouseDetails /> : (
+        <>
         <section className="bg-[#f7f5ee] py-20 text-[#14271d] sm:py-24 lg:py-28">
           {/* Ang ScrollMotion ang naglalagay ng .is-in. Kung wala siya ay
               mananatiling opacity: 0 ang lahat ng data-reveal dito. */}
@@ -163,7 +173,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                   style={revealDelay(110)}
                   className="mt-4 text-[clamp(2.25rem,4vw,4rem)] font-medium leading-none tracking-[-0.055em]"
                 >
-                  Find the stay that suits your visit.
+                  Your CamSur stay.
                 </h2>
               </div>
               <p
@@ -171,8 +181,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                 style={revealDelay(220)}
                 className="max-w-2xl text-base leading-8 text-[#56625b] lg:justify-self-end"
               >
-                Choose the privacy of a course-side Fairway Villa or the convenience of an intimate lodge at the heart
-                of the club.
+                Stay at Villa Del Rey, a comfortable resort base for golf groups, families, and guests exploring Camarines Sur.
               </p>
             </div>
 
@@ -270,6 +279,39 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             </div>
             </div>
         </section>
+
+        {/* Kasunod ng listahan ng tuluyan ang paanyaya na tumawag sa club.
+            Kaparehong CTA ito ng "Plan a visit"
+            sa Clubhouse, kaya iisa ang wika: gintong kicker, serif na pamagat,
+            gawing berde ang unang pindutan at ang numero sa gilid. */}
+        <section className={EDITORIAL_SECTION}>
+          <Shell>
+            <EditorialHeading
+              kicker="Get in touch"
+              title="Contact us."
+              intro="Ready to plan a stay, or want to hold rooms for a golf group? Call the club and we will help you build the visit that fits."
+            />
+
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
+              <Link
+                href="/contact"
+                data-reveal="up"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#265136] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
+              >
+                Contact us
+              </Link>
+              <a
+                href={CLUB_PHONE.href}
+                data-reveal="up"
+                style={delay(90)}
+                className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3f2e]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#265136] hover:text-[#265136] xl:text-[11px]"
+              >
+                {CLUB_PHONE.label}
+              </a>
+            </div>
+          </Shell>
+        </section>
+        </>
         )}
       </main>
       <Footer />

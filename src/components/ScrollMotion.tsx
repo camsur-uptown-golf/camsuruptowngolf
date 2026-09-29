@@ -11,9 +11,10 @@ import { usePathname } from "next/navigation";
  *   data-parallax="0.12"                    — drifts against the scroll
  *   data-count="25"                         — counts up when it enters view
  *
- * Dalawang direksyon ang lahat: hindi minsanan ang reveal. Bumabalik ito sa
- * nakatagong estado kapag lumabas ng viewport, kaya umaandar ulit pag-scroll
- * pabalik — pataas man o pababa.
+ * Minsanan ang reveal: pumapasok ang animation sa unang pagkakita, at
+ * mananatili na ang elemento — hindi na ito ibinabalik sa nakatagong estado
+ * kahit lumabas ng viewport. Kaya hindi nawawala ang larawan at teksto habang
+ * nagsi-scroll; ang animation ang nangyayari, hindi ang pagkawala.
  *
  * Isang rAF loop lang ang humahawak sa reveals at parallax. Sinasadya ang
  * paggamit ng getBoundingClientRect sa halip na IntersectionObserver: hindi
@@ -25,10 +26,6 @@ import { usePathname } from "next/navigation";
  * hindi mag-forced reflow sa bawat frame.
  */
 
-/** Kailangang lumagpas nang ganito karami ang elemento bago ito i-reset.
-    Ang puwang sa pagitan ng papasok at palabas na hangganan ang pumipigil
-    sa pagkurap-kurap kapag huminto ang scroll mismo sa gilid. */
-const EXIT_MARGIN = 80;
 export default function ScrollMotion() {
   const pathname = usePathname();
 
@@ -96,36 +93,27 @@ export default function ScrollMotion() {
       }
 
       const entering: HTMLElement[] = [];
-      const leaving: HTMLElement[] = [];
 
       for (const el of targets) {
+        // Naipakita na — tapos na ang trabaho rito. Hindi na ito sinusukat
+        // muli at hindi na ibinabalik sa nakatago, kaya nananatili ang laman.
+        if (el.classList.contains("is-in")) continue;
+
         const rect = el.getBoundingClientRect();
-        const shown = el.classList.contains("is-in");
 
         // Papasok: kahit anong pagpatong sa viewport. Huwag itong higpitan —
         // ang course snapshot ng homepage ay nakadikit sa ilalim ng h-svh na
         // hero, kaya sa mas mahigpit na hangganan ay mananatili itong blangko
         // hangga't hindi nag-i-scroll. Kung nakikita sa pag-load, lumalabas
         // ito sa pag-load.
-        if (!shown && rect.top < viewportHeight && rect.bottom > 0) {
+        if (rect.top < viewportHeight && rect.bottom > 0) {
           entering.push(el);
-          continue;
-        }
-
-        // Palabas: kailangang malinaw nang nakalampas, hindi basta dumampi sa
-        // gilid, para hindi kumurap-kurap ang animation.
-        if (shown && (rect.top > viewportHeight + EXIT_MARGIN || rect.bottom < -EXIT_MARGIN)) {
-          leaving.push(el);
         }
       }
 
       // --- write phase ---
       for (const [layer, y] of offsets) {
         layer.style.setProperty("--parallax-y", `${y.toFixed(2)}px`);
-      }
-
-      for (const el of leaving) {
-        el.classList.remove("is-in");
       }
 
       for (const el of entering) {

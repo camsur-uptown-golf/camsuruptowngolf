@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
 import { delay } from "@/components/EditorialKit";
+import { VILLA_DEL_REY_STAYS } from "@/lib/villa-del-rey";
 
 /**
  * Ang apat na uri ng tuluyan sa Villa Del Rey.
@@ -16,43 +17,12 @@ import { delay } from "@/components/EditorialKit";
  * ay mananatiling blangko ang buong section.
  */
 
-const STAY_TYPES = [
-  {
-    name: "Villas",
-    description:
-      "Spacious villa accommodation with a refined bedroom and a private poolside setting.",
-    exterior: "/villa-del-rey/stays/villa-pool-4k.jpg",
-    interior: "/villa-del-rey/stays/villa-bedroom-4k.jpg",
-  },
-  {
-    name: "Cabana",
-    description:
-      "Compact resort cabanas arranged along garden paths, with simple interiors designed for an easy stay.",
-    exterior: "/villa-del-rey/stays/cabana-exterior-4k.jpg",
-    interior: "/villa-del-rey/stays/cabana-bedroom-4k.jpg",
-  },
-  {
-    name: "Cabins",
-    description:
-      "Contemporary standalone cabins with landscaped outdoor space and a calm, light-filled bedroom.",
-    exterior: "/villa-del-rey/stays/cabins-exterior-4k.jpg",
-    interior: "/villa-del-rey/stays/cabins-bedroom-4k.jpg",
-  },
-  {
-    name: "Dwell",
-    description:
-      "A clean modern retreat pairing a private garden-facing exterior with a warm timber-lined bedroom.",
-    exterior: "/villa-del-rey/stays/dwell-exterior-4k.jpg",
-    interior: "/villa-del-rey/stays/dwell-bedroom-4k.jpg",
-  },
-] as const;
-
 export default function VillaDelReyStays() {
   return (
     <section id="villa-stays" className="bg-[#f7f5ee] text-[#14271d]">
       <ScrollMotion />
 
-      <div className="mx-auto max-w-7xl px-6 pb-4 pt-16 text-center sm:px-10 sm:pt-20 lg:px-8 lg:pt-24">
+      <div className="mx-auto max-w-[1600px] px-4 pb-3 pt-12 text-center sm:px-8 sm:pt-14 lg:pt-16">
         <Image
           src="/villa-del-rey/logo.png"
           alt="Villa Del Rey, CamSur Philippines"
@@ -86,78 +56,117 @@ export default function VillaDelReyStays() {
         <div data-reveal="up" style={delay(270)} className="mx-auto mt-9 h-px w-20 bg-[#98782f]/50" />
       </div>
 
-      {STAY_TYPES.map((stayType, index) => {
-        /* Salitan ang panig ng teksto at ang hugis ng pangunahing larawan.
-           Magkaiba ang taas ng `tall` at `wide`, kaya walang dalawang
-           magkasunod na hilera na pareho ang laki. */
+      {VILLA_DEL_REY_STAYS.map((stayType, index) => {
+        /* Salitan ang panig ng teksto at ng larawan pababa sa apat na hilera. */
         const flip = index % 2 === 1;
 
         return (
           <article
             key={stayType.name}
-            className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#1f3f2e]/10" : ""}`}
+            className={`py-14 sm:py-16 lg:py-20 ${index ? "border-t border-[#1f3f2e]/10" : ""}`}
           >
-            <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-16 lg:px-8">
-              {/* Pangalan agad ang simula ng panig na ito. Walang eyebrow at
-                  walang bilang sa likod: ang pangalan ng tuluyan lang ang
-                  sinusundan ng mata pababa sa apat na hilera. */}
+            <div
+              className={`mx-auto grid max-w-[1800px] items-center gap-10 px-5 sm:px-10 lg:gap-14 lg:px-14 xl:px-20 ${
+                flip
+                  ? "lg:grid-cols-[minmax(0,1.38fr)_minmax(320px,0.62fr)]"
+                  : "lg:grid-cols-[minmax(320px,0.62fr)_minmax(0,1.38fr)]"
+              }`}
+            >
+              {/* Pangalan agad ang simula ng panig na ito. */}
               <div className={`relative ${flip ? "lg:order-2" : ""}`}>
                 <h3
                   data-reveal="up"
-                  className="font-display text-[clamp(2.6rem,5vw,4.8rem)] font-medium leading-[0.92] tracking-[-0.055em]"
+                  style={delay(70)}
+                  className="font-display text-[clamp(2.8rem,5.5vw,5.5rem)] font-medium leading-[0.9] tracking-[-0.055em]"
                 >
                   {stayType.name}
                 </h3>
                 <p
                   data-reveal="up"
-                  style={delay(90)}
+                  style={delay(140)}
                   className="mt-6 max-w-xl text-base leading-8 text-[#5d685f] sm:text-lg sm:leading-9"
                 >
                   {stayType.description}
                 </p>
-                <div data-reveal="up" style={delay(180)} className="mt-8 h-px w-14 bg-[#98782f]/45" />
+
+                <div
+                  data-reveal="up"
+                  style={delay(190)}
+                  className="mt-8 border-y border-[#1f3f2e]/12 py-5"
+                >
+                  <div className="grid grid-cols-2 gap-5">
+                    <div>
+                      <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                        Setting
+                      </p>
+                      <p className="mt-2 text-sm font-medium text-[#26362e] sm:text-base">{stayType.setting}</p>
+                    </div>
+                    <div className="border-l border-[#1f3f2e]/12 pl-5">
+                      <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                        Gallery
+                      </p>
+                      <p className="mt-2 text-sm font-medium text-[#26362e] sm:text-base">Exterior &amp; room</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div data-reveal="up" style={delay(230)} className="mt-6">
+                  <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                    Highlights
+                  </p>
+                  <ul className="mt-4 grid gap-3 text-sm text-[#5d685f] sm:text-base">
+                    {stayType.highlights.map((highlight) => (
+                      <li key={highlight} className="flex items-center gap-3">
+                        <span className="size-1.5 shrink-0 rounded-full bg-[#98782f]" aria-hidden="true" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Link
+                  href="/plan-your-visit"
+                  data-reveal="up"
+                  style={delay(270)}
+                  className="mt-8 inline-flex h-12 items-center justify-center gap-3 rounded-full border border-[#265136]/25 px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:-translate-y-0.5 hover:border-[#265136] hover:bg-[#265136] hover:text-white xl:text-[12px]"
+                >
+                  Ask about availability <span aria-hidden="true">→</span>
+                </Link>
               </div>
 
-              {/* Magkapatong ang dalawang larawan: ang panloob ay nakasampa sa
-                  gilid ng panlabas. Nasa loob pa rin ng balot ang lahat, kaya
-                  walang tumatapon sa section sa ibaba. */}
-              <div className={`relative ${flip ? "lg:order-1" : ""}`}>
+              {/* Isang larawan lang ang nakikita sa page. Nasa parehong
+                  lightbox group ang nakatagong room photo para ma-next ito
+                  kapag binuksan ang pangunahing larawan. */}
+              <div className={`${flip ? "lg:order-1" : ""}`}>
                 <div
                   data-reveal={flip ? "left" : "right"}
                   data-lightbox
+                  data-lightbox-group={`villa-${stayType.name.toLowerCase()}`}
                   data-src={stayType.exterior}
                   data-alt={`${stayType.name} exterior at Villa Del Rey`}
-                  className={`relative overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_22px_55px_rgba(20,39,29,0.12)] sm:rounded-[2rem] ${
-                    flip ? "ml-auto w-[86%] aspect-[5/4]" : "w-[82%] aspect-[4/5]"
-                  }`}
+                  className="group relative aspect-[4/3] cursor-zoom-in overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_28px_70px_rgba(20,39,29,0.16)] sm:aspect-[16/9] sm:rounded-[2rem]"
                 >
-                  <Image
-                    src={stayType.exterior}
-                    alt={`${stayType.name} exterior at Villa Del Rey`}
-                    fill
-                    sizes="(max-width: 1023px) 82vw, 480px"
-                    className="object-cover"
-                  />
+                  <div data-parallax="0.05" className="absolute -inset-y-[14%] inset-x-0">
+                    <Image
+                      src={stayType.exterior}
+                      alt={`${stayType.name} exterior at Villa Del Rey`}
+                      fill
+                      sizes="(max-width: 1023px) calc(100vw - 2rem), 920px"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <span className="pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/30 bg-[#10251a]/75 px-4 py-2 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md sm:bottom-6 sm:right-6 sm:text-[11px]">
+                    View gallery <span aria-hidden="true">↗</span>
+                  </span>
                 </div>
-
-                <div
-                  data-reveal="scale"
-                  style={delay(200)}
+                <span
                   data-lightbox
+                  data-lightbox-group={`villa-${stayType.name.toLowerCase()}`}
                   data-src={stayType.interior}
                   data-alt={`${stayType.name} room at Villa Del Rey`}
-                  className={`absolute bottom-6 overflow-hidden rounded-[1.25rem] bg-[#d9ded8] shadow-[0_18px_45px_rgba(20,39,29,0.16)] ring-4 ring-[#f7f5ee] sm:bottom-8 sm:rounded-[1.5rem] ${
-                    flip ? "left-0 w-[38%] aspect-[3/4]" : "right-0 w-[42%] aspect-square"
-                  }`}
-                >
-                  <Image
-                    src={stayType.interior}
-                    alt={`${stayType.name} room at Villa Del Rey`}
-                    fill
-                    sizes="(max-width: 1023px) 40vw, 240px"
-                    className="object-cover"
-                  />
-                </div>
+                  className="hidden"
+                  aria-hidden="true"
+                />
               </div>
             </div>
           </article>
@@ -165,11 +174,11 @@ export default function VillaDelReyStays() {
       })}
 
       {/* Wala pang anumang CTA ang pahinang ito bago nito. */}
-      <div className="border-t border-white/10 bg-[#1f3f2e] text-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-8">
+      <div className="border-t border-[#1f3f2e]/10 bg-[#f7f5ee] text-[#14271d]">
+        <div className="mx-auto max-w-[1600px] px-4 py-12 text-center sm:px-8 sm:py-14 lg:px-8">
           <p
             data-reveal="up"
-            className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#d8b65b]"
+            className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]"
           >
             Plan your stay
           </p>
@@ -183,7 +192,7 @@ export default function VillaDelReyStays() {
           <p
             data-reveal="up"
             style={delay(180)}
-            className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 xl:text-base xl:leading-8"
+            className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8"
           >
             Tell the team your dates and how many are travelling, and they will come back with what is
             available across the four stay types.
@@ -197,7 +206,7 @@ export default function VillaDelReyStays() {
             </Link>
             <Link
               href="/accommodations"
-              className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f]"
+              className="inline-flex h-12 items-center rounded-full border border-[#1f3f2e]/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:border-[#265136] hover:text-[#265136]"
             >
               View all stays
             </Link>
