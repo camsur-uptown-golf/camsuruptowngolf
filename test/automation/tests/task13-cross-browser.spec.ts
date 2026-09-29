@@ -10,7 +10,7 @@ import { EXTERNAL_LINKS } from '../fixtures/site-data';
  * (under the 'chrome' project) and skip on the others — the browser under test is
  * chosen inside the test, not by the project.
  */
-const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
+const BASE = process.env.BASE_URL ?? 'https://camsuruptowngolf.vercel.app';
 
 type Launcher = () => Promise<Browser | null>;
 

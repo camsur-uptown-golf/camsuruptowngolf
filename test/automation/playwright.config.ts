@@ -14,7 +14,7 @@ import { join } from 'node:path';
  *      (see README "Opera GX" section). Then run only chrome/edge/firefox locally.
  */
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3000';
+const BASE_URL = process.env.BASE_URL ?? 'https://camsuruptowngolf.vercel.app';
 const DEFAULT_OPERA_GX_PATH = process.env.LOCALAPPDATA
   ? join(process.env.LOCALAPPDATA, 'Programs', 'Opera GX', 'opera.exe')
   : undefined;
@@ -29,6 +29,7 @@ export default defineConfig({
     '**/task03-responsive-layouts.spec.ts',
     '**/task04-header-mega-nav.spec.ts',
     '**/task10-accessibility.spec.ts',
+    '**/production-health.spec.ts',
   ],
   outputDir: './test-results',
   fullyParallel: true,

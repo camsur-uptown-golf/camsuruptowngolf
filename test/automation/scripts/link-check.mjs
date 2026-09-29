@@ -2,7 +2,7 @@
 // Usage: npm run links:crawl   (BASE_URL env overrides the default)
 import { LinkChecker } from 'linkinator';
 
-const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
+const BASE = process.env.BASE_URL ?? 'https://camsuruptowngolf.vercel.app';
 
 const checker = new LinkChecker();
 let broken = 0;

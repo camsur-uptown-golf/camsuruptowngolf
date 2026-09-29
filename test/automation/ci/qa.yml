@@ -20,20 +20,7 @@ jobs:
         with:
           node-version: 20
 
-      # Build & start the Next.js app (adjust if your start script differs)
-      - name: Install app deps
-        run: npm ci
-        working-directory: .
-      - name: Build app
-        run: npm run build
-        working-directory: .
-      - name: Start app
-        run: npm run start &
-        working-directory: .
-      - name: Wait for app
-        run: npx --yes wait-on http://localhost:3000
-
-      # QA suite
+      # QA suite targets the deployed production site by default.
       - name: Install QA deps
         run: npm ci
       - name: Install Playwright browsers
@@ -41,7 +28,7 @@ jobs:
       - name: Run Playwright (Chrome + Firefox)
         run: npx playwright test --project=chrome --project=firefox
         env:
-          BASE_URL: http://localhost:3000
+          BASE_URL: https://camsuruptowngolf.vercel.app
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4

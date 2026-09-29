@@ -1,6 +1,6 @@
 // QA Task 12 — Lighthouse CI configuration.
-// Usage: npm run lhci   (requires the site running at BASE_URL).
-const BASE = process.env.BASE_URL || 'http://localhost:3000';
+// Usage: npm run test:performance   (BASE_URL can override the production default).
+const BASE = process.env.BASE_URL || 'https://camsuruptowngolf.vercel.app';
 
 module.exports = {
   ci: {

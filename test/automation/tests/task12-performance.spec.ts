@@ -19,7 +19,7 @@ test.describe('Task 12 · Performance (Lighthouse)', () => {
       test(`Lighthouse — ${name} (${preset})`, async () => {
         const browser = await chromium.launch({ args: [`--remote-debugging-port=${PORT}`] });
         const page = await browser.newPage();
-        await page.goto((process.env.BASE_URL ?? 'http://localhost:3000') + path, {
+        await page.goto((process.env.BASE_URL ?? 'https://camsuruptowngolf.vercel.app') + path, {
           waitUntil: 'networkidle',
         });
         await playAudit({

@@ -1,6 +1,6 @@
 # CamSur Uptown Golf Club — QA Automation
 
-Focused automated QA for the website at `http://localhost:3000`. The default run includes
+Focused automated QA for the website at `https://camsuruptowngolf.vercel.app`. The default run includes
 only copy and spelling, accessibility and keyboard navigation, responsive layouts, and
 header and mega navigation. Other spec files remain in the repository but are not discovered.
 
@@ -15,12 +15,61 @@ header and mega navigation. Other spec files remain in the repository but are no
 cd test/automation
 npm install                 # install dev dependencies
 npx playwright install      # download browser binaries
-# Make sure the site is running at http://localhost:3000 (npm run dev in repo root)
 npm test                    # run the four selected areas in Opera GX
 npm run report              # open the HTML report
 ```
 
 Override the target URL with `BASE_URL`, e.g. `BASE_URL=https://staging.example.com npm test`.
+
+### Production health and bounded load checks
+
+The production audit is read-only and covers route health, desktop/mobile navigation,
+WCAG A/AA rules, responsive overflow, browser errors, broken images, and navigation timing:
+
+```bash
+BASE_URL=https://camsuruptowngolf.vercel.app npm run test:production
+```
+
+The bounded load check sends 30 `GET` requests with concurrency 5 by default. It has hard
+safety caps of 500 requests and concurrency 20:
+
+```bash
+npm run test:load
+
+# Optional tuning
+LOAD_REQUESTS=100 LOAD_CONCURRENCY=10 LOAD_MAX_P95_MS=3000 npm run test:load
+```
+
+### Staged capacity test
+
+The k6 capacity test ramps read-only `GET` traffic across a weighted mix of the homepage,
+golf, packages, accommodations, contact, and plan-your-visit routes. It aborts when the
+error rate, p95 latency, check rate, or dropped-iteration thresholds are breached.
+
+Install [k6](https://grafana.com/docs/k6/latest/set-up/install-k6/) and run the smoke profile
+before attempting capacity discovery. Public targets are locked until production access is
+explicitly acknowledged:
+
+```powershell
+$env:ALLOW_PRODUCTION_LOAD = "true"
+npm run test:capacity:smoke
+```
+
+The default capacity profile ramps gradually to 100 requests per second. Run it only with
+documented authorization, active monitoring, and an agreed stop/rollback contact:
+
+```powershell
+$env:ALLOW_PRODUCTION_LOAD = "true"
+$env:TARGET_RPS = "100"
+$env:MAX_VUS = "500"
+$env:MAX_P95_MS = "1500"
+npm run test:capacity
+```
+
+Optional `RAMP_DURATION`, `HOLD_DURATION`, and `MAX_ERROR_RATE` variables tune the stages
+and service-level thresholds. Hard safety caps reject more than 500 requests per second or
+1,000 virtual users. This test measures cached HTML/edge delivery; use an isolated staging
+environment for form submissions, cache-bypass tests, or origin/backend saturation.
 
 ---
 

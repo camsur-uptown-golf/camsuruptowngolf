@@ -1,6 +1,6 @@
 /**
  * Single source of truth for the CamSur Uptown Golf Club site structure.
- * Crawled live from http://localhost:3000. All specs iterate over this data so
+ * Crawled live from https://camsuruptowngolf.vercel.app. All specs iterate over this data so
  * the ~392 test cases map 1:1 to test/outputs/CamSur_Uptown_Golf_QA_TestCases.xlsx.
  */
 

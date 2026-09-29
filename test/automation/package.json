@@ -17,6 +17,11 @@
     "test:responsive": "playwright test tests/task03-responsive-layouts.spec.ts --project=opera-gx",
     "test:nav": "playwright test tests/task04-header-mega-nav.spec.ts --project=opera-gx",
     "test:a11y": "playwright test tests/task10-accessibility.spec.ts --project=opera-gx",
+    "test:production": "playwright test tests/production-health.spec.ts --project=chrome --workers=1",
+    "test:load": "node scripts/load-test.mjs",
+    "test:capacity:smoke": "k6 run -e CAPACITY_PROFILE=smoke scripts/capacity-test.js",
+    "test:capacity": "k6 run -e CAPACITY_PROFILE=capacity scripts/capacity-test.js",
+    "test:performance": "lhci autorun --config=./lighthouserc.cjs",
     "spell": "cspell \"../../app/**/*.{ts,tsx,md,mdx}\" \"../../content/**/*.{md,mdx,json}\" --no-must-find-files",
     "report": "playwright show-report"
   },
