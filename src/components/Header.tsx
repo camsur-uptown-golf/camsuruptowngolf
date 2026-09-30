@@ -708,7 +708,10 @@ export default function Header() {
              sa maliwanag na langit ay parang malabo ang gilid nito. Ang
              malambot na itim ang natira: iyon lang naman ang kailangan para
              bumukod ito sa larawan sa likod. */
-          className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[#e7d18d] px-7 py-3 text-[10px] font-bold uppercase tracking-[0.08em] text-[#265136] shadow-[0_10px_28px_rgba(0,0,0,0.22)] transition duration-200 hover:bg-[#f3dfa0] hover:shadow-[0_12px_32px_rgba(0,0,0,0.28)] xl:px-8 xl:py-3.5 xl:text-[11px]"
+          /* Ginto pa rin (#e7d18d), pero may mas madilim na gintong border
+             (#b8963f) at mas malakas na anino ngayon — para humiwalay ito sa
+             maliwanag na langit ng hero kung saan halos di-mahalata dati. */
+          className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[#b8963f] bg-[#e7d18d] px-7 py-3 text-[10px] font-bold uppercase tracking-[0.08em] text-[#265136] shadow-[0_10px_26px_rgba(0,0,0,0.34)] transition duration-200 hover:border-[#c9a54e] hover:bg-[#f3dfa0] hover:shadow-[0_12px_30px_rgba(0,0,0,0.4)] xl:px-8 xl:py-3.5 xl:text-[11px]"
         >
           {/* NAKATAGO ANG ICON SA IBABA NG `xl`. Nasa gitna ng screen ang
               nav at naka-angkla sa dalawang gilid ang marka at ito, kaya

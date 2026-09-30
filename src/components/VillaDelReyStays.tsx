@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
+import StayInfoTabs from "@/components/StayInfoTabs";
 import { delay } from "@/components/EditorialKit";
 import { VILLA_DEL_REY_STAYS } from "@/lib/villa-del-rey";
 
@@ -23,15 +24,6 @@ export default function VillaDelReyStays() {
       <ScrollMotion />
 
       <div className="mx-auto max-w-[1600px] px-4 pb-3 pt-12 text-center sm:px-8 sm:pt-14 lg:pt-16">
-        <Image
-          src="/villa-del-rey/logo.png"
-          alt="Villa Del Rey, CamSur Philippines"
-          width={528}
-          height={291}
-          sizes="(max-width: 639px) 52vw, 280px"
-          data-reveal="up"
-          className="mx-auto mb-8 h-auto w-[min(52vw,280px)] sm:mb-10"
-        />
         <p
           data-reveal="up"
           className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]"
@@ -77,52 +69,68 @@ export default function VillaDelReyStays() {
                 <h3
                   data-reveal="up"
                   style={delay(70)}
-                  className="font-display text-[clamp(2.8rem,5.5vw,5.5rem)] font-medium leading-[0.9] tracking-[-0.055em]"
+                  className="font-display text-[clamp(2.5rem,4.3vw,4.5rem)] font-medium leading-[0.92] tracking-[-0.05em]"
                 >
                   {stayType.name}
                 </h3>
-                <p
-                  data-reveal="up"
-                  style={delay(140)}
-                  className="mt-6 max-w-xl text-base leading-8 text-[#5d685f] sm:text-lg sm:leading-9"
-                >
-                  {stayType.description}
-                </p>
-
-                <div
-                  data-reveal="up"
-                  style={delay(190)}
-                  className="mt-8 border-y border-[#1f3f2e]/12 py-5"
-                >
-                  <div className="grid grid-cols-2 gap-5">
-                    <div>
-                      <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
-                        Setting
-                      </p>
-                      <p className="mt-2 text-sm font-medium text-[#26362e] sm:text-base">{stayType.setting}</p>
-                    </div>
-                    <div className="border-l border-[#1f3f2e]/12 pl-5">
-                      <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
-                        Gallery
-                      </p>
-                      <p className="mt-2 text-sm font-medium text-[#26362e] sm:text-base">Exterior &amp; room</p>
-                    </div>
+                {/* Ang stay na may amenities data (Villas sa ngayon) ay
+                    gumagamit ng tabbed na kaliwang column — DESCRIPTION ·
+                    KEY FACTS · AMENITIES. Ang iba ay nasa dating static na
+                    description + Setting/Gallery + Highlights pa rin. */}
+                {"amenities" in stayType ? (
+                  <div data-reveal="up" style={delay(140)}>
+                    <StayInfoTabs
+                      description={stayType.description}
+                      keyFacts={stayType.keyFacts}
+                      amenities={stayType.amenities}
+                    />
                   </div>
-                </div>
+                ) : (
+                  <>
+                    <p
+                      data-reveal="up"
+                      style={delay(140)}
+                      className="mt-5 max-w-xl text-sm leading-7 text-[#5d685f] sm:text-base sm:leading-8"
+                    >
+                      {stayType.description}
+                    </p>
 
-                <div data-reveal="up" style={delay(230)} className="mt-6">
-                  <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
-                    Highlights
-                  </p>
-                  <ul className="mt-4 grid gap-3 text-sm text-[#5d685f] sm:text-base">
-                    {stayType.highlights.map((highlight) => (
-                      <li key={highlight} className="flex items-center gap-3">
-                        <span className="size-1.5 shrink-0 rounded-full bg-[#98782f]" aria-hidden="true" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    <div
+                      data-reveal="up"
+                      style={delay(190)}
+                      className="mt-8 border-y border-[#1f3f2e]/12 py-5"
+                    >
+                      <div className="grid grid-cols-2 gap-5">
+                        <div>
+                          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                            Setting
+                          </p>
+                          <p className="mt-2 text-sm font-medium text-[#26362e]">{stayType.setting}</p>
+                        </div>
+                        <div className="border-l border-[#1f3f2e]/12 pl-5">
+                          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                            Gallery
+                          </p>
+                          <p className="mt-2 text-sm font-medium text-[#26362e]">Exterior &amp; room</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div data-reveal="up" style={delay(230)} className="mt-6">
+                      <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                        Highlights
+                      </p>
+                      <ul className="mt-4 grid gap-3 text-sm text-[#5d685f]">
+                        {stayType.highlights.map((highlight) => (
+                          <li key={highlight} className="flex items-center gap-3">
+                            <span className="size-1.5 shrink-0 rounded-full bg-[#98782f]" aria-hidden="true" />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </>
+                )}
 
                 <Link
                   href="/plan-your-visit"
@@ -144,19 +152,19 @@ export default function VillaDelReyStays() {
                   data-lightbox-group={`villa-${stayType.name.toLowerCase()}`}
                   data-src={stayType.exterior}
                   data-alt={`${stayType.name} exterior at Villa Del Rey`}
-                  className="group relative aspect-[4/3] cursor-zoom-in overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_28px_70px_rgba(20,39,29,0.16)] sm:aspect-[16/9] sm:rounded-[2rem]"
+                  className="group relative h-[320px] cursor-zoom-in overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_28px_70px_rgba(20,39,29,0.16)] sm:h-[460px] sm:rounded-[2rem] lg:h-[560px] xl:h-[620px]"
                 >
-                  <div data-parallax="0.05" className="absolute -inset-y-[14%] inset-x-0">
+                  <div className="absolute inset-0">
                     <Image
                       src={stayType.exterior}
                       alt={`${stayType.name} exterior at Villa Del Rey`}
                       fill
                       sizes="(max-width: 1023px) calc(100vw - 2rem), 920px"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      className="object-cover transition-[filter] duration-500 ease-out group-hover:brightness-[0.86] group-hover:saturate-[0.82]"
                     />
                   </div>
-                  <span className="pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/30 bg-[#10251a]/75 px-4 py-2 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md sm:bottom-6 sm:right-6 sm:text-[11px]">
-                    View gallery <span aria-hidden="true">↗</span>
+                  <span className="pointer-events-none absolute bottom-4 right-4 grid size-9 place-items-center border-2 border-white bg-[#10251a]/75 text-[1.6rem] font-light leading-none text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:bottom-6 sm:right-6 sm:size-10">
+                    <span aria-hidden="true" className="-translate-y-px">+</span>
                   </span>
                 </div>
                 <span
@@ -167,6 +175,17 @@ export default function VillaDelReyStays() {
                   className="hidden"
                   aria-hidden="true"
                 />
+                {stayType.gallery.map((photo) => (
+                  <span
+                    key={photo.src}
+                    data-lightbox
+                    data-lightbox-group={`villa-${stayType.name.toLowerCase()}`}
+                    data-src={photo.src}
+                    data-alt={photo.alt}
+                    className="hidden"
+                    aria-hidden="true"
+                  />
+                ))}
               </div>
             </div>
           </article>

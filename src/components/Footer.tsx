@@ -104,7 +104,8 @@ export default function Footer() {
                   kaya 14px na muli. */}
               <div className="space-y-1.5 text-[13px] leading-6 text-white/62 lg:mt-6 lg:text-sm">
                 <p className="font-semibold text-white/85">CamSur Uptown Golf Club</p>
-                <p>Camarines Sur, Philippines</p>
+                <p>San Jose, Pili</p>
+                <p>Camarines Sur 4418, Philippines</p>
                 {/* May sariling label na ngayon ang dalawang paraan ng
                     pagtawag. Ang numero lang ang nandito dati, nakadikit sa
                     address at walang nagsasabi kung para saan ito. */}

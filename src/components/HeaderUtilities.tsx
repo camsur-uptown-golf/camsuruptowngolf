@@ -6,7 +6,7 @@ import { useTranslation } from "@/i18n/LanguageProvider";
 
 /**
  * Maliliit na utility sa kanang bahagi ng header, katabi ng "Plan Your Visit":
- * live na weather sa Naga (icon + temp) at isang language selector.
+ * live na weather sa Pili (icon + temp) at isang language selector.
  *
  * Client component dahil live ang weather (kinukuha sa Open-Meteo) at
  * interactive ang wika. Nakatago sa ibaba ng `xl` — masikip ang gitna doon
@@ -14,12 +14,12 @@ import { useTranslation } from "@/i18n/LanguageProvider";
  * sila lumalabas, gaya ng icon ng CTA.
  */
 
-/* Naga City, Camarines Sur — malapit sa club. */
-const NAGA = { lat: 13.6218, lon: 123.1948 } as const;
+/* San Jose, Pili, Camarines Sur — dito mismo ang club (hindi Naga). */
+const PILI = { lat: 13.584308, lon: 123.253267 } as const;
 
 /* Open-Meteo: libre, walang API key, may CORS kaya kayang tawagin sa browser. */
 const WEATHER_URL =
-  `https://api.open-meteo.com/v1/forecast?latitude=${NAGA.lat}&longitude=${NAGA.lon}` +
+  `https://api.open-meteo.com/v1/forecast?latitude=${PILI.lat}&longitude=${PILI.lon}` +
   `&current=temperature_2m,weather_code&timezone=Asia%2FManila`;
 
 type Weather = { tempC: number; code: number };
@@ -174,7 +174,11 @@ function WeatherNow() {
       }
     };
     load();
-    const id = setInterval(load, 15 * 60 * 1000);
+    /* Kada 30 segundo — hindi realtime, pero sapat na madalas para mabilis
+       mag-recover kapag minsan hindi naka-load ang unang kuha. Kapag pumalya
+       ang isang refresh, pinapanatili ang huling alam na temp (hindi bina-
+       blangko), kaya hindi ito basta nawawala. */
+    const id = setInterval(load, 30 * 1000);
     return () => {
       alive = false;
       clearInterval(id);
@@ -186,12 +190,12 @@ function WeatherNow() {
   return (
     <span
       className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em]"
-      title={weather ? `Naga — ${w?.label}, ${Math.round(weather.tempC)}°C` : "Naga weather"}
+      title={weather ? `Pili — ${w?.label}, ${Math.round(weather.tempC)}°C` : "Pili weather"}
     >
       <WeatherIcon kind={w?.kind ?? "cloud"} />
       <span className="tabular-nums">{weather ? `${Math.round(weather.tempC)}°C` : "—°"}</span>
       <span className="sr-only">
-        {weather ? `Naga weather, ${w?.label}, ${Math.round(weather.tempC)} degrees.` : "Loading Naga weather."}
+        {weather ? `Pili weather, ${w?.label}, ${Math.round(weather.tempC)} degrees.` : "Loading Pili weather."}
       </span>
     </span>
   );

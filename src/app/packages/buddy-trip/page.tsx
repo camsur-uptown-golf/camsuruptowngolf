@@ -4,7 +4,7 @@ import PackageItineraryPage from "@/components/PackageItineraryPage";
 export const metadata: Metadata = {
   title: "Group Golf Getaway | CamSur Uptown Golf Club",
   description:
-    "Two nights, two rounds. A three-day golf trip for a group of friends, with course-side stays, shared tables, and time between rounds.",
+    "A two-night group getaway with two rounds of golf. Enjoy three days of course-side stays, shared tables, and time between rounds.",
 };
 
 /**

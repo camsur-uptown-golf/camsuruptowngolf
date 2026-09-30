@@ -26,7 +26,7 @@ const PACKAGES = [
     href: "/packages/stay-and-play",
     image: "/stay-and-play-hero-option-2.png",
     name: "Stay & Play",
-    summary: "One night, one round",
+    summary: "A one-night stay with a round of golf",
     who: "The simplest way to see the course",
     inclusions: [
       "One night in the accommodation of your choice",
@@ -40,7 +40,7 @@ const PACKAGES = [
     href: "/packages/buddy-trip",
     image: "/buddy-golf-trip-hero-v4.png",
     name: "Buddy Golf Trip",
-    summary: "Two nights, two rounds, one memorable group escape",
+    summary: "A two-night group getaway with two rounds of golf",
     who: "Golf, meals, and good company",
     inclusions: [
       "A flexible three-day itinerary for your group",
@@ -128,13 +128,6 @@ function ThePackages() {
                 </Link>
 
                 <div className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -top-10 left-0 select-none font-display text-[clamp(4.5rem,7vw,7rem)] font-medium leading-none tracking-[-0.05em] text-[#1f3f2e]/[0.07]"
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
                   <p className="relative text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
                     {pack.who}
                   </p>

@@ -32,9 +32,11 @@ export const CLUB_PHONE = { label: "+63 916 300 7914", href: "tel:+639163007914"
    dito lang ang palitan. */
 export const CLUB_EMAIL = { label: "info@camsuruptowngolf.com", href: "mailto:info@camsuruptowngolf.com" } as const;
 
-/* TODO (para sa club): kumpletuhin ang address — barangay, bayan, at ZIP. */
+/* Tunay na lokasyon ng club: San Jose, Pili, Camarines Sur (kumpirmado sa
+   mapa — 13.584308, 123.253267). PAKITINGNAN: 4418 ang karaniwang ZIP ng
+   Pili — kumpirmahin ang eksaktong barangay/ZIP ng club bago i-publish. */
 export const CLUB_ADDRESS = {
-  lines: ["CamSur Uptown Golf Club", "Camarines Sur, Philippines"],
+  lines: ["CamSur Uptown Golf Club", "San Jose, Pili", "Camarines Sur 4418, Philippines"],
 } as const;
 
 /**

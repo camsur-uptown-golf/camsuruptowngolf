@@ -4,7 +4,7 @@ import PackageItineraryPage from "@/components/PackageItineraryPage";
 export const metadata: Metadata = {
   title: "Stay & Play | CamSur Uptown Golf Club",
   description:
-    "One night, one round. A two-day course-side package for golfers who want a complete round without taking a week off.",
+    "A one-night stay with a round of golf. A two-day course-side package for golfers who want a complete round without taking a week off.",
 };
 
 /**

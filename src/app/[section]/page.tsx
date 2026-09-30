@@ -14,6 +14,7 @@ import ExperiencesDetails from "@/components/ExperiencesDetails";
 import PackagesDetails from "@/components/PackagesDetails";
 import ScrollCue from "@/components/ScrollCue";
 import ScrollMotion from "@/components/ScrollMotion";
+import HeroRevealMotion from "@/components/HeroRevealMotion";
 import { EDITORIAL_SECTION, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
 import { ACCOMMODATIONS, CLUB_PHONE, SITE_SECTIONS } from "@/lib/site-content";
 
@@ -58,13 +59,22 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
      pahinang walang motion driver ay mananatiling blangko ang teksto. */
   const usesFairwayHero =
     isGolf || isEvents || isPackages || isAccommodations || isExperiences || isClubhouse;
-  const usesHeroParallax = isGolf || isEvents;
+
+  /* Naka-pin (sticky top-0) na hero na tinatabunan ng susunod na section, may
+     scroll-zoom sa larawan at umaangat/kumukupas na title — gaya ng Villa del
+     Rey stay. Ginagamit ito ng Golf, Packages, Events at Experiences. Dahil
+     naka-pin ang hero, ang scroll-zoom (data-hero-media) ang galaw, hindi ang
+     rect-based parallax — kaya wala nang parallax na section. */
+  const usesStickyReveal = isPackages || isEvents || isGolf || isExperiences;
+  const usesHeroParallax = false;
 
   /* Patag ang Golf, Experiences at Clubhouse heroes; ang iba lang ang may
      landscape wave. Sa Clubhouse ay may anim na pahina ng kuwarto sa ilalim
      nito na patag ang hero — kapag may alon dito, dalawang magkaibang anyo
-     ang isang seksyon. */
-  const usesFairwayDivider = usesFairwayHero && !isGolf && !isExperiences && !isClubhouse;
+     ang isang seksyon. Ang mga sticky-reveal (packages, events) ay walang wave:
+     ang pagtabon ng susunod na section na mismo ang transition papuntang cream. */
+  const usesFairwayDivider =
+    usesFairwayHero && !isGolf && !isExperiences && !isClubhouse && !usesStickyReveal;
 
   /* Ang harapang burol ay dapat eksaktong katumbas ng background ng unang
      section sa ilalim — kahit bahagyang pagkakaiba ay lumilitaw bilang tahi. */
@@ -84,14 +94,15 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         >
         <section
           id="top"
-          className={`relative isolate flex items-end overflow-hidden bg-[#071d13] text-white ${
-            isGolf
-              ? "min-h-[620px] sm:min-h-[680px] lg:min-h-[700px]"
-              : isClubhouse
-                ? "sticky top-0 h-svh min-h-[680px]"
-              : isExperiences
-                ? "h-[80svh] min-h-[620px]"
-                : "min-h-[660px]"
+          className={`relative isolate flex overflow-hidden bg-[#071d13] text-white ${
+            usesStickyReveal ? "items-center justify-center" : "items-end"
+          } ${
+            // Naka-pin ang hero (sticky top-0); umaangat ang susunod na section
+            // para tabunan ito — reveal, gaya ng Villa del Rey. Ang clubhouse ay
+            // sticky din pero sa loob ng sariling h-[220svh] na track.
+            isClubhouse || usesStickyReveal
+              ? "sticky top-0 h-svh min-h-[680px]"
+              : "min-h-[660px]"
           }`}
         >
           <Image
@@ -101,6 +112,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             priority
             sizes="100vw"
             data-parallax={usesHeroParallax ? "-0.06" : undefined}
+            data-hero-media={usesStickyReveal ? "" : undefined}
             className={`-z-20 object-cover ${usesHeroParallax ? "parallax-media" : ""}`}
           />
           <div
@@ -117,11 +129,23 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {usesFairwayDivider && <FairwayDivider fill={dividerFill} />}
           {!isGolf && !isClubhouse ? (
             <div
-              className={`mx-auto w-full max-w-7xl px-6 pt-64 text-center lg:px-8 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`}
+              className={`mx-auto w-full max-w-7xl px-6 text-center lg:px-8 ${
+                usesStickyReveal
+                  ? // Naka-gitna (items-center) ang hero, kaya walang pt na
+                    // itinutulak — banayad na padding lang para sa hininga.
+                    "py-16"
+                  : `pt-64 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`
+              }`}
             >
               <h1
-                data-reveal={usesFairwayHero ? "up" : undefined}
-                className="mx-auto max-w-4xl text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]"
+                data-reveal={usesFairwayHero && !usesStickyReveal ? "up" : undefined}
+                data-hero-logo={usesStickyReveal ? "" : undefined}
+                className={`mx-auto max-w-4xl font-medium leading-[0.98] tracking-[-0.055em] ${
+                  usesStickyReveal
+                    ? // Mas maliit na title para sa naka-gitnang sticky hero.
+                      "text-[clamp(1.9rem,3.6vw,3.25rem)] drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
+                    : "text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.95]"
+                }`}
               >
                 {section.title}
               </h1>
@@ -131,11 +155,14 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {isClubhouse ? <ClubhouseHeroOverlay /> : null}
 
           {isGolf ? (
-            <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 text-center sm:pb-28 lg:px-8 lg:pb-32">
+            /* Naka-gitna sa sticky hero (items-center), kaya balanseng padding
+               lang — hindi na naka-baba. Mas maliit na title at umaangat/
+               kumukupas (data-hero-logo) habang natatabunan, gaya ng iba. */
+            <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-16 text-center lg:px-8">
               <div className="mx-auto max-w-3xl">
                 <h1
-                  data-reveal="up"
-                  className="mx-auto max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
+                  data-hero-logo=""
+                  className="mx-auto max-w-3xl text-balance text-[clamp(1.9rem,3.6vw,3.25rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
                 >
                   A course shaped by Camarines Sur
                 </h1>
@@ -148,6 +175,12 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         </section>
         </div>
 
+        {/* Para sa sticky-reveal (packages, events): naka-`relative z-10` at
+            solidong cream ang buong susunod na nilalaman kaya ito ang umaangat
+            at tumatabon sa naka-pin na hero habang nagsi-scroll — reveal, gaya
+            ng Villa del Rey. Sa ibang section ay walang klase ang balot, kaya
+            walang naaapektuhan. */}
+        <div className={usesStickyReveal ? "relative z-10 bg-[#f7f5ee]" : ""}>
         <div className="bg-[#f7f5ee]">
           <Breadcrumbs />
         </div>
@@ -313,7 +346,12 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         </section>
         </>
         )}
+        </div>
       </main>
+      {/* Scroll-driven na galaw ng naka-pin na hero (zoom + pag-angat ng title)
+          para sa packages at events — dito gumagamit ng mekanismong villa-del-rey
+          (sticky + cover). Ang clubhouse ay may sariling sticky-sequence. */}
+      {usesStickyReveal ? <HeroRevealMotion /> : null}
       <Footer />
     </>
   );
