@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { LOCALE_LABELS, LOCALES } from "@/i18n/config";
+import { LOCALE_LABELS, SWITCHER_LOCALES } from "@/i18n/config";
 import { useTranslation } from "@/i18n/LanguageProvider";
 
 /**
@@ -130,7 +130,7 @@ function LanguageSelector() {
           role="listbox"
           className="absolute right-0 top-[calc(100%+8px)] z-[60] min-w-[136px] overflow-hidden rounded-xl border border-[#f3dda0]/15 bg-[#265136] py-1 text-white shadow-[0_18px_42px_rgba(6,26,17,0.4)]"
         >
-          {LOCALES.map((code) => (
+          {SWITCHER_LOCALES.map((code) => (
             <li key={code}>
               <button
                 type="button"

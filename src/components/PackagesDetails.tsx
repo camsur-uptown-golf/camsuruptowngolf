@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
-import { EDITORIAL_SECTION_ALT, Kicker, Shell, delay } from "@/components/EditorialKit";
-import { CLUB_PHONE } from "@/lib/site-content";
+import { EDITORIAL_SECTION_ALT, Shell, delay } from "@/components/EditorialKit";
 
 /**
  * The Packages page, sa parehong editorial na wika ng Visit at Events.
@@ -24,10 +23,10 @@ const PACKAGES = [
   {
     slug: "stay-and-play",
     href: "/packages/stay-and-play",
-    image: "/stay-and-play-hero-option-2.png",
+    image: "/packages-stay-play-hero-v2.png",
     name: "Stay & Play",
     summary: "A one-night stay with a round of golf",
-    who: "The simplest way to see the course",
+    who: "",
     inclusions: [
       "One night in the accommodation of your choice",
       "One round with a caddie",
@@ -38,10 +37,10 @@ const PACKAGES = [
   {
     slug: "buddy-trip",
     href: "/packages/buddy-trip",
-    image: "/buddy-golf-trip-hero-v4.png",
-    name: "Buddy Golf Trip",
+    image: "/packages-group-getaway-hero-v2.jpeg",
+    name: "Group Golf Getaway",
     summary: "A two-night group getaway with two rounds of golf",
-    who: "Golf, meals, and good company",
+    who: "",
     inclusions: [
       "A flexible three-day itinerary for your group",
       "Two rounds with caddies",
@@ -64,28 +63,12 @@ function CheckIcon() {
   );
 }
 
-function PhoneIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
-      <path
-        d="M6.5 3.5 9 4l1 3-1.8 1.4a12 12 0 0 0 5.4 5.4L15 12l3 1 .5 2.5A2 2 0 0 1 16.4 18 13 13 0 0 1 6 7.6 2 2 0 0 1 6.5 3.5Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function ThePackages() {
   return (
     <section id="packages" className={EDITORIAL_SECTION_ALT}>
       <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-12">
         <div className="grid gap-8 border-b border-[#1f3f2e]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p data-reveal="up" className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f] xl:text-[11px]">
-              Choose your trip
-            </p>
             <h2
               data-reveal="up"
               style={delay(110)}
@@ -118,11 +101,23 @@ function ThePackages() {
                   href={pack.href}
                   className={`${imageOnRight ? "lg:order-2" : ""} group relative isolate block aspect-[3/2] overflow-hidden bg-[#1f3f2e] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
                 >
+                  {/* Napakalapad na panorama ang getaway hero (2.36:1), at nasa
+                      kanang bahagi nakatipon ang apat na manlalaro. Sa 3/2 na
+                      frame ay pinuputol ng default na object-center ang isa sa
+                      kanila — tatlo lang ang nakikita. Itinutok sa kanan ang
+                      buddy-trip para buo ang grupo; nasa gitna pa rin ang iba.
+
+                      INLINE STYLE, HINDI `object-right` NA KLASE. Bagong klase
+                      ito sa proyekto, at minsang hindi nire-regenerate ng dev
+                      ang CSS para sa ganitong bago — kaya nananatili sa gitna
+                      ang larawan at tatlo pa rin ang kita. Gaya ng inline na
+                      transform sa [section]/page.tsx, tiyak itong tumatalab. */}
                   <Image
                     src={pack.image}
                     alt={`${pack.name} at CamSur Uptown Golf Club`}
                     fill
                     sizes="(max-width: 1023px) calc(100vw - 3rem), 800px"
+                    style={pack.slug === "buddy-trip" ? { objectPosition: "right" } : undefined}
                     className="object-cover transition duration-700 group-hover:scale-[1.02]"
                   />
                 </Link>
@@ -131,7 +126,7 @@ function ThePackages() {
                   <p className="relative text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
                     {pack.who}
                   </p>
-                  <h3 className="relative mt-3 text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#14271d]">
+                  <h3 className="relative mt-3 font-display text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#14271d]">
                     {pack.name}
                   </h3>
                   <p className="relative mt-4 text-[17px] leading-8 text-[#3f4c45]">{pack.summary}</p>
@@ -172,11 +167,10 @@ function PackagesCta() {
       <Shell>
         <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
           <div>
-            <Kicker>Build your package</Kicker>
             <h2
               data-reveal="up"
               style={delay(90)}
-              className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
+              className="text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
             >
               Send us your dates.
             </h2>
@@ -193,13 +187,6 @@ function PackagesCta() {
               >
                 Request a quote
               </Link>
-              <a
-                href={CLUB_PHONE.href}
-                className="inline-flex h-11 items-center gap-2.5 rounded-full border border-[#1f3f2e]/20 px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:border-[#265136] hover:text-[#265136]"
-              >
-                <PhoneIcon />
-                {CLUB_PHONE.label}
-              </a>
             </div>
           </div>
         </div>

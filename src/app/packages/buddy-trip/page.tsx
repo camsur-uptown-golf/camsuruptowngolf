@@ -4,7 +4,7 @@ import PackageItineraryPage from "@/components/PackageItineraryPage";
 export const metadata: Metadata = {
   title: "Group Golf Getaway | CamSur Uptown Golf Club",
   description:
-    "A two-night group getaway with two rounds of golf. Enjoy three days of course-side stays, shared tables, and time between rounds.",
+    "A three-day golf getaway for your group at CamSur Uptown — two nights by the course, two full rounds, shared tables, and plenty of unscheduled time in between.",
 };
 
 /**
@@ -22,46 +22,46 @@ export const metadata: Metadata = {
 const days = [
   {
     label: "Arrival",
-    title: "Get everyone in, then get everyone warmed up.",
+    title: "Get everyone in, settle the group, and warm up together.",
     intro:
-      "Groups rarely arrive together. The first day is built loose enough that late arrivals do not hold up the rest.",
+      "Groups rarely arrive all at once, so the first day stays deliberately relaxed — late arrivals never hold up the rest, and everyone eases in at their own pace.",
     moments: [
       [
         "Afternoon",
-        "Check in, collect the group’s details, and leave the clubs with the team. Transfers and tee times for both rounds are confirmed here.",
+        "Check in, settle the group, and leave your clubs with our team. Transfers and tee times for both rounds are confirmed here, so nothing is left to chance.",
       ],
       [
         "Late afternoon",
-        "The practice bays, or a twilight nine for whoever has arrived and wants to play.",
+        "The practice bays, or a twilight nine for whoever has arrived and is keen to play.",
       ],
-      ["Evening", "The group dinner at the clubhouse — Bicol cooking, and the first argument about handicaps."],
+      ["Evening", "A welcome dinner at the clubhouse — Bicol cooking and good company to set the tone for the trip."],
     ],
   },
   {
     label: "First round",
-    title: "Play in the morning, keep the afternoon open.",
+    title: "Play in the morning, keep the afternoon yours.",
     intro:
-      "The first round settles the group into the course. What happens after it is up to you.",
+      "The first round eases the group into the course, and the rest of the day is entirely yours to shape.",
     moments: [
-      ["Morning", "Eighteen holes across the championship routing, in flights your group sets."],
-      ["Midday", "Lunch at the clubhouse and a look at the cards."],
+      ["Morning", "Eighteen holes across our championship routing, in flights your group decides."],
+      ["Midday", "Lunch at the clubhouse and the first look at the cards."],
       [
         "Afternoon",
-        "Free. Some groups take the practice bays, some take the pool or the wakepark, some take a nap. Nothing here is scheduled.",
+        "Completely free. Some groups head to the practice bays, others to the pool or the wakepark, and some simply unwind. Nothing here is scheduled.",
       ],
     ],
   },
   {
     label: "Second round",
-    title: "The round that settles it, then the road home.",
+    title: "The round that settles it, then an easy road home.",
     intro:
-      "The second round is the one the group plays for. The day is arranged so no one has to leave straight from the eighteenth.",
+      "The second round is the one the group plays for, and the day is arranged so no one has to rush off straight from the eighteenth.",
     moments: [
-      ["Early morning", "Breakfast and a proper range session before the tee."],
+      ["Early morning", "Breakfast and a proper range session before the first tee."],
       ["Morning", "The second eighteen — usually the one with something riding on it."],
       [
         "Midday",
-        "Lunch, the group photo, and check out. Luggage is held while you finish, and transfers run to Naga or on to your next stop.",
+        "Lunch, the group photo, and an unhurried check-out. We hold your luggage while you finish, with transfers to Naga or on to your next stop.",
       ],
     ],
   },
@@ -72,8 +72,8 @@ export default function BuddyTripPage() {
     <PackageItineraryPage
       active="buddy-trip"
       title="Group Golf Getaway"
-      description="A three-day trip for a foursome or a larger group: two nights close to the course, two full rounds, and enough unscheduled time between them that the trip does not feel like an itinerary."
-      image="/buddy-golf-trip-hero-v4.png"
+      description="A three-day getaway built for a foursome or a full group — two nights beside the course, two championship rounds, and enough open time in between that it feels less like an itinerary and more like a proper trip with your people."
+      image="/packages-group-getaway-hero-v2.jpeg"
       days={days}
       inclusions={[
         "Two nights at Villa Del Rey",

@@ -12,7 +12,6 @@ import EventsDetails from "@/components/EventsDetails";
 import GolfDetails from "@/components/GolfDetails";
 import ExperiencesDetails from "@/components/ExperiencesDetails";
 import PackagesDetails from "@/components/PackagesDetails";
-import ScrollCue from "@/components/ScrollCue";
 import ScrollMotion from "@/components/ScrollMotion";
 import HeroRevealMotion from "@/components/HeroRevealMotion";
 import { EDITORIAL_SECTION, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
@@ -21,7 +20,9 @@ import { ACCOMMODATIONS, CLUB_PHONE, SITE_SECTIONS } from "@/lib/site-content";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return SITE_SECTIONS.map((section) => ({ section: section.slug }));
+  return SITE_SECTIONS.filter((section) => section.slug !== "accommodations").map((section) => ({
+    section: section.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ section: string }> }): Promise<Metadata> {
@@ -35,6 +36,7 @@ const revealDelay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProp
 
 export default async function SectionPage({ params }: { params: Promise<{ section: string }> }) {
   const { section: slug } = await params;
+  if (slug === "accommodations") notFound();
   const section = SITE_SECTIONS.find((item) => item.slug === slug);
   if (!section) notFound();
   const isGolf = section.slug === "golf";
@@ -42,6 +44,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
   const isPackages = section.slug === "packages";
   const isExperiences = section.slug === "experiences";
   const isClubhouse = section.slug === "clubhouse";
+  const isAccommodations = section.slug === "accommodations";
 
   /**
    * Ang mga pahinang may sariling detail component: sila ang may fairway
@@ -52,8 +55,6 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
    * pahina (dahil nakatago ang data-reveal hangga't walang naglalagay ng
    * .is-in). Pasado ang tatlo sa dalawang ito.
    */
-  const isAccommodations = section.slug === "accommodations";
-
   /* Mga pahinang may <ScrollMotion />. Dito lang pwede ang data-reveal:
      nakatago ito sa CSS hangga't walang naglalagay ng .is-in, kaya sa
      pahinang walang motion driver ay mananatiling blangko ang teksto. */
@@ -131,11 +132,20 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             <div
               className={`mx-auto w-full max-w-7xl px-6 text-center lg:px-8 ${
                 usesStickyReveal
-                  ? // Naka-gitna (items-center) ang hero, kaya walang pt na
-                    // itinutulak — banayad na padding lang para sa hininga.
-                    "py-16"
+                  ? "py-16"
                   : `pt-64 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`
               }`}
+              style={
+                usesStickyReveal
+                  ? // Inline transform ang vertical offset (hindi Tailwind
+                    // [value] class — minsang hindi nire-regenerate ng dev ang
+                    // CSS para roon, kaya nananatili sa gitna). Packages ay
+                    // pataas dahil nasa center-bottom ang mga tao; Events ay
+                    // tunay na centered. Hindi ito humahawak sa
+                    // h1 na may sariling scroll transform.
+                    { transform: `translateY(${isPackages ? "-14vh" : isExperiences ? "-4vh" : "0"})` }
+                  : undefined
+              }
             >
               <h1
                 data-reveal={usesFairwayHero && !usesStickyReveal ? "up" : undefined}
@@ -143,7 +153,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                 className={`mx-auto max-w-4xl font-medium leading-[0.98] tracking-[-0.055em] ${
                   usesStickyReveal
                     ? // Mas maliit na title para sa naka-gitnang sticky hero.
-                      "text-[clamp(1.9rem,3.6vw,3.25rem)] drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
+                      "text-[clamp(2.25rem,4.5vw,4.75rem)] drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
                     : "text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.95]"
                 }`}
               >
@@ -155,14 +165,19 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {isClubhouse ? <ClubhouseHeroOverlay /> : null}
 
           {isGolf ? (
-            /* Naka-gitna sa sticky hero (items-center), kaya balanseng padding
-               lang — hindi na naka-baba. Mas maliit na title at umaangat/
-               kumukupas (data-hero-logo) habang natatabunan, gaya ng iba. */
-            <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-16 text-center lg:px-8">
+            /* Hindi naka-gitna: naka-angkla ang title malapit sa ibaba ng hero.
+               Inline style ang posisyon (hindi Tailwind arbitrary class) dahil
+               minsang hindi nire-regenerate ng dev ang CSS para sa bagong
+               [value] — kaya tiyak itong tumatalab. Umaangat/kumukupas pa rin
+               ang title (data-hero-logo) habang natatabunan, gaya ng iba. */
+            <div
+              className="mx-auto w-full max-w-7xl px-6 text-center lg:px-8"
+              style={{ position: "absolute", left: 0, right: 0, bottom: "14vh", zIndex: 10 }}
+            >
               <div className="mx-auto max-w-3xl">
                 <h1
                   data-hero-logo=""
-                  className="mx-auto max-w-3xl text-balance text-[clamp(1.9rem,3.6vw,3.25rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
+                  className="mx-auto max-w-3xl text-balance text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
                 >
                   A course shaped by Camarines Sur
                 </h1>
@@ -170,8 +185,6 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             </div>
           ) : null}
 
-          {isGolf ? <ScrollCue targetId="the-course" label="Explore the golf course" /> : null}
-          {isExperiences ? <ScrollCue targetId="on-the-water" label="Explore CamSur experiences" /> : null}
         </section>
         </div>
 

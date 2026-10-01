@@ -381,7 +381,7 @@ export const SITE_SECTIONS = [
     eyebrow: "Opening fairway to home green",
     title: "A landmark clubhouse at the heart of the course",
     description: "A championship golf experience shaped around play, arrival, dining, recovery, and the landscape of Camarines Sur.",
-    image: "/golf-hero-aerial-clean-4k.jpg",
+    image: "/golf-clubhouse-aerial-hero-v2.png",
     links: COURSE_PAGES.map((course, index) => ({ label: `Hole No. ${index + 1}`, href: `/golf/courses/${course.slug}` })),
   },
   /* Kasunod ng Golf: dito natatapos ang round, at ang mga espasyong ito ang
@@ -398,7 +398,7 @@ export const SITE_SECTIONS = [
   {
     slug: "clubhouse",
     label: "Clubhouse",
-    eyebrow: "A landscape that became a clubhouse",
+    eyebrow: "Inside the clubhouse",
     title: "At the heart of the course",
     description: "A single sculpted volume in four layers — practice and events below, welcome and shop at grade, lounges above, and a bar, pool and gardens on the roof.",
     image: "/clubhouse/concept/aerial-heart-of-the-course.jpg",
@@ -414,13 +414,13 @@ export const SITE_SECTIONS = [
     eyebrow: "Featured",
     title: "Plan a golf trip that fits your schedule",
     description: "Rounds, accommodation, and transfers combined into packages for weekends, groups, and longer stays.",
-    image: "/packages-main-hero-option-3-4k-v2.jpg",
+    image: "/packages-main-hero-v2.png",
     /* Highlights lang ito, hindi ang buong listahan — anim ang package sa
        PackagesDetails.tsx, dalawa lang ang ipinapakita sa mega menu. Ang
        label at ang slug sa href ay dapat tumugma sa PACKAGES doon. */
     links: [
-      { label: "Stay & Play", href: "/packages/stay-and-play", image: "/stay-and-play-hero-option-2.png" },
-      { label: "Group Golf Getaway", href: "/packages/buddy-trip", image: "/buddy-golf-trip-hero-v4.png" },
+      { label: "Stay & Play", href: "/packages/stay-and-play", image: "/packages-stay-play-hero-v2.png" },
+      { label: "Group Golf Getaway", href: "/packages/buddy-trip", image: "/packages-group-getaway-hero-v2.jpeg" },
     ],
   },
   {
@@ -438,7 +438,7 @@ export const SITE_SECTIONS = [
     slug: "experiences",
     label: "Experiences",
     eyebrow: "Beyond the course",
-    title: "There is a great deal here that is not golf",
+    title: "World-class experiences beyond the course",
     description: "Wakepark, ATV trails, a bike track, pickle ball courts, and the quieter corners of the resort — for the days between rounds, and for everyone not playing.",
     image: "/experiences/banner11-dehazed.jpg",
     /* Isa-isa ang bawat pasilidad dito, hindi ang apat na pangkat: ito ang

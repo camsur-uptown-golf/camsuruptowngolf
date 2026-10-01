@@ -39,11 +39,11 @@ export default function StayInfoTabs({
   const list = active === "keyFacts" ? keyFacts : amenities;
 
   return (
-    <div className="mt-7">
+    <div className="mt-8">
       <div
         role="tablist"
         aria-label="Room information"
-        className="flex flex-wrap items-center gap-x-3 gap-y-2 font-navigation text-[10px] font-bold uppercase tracking-[0.18em] xl:text-[11px]"
+        className="flex flex-wrap items-center gap-x-1.5 gap-y-2 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] sm:text-[11px] sm:tracking-[0.18em]"
       >
         {TABS.map((tab, index) => (
           <Fragment key={tab.id}>
@@ -59,10 +59,10 @@ export default function StayInfoTabs({
               aria-selected={active === tab.id}
               aria-controls={`${uid}-panel`}
               onClick={() => setActive(tab.id)}
-              className={`transition-colors ${
+              className={`cursor-pointer rounded-full border px-3 py-2 transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] ${
                 active === tab.id
-                  ? "text-[#98782f]"
-                  : "text-[#5d685f]/50 hover:text-[#98782f]/80"
+                  ? "border-[#98782f]/35 bg-[#98782f]/10 text-[#98782f] shadow-[inset_0_0_0_1px_rgba(152,120,47,0.05)]"
+                  : "border-transparent text-[#5d685f]/55 hover:-translate-y-0.5 hover:border-[#98782f]/25 hover:bg-[#98782f]/[0.06] hover:text-[#7e6327]"
               }`}
             >
               {tab.label}
@@ -75,22 +75,22 @@ export default function StayInfoTabs({
         id={`${uid}-panel`}
         role="tabpanel"
         aria-labelledby={`${uid}-tab-${active}`}
-        className="mt-6"
+        className="mt-7"
       >
         {active === "description" ? (
-          <p className="max-w-xl text-sm leading-7 text-[#5d685f] sm:text-base sm:leading-8">
+          <p className="max-w-xl text-[clamp(1.05rem,1.25vw,1.3rem)] font-light leading-[1.7] tracking-[-0.018em] text-[#5d685f]">
             {description}
           </p>
         ) : (
           <ul
-            className={`text-sm text-[#5d685f] ${
-              list.length > 8 ? "grid gap-x-8 gap-y-3 sm:grid-cols-2" : "grid gap-3"
+            className={`text-[13px] leading-7 text-[#5d685f] sm:text-sm ${
+              list.length > 8 ? "grid grid-cols-2 gap-x-5 gap-y-3 sm:gap-x-8" : "grid gap-4"
             }`}
           >
             {list.map((item) => (
-              <li key={item} className="flex items-center gap-3">
+              <li key={item} className="flex items-start gap-3">
                 <span
-                  className="size-1.5 shrink-0 rounded-full bg-[#98782f]"
+                  className="mt-[11px] size-1.5 shrink-0 rounded-full bg-[#98782f]"
                   aria-hidden="true"
                 />
                 <span>{item}</span>

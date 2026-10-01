@@ -624,10 +624,10 @@ export default function Header() {
             Pareho na silang `left-1/2 -translate-x-1/2` sa container ngayon,
             kaya iisa ang angkla nila at hindi na sila maaaring maghiwalay.
             Ganito na rin pala ang compact nav sa ibaba — sinusundan lang
-            nito iyon. Ang `top-[104px]` ang dating posisyon nito sa hilera;
+            nito iyon. Ang `top-[68px]` ang posisyon nito sa hilera;
             hindi nagbabago ang taas ng header dahil ang marka (208px) ang
             nagtatakda niyon, hindi ang nav. */}
-        <div className={`${isScrolled ? "w-auto" : "w-[min(820px,calc(100vw-34rem))] 2xl:w-[900px]"} hidden -translate-x-1/2 flex-col items-center gap-0 lg:absolute lg:left-1/2 lg:top-[92px] lg:flex`}>
+        <div className={`${isScrolled ? "w-auto" : "w-[min(820px,calc(100vw-34rem))] 2xl:w-[900px]"} hidden -translate-x-1/2 flex-col items-center gap-0 lg:absolute lg:left-1/2 lg:top-[68px] lg:flex`}>
           <nav
             data-nav="hero"
             aria-label="Primary navigation"
@@ -665,17 +665,15 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* Weather + language — naka-center sa itaas ng nav pill. Kaparehong
-            angkla ng nav (`absolute left-1/2 -translate-x-1/2` sa container),
-            kaya iisa ang sentro nila. `top-[52px]` — sa ibabaw ng nav na nasa
-            `top-[92px]`. Sa hero lang; pagka-scroll ay nawawala para bumalik sa
-            dating compact header. `hidden lg:block` — cellphone ay may sariling
-            pill. */}
-        {isScrolled ? null : (
-          <div className="pointer-events-auto absolute left-1/2 top-[52px] hidden -translate-x-1/2 lg:block">
-            <HeaderUtilities />
-          </div>
-        )}
+        {/* Weather + language — naka-center sa itaas ng nav pill. Palaging
+            mounted ang component kahit naka-scroll at visually hidden: sa
+            ganitong paraan hindi nawawala ang huling temperature at hindi
+            bumabalik sa `—°` kapag umakyat muli sa hero. */}
+        <div
+          className={`${isScrolled ? "pointer-events-none invisible opacity-0" : "pointer-events-auto visible opacity-100"} absolute left-1/2 top-[28px] hidden -translate-x-1/2 transition-opacity duration-200 lg:block`}
+        >
+          <HeaderUtilities />
+        </div>
 
         {/* "Contact Us" ito dati at ang "Plan your visit" ay nasa maliit na
             hilera sa itaas ng nav. Pinagpalit: isang pangunahing pindutan
@@ -686,7 +684,7 @@ export default function Header() {
             dito; nakalutang na sila nang naka-center sa itaas ng nav pill sa
             ibaba. */}
         <div
-          className={`${isScrolled ? "translate-y-0" : "-translate-y-3"} pointer-events-auto hidden justify-self-end lg:col-start-3 lg:block`}
+          className={`${isScrolled ? "translate-y-0" : "-translate-y-9"} pointer-events-auto hidden justify-self-end lg:col-start-3 lg:block`}
         >
           <Link
             href="/plan-your-visit"
@@ -843,13 +841,15 @@ export default function Header() {
                 })}
               </ul>
 
-              <Link
-                href={`/${mobileSubsection.slug}`}
-                onClick={closeMobileNav}
-                className="mt-5 flex min-h-11 items-center justify-center rounded-full border border-white/35 px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#f1d98f] hover:bg-[#f1d98f] hover:text-[#0b281b]"
-              >
-                {t("mega.viewAll")} {sectionLabel(mobileSubsection.slug, mobileSubsection.label)}
-              </Link>
+              {mobileSubsection.slug !== "accommodations" ? (
+                <Link
+                  href={`/${mobileSubsection.slug}`}
+                  onClick={closeMobileNav}
+                  className="mt-5 flex min-h-11 items-center justify-center rounded-full border border-white/35 px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#f1d98f] hover:bg-[#f1d98f] hover:text-[#0b281b]"
+                >
+                  {t("mega.viewAll")} {sectionLabel(mobileSubsection.slug, mobileSubsection.label)}
+                </Link>
+              ) : null}
             </div>
           </div>
         ) : (
@@ -961,9 +961,8 @@ export default function Header() {
              HERO — sa nav mismo nakadugtong. Lumulutang doon ang pill, at
              ang panel ay nakapasok ng 18px sa ilalim nito (z-50, kaparehong
              #265136) para walang tahi sa dugtungan. Ang ibaba ng nav ay
-             152px (`top-[92px]` plus `h-12` plus 48px), kaya 122 ang `top`:
-             152 + 18 − 36, kung saan ang 36 ay ang `pt-9` ng mga haligi at
-             ang 18 ang nakikitang gap sa itaas ng mga heading.
+             116px (`top-[68px]` plus `h-12`), kaya 98px ang `top` ng panel
+             para may 18px na overlap at walang siwang sa dugtungan.
 
              NAKA-SCROLL — sa bar nakadugtong, hindi sa nav. Nasa loob na ng
              80px na bar ang nav, kaya ang ibaba ng bar ang gilid na kita ng
@@ -1002,7 +1001,7 @@ export default function Header() {
 
              Nananatiling 820px mula 1376px pataas — doon lang naman ito
              nagiging mas makitid kaysa sa cap. */
-          className={`${isScrolled ? "top-[80px]" : "top-[122px]"} ${hidesHighlights ? "rounded-b-[2rem]" : "rounded-b-[1.6rem]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-t-none border border-t-0 border-white/10 bg-[#265136] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block 2xl:w-[900px]`}
+          className={`${isScrolled ? "top-[80px]" : "top-[98px]"} ${hidesHighlights ? "rounded-b-[2rem]" : "rounded-b-[1.6rem]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-t-none border border-t-0 border-white/10 bg-[#265136] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block 2xl:w-[900px]`}
         >
           {/* Walang fixed na taas: sumusukat ang panel sa laman ng section.
               Dati ay 360px ang lahat, kaya may 140px na walang laman sa ilalim
@@ -1209,6 +1208,7 @@ export default function Header() {
                                 fill
                                 sizes="280px"
                                 className="object-cover opacity-90 transition duration-500 group-hover/card:scale-[1.04] group-hover/card:opacity-100"
+                                style={activeSection.slug === "packages" ? { objectPosition: "right center" } : undefined}
                               />
                             )}
                             <span className="absolute inset-0 bg-gradient-to-t from-[#071a12]/80 via-[#071a12]/10 to-transparent" aria-hidden="true" />

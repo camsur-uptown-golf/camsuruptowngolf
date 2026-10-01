@@ -41,38 +41,41 @@ function ArrowIcon() {
 const SLIDES = [
   {
     href: "/packages",
-    image: "/packages-main-hero-option-3-4k-v2.jpg",
+    image: "/packages-main-hero-v2.png",
     alt: "Golfers walking back to the clubhouse at sunset, CamSur Uptown Golf Club",
     title: "CamSur Uptown Golf Packages",
     blurbKey: "packages.blurbMain",
     ctaKey: "packages.ctaExplore",
+    focalPoint: "center",
   },
   {
     href: "/packages/stay-and-play",
-    image: "/stay-and-play-hero-option-2.png",
-    alt: "A golfer on the fairway beneath Mt. Isarog at CamSur Uptown",
+    image: "/packages-stay-play-hero-v2.png",
+    alt: "Golfers playing the fairway beneath Mt. Isarog at CamSur Uptown",
     title: "Stay & Play",
     blurbKey: "packages.blurbStayPlay",
     ctaKey: "packages.ctaView",
+    focalPoint: "right center",
   },
   {
     href: "/packages/buddy-trip",
-    image: "/buddy-golf-trip-hero-v4.png",
+    image: "/packages-group-getaway-hero-v2.jpeg",
     alt: "Four friends walking the fairway together at CamSur Uptown",
     title: "Group Golf Getaway",
     blurbKey: "packages.blurbGroup",
     ctaKey: "packages.ctaView",
+    focalPoint: "right center",
   },
 ] as const;
 
 /** Gaano katagal bago lumipat. */
-const INTERVAL_MS = 6500;
+const INTERVAL_MS = 5000;
 
 export default function PackagesCarousel() {
   const { t } = useTranslation();
   const [active, setActive] = useState(0);
-  /* Humihinto kapag may daliri o cursor sa ibabaw, o kapag may naka-focus
-     sa loob — hindi dapat mawala sa ilalim ng kamay ang binabasa. */
+  /* Humihinto lang kapag may keyboard focus sa loob. Tuloy ang autoplay
+     kapag cursor lang ang nakapatong sa carousel. */
   const [paused, setPaused] = useState(false);
   /* `useSyncExternalStore` at hindi `useState` sa loob ng effect: ito ang
      paraan ng React para sa halagang nasa labas nito, at umaayon ito sa
@@ -119,8 +122,6 @@ export default function PackagesCarousel() {
           ang 1.9 na aspect, at masyado nang mataas iyon para sa isang banda. */}
       <div
         className="relative isolate min-h-[600px] w-full overflow-hidden bg-[#dfe4df] sm:aspect-[16/9] sm:min-h-0 lg:aspect-[1.9/1] lg:max-h-[780px]"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
         onFocusCapture={() => setPaused(true)}
         onBlurCapture={() => setPaused(false)}
       >
@@ -144,7 +145,8 @@ export default function PackagesCarousel() {
                 fill
                 sizes="100vw"
                 priority={index === 0}
-                className="-z-20 object-cover object-center"
+                className="-z-20 object-cover"
+                style={{ objectPosition: slide.focalPoint }}
               />
               {/* Mula sa ibaba sa cellphone, mula sa kaliwa mula `sm`: doon
                   nakalagay ang teksto sa bawat isa. */}
@@ -168,7 +170,7 @@ export default function PackagesCarousel() {
                     href={slide.href}
                     className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d]"
                   >
-                    {t(slide.ctaKey)}
+                    {slide.href === "/packages" ? "Explore" : "View"}
                     <ArrowIcon />
                   </Link>
                 </div>
@@ -177,20 +179,30 @@ export default function PackagesCarousel() {
           ))}
         </div>
 
-        {/* Mga tuldok: nasa ilalim ng teksto sa cellphone, kaya may `pb-20`
-            ang card sa itaas para hindi sila magpatong. Nasa labas sila ng
-            filmstrip, kaya hindi sila gumagalaw kasama nito. */}
-        <div className="absolute inset-x-0 bottom-7 z-10 mx-auto flex max-w-7xl gap-2.5 px-6 sm:bottom-10 lg:px-8">
-          {SLIDES.map((slide, index) => (
-            <button
-              key={slide.href}
-              type="button"
-              onClick={() => setActive(index)}
-              aria-label={`Show ${slide.title}`}
-              aria-current={index === active}
-              className={`${index === active ? "w-9 bg-[#e7d18d]" : "w-4 bg-white/45 hover:bg-white/75"} h-1 rounded-full transition-all duration-300`}
-            />
-          ))}
+        {/* Carousel controls: direktang pagination at next. Mula sa huling
+            slide ay umiikot ang arrow pabalik sa una. */}
+        <div className="absolute inset-x-0 bottom-7 z-10 mx-auto flex max-w-7xl items-center justify-start gap-4 px-6 sm:bottom-10 lg:px-8">
+          <div className="flex gap-2.5">
+            {SLIDES.map((slide, index) => (
+              <button
+                key={slide.href}
+                type="button"
+                onClick={() => setActive(index)}
+                aria-label={`Show ${slide.title}`}
+                aria-current={index === active}
+                className={`${index === active ? "scale-110 bg-[#e7d18d]" : "bg-white/45 hover:bg-white/75"} h-2.5 w-2.5 rounded-full transition-all duration-300`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setActive((current) => (current + 1) % SLIDES.length)}
+            aria-label={`Next slide: ${SLIDES[(active + 1) % SLIDES.length].title}`}
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-transparent text-[#e7d18d] shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:translate-x-0.5 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d]"
+          >
+            <ArrowIcon />
+          </button>
         </div>
       </div>
     </section>

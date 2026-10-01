@@ -41,8 +41,8 @@ const STAGE_VH = 220;
    dalawang delay: (1) malinis muna ang larawan bago umahon ang teksto
    (TEXT_START), at (2) pagkatapos nitong buo (TEXT_END), may mahabang plateau
    pa — naka-pin pa rin ang larawan, hindi agad bumababa sa susunod. */
-const TEXT_START = 0.35;
-const TEXT_END = 0.65;
+const TEXT_START = 0;
+const TEXT_END = 0.3;
 
 export default function ClubhouseRooms() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -114,23 +114,43 @@ export default function ClubhouseRooms() {
           <div className="sticky top-0 h-screen overflow-hidden bg-black">
             <Image src={space.image} alt={space.imageAlt} fill sizes="100vw" className="object-cover" />
 
-            {/* Teksto sa kaliwang ibaba. Neutral (itim) na malambot na scrim —
-                walang green tint — kasama sa fade, dagdag ng text-shadow para
-                nabasa sa ibabaw ng maliwanag na larawan. Nakatago muna
-                (`--text` = 0) at kusang umuusbong habang nag-scroll, may delay
-                bago lumitaw.
+            {/* Kasabay mismo ng `--text`, nagfa-fade in ang BLACK OVERLAY sa
+                bawat larawan: malinis muna ang larawan (opacity 0), at habang
+                nag-scroll papasok ang section ay lumilitaw ang maitim na patong
+                para talagang mabasa ang heading at teksto kahit maliwanag ang
+                larawan (puting sahig, pool deck).
 
-                BUONG-LAPAD ANG SCRIM, HINDI `max-w-2xl` NA KAHON. Dati ay nasa
-                672px na kahon ang gradient, kaya may vertical seam sa kanang
-                gilid nito at mahina ang dilim sa itaas kung saan nakaupo ang
-                eyebrow at pamagat — mahirap basahin sa maliwanag na larawan.
-                Ngayon: buong-lapad (walang seam), mas madilim at mas mataas ang
-                saklaw (bottom gradient), dagdag na kaliwang gradient sa panig ng
-                teksto, at mas malakas na text-shadow. Ang teksto na lang ang
-                naka-`max-w-2xl` sa loob. */}
+                BUONG-LAPAD ito: iisang patayong gradient na PANTAY mula kaliwa
+                hanggang kanan (0%–100%), kaya hanggang dulong-kanan umaabot ang
+                itim — walang radial na nagkukonsentra sa kaliwa na mukhang putol
+                bago ang kanang gilid. Maitim sa ilalim (likod ng teksto),
+                kumukupas nang makinis pataas: walang matigas na linya ni kahon. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={
+                {
+                  background:
+                    "radial-gradient(ellipse 78% 82% at 0% 100%, rgba(0,0,0,0.64) 0%, rgba(0,0,0,0.46) 38%, rgba(0,0,0,0.20) 66%, transparent 92%), linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.28) 60%, rgba(0,0,0,0.58) 100%)",
+                  opacity: "var(--text, 0)",
+                  willChange: "opacity",
+                } as CSSProperties
+              }
+            />
+
+            {/* Teksto sa kaliwang ibaba. Walang sariling background ito — ang
+                scrim sa itaas ang nagdidilim. Dito, NAKAPATONG-PATONG na
+                text-shadow ang katuwang: isang maigsi't makapal na anino (halos
+                outline) para sa gilid ng bawat titik, saka dalawang mas malambot
+                na halo. Nakadikit lang sa teksto ang mga ito (local), kaya
+                nababasa kahit sa maputing bg nang hindi na kailangang padilimin
+                pa ang buong larawan — mas mabisa kaysa dating iisang malabo't
+                malapad na 28px na anino. Nakatago muna (`--text` = 0), kusang
+                umuusbong habang nag-scroll. Ang teksto na lang ang naka-
+                `max-w-2xl` sa loob. */}
             <div className="absolute inset-x-0 bottom-0">
               <div
-                className="[background:linear-gradient(0deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.48)_36%,rgba(0,0,0,0.16)_66%,transparent_100%),linear-gradient(90deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.2)_46%,transparent_74%)] px-6 pb-6 pt-28 text-white [text-shadow:0_1px_22px_rgba(0,0,0,0.62)] sm:px-9 sm:pb-9 sm:pt-32 lg:px-12 lg:pb-12 lg:pt-36"
+                className="px-6 pb-6 pt-28 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.95),0_2px_8px_rgba(0,0,0,0.75),0_4px_20px_rgba(0,0,0,0.5)] sm:px-9 sm:pb-9 sm:pt-32 lg:px-12 lg:pb-12 lg:pt-36"
                 style={
                   {
                     opacity: "var(--text, 0)",
@@ -143,12 +163,22 @@ export default function ClubhouseRooms() {
                   <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#f0d98f] xl:text-[11px]">
                     {space.floor}
                   </p>
-                  <h3 className="mt-3 text-2xl font-medium tracking-[-0.04em] text-white sm:text-3xl xl:text-4xl">
+                  <h3 className="mt-3 font-display text-2xl font-medium tracking-[-0.04em] text-white sm:text-3xl xl:text-4xl">
                     {space.name}
                   </h3>
-                  <p className="mt-4 max-w-xl text-sm leading-7 text-white/90 line-clamp-4 sm:line-clamp-none xl:text-base xl:leading-8">
+                  <p className="mt-4 max-w-xl line-clamp-3 text-sm leading-7 text-white/90 xl:text-base xl:leading-8">
                     {space.description}
                   </p>
+                  {space.features.length > 0 ? (
+                    <ul className="mt-4 flex max-w-2xl flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-white/85 sm:text-sm">
+                      {space.features.map((feature) => (
+                        <li key={feature} className="flex items-center gap-2">
+                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#e7d18d]" aria-hidden="true" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                   {/* Ang `id` ang slug ng sariling ruta — tingnan ang
                       CLUBHOUSE_SPACES. Nananatili rin itong anchor dito. */}
                   <Link

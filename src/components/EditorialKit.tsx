@@ -84,7 +84,7 @@ export function EditorialHeading({
   intro,
   size = "default",
 }: {
-  kicker: string;
+  kicker?: string;
   title: ReactNode;
   intro?: string;
   size?: "default" | "lg";
@@ -92,11 +92,11 @@ export function EditorialHeading({
   const isLg = size === "lg";
   return (
     <div className={`mx-auto text-center ${isLg ? "max-w-2xl xl:max-w-3xl" : "max-w-xl xl:max-w-2xl"}`}>
-      <Kicker>{kicker}</Kicker>
+      {kicker ? <Kicker>{kicker}</Kicker> : null}
       <h2
         data-reveal="up"
         style={delay(90)}
-        className={`mt-3 font-medium tracking-[-0.035em] text-[#14271d] ${
+        className={`${kicker ? "mt-3 " : ""}font-medium tracking-[-0.035em] text-[#14271d] ${
           isLg
             ? "text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.02]"
             : "text-2xl sm:text-3xl xl:text-4xl"

@@ -44,7 +44,7 @@ const LINK_GROUPS: { title: string; links: { label: string; href: string }[] }[]
        iisa ang pangalan. */
     title: "Visit",
     links: [
-      { label: "Accommodations", href: "/accommodations" },
+      { label: "Villa Del Rey", href: "/accommodations/villa-del-rey" },
       { label: "Plan Your Visit", href: "/plan-your-visit" },
       { label: "Contact Us", href: "/contact" },
     ],

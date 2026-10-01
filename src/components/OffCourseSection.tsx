@@ -30,10 +30,10 @@ const DESTINATIONS = [
   },
   {
     title: "Accommodations",
-    href: "/accommodations",
+    href: "/accommodations/villa-del-rey",
     image: "/accommodations/resort-aerial.webp",
     alt: "Aerial view of resort cabins beside the wakepark lagoon at CamSur",
-    blurb: "Two resort stays, both within easy reach of the fairways.",
+    blurb: "Villa Del Rey offers a relaxed resort base within easy reach of the fairways.",
     position: "object-center",
   },
 ] as const;

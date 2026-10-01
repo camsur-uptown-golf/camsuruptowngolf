@@ -8,7 +8,6 @@ import ScrollMotion from "@/components/ScrollMotion";
 import ClubhouseGallery from "@/components/ClubhouseGallery";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
 import { CLUBHOUSE_SPACES } from "@/lib/clubhouse";
-import { CLUB_PHONE } from "@/lib/site-content";
 
 /**
  * Ang sariling pahina ng bawat espasyo sa clubhouse.
@@ -101,7 +100,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
           <>
             <section className="relative isolate scroll-mt-24 bg-[#f7f5ee] pt-4 pb-10 sm:pt-6 sm:pb-14">
               <Shell>
-                <EditorialHeading size="lg" kicker="In detail" title={`More of ${space.name.toLowerCase()}.`} />
+                <EditorialHeading size="lg" kicker="" title={`More of ${space.name.toLowerCase()}.`} />
               </Shell>
             </section>
 
@@ -113,28 +112,19 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
           <Shell>
             <EditorialHeading
               size="lg"
-              kicker="Plan a visit"
+              kicker=""
               title="Come and see it."
-              intro="Opening hours, dress code, and which rooms visitors can use are not settled yet — call the club and we will tell you what is."
+              intro="Opening hours, dress code, and visitor access are still being finalized. Plan your visit and we’ll help you prepare."
             />
 
-            {/* Nagtatagpo sa gitna: ang una ay pumapasok mula kaliwa, ang
-                pangalawa mula kanan, habang nag-scroll pababa. */}
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
               <Link
                 href="/plan-your-visit"
-                data-reveal="left"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#265136] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
+                data-reveal="up"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
               >
                 Plan your visit
               </Link>
-              <a
-                href={CLUB_PHONE.href}
-                data-reveal="right"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3f2e]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#265136] hover:text-[#265136] xl:text-[11px]"
-              >
-                {CLUB_PHONE.label}
-              </a>
             </div>
           </Shell>
         </section>

@@ -6,7 +6,6 @@ import CourseRoutingMap from "@/components/CourseRoutingMap";
 import PackagesCarousel from "@/components/PackagesCarousel";
 import { EditorialHeading, Shell } from "@/components/EditorialKit";
 import { Container, delay } from "@/components/SectionKit";
-import { CLUB_PHONE } from "@/lib/site-content";
 
 /**
  * The Golf page.
@@ -128,21 +127,13 @@ function DesignPrinciples() {
 
 function GolfCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#1f3f2e] py-14 text-white sm:py-16">
-      <div
-        data-parallax="0.14"
-        className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-80 w-80 rounded-full bg-[#c9a54e]/[0.06] blur-3xl"
-        aria-hidden="true"
-      />
+    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
       <Container>
         <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-          <p data-reveal="up" style={delay(0)} className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">
-            Play the course
-          </p>
-          <h2 data-reveal="up" style={delay(90)} className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl">
+          <h2 data-reveal="up" style={delay(90)} className="text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl">
             Book your first round.
           </h2>
-          <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 text-white/68 xl:text-base xl:leading-8">
+          <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8">
             Tell the club when you would like to play and how many are in your group, and the team will take care of
             the tee time, the caddies, and anything else you need.
           </p>
@@ -156,12 +147,6 @@ function GolfCta() {
             >
               Plan your visit
             </Link>
-            <a
-              href={CLUB_PHONE.href}
-              className="inline-flex h-11 items-center rounded-full border border-white/22 px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white/85 transition hover:border-[#e7d18d]/60 hover:text-[#f1d98f]"
-            >
-              {CLUB_PHONE.label}
-            </a>
           </div>
         </div>
       </Container>

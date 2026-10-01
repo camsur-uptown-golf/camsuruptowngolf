@@ -13,6 +13,12 @@ export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "EN";
 
+/* Ang mga wikang ipinapakita sa language switcher. Pansamantalang itinago ang
+   BCL (Bikol) habang ni-repaso ang salin — nasa LOCALES, sa Locale type, sa
+   dictionaries, at sa cookie handling pa rin ito, kaya para muling ilabas ay
+   alisin lang ito sa filter na ito. */
+export const SWITCHER_LOCALES: readonly Locale[] = LOCALES.filter((code) => code !== "BCL");
+
 /* Pangalan ng cookie na humahawak ng piniling wika. Kaparehong pangalan ang
    ginamit ng lumang localStorage key sa selector, kaya tuluy-tuloy ang alaala. */
 export const LOCALE_COOKIE = "cu-lang";

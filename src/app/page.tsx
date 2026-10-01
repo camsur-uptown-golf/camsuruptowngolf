@@ -82,18 +82,18 @@ function CourseSnapshot() {
   return (
     <section
       id="course-snapshot"
-      className="absolute inset-x-0 bottom-2 z-20 px-4 font-navigation text-white sm:bottom-3 sm:px-6 lg:bottom-4 lg:px-8"
+      className="absolute inset-x-0 bottom-4 z-20 px-4 font-navigation text-white sm:bottom-6 sm:px-6 lg:bottom-7 lg:px-8"
       aria-label="Course snapshot"
     >
-      <div className="mx-auto grid max-w-6xl grid-cols-2 overflow-hidden rounded-lg border border-[#f3dda0]/25 bg-[#1f3f2e]/88 shadow-[0_18px_42px_rgba(6,26,17,0.3)] backdrop-blur-md sm:grid-cols-4">
+      <div className="mx-auto grid w-full max-w-[50rem] grid-cols-2 sm:grid-cols-4 lg:w-[54%] lg:min-w-[40rem]">
         {COURSE_FACTS.map(({ value, count, labelKey, Icon }, index) => (
           <div
             key={labelKey}
             data-reveal="up"
             style={delay(index * 90)}
-            className={`relative flex min-h-[54px] flex-col items-center justify-center px-3 py-2 text-center sm:min-h-[58px] ${index % 2 ? "border-l border-[#f3dda0]/15" : ""} ${index > 1 ? "border-t border-[#f3dda0]/15 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-[#f3dda0]/15" : ""}`}
+            className="relative flex min-h-14 flex-col items-center justify-center px-3 py-2 text-center sm:min-h-[4.75rem] sm:px-4"
           >
-            <div className="flex min-h-7 items-center justify-center">
+            <div className="flex min-h-7 items-center justify-center sm:min-h-8">
               {Icon ? <Icon /> : null}
               {/* IISANG SUKAT ANG APAT. Nakadikit dati ang laki sa `count`:
                   maliit (`text-xs`) kapag `null`, malaki kapag may bilang.
@@ -105,12 +105,12 @@ function CourseSnapshot() {
                   Para sa count-up na lang ang `count`, hindi na para sa
                   laki — dalawang magkaibang bagay ang pinagsasama niyon. */}
               {value ? (
-                <p className="font-navigation text-base font-semibold leading-none tabular-nums tracking-[-0.02em] text-[#f3dda0] sm:text-lg">
+                <p className="font-navigation text-2xl font-semibold leading-none tabular-nums tracking-[-0.02em] text-[#f3dda0] sm:text-xl">
                   {count === null ? value : <span data-count={count}>{value}</span>}
                 </p>
               ) : null}
             </div>
-            <p className="mt-0.5 text-[9px] font-medium uppercase leading-tight tracking-[0.12em] text-white/55 sm:text-[10px] xl:text-[11px]"><T k={labelKey} /></p>
+            <p className="mt-1 text-[8px] font-medium uppercase leading-tight tracking-[0.12em] text-white/60 sm:text-[10px] xl:text-[11px]"><T k={labelKey} /></p>
           </div>
         ))}
       </div>

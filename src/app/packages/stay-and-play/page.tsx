@@ -4,7 +4,7 @@ import PackageItineraryPage from "@/components/PackageItineraryPage";
 export const metadata: Metadata = {
   title: "Stay & Play | CamSur Uptown Golf Club",
   description:
-    "A one-night stay with a round of golf. A two-day course-side package for golfers who want a complete round without taking a week off.",
+    "A two-day, course-side golf getaway at CamSur Uptown — one night beside the fairways, one full championship round, and an unhurried pace from arrival to the final putt.",
 };
 
 /**
@@ -22,32 +22,32 @@ export const metadata: Metadata = {
 const days = [
   {
     label: "Arrival",
-    title: "Arrive early enough to play the same day.",
+    title: "Settle in, then ease onto the course the same afternoon.",
     intro:
-      "The club is a short drive from Naga. Check in, hand over the clubs, and there is usually still light for a warm-up.",
+      "Just a short drive from Naga, the club is made for an easy start — check in, hand over your clubs, and there is usually still light for a relaxed warm-up before the round that matters tomorrow.",
     moments: [
       [
         "Afternoon",
-        "Check in and confirm the next morning’s tee time. The team takes the clubs and stores them overnight at the club.",
+        "Check in and confirm tomorrow’s tee time. Our team takes your clubs and stores them securely overnight, so you travel light.",
       ],
       [
         "Late afternoon",
-        "Loosen up at the practice bays, or take a short twilight nine if you arrive before the light goes.",
+        "Loosen up at the practice bays, or slip out for a relaxed twilight nine while the light holds.",
       ],
-      ["Evening", "Dinner at the clubhouse, then an early night before the round."],
+      ["Evening", "An unhurried dinner at the clubhouse, then an early night before the main event."],
     ],
   },
   {
     label: "The round",
-    title: "A full eighteen, then an unhurried finish.",
+    title: "A full championship eighteen, with nowhere to rush off to.",
     intro:
-      "The round is the point of the package. Everything around it is arranged so the morning is not a rush.",
+      "The round is the heart of the package, and everything around it is arranged so your morning never feels rushed.",
     moments: [
-      ["Early morning", "Breakfast, then range balls while your caddie meets you at the first tee."],
-      ["Morning", "Eighteen holes across the championship routing, played at a comfortable pace."],
+      ["Early morning", "Breakfast, then range balls as your caddie meets you at the first tee."],
+      ["Morning", "Eighteen holes across our championship routing, played at a comfortable, unhurried pace."],
       [
         "Midday",
-        "Lunch at the clubhouse, then check out. The team brings your clubs and luggage to the car for the drive home.",
+        "Lunch at the clubhouse, then an easy check-out — our team brings your clubs and luggage to the car for the drive home.",
       ],
     ],
   },
@@ -58,8 +58,8 @@ export default function Page() {
     <PackageItineraryPage
       active="stay-and-play"
       title="Stay & Play"
-      description="A two-day course-side package for golfers who want a complete round at CamSur Uptown without taking a week off. One night, one full eighteen, and enough time around it that nothing feels rushed."
-      image="/stay-and-play-hero-option-2.png"
+      description="The easiest way to turn one great round into a proper golf getaway — without taking a week off. Stay a night beside the course, play a full championship eighteen in the morning, and keep the pace unhurried from arrival to the final putt."
+      image="/packages-stay-play-hero-v2.png"
       days={days}
       inclusions={[
         "One night at Villa Del Rey",

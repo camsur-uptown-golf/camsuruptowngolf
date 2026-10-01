@@ -4,7 +4,6 @@ import FairwayDivider from "@/components/FairwayDivider";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
-import { CLUB_PHONE } from "@/lib/site-content";
 
 export type PackageDay = {
   label: string;
@@ -26,7 +25,7 @@ type Props = {
 
 const PACKAGE_LINKS = [
   ["stay-and-play", "Stay & Play"],
-  ["buddy-trip", "Buddy Golf Trip"],
+  ["buddy-trip", "Group Golf Getaway"],
 ] as const;
 
 export default function PackageItineraryPage({ active, title, description, image, days, inclusions }: Props) {
@@ -35,10 +34,25 @@ export default function PackageItineraryPage({ active, title, description, image
       <main className="bg-[#f7f5ee] text-[#14271d]">
         <ScrollMotion />
         <section className="relative isolate flex min-h-[660px] items-center overflow-hidden bg-[#102a1e] text-white">
-          <Image src={image} alt="" fill priority sizes="100vw" className="-z-20 object-cover object-center" />
+          <Image
+            src={image}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="-z-20 object-cover"
+            style={{ objectPosition: "right center" }}
+          />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,19,13,0.64)_0%,rgba(5,19,13,0.18)_42%,rgba(5,19,13,0.76)_100%)]" />
           <FairwayDivider fill="#f7f5ee" />
-          <div className="mx-auto w-full max-w-7xl px-6 pb-28 pt-44 text-center sm:pb-36 lg:px-8">
+          <div
+            className="mx-auto w-full max-w-7xl px-6 pb-28 pt-44 text-center sm:pb-36 lg:px-8"
+            style={
+              active === "buddy-trip"
+                ? { transform: "translateY(50px)" }
+                : undefined
+            }
+          >
             <h1 className="mx-auto max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">{title}</h1>
           </div>
         </section>
@@ -64,7 +78,7 @@ export default function PackageItineraryPage({ active, title, description, image
             <div className="min-w-0 md:pt-12">
               <div className="max-w-4xl border-b border-[#1f3f2e]/18 pb-10">
                 <p className="text-sm font-medium leading-7 text-[#46554c]">{description}</p>
-                <p className="mt-5 text-sm leading-7 text-[#59665e]">Use this itinerary as a starting point. The club can adjust tee times, meals, accommodation, transfers, and pace around your dates and availability.</p>
+                <p className="mt-5 text-sm leading-7 text-[#59665e]">This itinerary is only a starting point — the club can shape the tee times, meals, accommodation, transfers, and pace around your dates and your group.</p>
                 <Link href="/packages" className="mt-7 inline-flex h-10 items-center rounded-full bg-[#265136] px-6 font-navigation text-[9px] font-bold uppercase tracking-[0.13em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e]">Compare packages</Link>
               </div>
               <div className="max-w-4xl">
@@ -87,8 +101,20 @@ export default function PackageItineraryPage({ active, title, description, image
           </div>
         </section>
 
-        <section className="bg-[#f7f5ee] py-16 sm:py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:px-8"><div><p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Package starting point</p><h2 className="mt-4 text-[clamp(2rem,3.4vw,3.25rem)] font-medium leading-none tracking-[-0.05em]">What is included.</h2><p className="mt-5 max-w-xl text-sm leading-7 text-[#5d685f]">Final inclusions and rates depend on dates, availability, accommodation, and number of golfers.</p></div><ul className="divide-y divide-[#1f3f2e]/10 border-y border-[#1f3f2e]/10">{inclusions.map((item) => <li key={item} className="flex gap-3 py-4 text-sm leading-7 text-[#46554c]"><span className="text-[#98782f]">✓</span>{item}</li>)}</ul></div></section>
-        <section className="bg-[#1f3f2e] px-6 py-16 text-center text-white"><p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#f1d98f]">Plan your stay</p><h2 className="mx-auto mt-4 max-w-2xl text-3xl font-medium tracking-[-0.045em] sm:text-4xl">Choose the dates. We’ll shape the trip.</h2><div className="mt-8 flex flex-wrap justify-center gap-3"><Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]">Request a quote</Link><a href={CLUB_PHONE.href} className="inline-flex h-12 items-center rounded-full border border-white/30 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] transition hover:border-[#e7d18d] hover:text-[#f1d98f]">Call {CLUB_PHONE.label}</a></div></section>
+        <section className="bg-[#f7f5ee] py-16 sm:py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:px-8"><div><p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Package starting point</p><h2 className="mt-4 text-[clamp(2rem,3.4vw,3.25rem)] font-medium leading-none tracking-[-0.05em]">What is included.</h2><p className="mt-5 max-w-xl text-sm leading-7 text-[#5d685f]">Final inclusions and rates are tailored to your dates, group size, accommodation, and availability.</p></div><ul className="divide-y divide-[#1f3f2e]/10 border-y border-[#1f3f2e]/10">{inclusions.map((item) => <li key={item} className="flex gap-3 py-4 text-sm leading-7 text-[#46554c]"><span className="text-[#98782f]">✓</span>{item}</li>)}</ul></div></section>
+        <section className="border-t border-[#1f3f2e]/10 bg-[#f7f5ee] px-6 py-16 text-center text-[#14271d]">
+          <h2 className="mx-auto max-w-2xl text-3xl font-medium tracking-[-0.045em] sm:text-4xl">
+            Choose the dates. We’ll shape the trip.
+          </h2>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/plan-your-visit"
+              className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+            >
+              Request a quote
+            </Link>
+          </div>
+        </section>
       </main>
       <Footer />
     </>

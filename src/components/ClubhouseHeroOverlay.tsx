@@ -4,7 +4,9 @@ import type { CSSProperties } from "react";
 import { useEffect, useRef } from "react";
 import { CLUBHOUSE_FACTS } from "@/lib/clubhouse";
 
-const HERO_FACTS = CLUBHOUSE_FACTS.filter((fact) => fact.label !== "Square metres");
+const HERO_FACTS = CLUBHOUSE_FACTS.filter(
+  (fact) => fact.label !== "Square metres" && fact.label !== "Levels + rooftop",
+);
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 
 export default function ClubhouseHeroOverlay() {
@@ -74,6 +76,10 @@ export default function ClubhouseHeroOverlay() {
         style={{
           opacity: "var(--clubhouse-title-opacity)",
           transform: "translateY(var(--clubhouse-title-shift))",
+          /* Ibinaba ang title mula sa gitna papuntang ~77% ng tanaw. Inline
+             ang offset (hindi Tailwind [value] class) dahil hindi laging
+             nire-regenerate ng dev ang CSS para sa bagong arbitrary class. */
+          paddingTop: "54vh",
         }}
       >
         <h1 className="max-w-4xl text-balance text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white [text-shadow:0_3px_28px_rgba(0,0,0,0.5)]">
@@ -88,7 +94,7 @@ export default function ClubhouseHeroOverlay() {
           transform: "translateY(var(--clubhouse-facts-shift))",
         }}
       >
-        <dl className="mx-auto grid max-w-3xl grid-cols-2 overflow-hidden rounded-xl border border-[#d1af58]/25 bg-[#1f3f2e]/85 text-center shadow-[0_16px_44px_rgba(6,26,17,0.32)] backdrop-blur-md sm:grid-cols-4">
+        <dl className="mx-auto grid max-w-3xl grid-cols-2 overflow-hidden rounded-xl border border-[#d1af58]/25 bg-[#1f3f2e]/85 text-center shadow-[0_16px_44px_rgba(6,26,17,0.32)] backdrop-blur-md sm:grid-cols-3">
           {HERO_FACTS.map((fact, index) => (
             <div
               key={fact.label}

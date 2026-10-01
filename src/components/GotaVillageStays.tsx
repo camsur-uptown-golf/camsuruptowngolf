@@ -93,7 +93,7 @@ export default function GotaVillageStays() {
           <p data-reveal="up" style={delay(180)} className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 xl:text-base xl:leading-8">Share your preferred dates and group size with the team to ask about current room availability.</p>
           <div data-reveal="up" style={delay(270)} className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] xl:text-[12px]">Inquire about your stay</Link>
-            <Link href="/accommodations" className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f] xl:text-[12px]">View all stays</Link>
+            <Link href="/accommodations/villa-del-rey" className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f] xl:text-[12px]">Explore Villa Del Rey</Link>
           </div>
         </div>
       </div>
