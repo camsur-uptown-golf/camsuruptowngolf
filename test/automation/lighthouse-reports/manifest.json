@@ -1,0 +1,218 @@
+[
+  {
+    "url": "https://camsuruptowngolf.vercel.app/",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_-2026_09_29_01_58_52.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_-2026_09_29_01_58_52.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.94,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_-2026_09_29_01_59_09.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_-2026_09_29_01_59_09.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.94,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/golf",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf-2026_09_29_01_59_26.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf-2026_09_29_01_59_26.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/golf",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf-2026_09_29_01_59_44.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf-2026_09_29_01_59_44.report.json",
+    "summary": {
+      "performance": 0.97,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/golf/courses/hole-no.1",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf_courses_hole_no_1-2026_09_29_02_00_19.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf_courses_hole_no_1-2026_09_29_02_00_19.report.json",
+    "summary": {
+      "performance": 1,
+      "accessibility": 0.97,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/golf/courses/hole-no.1",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf_courses_hole_no_1-2026_09_29_02_00_52.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf_courses_hole_no_1-2026_09_29_02_00_52.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.97,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/clubhouse",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_clubhouse-2026_09_29_02_01_09.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_clubhouse-2026_09_29_02_01_09.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/clubhouse",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_clubhouse-2026_09_29_02_01_26.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_clubhouse-2026_09_29_02_01_26.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/packages",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_packages-2026_09_29_02_01_59.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_packages-2026_09_29_02_01_59.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/packages",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_packages-2026_09_29_02_02_30.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_packages-2026_09_29_02_02_30.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/contact",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_contact-2026_09_29_02_02_46.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_contact-2026_09_29_02_02_46.report.json",
+    "summary": {
+      "performance": 1,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/contact",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_contact-2026_09_29_02_03_18.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_contact-2026_09_29_02_03_18.report.json",
+    "summary": {
+      "performance": 1,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/",
+    "isRepresentativeRun": true,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_-2026_09_29_01_58_34.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_-2026_09_29_01_58_34.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.94,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/golf",
+    "isRepresentativeRun": true,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf-2026_09_29_02_00_02.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf-2026_09_29_02_00_02.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/golf/courses/hole-no.1",
+    "isRepresentativeRun": true,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf_courses_hole_no_1-2026_09_29_02_00_36.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_golf_courses_hole_no_1-2026_09_29_02_00_36.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.97,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/clubhouse",
+    "isRepresentativeRun": true,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_clubhouse-2026_09_29_02_01_43.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_clubhouse-2026_09_29_02_01_43.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/packages",
+    "isRepresentativeRun": true,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_packages-2026_09_29_02_02_15.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_packages-2026_09_29_02_02_15.report.json",
+    "summary": {
+      "performance": 0.99,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "https://camsuruptowngolf.vercel.app/contact",
+    "isRepresentativeRun": true,
+    "htmlPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_contact-2026_09_29_02_03_02.report.html",
+    "jsonPath": "C:\\code\\project_september_2026_to_present\\camsuruptowngolf\\test\\automation\\lighthouse-reports\\camsuruptowngolf_vercel_app-_contact-2026_09_29_02_03_02.report.json",
+    "summary": {
+      "performance": 1,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    }
+  }
+]
