@@ -69,6 +69,14 @@ const MEGA_HEADING =
   "mb-4 border-b border-white/10 pb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]";
 
 /**
+ * Ilang Golf hole lang ang ipinapakita sa mobile menu. Ang buong 18 ay
+ * masyadong mahaba sa cellphone, kaya iilan lang dito at nasa "View all"
+ * na link pababa sa /golf ang natitira. Sa desktop ay buo pa rin ang 18 —
+ * ito ay para sa mobile submenu lang.
+ */
+const MOBILE_GOLF_HIGHLIGHTS = 6;
+
+/**
  * Hugis ng listahan sa `names`, batay sa bilang ng link. Fixed ang lapad ng
  * mga column kapag dalawa lang para hindi piliting ikalat ang kaunting link
  * sa buong panel. Sa 18 holes lang ginagamit ang tatlong pantay na column
@@ -925,9 +933,14 @@ export default function Header() {
               </p>
 
               {/* Dalawang hanay lang kapag marami — ang Golf ay 18 na butas, at
-                  sa isang hanay ay mas mahaba pa iyon kaysa sa screen. */}
-              <ul className={`mt-3.5 grid gap-x-4 ${mobileSubsection.links.length > 6 ? "grid-cols-2 gap-y-3" : "grid-cols-1 gap-y-3.5"}`}>
-                {mobileSubsection.links.map((link) => {
+                  sa isang hanay ay mas mahaba pa iyon kaysa sa screen. Sa Golf
+                  ay iilang butas lang ang kita (`MOBILE_GOLF_HIGHLIGHTS`); nasa
+                  "View all" na link sa ibaba ang natitira. */}
+              <ul className={`mt-3.5 grid gap-x-4 ${mobileSubsection.slug === "golf" || mobileSubsection.links.length > 6 ? "grid-cols-2 gap-y-3" : "grid-cols-1 gap-y-3.5"}`}>
+                {(mobileSubsection.slug === "golf"
+                  ? mobileSubsection.links.slice(0, MOBILE_GOLF_HIGHLIGHTS)
+                  : mobileSubsection.links
+                ).map((link) => {
                   const isExternal = link.href.startsWith("http");
                   return (
                     <li key={`${link.href}-${link.label}`}>
@@ -944,6 +957,19 @@ export default function Header() {
                   );
                 })}
               </ul>
+
+              {/* Natitirang butas: isang link na lang papunta sa buong listahan
+                  sa /golf, sa halip na ilista silang lahat dito. */}
+              {mobileSubsection.slug === "golf" && mobileSubsection.links.length > MOBILE_GOLF_HIGHLIGHTS ? (
+                <Link
+                  href="/golf"
+                  onClick={closeMobileNav}
+                  className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition-colors hover:text-[#f1d98f]"
+                >
+                  View all {mobileSubsection.links.length} holes
+                  <ChevronIcon className="h-3 w-3" />
+                </Link>
+              ) : null}
 
               {mobileSubsection.slug === "golf" ? (
                 <div className="mt-5 border-t border-white/12 pt-5">

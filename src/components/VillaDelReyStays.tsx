@@ -119,8 +119,10 @@ export default function VillaDelReyStays() {
                   />
                 </div>
 
+                {/* Same-page anchor papunta sa <section id="availability"> ng
+                    accommodation page — doon ang form, hindi na /plan-your-visit. */}
                 <Link
-                  href="/plan-your-visit"
+                  href="#availability"
                   data-reveal="up"
                   style={delay(270)}
                   className="mt-8 inline-flex h-12 max-w-full items-center justify-center gap-3 whitespace-nowrap rounded-full border border-[#265136]/25 px-5 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#265136] transition hover:-translate-y-0.5 hover:border-[#265136] hover:bg-[#265136] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:px-7 sm:text-[11px] sm:tracking-[0.12em] xl:text-[12px]"
@@ -153,8 +155,17 @@ export default function VillaDelReyStays() {
                       className="object-cover transition-[filter] duration-500 ease-out group-hover:brightness-[0.86] group-hover:saturate-[0.82]"
                     />
                   </div>
-                  <span className="pointer-events-none absolute bottom-4 right-4 grid size-9 place-items-center border-2 border-white bg-[#10251a]/75 text-[1.6rem] font-light leading-none text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:bottom-6 sm:right-6 sm:size-10">
-                    <span aria-hidden="true" className="-translate-y-px">+</span>
+                  {/* Lightbox "zoom" badge. Salamin-na-may-plus (zoom in), hindi
+                      tanda ng "+" — tugma ito sa `cursor-zoom-in` at malinaw na
+                      "palakihin ang larawan," hindi "magdagdag." Walang frame,
+                      walang bg — lumulutang lang ang icon; ang drop-shadow ang
+                      nagpapakita nito sa maliliwanag na larawan (neutral, walang
+                      green). */}
+                  <span className="pointer-events-none absolute bottom-4 right-4 grid size-9 place-items-center text-white sm:bottom-6 sm:right-6 sm:size-10">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="size-6 drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)] sm:size-7">
+                      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2.1" />
+                      <path d="M16.5 16.5 21 21M11 8.4v5.2M8.4 11h5.2" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
+                    </svg>
                   </span>
                 </div>
                 <span

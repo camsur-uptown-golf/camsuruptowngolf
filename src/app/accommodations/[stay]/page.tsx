@@ -8,6 +8,7 @@ import ImageLightbox from "@/components/ImageLightbox";
 import HeroRevealMotion from "@/components/HeroRevealMotion";
 import HeroWords from "@/components/HeroWords";
 import VillaDelReyStays from "@/components/VillaDelReyStays";
+import AvailabilityRequest from "@/components/AvailabilityRequest";
 import { ACCOMMODATIONS } from "@/lib/site-content";
 
 export const dynamicParams = false;
@@ -125,6 +126,29 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
               bilang guhit sa pagitan. */}
 
           {stay.slug === "villa-del-rey" ? <VillaDelReyStays /> : null}
+
+          {/* Patutunguhan ng "Ask about availability" na button (anchor na
+              #availability). `scroll-mt` para hindi matakpan ng anumang
+              naka-pin na elemento ang pamagat kapag tumalon dito. */}
+          <section
+            id="availability"
+            className="scroll-mt-24 bg-[#f7f5ee] px-6 pb-24 pt-10 sm:pb-32 lg:px-8"
+          >
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
+                Availability
+              </p>
+              <h2 className="mt-3 text-[clamp(1.75rem,3.5vw,2.75rem)] font-medium tracking-[-0.04em] text-[#14271d]">
+                Ask about {stay.title}
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#5d685f]">
+                Share your preferred date and group size, and the team will come back to you about availability.
+              </p>
+            </div>
+            <div className="mt-10">
+              <AvailabilityRequest accommodationSlug={stay.slug} accommodationTitle={stay.title} />
+            </div>
+          </section>
         </div>
 
       </main>

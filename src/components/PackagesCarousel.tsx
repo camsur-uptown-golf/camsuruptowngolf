@@ -116,12 +116,17 @@ export default function PackagesCarousel() {
        silang may sariling nilalamang humahawak doon. Huwag itong
        bawiin nang hindi muna inilalabas ang pamagat sa krema. */
     <section id="home-packages" className="bg-[#f7f5ee] text-[#1b2730]">
-      {/* `min-h` sa cellphone, `aspect` mula `sm`: sa 16/9 ay 211px lang ang
-          taas sa 375px na screen at hindi kasya ang teksto. Ang `max-h` sa
-          `lg` ang pumipigil dito sa napakalaking screen — sa 1920px ay 1010px
-          ang 1.9 na aspect, at masyado nang mataas iyon para sa isang banda. */}
+      {/* Takdang taas sa cellphone (`h-[600px]`), `aspect` mula `sm`.
+          Kailangang TAKDA ang taas, hindi `min-h` lang: ang filmstrip at mga
+          slide sa loob ay `h-full` (height:100%) at ang larawan ay `fill`.
+          Hindi nalulutas ang porsyentong taas laban sa `min-height` lang —
+          gumuguho sila sa taas ng teksto, kaya bahagi lang ng bloke ang
+          natatakpan ng larawan at sumisilip ang kulay-abong background sa
+          ibaba. Sa 16/9 ay 211px lang ang taas sa 375px kaya 600px ang pinili.
+          Ang `max-h` sa `lg` ang pumipigil sa napakalaking screen — sa 1920px
+          ay 1010px ang 1.9 na aspect, masyadong mataas para sa isang banda. */}
       <div
-        className="relative isolate min-h-[600px] w-full overflow-hidden bg-[#dfe4df] sm:aspect-[16/9] sm:min-h-0 lg:aspect-[1.9/1] lg:max-h-[780px]"
+        className="relative isolate h-[600px] w-full overflow-hidden bg-[#dfe4df] sm:h-auto sm:aspect-[16/9] lg:aspect-[1.9/1] lg:max-h-[780px]"
         onFocusCapture={() => setPaused(true)}
         onBlurCapture={() => setPaused(false)}
       >
@@ -165,7 +170,10 @@ export default function PackagesCarousel() {
                   <h2 className="font-serif text-[clamp(2.25rem,4vw,3.5rem)] font-normal leading-[0.98] tracking-[-0.04em]">
                     {slide.title}
                   </h2>
-                  <p className="mt-5 max-w-[460px] text-sm leading-7 text-white/80 sm:text-[15px]">{t(slide.blurbKey)}</p>
+                  {/* Mas makitid sa cellphone para 3 linya ang blurb — sa
+                      buong `460px` ay 2 linya lang ito at mukhang kulang.
+                      Mula `sm` ay buo na ulit ang lapad. */}
+                  <p className="mt-5 max-w-[270px] text-sm leading-7 text-white/80 sm:max-w-[460px] sm:text-[15px]">{t(slide.blurbKey)}</p>
                   <Link
                     href={slide.href}
                     className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d]"
