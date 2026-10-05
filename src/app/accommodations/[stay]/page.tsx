@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ImageLightbox from "@/components/ImageLightbox";
 import HeroRevealMotion from "@/components/HeroRevealMotion";
+import HeroWords from "@/components/HeroWords";
 import VillaDelReyStays from "@/components/VillaDelReyStays";
 import { ACCOMMODATIONS } from "@/lib/site-content";
 
@@ -72,7 +73,11 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             }`}
           />
           {hasEditorialStayLayout ? (
-            <div className="absolute inset-0 z-10 flex items-start justify-center px-6 pt-[20vh] sm:pt-[22vh]">
+            <div className="hero-media-reveal absolute inset-0 z-10 flex items-start justify-center px-6 pt-[20vh] sm:pt-[22vh]">
+              {/* `hero-media-reveal` (globals.css): isang-beses na eleganteng
+                  pagpasok ng logo sa pag-load — fade + angat + naglalahong blur.
+                  Logo ito (hindi teksto), kaya hindi word-by-word; nasa wrapper
+                  ito para hiwalay sa scroll-driven na `data-hero-logo` ng <img>. */}
               {/* Walang nang white card — dumidikit na ang logo (transparent
                   ang PNG) sa hero. Banayad na drop-shadow para nababasa ang
                   navy na logo sa ibabaw ng litrato, gaya ng ibang hero title.
@@ -95,8 +100,11 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
           {!hasEditorialStayLayout ? <FairwayDivider fill="#f7f5ee" /> : null}
           {!hasEditorialStayLayout ? (
             <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-28 pt-64 sm:pb-36 lg:px-8 lg:pb-44">
+              {/* Word-by-word na pagpasok sa pag-load (HeroWords). Para sa
+                  non-editorial na stays; ang villa-del-rey ay logo image na
+                  may sariling `hero-media-reveal`. */}
               <h1 className="max-w-5xl text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.92] tracking-[-0.06em] drop-shadow-[0_3px_14px_rgba(0,0,0,0.55)]">
-                {stay.title}
+                <HeroWords text={stay.title} />
               </h1>
             </div>
           ) : null}

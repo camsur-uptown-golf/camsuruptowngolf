@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import RequestCallback from "@/components/RequestCallback";
 import Scorecard from "@/components/Scorecard";
 import ScrollMotion from "@/components/ScrollMotion";
+import HeroWords from "@/components/HeroWords";
 import { Container, SectionHeading, delay } from "@/components/SectionKit";
 import { HOLE_PROFILES } from "@/lib/course-holes";
 import { COURSE_PAGES } from "@/lib/site-content";
@@ -68,7 +69,8 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
   return (
     <>
       <main>
-        <ScrollMotion />
+        {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
+        <ScrollMotion replay />
         <section id="top" className="relative isolate min-h-[660px] overflow-hidden bg-[#071d13] text-white">
           <Image
             src={concept.image}
@@ -89,11 +91,11 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           <FairwayDivider fill="#f7f5ee" />
           <div className="mx-auto flex min-h-[660px] max-w-7xl items-center justify-center px-6 py-24 lg:px-8">
             <div className="w-full text-center">
-              <h1
-                data-reveal="up"
-                className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
-              >
-                Hole No. {index + 1}
+              {/* Word-by-word na pagpasok sa pag-load (HeroWords). Inalis ang
+                  `data-reveal="up"`: iisa na lang ang entrance, ang word-by-word.
+                  Nananatili ang `data-reveal="line"` na guhit sa ibaba. */}
+              <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white">
+                <HeroWords text={`Hole No. ${index + 1}`} />
               </h1>
               <span
                 data-reveal="line"

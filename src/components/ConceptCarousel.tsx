@@ -1,34 +1,147 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { COURSE_PAGES as SLIDES } from "@/lib/site-content";
 import { useTranslation } from "@/i18n/LanguageProvider";
 
-function Arrow({ direction }: { direction: "left" | "right" }) {
-  return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
-      <path
-        d={direction === "left" ? "m14.5 5-7 7 7 7" : "m9.5 5 7 7-7 7"}
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+const N = SLIDES.length;
+const SWIPE_THRESHOLD = 56;
+
+// Hugis ng curved na belt (coverflow). Ang gitna ay flat (rotateY 0); ang mga
+// gilid ay naka-tilt papaloob at humuhurong sa Z para magmukhang nakabilog.
+const ANGLE = 40; // deg tilt ng kapitbahay
+const DEPTH = 150; // px na urong sa Z kada hakbang
+const SCALE_STEP = 0.1; // liit kada hakbang palayo
+const SPREAD = 0.56; // agwat kada hakbang bilang bahagi ng lapad ng card
+const WINDOW = 1.5; // gitna + isang katabi kada panig lang ang makikita
+
+const wrapIndex = (index: number) => ((index % N) + N) % N;
+
+// Pinakamalapit na agwat ng isang slide mula sa kasalukuyang posisyon, may wrap
+// (kaya katabi ni hole 1 sa kaliwa si hole 18).
+function wrappedDelta(index: number, pos: number) {
+  let d = index - pos;
+  if (d > N / 2) d -= N;
+  else if (d < -N / 2) d += N;
+  return d;
+}
+
+function cardTransform(d: number): CSSProperties {
+  const dist = Math.abs(d);
+  const dir = Math.sign(d);
+  const rotateY = -dir * Math.min(dist, 1) * ANGLE;
+  const translateX = d * SPREAD * 100; // porsiyento ng lapad ng card
+  const translateZ = -Math.min(dist, 2) * DEPTH;
+  const scale = 1 - Math.min(dist, 2) * SCALE_STEP;
+  // Gitna + isang katabi lang ang kita. Ang pangatlo (dist >= 2) ay itinatago;
+  // may fade zone (1→2) para marahan itong pumasok habang hinihila o nasa
+  // transition sa halip na biglang sumulpot.
+  const opacity = dist <= 1 ? 1 : dist >= 2 ? 0 : 2 - dist;
+  return {
+    transform: `translate3d(${translateX}%, 0, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
+    opacity,
+    zIndex: Math.round(100 - dist * 10),
+    pointerEvents: dist < WINDOW ? "auto" : "none",
+  };
 }
 
 export default function ConceptCarousel() {
   const { t } = useTranslation();
+  const router = useRouter();
   const [active, setActive] = useState(0);
-  const previous = (active - 1 + SLIDES.length) % SLIDES.length;
-  const next = (active + 1) % SLIDES.length;
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [stageWidth, setStageWidth] = useState(0);
 
-  const goPrevious = () => setActive(previous);
-  const goNext = () => setActive(next);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const dragStart = useRef<{ x: number; y: number; pointerId: number; target: Element | null } | null>(null);
+  const swipeConsumed = useRef(false);
+
+  const goPrevious = () => setActive((current) => wrapIndex(current - 1));
+  const goNext = () => setActive((current) => wrapIndex(current + 1));
+
+  const step = stageWidth * SPREAD;
+  // Fractional na posisyon: sa drag, sumusunod sa daliri; kapag tapos, buo ang
+  // active. Ang bawat card ay transform ayon sa layo nito sa `pos`.
+  const pos = isDragging && step > 0 ? active - dragOffset / step : active;
+
+  const measure = useCallback(() => {
+    if (stageRef.current) setStageWidth(stageRef.current.clientWidth);
+  }, []);
+
+  useLayoutEffect(() => {
+    measure();
+  }, [measure]);
+
+  useEffect(() => {
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
+
+  const startSwipe = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    dragStart.current = { x: event.clientX, y: event.clientY, pointerId: event.pointerId, target: event.target as Element };
+    swipeConsumed.current = false;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const moveSwipe = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const start = dragStart.current;
+    if (!start || start.pointerId !== event.pointerId) return;
+    const deltaX = event.clientX - start.x;
+    const deltaY = event.clientY - start.y;
+    if (Math.abs(deltaX) <= Math.abs(deltaY) || Math.abs(deltaX) < 6) return;
+    swipeConsumed.current = true;
+    setIsDragging(true);
+    setDragOffset(deltaX);
+  };
+
+  const finishSwipe = (event: ReactPointerEvent<HTMLDivElement>, cancelled = false) => {
+    const start = dragStart.current;
+    if (!start || start.pointerId !== event.pointerId) return;
+
+    const deltaX = event.clientX - start.x;
+    const deltaY = event.clientY - start.y;
+    const horizontal = Math.abs(deltaX) > Math.abs(deltaY);
+
+    if (!cancelled && horizontal && step > 0) {
+      const stepped = Math.round(deltaX / step);
+      let target = active - stepped;
+      // Siguraduhing gumagalaw man lang nang isa ang mabilis na maliit na swipe.
+      if (target === active && Math.abs(deltaX) >= SWIPE_THRESHOLD) {
+        target = active + (deltaX > 0 ? -1 : 1);
+      }
+      setActive(wrapIndex(target));
+    } else if (!cancelled && Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) {
+      /* TAP (hindi swipe) sa isang card: kung ito ang active (gitna), buksan
+         ang hole; kung gilid, dalhin sa gitna. Ginagawa rito, hindi sa native
+         na click ng Link, dahil ang pointer capture sa swipe surface ay minsang
+         hindi naipapasa ang click sa loob — kaya mukhang "hindi clickable" ang
+         gitnang larawan. `swipeConsumed` para hindi doblehin ng native click. */
+      const card = start.target?.closest<HTMLElement>("[data-slide]");
+      const index = card ? Number(card.dataset.slide) : -1;
+      if (index >= 0) {
+        swipeConsumed.current = true;
+        if (index === active) router.push(`/golf/courses/${SLIDES[index].slug}`);
+        else setActive(index);
+      }
+    }
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    dragStart.current = null;
+    setIsDragging(false);
+    setDragOffset(0);
+
+    window.setTimeout(() => {
+      swipeConsumed.current = false;
+    }, 0);
+  };
 
   return (
     <section
@@ -39,113 +152,102 @@ export default function ConceptCarousel() {
         if (event.key === "ArrowRight") goNext();
       }}
     >
-      <div className="relative">
-        {/* Reveals go only on elements without a transform of their own — the
-            side previews and the divider rules are centred with -translate-y,
-            which a landed reveal would reset to none. */}
-        <button
-          type="button"
-          onClick={goPrevious}
-          aria-label={`Previous image: ${SLIDES[previous].title}`}
-          className="group absolute left-0 top-1/2 hidden aspect-[1.25] w-[20vw] max-w-[410px] -translate-y-1/2 overflow-hidden bg-[#1f3f2e] lg:block"
+      {/* Ang data-reveal ay may sarili nang transform, kaya nasa labas ito ng
+          3D stage na humahawak ng mga naka-perspective na card. */}
+      <div data-reveal="scale">
+        <div
+          onPointerDown={startSwipe}
+          onPointerMove={moveSwipe}
+          onPointerUp={(event) => finishSwipe(event)}
+          onPointerCancel={(event) => finishSwipe(event, true)}
+          className={`w-full touch-pan-y select-none ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
         >
-          <Image src={SLIDES[previous].image} alt="" fill sizes="20vw" className="object-cover opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
-          <span className="absolute inset-0 bg-[#082218]/10" aria-hidden="true" />
-        </button>
-
-        <button
-          type="button"
-          onClick={goNext}
-          aria-label={`Next image: ${SLIDES[next].title}`}
-          className="group absolute right-0 top-1/2 hidden aspect-[1.25] w-[20vw] max-w-[410px] -translate-y-1/2 overflow-hidden bg-[#1f3f2e] lg:block"
-        >
-          <Image src={SLIDES[next].image} alt="" fill sizes="20vw" className="object-cover opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
-          <span className="absolute inset-0 bg-[#082218]/10" aria-hidden="true" />
-        </button>
-
-        <span className="absolute left-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#1f3f2e]/55 lg:block" aria-hidden="true" />
-        <span className="absolute right-[22vw] top-1/2 hidden h-20 w-px -translate-y-1/2 bg-[#1f3f2e]/55 lg:block" aria-hidden="true" />
-
-        <Link
-          href={`/golf/courses/${SLIDES[active].slug}`}
-          aria-label={`View ${SLIDES[active].title}`}
-          data-reveal="scale"
-          className="relative z-10 mx-auto block aspect-[1.94] w-[calc(100%-3rem)] max-w-[1040px] overflow-hidden bg-[#1f3f2e] shadow-[0_18px_42px_rgba(17,44,31,0.1)] sm:w-[52vw]"
-        >
-          <Image
-            key={SLIDES[active].image}
-            src={SLIDES[active].image}
-            alt={`${SLIDES[active].title} — CamSur Uptown Golf Club hole`}
-            fill
-            priority={active === 0}
-            sizes="(min-width: 640px) 52vw, calc(100vw - 3rem)"
-            className="carousel-image object-cover"
-          />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#061a11]/30 to-transparent" aria-hidden="true" />
-          <p className="absolute bottom-4 right-5 text-[10px] xl:text-[11px] font-bold tracking-[0.18em] text-white/85 sm:bottom-6 sm:right-7">
-            {String(active + 1).padStart(2, "0")} / {SLIDES.length}
-          </p>
-        </Link>
+          <div
+            ref={stageRef}
+            style={{ perspective: "1600px", transformStyle: "preserve-3d" }}
+            className="relative mx-auto aspect-[1.94] w-[calc(100vw-3rem)] max-w-[1040px] sm:w-[52vw]"
+          >
+            {SLIDES.map((slide, index) => {
+              const d = wrappedDelta(index, pos);
+              const isActive = index === active;
+              return (
+                <Link
+                  key={slide.slug}
+                  href={`/golf/courses/${slide.slug}`}
+                  data-slide={index}
+                  aria-label={isActive ? `View ${slide.title}` : `Show ${slide.title}`}
+                  aria-current={isActive ? "true" : undefined}
+                  aria-hidden={Math.abs(d) > WINDOW ? "true" : undefined}
+                  tabIndex={isActive ? 0 : -1}
+                  draggable={false}
+                  onDragStart={(event) => event.preventDefault()}
+                  onClick={(event) => {
+                    if (swipeConsumed.current) {
+                      event.preventDefault();
+                      return;
+                    }
+                    if (!isActive) {
+                      event.preventDefault();
+                      setActive(index);
+                    }
+                  }}
+                  style={cardTransform(d)}
+                  className={`group absolute inset-0 block overflow-hidden bg-[#1f3f2e] outline-none [backface-visibility:hidden] focus-visible:ring-2 focus-visible:ring-[#b38c34] ${
+                    isActive ? "shadow-[0_26px_60px_rgba(17,44,31,0.22)]" : ""
+                  } ${isDragging ? "" : "transition-[transform,opacity] duration-[560ms] ease-[cubic-bezier(0.22,1,0.36,1)]"}`}
+                >
+                  <Image
+                    src={slide.image}
+                    alt={`${slide.title} — CamSur Uptown Golf Club hole`}
+                    fill
+                    priority={index === 0}
+                    sizes="(min-width: 640px) 52vw, calc(100vw - 3rem)"
+                    className="pointer-events-none object-cover"
+                  />
+                  {/* Bahagyang dumidilim ang mga gilid para umurong ang tingin. */}
+                  <div
+                    className={`pointer-events-none absolute inset-0 transition-opacity duration-[560ms] ${
+                      isActive ? "opacity-0" : "bg-[#061a11]/40 opacity-100"
+                    }`}
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#061a11]/30 to-transparent"
+                    aria-hidden="true"
+                  />
+                  {isActive && (
+                    <p className="pointer-events-none absolute bottom-4 right-5 text-[10px] font-bold tracking-[0.18em] text-white/85 sm:bottom-6 sm:right-7 xl:text-[11px]">
+                      {String(active + 1).padStart(2, "0")} / {N}
+                    </p>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <div
         data-reveal="up"
         style={{ "--reveal-delay": "150ms" } as CSSProperties}
-        className="mx-auto grid w-full max-w-[1040px] grid-cols-[auto_1fr_auto] items-start gap-4 px-6 pt-7 sm:w-[52vw] sm:min-w-[720px] sm:gap-7 sm:px-0 sm:pt-8"
+        className="mx-auto w-full max-w-[1040px] px-6 pt-7 sm:w-[52vw] sm:min-w-[720px] sm:px-0 sm:pt-8"
       >
-        <button
-          type="button"
-          onClick={goPrevious}
-          aria-label="Previous hole image"
-          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#265136]/35 text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
-        >
-          <Arrow direction="left" />
-        </button>
-
-        <div className="grid min-w-0 gap-5 lg:grid-cols-2 lg:gap-10">
+        <div className="grid min-w-0 gap-7 lg:grid-cols-2 lg:gap-10" aria-live="polite">
           <div className="min-w-0 lg:border-r lg:border-[#1f3f2e]/35 lg:pr-10">
-            {/* NASA PAMAGAT ANG "HOLE", HINDI SA EYEBROW. Dating "Hole" ang
-                eyebrow at "No. 1" lang ang pamagat, kaya nasa 10px na
-                teksto nakasabit ang pinakamahalagang salita. "Hole No. N"
-                din ang tawag dito sa nav, sa breadcrumb at sa ruta, kaya
-                iisa na ang pangalan nito sa buong site.
-
-                NANATILING HINDI NAGBABAGO ANG EYEBROW. Sinubukan dito ang
-                sariling pangalan ng bawat butas ("Opening Fairway"), pero
-                dalawang gumagalaw na teksto iyon nang magkapatong — lumilipat
-                ang eyebrow at ang pamagat nang sabay, at nagulo ang mata.
-                Label ng section ito, hindi bahagi ng datos ng butas, kaya
-                iisa lang ito sa labing-walo. */}
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
               {t("course.eyebrow")}
             </p>
-            {/* 3.1vw AT HINDI HIGIT PA. Ang hanay na ito ay 238px lang sa
-                1440px. Sa 3.6vw (51.8px) ay pumuputol sa dalawang linya ang
-                butas 10 at 18 habang nananatiling isang linya ang iba, kaya
-                tumatalon ang taas habang pinapalitan ang butas. Sa 3.1vw
-                (44.6px) ay kasya ang lahat ng labing-walo sa isang linya —
-                sinubukan ko ang bawat isa. Kapag pinalaki ito o pinaliit ang
-                hanay, subukan muli ang 10 at ang 18, hindi lang ang 1. */}
-            <h3 className="mt-2 max-w-full font-serif text-[clamp(2.5rem,3.1vw,4rem)] font-medium leading-[0.9] tracking-[-0.055em]">
+            <h3 className="mt-2 max-w-full font-serif text-[clamp(2rem,2.5vw,3rem)] font-medium leading-[0.92] tracking-[-0.05em]">
               {t("course.holeNo")} {active + 1}
             </h3>
-          </div>
-          <div className="hidden lg:block lg:pt-6" aria-live="polite">
-            <p className="text-sm leading-6 text-[#536058]">{SLIDES[active].description}</p>
-            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[130px] items-center justify-center rounded-full bg-[#265136] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#1f3f2e]">
+            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-10 min-w-[112px] items-center justify-center rounded-full bg-[#265136] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#1f3f2e]">
               {t("action.explore")}
             </Link>
           </div>
+          <div className="hidden lg:block lg:pt-6">
+            <p className="text-sm leading-6 text-[#536058]">{SLIDES[active].description}</p>
+          </div>
         </div>
-
-        <button
-          type="button"
-          onClick={goNext}
-          aria-label="Next hole image"
-          className="mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#265136]/35 text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
-        >
-          <Arrow direction="right" />
-        </button>
       </div>
 
       <div

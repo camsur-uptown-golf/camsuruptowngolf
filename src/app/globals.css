@@ -233,6 +233,142 @@ html {
   will-change: transform, opacity;
 }
 
+/* WORD-BY-WORD na pagpasok ng golf hero title kapag na-load ang pahina.
+   Bawat salita (.hero-word) ay umaangat, kumukupas-papasok, at naglilinaw
+   mula sa blur — sunud-sunod ayon sa `animation-delay` na isinusulat kada
+   span (base 200ms + 120ms kada salita).
+
+   Nasa mga salita ito, hindi sa <h1>, kaya hiwalay sa scroll-driven na
+   [data-hero-logo] (nasa titulo mismo) at sa drop-shadow (filter) nito —
+   ang word-by-word ang isang beses, ang kupas-sa-scroll ang nagpapatuloy.
+   `backwards` ang fill: nakatago muna ang bawat salita (0% frame) habang
+   naghihintay ng turn nito kaya walang kislap, at walang naiiwang estado
+   pagkatapos — tugma na sa natural na salita, kaya walang talon. */
+@keyframes hero-word-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    filter: blur(8px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+.hero-word {
+  display: inline-block;
+  animation: hero-word-in 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  will-change: transform, opacity, filter;
+}
+
+/* Para sa hero na LARAWAN/LOGO (hindi teksto), gaya ng wordmark ng Villa Del
+   Rey: isang-beses na eleganteng pagpasok — fade + banayad na angat +
+   naglalahong blur, sa house easing. Katulad ng word-by-word ngunit buo, dahil
+   hindi mahahati sa salita ang isang larawan. Ilagay sa WRAPPER (hindi sa
+   larawang may [data-hero-logo]) kaya hiwalay sa scroll-fade nito; `backwards`
+   ang fill kaya nakatago muna bago magsimula at walang naiiwang estado. */
+@keyframes hero-media-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0) scale(0.985);
+    filter: blur(10px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.hero-media-reveal {
+  animation: hero-media-in 1300ms cubic-bezier(0.22, 1, 0.36, 1) 220ms backwards;
+  will-change: transform, opacity, filter;
+}
+
+/* STAGGERED na pagpasok ng mga item sa mega menu (HIGHLIGHTS) pagbukas nito.
+   Bawat link ay umaangat-papasok nang sunud-sunod (`animationDelay` kada index,
+   +45ms, isinusulat sa markup). Mount-driven: conditional render ang panel,
+   kaya tumatakbo ang animation sa bawat pagbukas at sa bawat palit ng section.
+   `backwards` ang fill kaya nakatago muna bawat item hanggang sa turn nito, at
+   walang naiiwang transform kaya hindi naaapektuhan ang hover (kulay lang). */
+@keyframes mega-item-in {
+  0% {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mega-item {
+  animation: mega-item-in 460ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Gintong X (clear) ng site search. `type="search"` ang input, kaya ang
+   browser mismo ang naglalagay ng cancel button — default na kulay ito (asul
+   sa ilang browser). Pinapalitan ng gintong (#f3dda0, kapareho ng search icon
+   sa tabi) na X gamit ang mask: ang background-color ang kulay, ang SVG ang
+   hugis. Naka-scope sa search input lang. Webkit/Chromium ito; sa Firefox ay
+   walang native cancel button, kaya walang naaapektuhan. */
+#site-search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-color: #f3dda0;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 18 18M18 6 6 18' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 18 18M18 6 6 18' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: opacity 150ms ease;
+}
+
+#site-search-input::-webkit-search-cancel-button:hover {
+  opacity: 0.75;
+}
+
+/* SCROLL REVEAL na pinapatakbo ng IntersectionObserver (ScrollReveal.tsx).
+   Nilalagyan ng `.in-view` ang bawat `[data-scroll-anim]` kapag pumasok sa
+   tanaw, at inaalis kapag umalis — kaya NAG-A-ANIMATE ULIT sa bawat pasok,
+   scroll down man o pataas. Time-based (transition) ito kaya tiyak na nakikita
+   ang galaw, at gumagana sa LAHAT ng browser (hindi gaya ng scroll-driven na
+   `animation-timeline` na pabago-bago ang suporta).
+
+   `slide-left/right` = galing-gilid na larawan; `rise` = umaangat na teksto.
+   Ang starting (hidden) state ay nasa `scripting: enabled`, kaya buo pa rin
+   ang laman kapag naka-off ang JS. May reduced-motion guard sa ibaba. */
+@media (scripting: enabled) {
+  [data-scroll-anim] {
+    opacity: 0;
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  [data-scroll-anim="slide-left"] {
+    transform: translate3d(-120px, 0, 0);
+  }
+  [data-scroll-anim="slide-right"] {
+    transform: translate3d(120px, 0, 0);
+  }
+  [data-scroll-anim="rise"] {
+    transform: translate3d(0, 64px, 0);
+  }
+  [data-scroll-anim].in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal],
   [data-reveal].is-in {
@@ -244,4 +380,8 @@ html {
   .parallax-media { transform: scale(var(--parallax-scale, 1.3)); }
   [data-hero-media] { transform: none; }
   [data-hero-logo] { transform: none; opacity: 1; }
+  .hero-word { animation: none; }
+  .hero-media-reveal { animation: none; }
+  .mega-item { animation: none; }
+  [data-scroll-anim] { opacity: 1; transform: none; transition: none; }
 }

@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { useEffect, useRef } from "react";
+import HeroWords from "@/components/HeroWords";
 import { CLUBHOUSE_FACTS } from "@/lib/clubhouse";
 
 const HERO_FACTS = CLUBHOUSE_FACTS.filter(
@@ -82,8 +83,10 @@ export default function ClubhouseHeroOverlay() {
           paddingTop: "54vh",
         }}
       >
+        {/* Word-by-word entrance (HeroWords); nasa parent container ang
+            scroll-driven na kupas (--clubhouse-title-opacity/shift). */}
         <h1 className="max-w-4xl text-balance text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white [text-shadow:0_3px_28px_rgba(0,0,0,0.5)]">
-          The Heart of the Course
+          <HeroWords text="The Heart of the Course" />
         </h1>
       </div>
 

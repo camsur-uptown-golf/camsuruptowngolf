@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
+import BackToHeroButton from "@/components/BackToHeroButton";
 import EventsOccasions from "@/components/EventsOccasions";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
 
@@ -178,6 +179,7 @@ export default function EventsDetails() {
       <ScrollMotion />
       <Occasions />
       <EventsCta />
+      <BackToHeroButton />
     </>
   );
 }

@@ -26,7 +26,7 @@ import { usePathname } from "next/navigation";
  * hindi mag-forced reflow sa bawat frame.
  */
 
-export default function ScrollMotion() {
+export default function ScrollMotion({ replay = false }: { replay?: boolean } = {}) {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -93,27 +93,36 @@ export default function ScrollMotion() {
       }
 
       const entering: HTMLElement[] = [];
+      const leaving: HTMLElement[] = [];
 
       for (const el of targets) {
-        // Naipakita na — tapos na ang trabaho rito. Hindi na ito sinusukat
-        // muli at hindi na ibinabalik sa nakatago, kaya nananatili ang laman.
-        if (el.classList.contains("is-in")) continue;
-
         const rect = el.getBoundingClientRect();
-
         // Papasok: kahit anong pagpatong sa viewport. Huwag itong higpitan —
         // ang course snapshot ng homepage ay nakadikit sa ilalim ng h-svh na
         // hero, kaya sa mas mahigpit na hangganan ay mananatili itong blangko
         // hangga't hindi nag-i-scroll. Kung nakikita sa pag-load, lumalabas
         // ito sa pag-load.
-        if (rect.top < viewportHeight && rect.bottom > 0) {
+        const inView = rect.top < viewportHeight && rect.bottom > 0;
+        const isIn = el.classList.contains("is-in");
+
+        if (inView && !isIn) {
           entering.push(el);
+        } else if (replay && !inView && isIn) {
+          // REPLAY MODE: inaalis ang .is-in paglabas sa tanaw, kaya umuulit ang
+          // reveal sa bawat pasok — scroll down man o pataas (walang dead air).
+          // Sa default (one-time) mode, hindi ito inaalis kaya nananatili ang
+          // laman tulad ng dati.
+          leaving.push(el);
         }
       }
 
       // --- write phase ---
       for (const [layer, y] of offsets) {
         layer.style.setProperty("--parallax-y", `${y.toFixed(2)}px`);
+      }
+
+      for (const el of leaving) {
+        el.classList.remove("is-in");
       }
 
       for (const el of entering) {
@@ -147,7 +156,7 @@ export default function ScrollMotion() {
       document.removeEventListener("visibilitychange", repaintWhenVisible);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [pathname]);
+  }, [pathname, replay]);
 
   return null;
 }

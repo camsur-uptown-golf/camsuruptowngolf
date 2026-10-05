@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
+import ScrollReveal from "@/components/ScrollReveal";
 import StayFeatures from "@/components/StayFeatures";
 import { delay } from "@/components/EditorialKit";
 import { VILLA_DEL_REY_STAYS } from "@/lib/villa-del-rey";
@@ -22,6 +23,7 @@ export default function VillaDelReyStays() {
   return (
     <section id="villa-stays" className="bg-[#f7f5ee] text-[#14271d]">
       <ScrollMotion />
+      <ScrollReveal />
 
       <div className="mx-auto max-w-[1600px] px-4 pb-3 pt-12 text-center sm:px-8 sm:pt-14 lg:pt-16">
         <p
@@ -131,13 +133,16 @@ export default function VillaDelReyStays() {
                   lightbox group ang nakatagong room photo para ma-next ito
                   kapag binuksan ang pangunahing larawan. */}
               <div className={`${flip ? "lg:order-1" : ""}`}>
+                {/* Scroll reveal via IntersectionObserver (ScrollReveal.tsx):
+                    galing sa sariling panig ang larawan (flip → kaliwa),
+                    nag-a-animate ulit sa bawat pasok — scroll down man o pataas. */}
                 <div
-                  data-reveal={flip ? "left" : "right"}
+                  data-scroll-anim={flip ? "slide-left" : "slide-right"}
+                  className={`group relative h-[320px] cursor-zoom-in overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_28px_70px_rgba(20,39,29,0.16)] sm:h-[460px] sm:rounded-[2rem] lg:h-[560px] xl:h-[620px]`}
                   data-lightbox
                   data-lightbox-group={`villa-${stayType.name.toLowerCase()}`}
                   data-src={stayType.exterior}
                   data-alt={`${stayType.name} exterior at Villa Del Rey`}
-                  className="group relative h-[320px] cursor-zoom-in overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_28px_70px_rgba(20,39,29,0.16)] sm:h-[460px] sm:rounded-[2rem] lg:h-[560px] xl:h-[620px]"
                 >
                   <div className="absolute inset-0">
                     <Image

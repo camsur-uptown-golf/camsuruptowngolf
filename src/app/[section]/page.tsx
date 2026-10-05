@@ -10,6 +10,7 @@ import ClubhouseDetails from "@/components/ClubhouseDetails";
 import ClubhouseHeroOverlay from "@/components/ClubhouseHeroOverlay";
 import EventsDetails from "@/components/EventsDetails";
 import GolfDetails from "@/components/GolfDetails";
+import HeroWords from "@/components/HeroWords";
 import ExperiencesDetails from "@/components/ExperiencesDetails";
 import PackagesDetails from "@/components/PackagesDetails";
 import ScrollMotion from "@/components/ScrollMotion";
@@ -143,7 +144,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                     // pataas dahil nasa center-bottom ang mga tao; Events ay
                     // tunay na centered. Hindi ito humahawak sa
                     // h1 na may sariling scroll transform.
-                    { transform: `translateY(${isPackages ? "-14vh" : isExperiences ? "-4vh" : "0"})` }
+                    { transform: `translateY(${isPackages ? "-14vh" : isExperiences ? "-10vh" : "0"})` }
                   : undefined
               }
             >
@@ -157,7 +158,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                     : "text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.95]"
                 }`}
               >
-                {section.title}
+                <HeroWords text={section.title} />
               </h1>
             </div>
           ) : null}
@@ -174,12 +175,15 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               className="mx-auto w-full max-w-7xl px-6 text-center lg:px-8"
               style={{ position: "absolute", left: 0, right: 0, bottom: "14vh", zIndex: 10 }}
             >
+              {/* WORD-BY-WORD na pagpasok (HeroWords): nasa mga salita ang
+                  entrance; nasa <h1> pa rin ang drop-shadow at ang
+                  scroll-driven na `data-hero-logo`, kaya hindi nagbabanggaan. */}
               <div className="mx-auto max-w-3xl">
                 <h1
                   data-hero-logo=""
                   className="mx-auto max-w-3xl text-balance text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
                 >
-                  A course shaped by Camarines Sur
+                  <HeroWords text="A course shaped by Camarines Sur" />
                 </h1>
               </div>
             </div>

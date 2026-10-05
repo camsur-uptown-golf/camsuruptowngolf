@@ -4,6 +4,9 @@ import FairwayDivider from "@/components/FairwayDivider";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
+import BackToHeroButton from "@/components/BackToHeroButton";
+import HeroWords from "@/components/HeroWords";
+import { delay } from "@/components/EditorialKit";
 
 export type PackageDay = {
   label: string;
@@ -32,7 +35,8 @@ export default function PackageItineraryPage({ active, title, description, image
   return (
     <>
       <main className="bg-[#f7f5ee] text-[#14271d]">
-        <ScrollMotion />
+        {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
+        <ScrollMotion replay />
         <section className="relative isolate flex min-h-[660px] items-center overflow-hidden bg-[#102a1e] text-white">
           <Image
             src={image}
@@ -53,7 +57,7 @@ export default function PackageItineraryPage({ active, title, description, image
                 : undefined
             }
           >
-            <h1 className="mx-auto max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">{title}</h1>
+            <h1 className="mx-auto max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]"><HeroWords text={title} /></h1>
           </div>
         </section>
 
@@ -76,14 +80,14 @@ export default function PackageItineraryPage({ active, title, description, image
             </aside>
 
             <div className="min-w-0 md:pt-12">
-              <div className="max-w-4xl border-b border-[#1f3f2e]/18 pb-10">
+              <div data-reveal="up" className="max-w-4xl border-b border-[#1f3f2e]/18 pb-10">
                 <p className="text-sm font-medium leading-7 text-[#46554c]">{description}</p>
                 <p className="mt-5 text-sm leading-7 text-[#59665e]">This itinerary is only a starting point — the club can shape the tee times, meals, accommodation, transfers, and pace around your dates and your group.</p>
                 <Link href="/packages" className="mt-7 inline-flex h-10 items-center rounded-full bg-[#265136] px-6 font-navigation text-[9px] font-bold uppercase tracking-[0.13em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e]">Compare packages</Link>
               </div>
               <div className="max-w-4xl">
                 {days.map((day, index) => (
-                  <details key={day.label} className="group border-b border-[#1f3f2e]/25">
+                  <details key={day.label} data-reveal="up" style={delay(index * 80)} className="group border-b border-[#1f3f2e]/25">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 marker:hidden">
                       <span className="font-navigation text-xl font-semibold uppercase tracking-[-0.02em] text-[#24342b] sm:text-2xl">Day {index + 1}</span>
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#1f3f2e]/55 transition group-open:rotate-180"><span className="h-2.5 w-2.5 -translate-y-0.5 rotate-45 border-b border-r" /></span>
@@ -101,9 +105,9 @@ export default function PackageItineraryPage({ active, title, description, image
           </div>
         </section>
 
-        <section className="bg-[#f7f5ee] py-16 sm:py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:px-8"><div><p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Package starting point</p><h2 className="mt-4 text-[clamp(2rem,3.4vw,3.25rem)] font-medium leading-none tracking-[-0.05em]">What is included.</h2><p className="mt-5 max-w-xl text-sm leading-7 text-[#5d685f]">Final inclusions and rates are tailored to your dates, group size, accommodation, and availability.</p></div><ul className="divide-y divide-[#1f3f2e]/10 border-y border-[#1f3f2e]/10">{inclusions.map((item) => <li key={item} className="flex gap-3 py-4 text-sm leading-7 text-[#46554c]"><span className="text-[#98782f]">✓</span>{item}</li>)}</ul></div></section>
+        <section className="bg-[#f7f5ee] py-16 sm:py-20"><div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:px-8"><div data-reveal="up"><p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Package starting point</p><h2 className="mt-4 text-[clamp(2rem,3.4vw,3.25rem)] font-medium leading-none tracking-[-0.05em]">What is included.</h2><p className="mt-5 max-w-xl text-sm leading-7 text-[#5d685f]">Final inclusions and rates are tailored to your dates, group size, accommodation, and availability.</p></div><ul data-reveal="up" style={delay(90)} className="divide-y divide-[#1f3f2e]/10 border-y border-[#1f3f2e]/10">{inclusions.map((item) => <li key={item} className="flex gap-3 py-4 text-sm leading-7 text-[#46554c]"><span className="text-[#98782f]">✓</span>{item}</li>)}</ul></div></section>
         <section className="border-t border-[#1f3f2e]/10 bg-[#f7f5ee] px-6 py-16 text-center text-[#14271d]">
-          <h2 className="mx-auto max-w-2xl text-3xl font-medium tracking-[-0.045em] sm:text-4xl">
+          <h2 data-reveal="up" className="mx-auto max-w-2xl text-3xl font-medium tracking-[-0.045em] sm:text-4xl">
             Choose the dates. We’ll shape the trip.
           </h2>
           <div className="mt-8 flex justify-center">
@@ -117,6 +121,7 @@ export default function PackageItineraryPage({ active, title, description, image
         </section>
       </main>
       <Footer />
+      <BackToHeroButton />
     </>
   );
 }

@@ -137,6 +137,19 @@ const SECTION_EXTRAS: Record<
   ],
 };
 
+/* Temporary launch event for the Golf menu. Keep the date and availability
+   here so the desktop and mobile cards cannot drift apart when the club
+   publishes the confirmed tournament calendar. */
+const UPCOMING_TOURNAMENT = {
+  label: "CamSur Uptown Invitational",
+  href: "/events#occasions",
+  image: "/events/golf-tournaments-full-logo-2026-clean-4k-v3.png",
+  date: "Sat · 28 Nov 2026",
+  time: "7:00 AM shotgun start",
+  format: "18-hole team scramble",
+  status: "Registration open",
+} as const;
+
 /**
  * Nakabalik: inalis ito noong tinanggal ang maliit na hilera sa itaas ng
  * nav, at nasa pangunahing pindutan na ito ngayon.
@@ -198,6 +211,40 @@ function PhoneIcon() {
   );
 }
 
+function SearchIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
+      <circle cx="10.8" cy="10.8" r="6.3" stroke="currentColor" strokeWidth="1.9" />
+      <path d="m15.5 15.5 4 4" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden="true">
+      <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+const SEARCH_ITEMS = [
+  ...SITE_SECTIONS.flatMap((section) => [
+    { label: section.label, href: `/${section.slug}`, category: "Explore" },
+    ...section.links.map((link) => ({
+      label: link.label,
+      href: link.href,
+      category: section.label,
+    })),
+  ]),
+  { label: "Plan Your Visit", href: "/plan-your-visit", category: "Visitor information" },
+  { label: "Getting Here", href: "/getting-here", category: "Visitor information" },
+  { label: "Frequently Asked Questions", href: "/faq", category: "Visitor information" },
+  { label: "Contact Us", href: "/contact", category: "Visitor information" },
+] as const;
+
+const FEATURED_SEARCH_ITEMS = SEARCH_ITEMS.filter((item) => item.category === "Explore");
+
 export default function Header() {
   const pathname = usePathname();
   const { t } = useTranslation();
@@ -205,6 +252,8 @@ export default function Header() {
   const sectionLabel = (slug: string, fallback: string) => (slug in NAV_KEYS ? t(NAV_KEYS[slug]) : fallback);
   const [isScrolled, setIsScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   /** Slug ng section na binuksan sa loob ng mobile drawer; null = ugat na listahan. */
   const [mobileSection, setMobileSection] = useState<string | null>(null);
@@ -214,9 +263,12 @@ export default function Header() {
   const [hoveredExtra, setHoveredExtra] = useState<{ label: string; href: string; image?: string } | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const closeMenuTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchTriggerRef = useRef<HTMLButtonElement | null>(null);
   const lastScrollY = useRef(0);
   const compactHeader = useRef(false);
   const activeSection = NAV_SECTIONS.find((section) => section.slug === openMenu);
+  const desktopPanelOpen = Boolean(activeSection || searchOpen);
   const mobileSubsection = NAV_SECTIONS.find((section) => section.slug === mobileSection);
   const megaStyle = activeSection ? MEGA_STYLES[activeSection.slug] ?? "rules" : "rules";
   /* Ito ang nagpapasya kung tatlo o dalawa ang haligi ng panel. */
@@ -255,6 +307,31 @@ export default function Header() {
    * papunta sa pahinang binabasa na.
    */
   const isAwayFromHome = pathname !== "/";
+
+  const normalizedSearchQuery = searchQuery.trim().toLocaleLowerCase();
+  const searchResults = (normalizedSearchQuery
+    ? SEARCH_ITEMS.filter((item) => `${item.label} ${item.category}`.toLocaleLowerCase().includes(normalizedSearchQuery))
+    : FEATURED_SEARCH_ITEMS
+  ).slice(0, 8);
+
+  const openSearch = (trigger: HTMLButtonElement) => {
+    cancelScheduledClose();
+    clearPreview();
+    setOpenMenu(null);
+    setMobileMenuOpen(false);
+    if (searchOpen) {
+      setSearchOpen(false);
+      return;
+    }
+    searchTriggerRef.current = trigger;
+    setSearchQuery("");
+    setSearchOpen(true);
+  };
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    window.requestAnimationFrame(() => searchTriggerRef.current?.focus());
+  };
 
   /* Isinasara lang ang drawer; ang pagbalik sa ugat ay hinahawakan ng effect
      sa ibaba pagkatapos ng fade, para hindi kumislap ang unang antas. */
@@ -389,6 +466,7 @@ export default function Header() {
   const toggleDesktopMenu = (slug: string) => {
     cancelScheduledClose();
     clearPreview();
+    setSearchOpen(false);
     if (slug === "accommodations") setAccommodationSlideIndex(0);
     setOpenMenu((currentMenu) => currentMenu === slug ? null : slug);
   };
@@ -437,6 +515,7 @@ export default function Header() {
         lastScrollY.current = currentScrollY;
       } else if (currentScrollY > lastScrollY.current + 10) {
         setOpenMenu(null);
+        setSearchOpen(false);
         lastScrollY.current = currentScrollY;
       }
     };
@@ -452,13 +531,24 @@ export default function Header() {
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
+      if (searchOpen) {
+        setSearchOpen(false);
+        window.requestAnimationFrame(() => searchTriggerRef.current?.focus());
+        return;
+      }
       setOpenMenu(null);
       if (mobileSection) setMobileSection(null);
       else setMobileMenuOpen(false);
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [mobileSection]);
+  }, [mobileSection, searchOpen]);
+
+  useEffect(() => {
+    if (!searchOpen) return;
+    const focusFrame = window.requestAnimationFrame(() => searchInputRef.current?.focus());
+    return () => window.cancelAnimationFrame(focusFrame);
+  }, [searchOpen]);
 
   /* Ibinabalik sa ugat ang drawer pagkatapos nitong magsara, hindi habang
      nagsasara, para hindi kumislap ang unang antas sa panahon ng fade. */
@@ -476,6 +566,7 @@ export default function Header() {
         setHoveredPreviewIndex(null);
         setHoveredExtra(null);
         setOpenMenu(null);
+        setSearchOpen(false);
       }
     };
 
@@ -499,6 +590,7 @@ export default function Header() {
     const closeFrame = window.requestAnimationFrame(() => {
       setMobileMenuOpen(false);
       setOpenMenu(null);
+      setSearchOpen(false);
     });
     return () => window.cancelAnimationFrame(closeFrame);
   }, [pathname]);
@@ -631,7 +723,7 @@ export default function Header() {
           <nav
             data-nav="hero"
             aria-label="Primary navigation"
-            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : openMenu ? "visible max-h-16 w-[min(820px,calc(100vw-34rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#265136] px-5 py-2 opacity-100 shadow-none 2xl:w-[900px]" : /* `w-auto`, HINDI NAKATAKDANG LAPAD. Nakapirmi ito sa 760px dati —
+            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : desktopPanelOpen ? "visible max-h-16 w-[min(820px,calc(100vw-34rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#265136] px-5 py-2 opacity-100 shadow-none 2xl:w-[900px]" : /* `w-auto`, HINDI NAKATAKDANG LAPAD. Nakapirmi ito sa 760px dati —
                    sukat para sa pitong item. Sa anim ay 625px na lang ang
                    laman, kaya 123px na bakante ang ipinapamahagi ng
                    `justify-evenly` bilang 17px na puwang sa pagitan ng bawat
@@ -642,7 +734,7 @@ export default function Header() {
                    hindi na kailangang sukatin muli kapag may idinagdag o
                    inalis sa SITE_SECTIONS. Ang `max-w` ang humahawak nito sa
                    loob ng screen kapag marami na ang item. */
-                "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-[#d8b65b]/20 bg-[#265136]/88 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.16)]"} ${openMenu ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-[#f3dda0] backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
+                "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-[#d8b65b]/20 bg-[#265136]/88 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.16)]"} ${desktopPanelOpen ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-[#f3dda0] backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
           >
             {isAwayFromHome ? (
               <Link href="/" onClick={closeDesktopMenu} className={NAV_ITEM_CLASS}>
@@ -662,6 +754,18 @@ export default function Header() {
                 {sectionLabel(item.slug, item.label).toUpperCase()}
               </button>
             ))}
+            <span className="ml-0.5 flex items-center border-l border-[#f3dda0]/20 pl-1">
+              <button
+                type="button"
+                onClick={(event) => openSearch(event.currentTarget)}
+                aria-label="Search this site"
+                aria-expanded={searchOpen}
+                aria-controls="site-search-panel"
+                className={`${searchOpen ? "bg-[#56725f]" : ""} flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#f3dda0] transition-colors duration-200 hover:bg-[#56725f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]`}
+              >
+                <SearchIcon />
+              </button>
+            </span>
           </nav>
         </div>
 
@@ -841,6 +945,45 @@ export default function Header() {
                 })}
               </ul>
 
+              {mobileSubsection.slug === "golf" ? (
+                <div className="mt-5 border-t border-white/12 pt-5">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0]">
+                    Upcoming tournament
+                  </p>
+                  <Link
+                    href={UPCOMING_TOURNAMENT.href}
+                    onClick={closeMobileNav}
+                    className="group mt-3 block overflow-hidden rounded-2xl border border-white/12 bg-white/[0.05] transition-colors hover:border-[#f3dda0]/35 hover:bg-white/[0.08]"
+                    aria-label={`${UPCOMING_TOURNAMENT.label}, ${UPCOMING_TOURNAMENT.date}, ${UPCOMING_TOURNAMENT.status}`}
+                  >
+                    <span className="relative block aspect-[1.8] overflow-hidden bg-[#173b28]">
+                      <Image
+                        src={UPCOMING_TOURNAMENT.image}
+                        alt=""
+                        fill
+                        sizes="340px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.035]"
+                      />
+                      <span className="absolute inset-0 bg-gradient-to-t from-[#071a12]/70 via-transparent to-transparent" aria-hidden="true" />
+                      <span className="absolute bottom-3 left-3 rounded-full bg-[#e7d18d] px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.12em] text-[#14271d]">
+                        {UPCOMING_TOURNAMENT.status}
+                      </span>
+                    </span>
+                    <span className="block p-4">
+                      <span className="block text-[9px] font-bold uppercase tracking-[0.15em] text-[#f3dda0]">
+                        {UPCOMING_TOURNAMENT.date}
+                      </span>
+                      <span className="mt-1.5 block text-base font-semibold leading-snug text-white">
+                        {UPCOMING_TOURNAMENT.label}
+                      </span>
+                      <span className="mt-2 block text-xs leading-5 text-white/60">
+                        {UPCOMING_TOURNAMENT.time} · {UPCOMING_TOURNAMENT.format}
+                      </span>
+                    </span>
+                  </Link>
+                </div>
+              ) : null}
+
               {mobileSubsection.slug !== "accommodations" ? (
                 <Link
                   href={`/${mobileSubsection.slug}`}
@@ -951,7 +1094,85 @@ export default function Header() {
             {item.label.toUpperCase()}
           </button>
         ))}
+        <span className="ml-0.5 flex items-center border-l border-[#f3dda0]/20 pl-1">
+          <button
+            type="button"
+            onClick={(event) => openSearch(event.currentTarget)}
+            aria-label="Search this site"
+            aria-expanded={searchOpen}
+            aria-controls="site-search-panel"
+            className={`${searchOpen ? "bg-[#56725f]" : ""} flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#f3dda0] transition-colors duration-200 hover:bg-[#56725f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]`}
+          >
+            <SearchIcon />
+          </button>
+        </span>
       </nav>
+
+      {searchOpen && (
+        <section
+          id="site-search-panel"
+          role="search"
+          aria-labelledby="site-search-title"
+          className={`${isScrolled ? "top-[80px]" : "top-[98px]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-b-[1.6rem] rounded-t-none border border-t-0 border-white/10 bg-[#265136] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block 2xl:w-[900px]`}
+        >
+          <div className={`${isScrolled ? "pt-4" : "pt-8"} px-5 pb-5`}>
+            <div className="flex items-center gap-4 border-b border-white/10 pb-4">
+              <label htmlFor="site-search-input" className="sr-only">
+                Search pages, golf holes, and experiences
+              </label>
+              <div className="flex h-12 min-w-0 flex-1 items-center gap-3 rounded-full border border-[#f3dda0]/25 bg-white/[0.055] px-4 transition-colors focus-within:border-[#f3dda0]/65 focus-within:bg-white/[0.08]">
+                <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[#f3dda0]" />
+                <input
+                  ref={searchInputRef}
+                  id="site-search-input"
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search pages, golf holes, experiences..."
+                  autoComplete="off"
+                  className="h-full min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/40 xl:text-base"
+                />
+              </div>
+            </div>
+
+            <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]/60">
+              {normalizedSearchQuery ? `${searchResults.length} result${searchResults.length === 1 ? "" : "s"}` : ""}
+            </p>
+
+            {/* Cap na kasya ang 6 browse cards nang walang scrollbar (3 hilera
+                ~340px), pero nag-scroll pa rin kapag mahaba ang typed results
+                para hindi umabot sa ibaba ng screen ang panel. */}
+            <div className="mt-2 grid max-h-[min(66vh,400px)] grid-cols-2 gap-2 overflow-y-auto pr-1" aria-live="polite">
+              {searchResults.length ? searchResults.map((item) => (
+                <Link
+                  key={`${item.href}-${item.label}`}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                  onClick={() => setSearchOpen(false)}
+                  className="group flex min-h-16 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 transition-colors hover:border-[#f3dda0]/30 hover:bg-white/[0.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]"
+                >
+                  <span className="min-w-0">
+                    <span className="block truncate text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0]/85">
+                      {item.category}
+                    </span>
+                    <span className="mt-1 block text-sm font-medium text-white/85 transition-colors group-hover:text-white xl:text-base">
+                      {item.label}
+                    </span>
+                  </span>
+                  <span className="scale-125 text-[#f3dda0]">
+                    <ArrowRightIcon />
+                  </span>
+                </Link>
+              )) : (
+                <p className="col-span-2 rounded-2xl border border-dashed border-white/12 px-5 py-8 text-center text-sm text-white/55">
+                  No pages found. Try a shorter search.
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {activeSection && (
         <div
@@ -1013,7 +1234,7 @@ export default function Header() {
               ang preview column sa lahat ng tab, kaya hindi nagbabago ang
               laki ng card kapag nagpalit ng section. */}
           <div
-            className={`${sectionExtras ? "grid-cols-[240px_minmax(0,1fr)_160px] 2xl:grid-cols-[280px_minmax(0,1fr)_180px]" : hidesHighlights ? "grid-cols-[minmax(0,3fr)_minmax(240px,2fr)]" : "grid-cols-[240px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)]"} grid`}
+            className={`${sectionExtras ? "grid-cols-[240px_minmax(0,1fr)_190px] 2xl:grid-cols-[280px_minmax(0,1fr)_210px]" : hidesHighlights ? "grid-cols-[minmax(0,3fr)_minmax(240px,2fr)]" : "grid-cols-[240px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)]"} grid`}
           >
             {/* UMUUNAT ANG LARAWAN, HINDI NAKATAKDA ANG HUGIS. `aspect-[1.35]`
                 ito dati — 175×129 anuman ang taas ng panel — kaya may patay
@@ -1048,7 +1269,7 @@ export default function Header() {
                    pumuputol sa dalawang linya ang mahahabang pangalan.
                    Isang salita na lang ito, kaya 36px na ang lahat.
                    Kapag ibinalik ang pangalan ng section, itaas ulit. */
-                className={`${hidesHighlights ? "min-h-[360px]" : "min-h-[229px]"} group flex flex-1 flex-col`}
+                className={`${hidesHighlights ? "mega-item min-h-[360px]" : "min-h-[229px]"} group flex flex-1 flex-col`}
               >
                 <div className={`${hidesHighlights ? "min-h-[245px] rounded-xl" : "min-h-[129px] rounded-lg"} relative flex-1 overflow-hidden bg-[#265136]`}>
                   <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes={hidesHighlights ? "600px" : "220px"} className="mega-preview-image object-cover opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
@@ -1160,7 +1381,8 @@ export default function Header() {
                   <Link
                     href="/faq"
                     onClick={closeDesktopMenu}
-                    className="group/help border-b border-white/10 py-5 text-white/75 transition-colors hover:text-[#f1d98f]"
+                    className="mega-item group/help border-b border-white/10 py-5 text-white/75 transition-colors hover:text-[#f1d98f]"
+                    style={{ animationDelay: "90ms" }}
                   >
                     <span className="flex items-center justify-between gap-3">
                       <span className="text-[12px] font-semibold uppercase tracking-[0.06em]">FAQ</span>
@@ -1196,7 +1418,8 @@ export default function Header() {
                         <Link
                           key={`${link.href}-${link.label}`}
                           {...highlightLinkProps(link, index)}
-                          className="group/card block"
+                          className="mega-item group/card block"
+                          style={{ animationDelay: `${index * 45}ms` }}
                         >
                           <div
                             className="relative aspect-[1.25] overflow-hidden rounded-lg bg-[#265136]"
@@ -1262,7 +1485,8 @@ export default function Header() {
                            dalawang-linyang "Playground & Outdoor Basketball
                            Court". Ang `min-h` at `items-center` ang nagpapantay
                            ng ritmo ng hilera kahit may pumutol na linya. */
-                        className={`${hoveredPreviewIndex === index ? "text-[#f1d98f]" : "text-white/72"} flex min-h-[34px] items-center text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#f1d98f]`}
+                        className={`mega-item ${hoveredPreviewIndex === index ? "text-[#f1d98f]" : "text-white/72"} flex min-h-[34px] items-center text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#f1d98f]`}
+                        style={{ animationDelay: `${index * 45}ms` }}
                       >
                         {link.label}
                       </Link>
@@ -1284,7 +1508,8 @@ export default function Header() {
                         /* Walang `first:border-t`: ang hairline sa ilalim ng
                            heading na ang nagsasara ng itaas ng listahan.
                            Kapag mayroon, dalawang guhit na 16px ang pagitan. */
-                        className="group/rule flex items-center justify-between gap-3 border-b border-white/10 py-4 text-white/72 transition-colors duration-200 hover:text-[#f1d98f]"
+                        className="mega-item group/rule flex items-center justify-between gap-3 border-b border-white/10 py-4 text-white/72 transition-colors duration-200 hover:text-[#f1d98f]"
+                        style={{ animationDelay: `${index * 45}ms` }}
                       >
                         <span className="text-[12px] font-semibold uppercase tracking-[0.05em]">{link.label}</span>
                         <span className="text-[#e7d18d] opacity-0 transition-opacity duration-300 group-hover/rule:opacity-100" aria-hidden="true">→</span>
@@ -1334,6 +1559,43 @@ export default function Header() {
                         );
                       })}
                     </div>
+
+                    {activeSection.slug === "golf" && group.heading === "Competition" ? (
+                      <Link
+                        href={UPCOMING_TOURNAMENT.href}
+                        onClick={closeDesktopMenu}
+                        onMouseEnter={() => setHoveredExtra(UPCOMING_TOURNAMENT)}
+                        onFocus={() => setHoveredExtra(UPCOMING_TOURNAMENT)}
+                        className="mega-item group/event mt-4 block overflow-hidden rounded-xl border border-white/12 bg-white/[0.045] transition duration-300 hover:-translate-y-0.5 hover:border-[#f3dda0]/35 hover:bg-white/[0.075] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]"
+                        style={{ animationDelay: "90ms" }}
+                        aria-label={`${UPCOMING_TOURNAMENT.label}, ${UPCOMING_TOURNAMENT.date}, ${UPCOMING_TOURNAMENT.status}`}
+                      >
+                        <span className="relative block aspect-[1.45] overflow-hidden bg-[#173b28]">
+                          <Image
+                            src={UPCOMING_TOURNAMENT.image}
+                            alt=""
+                            fill
+                            sizes="180px"
+                            className="object-cover transition-transform duration-500 group-hover/event:scale-[1.04]"
+                          />
+                          <span className="absolute inset-0 bg-gradient-to-t from-[#071a12]/70 via-transparent to-transparent" aria-hidden="true" />
+                          <span className="absolute bottom-2 left-2 rounded-full bg-[#e7d18d] px-2 py-1 text-[7px] font-bold uppercase tracking-[0.12em] text-[#14271d]">
+                            {UPCOMING_TOURNAMENT.status}
+                          </span>
+                        </span>
+                        <span className="block p-3">
+                          <span className="block text-[8px] font-bold uppercase tracking-[0.14em] text-[#f3dda0]">
+                            {UPCOMING_TOURNAMENT.date}
+                          </span>
+                          <span className="mt-1.5 block text-[11px] font-semibold leading-[1.3] text-white">
+                            {UPCOMING_TOURNAMENT.label}
+                          </span>
+                          <span className="mt-2 block text-[9px] leading-4 text-white/55">
+                            {UPCOMING_TOURNAMENT.time}<br />{UPCOMING_TOURNAMENT.format}
+                          </span>
+                        </span>
+                      </Link>
+                    ) : null}
                   </div>
                 ))}
               </div>

@@ -30,7 +30,9 @@ import Image from "next/image";
 
 const STAGE_VH = 220;
 const TEXT_START = 0;
-const TEXT_END = 0.3;
+/* Mas maliit = mas mabilis buong lumabas ang caption (mas kaunting delay).
+   Sa 0.15, buo na ito pagkatapos ng ~15% ng stage, hindi 30%. */
+const TEXT_END = 0.15;
 
 type Occasion = {
   readonly title: string;
@@ -113,6 +115,7 @@ export default function EventsOccasions({ occasions }: { occasions: readonly Occ
           {/* Naka-pin na larawan — pumupuno sa buong tanaw. Neutral (itim) ang
               fallback bg kaya walang berdeng gilid habang naglo-load. */}
           <div className="sticky top-0 h-screen overflow-hidden bg-black">
+            {/* Static (walang galaw) ang larawan — pumupuno lang sa tanaw. */}
             <Image src={occasion.image} alt={occasion.imageAlt} fill sizes="100vw" className="object-cover" />
 
             {/* Kasabay ng caption ang dark overlay. Pinakamalalim sa

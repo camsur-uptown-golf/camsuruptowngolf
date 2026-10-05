@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
+import ScrollReveal from "@/components/ScrollReveal";
 import { EDITORIAL_SECTION_ALT, Shell, delay } from "@/components/EditorialKit";
 
 /**
@@ -93,12 +94,14 @@ function ThePackages() {
               <article
                 key={pack.slug}
                 id={pack.slug}
-                data-reveal="up"
-                style={delay(index * 120)}
                 className={`${imageOnRight ? "lg:grid-cols-[1fr_3fr]" : "lg:grid-cols-[3fr_1fr]"} grid scroll-mt-28 items-center gap-10 lg:gap-12`}
               >
+                {/* Scroll reveal via IntersectionObserver (ScrollReveal.tsx):
+                    galing sa sariling panig ang larawan, nag-a-animate ulit sa
+                    bawat pasok — scroll down man o pataas. */}
                 <Link
                   href={pack.href}
+                  data-scroll-anim={imageOnRight ? "slide-right" : "slide-left"}
                   className={`${imageOnRight ? "lg:order-2" : ""} group relative isolate block aspect-[3/2] overflow-hidden bg-[#1f3f2e] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
                 >
                   {/* Napakalapad na panorama ang getaway hero (2.36:1), at nasa
@@ -122,7 +125,9 @@ function ThePackages() {
                   />
                 </Link>
 
-                <div className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
+                {/* Umaangat na teksto (data-scroll-anim="rise"), kasabay ng
+                    side-slide ng larawan; nag-a-animate ulit sa bawat pasok. */}
+                <div data-scroll-anim="rise" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
                   <p className="relative text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
                     {pack.who}
                   </p>
@@ -199,6 +204,7 @@ export default function PackagesDetails() {
   return (
     <>
       <ScrollMotion />
+      <ScrollReveal />
       <ThePackages />
       <PackagesCta />
     </>

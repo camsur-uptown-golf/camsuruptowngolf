@@ -181,7 +181,9 @@ function Introduction() {
 export default function Home() {
   return (
     <>
-      <ScrollMotion />
+      {/* replay: umuulit ang mga reveal sa bawat pasok (scroll down o pataas),
+          kaya walang dead air. */}
+      <ScrollMotion replay />
       <main>
         <Hero />
         <Introduction />

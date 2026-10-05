@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
+import ScrollReveal from "@/components/ScrollReveal";
+import BackToHeroButton from "@/components/BackToHeroButton";
 import ClubhouseRooms from "@/components/ClubhouseRooms";
-import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
+import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
 import { CLUBHOUSE_DAY } from "@/lib/clubhouse";
 
 /**
@@ -25,6 +27,7 @@ export default function ClubhouseDetails() {
   return (
     <>
       <ScrollMotion />
+      <ScrollReveal />
 
       {/* Ang mga area bilang scrollytelling tour — ito na ang unang malaking
           bahagi: nauuna ang nakikita (mga larawan ng espasyo) bago ang mas
@@ -64,11 +67,14 @@ export default function ClubhouseDetails() {
             return (
               <div
                 key={part.time}
-                data-reveal="up"
-                style={delay(index * 120)}
                 className={`${imageOnRight ? "lg:grid-cols-[1fr_2.4fr]" : "lg:grid-cols-[2.4fr_1fr]"} grid items-center gap-10 lg:gap-14`}
               >
+                {/* Scroll reveal via IntersectionObserver (ScrollReveal.tsx):
+                    galing-gilid ang larawan, umaangat ang teksto, at nag-a-
+                    animate ULIT sa bawat pasok — scroll down man o pataas, kaya
+                    walang dead air. */}
                 <div
+                  data-scroll-anim={imageOnRight ? "slide-right" : "slide-left"}
                   className={`${imageOnRight ? "lg:order-2" : ""} relative aspect-[3/2] overflow-hidden rounded-2xl bg-[#1f3f2e] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
                 >
                   <Image
@@ -80,7 +86,7 @@ export default function ClubhouseDetails() {
                   />
                 </div>
 
-                <div className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
+                <div data-scroll-anim="rise" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
                   <p className="relative font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
                     {part.time}
                   </p>
@@ -119,6 +125,7 @@ export default function ClubhouseDetails() {
         </Shell>
       </section>
 
+      <BackToHeroButton />
     </>
   );
 }

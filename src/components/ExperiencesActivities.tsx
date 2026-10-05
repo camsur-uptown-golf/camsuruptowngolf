@@ -6,7 +6,8 @@ import Image from "next/image";
 
 const STAGE_VH = 220;
 const TEXT_START = 0;
-const TEXT_END = 0.3;
+/* Mas mabilis buong lumabas ang caption (~15% ng stage), tugma sa /events. */
+const TEXT_END = 0.15;
 
 type Activity = {
   readonly id: string;
@@ -79,6 +80,7 @@ export default function ExperiencesActivities({ kicker, items }: { kicker: strin
           style={{ height: `${STAGE_VH}vh` }}
         >
           <div className="sticky top-0 h-screen overflow-hidden bg-black">
+            {/* Static (walang galaw) ang larawan — pumupuno lang sa tanaw. */}
             <Image src={item.image} alt={item.name} fill sizes="100vw" className="object-cover" />
 
             <div
@@ -119,7 +121,7 @@ export default function ExperiencesActivities({ kicker, items }: { kicker: strin
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-6 inline-flex h-11 items-center gap-3 rounded-full border border-[#e7d18d]/70 bg-black/20 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#f0d98f] backdrop-blur-[2px] transition-colors hover:border-[#e7d18d] hover:bg-[#e7d18d] hover:text-[#14271d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d] xl:text-[11px]"
+                    className="mt-6 inline-flex h-11 items-center gap-3 rounded-full border border-[#e7d18d]/70 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#f0d98f] transition-colors hover:border-[#e7d18d] hover:bg-[#e7d18d] hover:text-[#14271d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d] xl:text-[11px]"
                   >
                     View facility <span aria-hidden="true">↗</span>
                   </a>

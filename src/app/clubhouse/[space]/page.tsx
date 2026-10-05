@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import ClubhouseGallery from "@/components/ClubhouseGallery";
+import HeroWords from "@/components/HeroWords";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
 import { CLUBHOUSE_SPACES } from "@/lib/clubhouse";
 
@@ -48,7 +49,8 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
   return (
     <>
       <main>
-        <ScrollMotion />
+        {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
+        <ScrollMotion replay />
 
         <section id="top" className="relative isolate flex min-h-[560px] items-end overflow-hidden bg-[#071d13] text-white sm:min-h-[640px]">
           <Image
@@ -64,11 +66,10 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             aria-hidden="true"
           />
           <div className="mx-auto w-full max-w-4xl px-6 pb-16 pt-56 sm:px-10 sm:pb-20 lg:px-12 xl:max-w-5xl">
-            <h1
-              data-reveal="up"
-              className="max-w-3xl text-[clamp(2.25rem,4.5vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]"
-            >
-              {space.name}
+            {/* Word-by-word na pagpasok sa pag-load (HeroWords). Inalis ang
+                `data-reveal="up"`: iisa na lang ang entrance, ang word-by-word. */}
+            <h1 className="max-w-3xl text-[clamp(2.25rem,4.5vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]">
+              <HeroWords text={space.name} />
             </h1>
           </div>
         </section>

@@ -157,7 +157,8 @@ function GolfCta() {
 export default function GolfDetails() {
   return (
     <>
-      <ScrollMotion />
+      {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
+      <ScrollMotion replay />
       <Overview />
       <CourseRoutingMap />
       <ConceptCarousel />

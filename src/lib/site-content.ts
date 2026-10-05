@@ -437,7 +437,7 @@ export const SITE_SECTIONS = [
   {
     slug: "experiences",
     label: "Experiences",
-    eyebrow: "Beyond the course",
+    eyebrow: "Experience",
     title: "World-class experiences beyond the course",
     description: "Wakepark, ATV trails, a bike track, pickle ball courts, and the quieter corners of the resort — for the days between rounds, and for everyone not playing.",
     image: "/experiences/banner11-dehazed.jpg",
@@ -450,12 +450,12 @@ export const SITE_SECTIONS = [
       {
         label: "Pickle Ball",
         href: "https://pickleball.camsur.com/",
-        image: "/experiences/pickleball.webp",
+        image: "/experiences/pickleball-enhanced.png",
       },
       { label: "Skate Park", href: "https://visitcamsur.com/facilities/skate-park", image: "/experiences/skate-park.webp" },
       { label: "Bike Track", href: "https://visitcamsur.com/facilities/bike-track", image: "/experiences/bike-track.webp" },
       {
-        label: "Playground & Outdoor Basketball Court",
+        label: "Outdoor/Indoor Basketball Court",
         href: "https://visitcamsur.com/facilities/playground",
         image: "/experiences/playground-basketball.webp",
       },
