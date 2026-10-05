@@ -85,7 +85,10 @@ const MOBILE_GOLF_HIGHLIGHTS = 6;
 function namesGridClass(count: number, sectionSlug: string) {
   if (count > 12) return "grid-flow-col grid-rows-[repeat(6,max-content)] grid-cols-3";
   if (sectionSlug === "experiences") {
-    return "grid-flow-col grid-rows-[repeat(6,max-content)] grid-cols-[180px_180px] justify-start";
+    /* Limang hilera bawat haligi (5×5 ang 10 highlight, pantay) at mas makit
+       na haligi (140px) para lumiit ang lawak ng highlights — napupunta ang
+       natitirang espasyo sa preview column sa kaliwa. */
+    return "grid-flow-col grid-rows-[repeat(5,max-content)] grid-cols-[140px_140px] justify-start";
   }
   if (count > 6) return "grid-flow-col grid-rows-[repeat(5,max-content)] grid-cols-[180px_180px] justify-start";
   return "grid-cols-[220px] justify-start";
@@ -138,7 +141,7 @@ const SECTION_EXTRAS: Record<
         {
           label: "CWC Clubhouse",
           href: "https://visitcamsur.com/facilities/clubhouse",
-          image: "/dining/clubhouse.webp",
+          image: "/experiences/cwc-clubhouse-clean-4k.webp",
         },
       ],
     },
@@ -186,7 +189,7 @@ function CalendarIcon({ className = "h-4 w-4 shrink-0" }: { className?: string }
  * nagkaiba ang dalawang nav dito, iba ang sukat ng pill kapag naka-scroll.
  */
 const NAV_ITEM_CLASS =
-  "pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-2.5 py-2.5 transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f3dda0] xl:px-3.5";
+  "pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-2 py-2.5 transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f3dda0] xl:px-3";
 
 /* Pang-CTA sa mega menu. Hiwalay sa `ChevronIcon`: chevron iyon para sa
    mga listahan at drawer, at mahaba ang arrow na ito para sa pindutan. */
@@ -731,7 +734,7 @@ export default function Header() {
           <nav
             data-nav="hero"
             aria-label="Primary navigation"
-            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : desktopPanelOpen ? "visible max-h-16 w-[min(820px,calc(100vw-34rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#265136] px-5 py-2 opacity-100 shadow-none 2xl:w-[900px]" : /* `w-auto`, HINDI NAKATAKDANG LAPAD. Nakapirmi ito sa 760px dati —
+            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : desktopPanelOpen ? "visible max-h-16 w-[min(820px,calc(100vw-34rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#265136] px-3 py-2 opacity-100 shadow-none 2xl:w-[900px]" : /* `w-auto`, HINDI NAKATAKDANG LAPAD. Nakapirmi ito sa 760px dati —
                    sukat para sa pitong item. Sa anim ay 625px na lang ang
                    laman, kaya 123px na bakante ang ipinapamahagi ng
                    `justify-evenly` bilang 17px na puwang sa pagitan ng bawat
@@ -762,7 +765,7 @@ export default function Header() {
                 {sectionLabel(item.slug, item.label).toUpperCase()}
               </button>
             ))}
-            <span className="ml-0.5 flex items-center border-l border-[#f3dda0]/20 pl-1">
+            <span className="flex items-center border-l border-[#f3dda0]/20 pl-1">
               <button
                 type="button"
                 onClick={(event) => openSearch(event.currentTarget)}
@@ -844,11 +847,11 @@ export default function Header() {
             telepono at malayo sila sa MENU sa gitna. Ang `gap` na ito ang
             nagtatakda ng layo ngayon, at `justify-self-center` ang
             nagpapanatili nitong nakagitna sa grid ng header. */}
-        <div className="pointer-events-auto flex w-auto items-center justify-self-center gap-10 rounded-full border border-white/20 bg-[#265136]/95 px-5 py-2.5 shadow-[0_14px_36px_rgba(0,0,0,0.22)] backdrop-blur-xl lg:hidden">
+        <div className="pointer-events-auto flex w-auto items-center justify-self-center gap-7 rounded-full border border-white/20 bg-[#265136]/95 px-4 py-2 shadow-[0_14px_36px_rgba(0,0,0,0.22)] backdrop-blur-xl lg:hidden">
           <Link
             href="/"
             aria-label="Camsur Uptown Golf Club — home"
-            className="flex h-11 shrink-0 items-center"
+            className="flex h-10 shrink-0 items-center"
           >
             {/* Shield lang, walang wordmark. Sinubukan ang buong logo dito
                 pero portrait ito at apat na linya ang wordmark: kailangan ng
@@ -862,7 +865,7 @@ export default function Header() {
               width={911}
               height={1251}
               priority
-              className="h-9 w-auto"
+              className="h-8 w-auto"
             />
           </Link>
 
@@ -885,7 +888,7 @@ export default function Header() {
           <a
             href={PHONE_HREF}
             aria-label={`Call ${PHONE_LABEL}`}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/35 text-white/90 transition hover:border-[#f1d98f] hover:text-[#f1d98f]"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 text-white/90 transition hover:border-[#f1d98f] hover:text-[#f1d98f]"
           >
             <PhoneIcon />
           </a>
@@ -1260,7 +1263,7 @@ export default function Header() {
               ang preview column sa lahat ng tab, kaya hindi nagbabago ang
               laki ng card kapag nagpalit ng section. */}
           <div
-            className={`${sectionExtras ? "grid-cols-[240px_minmax(0,1fr)_190px] 2xl:grid-cols-[280px_minmax(0,1fr)_210px]" : hidesHighlights ? "grid-cols-[minmax(0,3fr)_minmax(240px,2fr)]" : "grid-cols-[240px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)]"} grid`}
+            className={`${activeSection.slug === "experiences" ? "grid-cols-[minmax(0,1fr)_max-content_190px] 2xl:grid-cols-[minmax(0,1fr)_max-content_210px]" : sectionExtras ? "grid-cols-[240px_minmax(0,1fr)_190px] 2xl:grid-cols-[280px_minmax(0,1fr)_210px]" : hidesHighlights ? "grid-cols-[minmax(0,3fr)_minmax(240px,2fr)]" : "grid-cols-[240px_minmax(0,1fr)] 2xl:grid-cols-[280px_minmax(0,1fr)]"} grid`}
           >
             {/* UMUUNAT ANG LARAWAN, HINDI NAKATAKDA ANG HUGIS. `aspect-[1.35]`
                 ito dati — 175×129 anuman ang taas ng panel — kaya may patay

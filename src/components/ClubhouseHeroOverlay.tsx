@@ -97,11 +97,14 @@ export default function ClubhouseHeroOverlay() {
           transform: "translateY(var(--clubhouse-facts-shift))",
         }}
       >
-        <dl className="mx-auto grid max-w-3xl grid-cols-2 overflow-hidden rounded-xl border border-[#d1af58]/25 bg-[#1f3f2e]/85 text-center shadow-[0_16px_44px_rgba(6,26,17,0.32)] backdrop-blur-md sm:grid-cols-3">
+        {/* Tatlong fact lang (sinala ang "Square metres" at "Levels + rooftop"),
+            kaya `grid-cols-3` sa lahat ng lapad — isang malinis na row. Dati ay
+            `grid-cols-2` sa mobile, kaya nag-iisa ang pangatlo sa ibabang row. */}
+        <dl className="mx-auto grid max-w-3xl grid-cols-3 overflow-hidden rounded-xl border border-[#d1af58]/25 bg-[#1f3f2e]/85 text-center shadow-[0_16px_44px_rgba(6,26,17,0.32)] backdrop-blur-md">
           {HERO_FACTS.map((fact, index) => (
             <div
               key={fact.label}
-              className={`flex min-h-[68px] flex-col justify-center px-3 py-3 sm:min-h-[80px] sm:px-4 ${index % 2 ? "border-l border-[#c9a54e]/15" : ""} ${index > 1 ? "border-t border-[#c9a54e]/15 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-[#c9a54e]/15" : ""}`}
+              className={`flex min-h-[68px] flex-col justify-center px-2 py-3 sm:min-h-[80px] sm:px-4 ${index > 0 ? "border-l border-[#c9a54e]/15" : ""}`}
             >
               <dt className="font-display text-xl font-medium leading-none tracking-[-0.04em] text-[#f2d98d] sm:text-2xl">
                 {fact.value}

@@ -28,6 +28,11 @@ const ACTIVITIES = [
     id: "wakepark",
     name: "Wakepark",
     image: "/experiences/wakepark.webp",
+    /* Background video (Cloudinary CDN). `f_auto,q_auto` — awtomatikong
+       pinipili ng Cloudinary ang pinakamagaan na format/quality kada browser.
+       Ang `/experiences/wakepark.webp` sa itaas ang poster/fallback habang
+       nilo-load o kung mabigo ang video. Landscape ang clip, kaya object-cover. */
+    video: "https://res.cloudinary.com/diwrwmjgw/video/upload/f_auto,q_auto/snapgram_compressed_k4dqif.mp4",
     href: "https://visitcamsur.com/facilities/wakepark",
     description:
       "A cable wake system over open water, with gear and instruction for first-timers as well as riders working on their own lines.",
@@ -149,8 +154,8 @@ export default function ExperiencesDetails() {
       <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] pb-14 pt-4 sm:pb-16 sm:pt-6">
         <Shell>
           <EditorialHeading
-            title="Everything beyond the round."
-            intro="Wakepark, ATV trails, a bike track, pickle ball courts, and the quieter corners of the resort — for the days between rounds, and for everyone not playing."
+            title="Come find your adventure."
+            intro="Take on the wakepark, pickle ball, basketball, and ATV trails, or unwind with a massage and the resort's quieter corners — there's something here for everyone."
             size="lg"
           />
         </Shell>

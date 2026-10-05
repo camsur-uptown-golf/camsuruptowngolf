@@ -13,6 +13,11 @@ type Activity = {
   readonly id: string;
   readonly name: string;
   readonly image: string;
+  /* Opsyonal na background video (lokal na MP4 sa /public). Kapag may nito,
+     tumutugtog ito sa ibabaw ng larawan; ang larawan ang nananatiling poster
+     habang nilo-load o kung mabigo ang video. Dapat muted + loop + playsInline
+     para payagan ng browser ang autoplay. */
+  readonly video?: string;
   readonly href: string;
   readonly description: string;
 };
@@ -80,8 +85,24 @@ export default function ExperiencesActivities({ kicker, items }: { kicker: strin
           style={{ height: `${STAGE_VH}vh` }}
         >
           <div className="sticky top-0 h-screen overflow-hidden bg-black">
-            {/* Static (walang galaw) ang larawan — pumupuno lang sa tanaw. */}
+            {/* Larawan: nasa likod bilang poster/fallback. Kapag may video ang
+                activity, tumutugtog ito sa ibabaw; kung mabigo (404 o hindi
+                suportado), nananatiling kita ang larawan sa likod. */}
             <Image src={item.image} alt={item.name} fill sizes="100vw" className="object-cover" />
+            {item.video ? (
+              <video
+                src={item.video}
+                poster={item.image}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                aria-hidden="true"
+                tabIndex={-1}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : null}
 
             <div
               aria-hidden="true"
