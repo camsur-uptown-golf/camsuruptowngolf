@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
 
 function scrollToTopImmediately() {
@@ -23,29 +23,18 @@ export default function RouteScrollReset() {
     return () => window.cancelAnimationFrame(frame);
   }, [pathname]);
 
-  useEffect(() => {
-    const resetBeforeInternalNavigation = (event: MouseEvent) => {
-      /* Kinakansela ng PageCurtain ang click para ito na ang maghatid sa
-         bagong ruta. Kung mag-i-scroll pa rin tayo dito, tatalon ang pahina
-         bago pa man tumakip ang kurtina at kitang-kita iyon. */
-      if (event.defaultPrevented) return;
-      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  /* INALIS ANG PAG-SCROLL BAGO MAG-NAVIGATE, KASAMA NG PAGECURTAIN.
+     May pangalawang effect dito dati na nakikinig sa bawat click sa loob
+     ng site at nag-i-scroll pataas bago pa lumipat ng ruta. May silbi iyon
+     noong may kurtina: kinakansela ng PageCurtain ang click, kaya nakatakip
+     na ang kurtina bago pa tumalon ang pahina — hindi ito nakikita.
 
-      const target = event.target;
-      if (!(target instanceof Element)) return;
+     Wala nang kurtina, kaya walang nagkakansela ng click at walang
+     tumatakip. Ang pag-scroll na iyon ay magiging kitang-kitang pagtalon
+     ng kasalukuyang pahina bago pa man dumating ang bago. Ang
+     `useLayoutEffect` sa itaas ang sapat na: nasa itaas na ang bagong
+     pahina pagdating nito.
 
-      const anchor = target.closest("a[href]");
-      if (!(anchor instanceof HTMLAnchorElement) || anchor.target === "_blank" || anchor.hasAttribute("download")) return;
-
-      const destination = new URL(anchor.href, window.location.href);
-      if (destination.origin !== window.location.origin || destination.hash) return;
-
-      scrollToTopImmediately();
-    };
-
-    document.addEventListener("click", resetBeforeInternalNavigation, true);
-    return () => document.removeEventListener("click", resetBeforeInternalNavigation, true);
-  }, []);
-
+     Kapag ibinalik ang PageCurtain, ibalik din ito. */
   return null;
 }

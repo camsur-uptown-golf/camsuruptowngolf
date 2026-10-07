@@ -18,6 +18,8 @@ export type Crumb = { label: string; href: string };
 const STANDALONE: Record<string, string> = {
   "plan-your-visit": "Plan your visit",
   contact: "Contact",
+  faq: "FAQs",
+  "getting-here": "How to get here",
   "terms-of-use": "Terms of use",
 };
 
@@ -44,6 +46,15 @@ export function trailFor(pathname: string): Crumb[] {
 
   if (!section) {
     crumbs.push({ label: STANDALONE[segments[0]] ?? titleCase(segments[0]), href: path });
+    return crumbs;
+  }
+
+  /* Wala nang accommodation listing page. Ang mga stay ay diretsong anak
+     ng Home sa breadcrumb, kahit nananatili ang `/accommodations/` sa URL
+     para hindi mabago ang mga umiiral na detail route. */
+  if (section.slug === "accommodations" && segments.length > 1) {
+    const link = section.links.find((item) => item.href === path);
+    crumbs.push({ label: link?.label ?? titleCase(segments[segments.length - 1]), href: path });
     return crumbs;
   }
 

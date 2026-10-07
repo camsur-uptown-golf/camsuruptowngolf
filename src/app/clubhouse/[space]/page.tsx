@@ -5,9 +5,10 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
-import { EDITORIAL_SECTION, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
-import { CLUBHOUSE_SPACES, roomCountWord } from "@/lib/clubhouse";
-import { CLUB_PHONE } from "@/lib/site-content";
+import ClubhouseGallery from "@/components/ClubhouseGallery";
+import HeroWords from "@/components/HeroWords";
+import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
+import { CLUBHOUSE_SPACES } from "@/lib/clubhouse";
 
 /**
  * Ang sariling pahina ng bawat espasyo sa clubhouse.
@@ -48,7 +49,8 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
   return (
     <>
       <main>
-        <ScrollMotion />
+        {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
+        <ScrollMotion replay />
 
         <section id="top" className="relative isolate flex min-h-[560px] items-end overflow-hidden bg-[#071d13] text-white sm:min-h-[640px]">
           <Image
@@ -64,101 +66,72 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             aria-hidden="true"
           />
           <div className="mx-auto w-full max-w-4xl px-6 pb-16 pt-56 sm:px-10 sm:pb-20 lg:px-12 xl:max-w-5xl">
-            <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e] xl:text-[11px]">
-              {space.floor}
-            </p>
-            <h1
-              data-reveal="up"
-              style={delay(110)}
-              className="mt-4 max-w-3xl text-[clamp(2.25rem,4.5vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]"
-            >
-              {space.name}
+            {/* Word-by-word na pagpasok sa pag-load (HeroWords). Inalis ang
+                `data-reveal="up"`: iisa na lang ang entrance, ang word-by-word. */}
+            <h1 className="max-w-3xl text-[clamp(2.25rem,4.5vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]">
+              <HeroWords text={space.name} />
             </h1>
           </div>
         </section>
 
-        <div className="bg-[#ffffff]">
+        <div className="bg-[#f7f5ee]">
           <Breadcrumbs />
         </div>
 
-        <section className={EDITORIAL_SECTION}>
+        <section className="relative isolate bg-[#f7f5ee] pt-10 pb-6 sm:pt-12 sm:pb-8">
           <Shell>
             <p
               data-reveal="up"
-              className="mx-auto max-w-3xl text-base leading-8 text-[#14271d] sm:text-lg sm:leading-9"
+              className="mx-auto max-w-3xl text-center text-base leading-8 text-[#14271d] sm:text-lg sm:leading-9"
             >
               {space.description}
-            </p>
-
-            <p data-reveal="up" style={delay(120)} className="mt-8 text-center">
-              <Link
-                href="/clubhouse"
-                className="inline-flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#2f644b] xl:text-[11px]"
-              >
-                <span aria-hidden="true">←</span> All {roomCountWord().toLowerCase()} rooms
-              </Link>
             </p>
           </Shell>
         </section>
 
         {/* Wala pang dagdag na render ang ibang espasyo sa dokumento, kaya
             nawawala nang buo ang section na ito sa halip na mag-iwan ng
-            blangkong ulo. */}
-        {space.gallery.length > 0 ? (
-          <section className={EDITORIAL_SECTION}>
-            <Shell>
-              <EditorialHeading kicker="In detail" title={`More of ${space.name.toLowerCase()}.`} />
+            blangkong ulo.
 
-              <div className="mt-12 space-y-10 sm:mt-14 sm:space-y-14">
-                {space.gallery.map((shot, shotIndex) => (
-                  <figure key={shot.src} data-reveal="up" style={delay(shotIndex * 90)}>
-                    <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-[#173b2a]">
-                      <Image
-                        src={shot.src}
-                        alt={shot.alt}
-                        fill
-                        sizes="(max-width: 1023px) calc(100vw - 3rem), 960px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <figcaption className="mt-4 text-sm leading-7 text-[#5d685f]">{shot.alt}</figcaption>
-                  </figure>
-                ))}
-              </div>
-            </Shell>
-          </section>
+            Scrollytelling ang mga kuha — kapareho ng mga kuwarto sa
+            `/clubhouse`. Ang ulo ay nasa walang-overflow na section (sinisira
+            ng overflow-hidden ang sticky), at sariling seksyon na ang mga
+            larawan sa ClubhouseGallery. */}
+        {space.gallery.length > 0 ? (
+          <>
+            <section className="relative isolate scroll-mt-24 bg-[#f7f5ee] pt-4 pb-10 sm:pt-6 sm:pb-14">
+              <Shell>
+                <EditorialHeading size="lg" kicker="" title={`More of ${space.name.toLowerCase()}.`} />
+              </Shell>
+            </section>
+
+            <ClubhouseGallery label={space.name} shots={space.gallery} />
+          </>
         ) : null}
 
-        <section className={EDITORIAL_SECTION}>
+        <section className={EDITORIAL_SECTION_ALT}>
           <Shell>
             <EditorialHeading
-              kicker="Plan a visit"
+              size="lg"
+              kicker=""
               title="Come and see it."
-              intro="Opening hours, dress code, and which rooms visitors can use are not settled yet — call the club and we will tell you what is."
+              intro="Opening hours, dress code, and visitor access are still being finalized. Plan your visit and we’ll help you prepare."
             />
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
               <Link
                 href="/plan-your-visit"
                 data-reveal="up"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#2f644b] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#3a765a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f644b] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
               >
                 Plan your visit
               </Link>
-              <a
-                href={CLUB_PHONE.href}
-                data-reveal="up"
-                style={delay(90)}
-                className="inline-flex h-12 items-center justify-center rounded-full border border-[#173b2a]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#2f644b] hover:text-[#2f644b] xl:text-[11px]"
-              >
-                {CLUB_PHONE.label}
-              </a>
             </div>
           </Shell>
         </section>
 
         {/* Pabalik-balik sa anim na kuwarto, gaya ng sa mga butas ng golf. */}
-        <nav aria-label="Other rooms" className="grid border-t border-[#173b2a]/10 sm:grid-cols-2">
+        <nav aria-label="Other rooms" className="grid border-t border-[#1f3f2e]/10 sm:grid-cols-2">
           {[
             { space: previous, label: "Previous" },
             { space: next, label: "Next" },

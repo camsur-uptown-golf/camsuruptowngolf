@@ -15,8 +15,8 @@ export function ImgPlaceholder({
 }) {
   const bg =
     tone === "cream"
-      ? "from-[#efe9db] to-[#ddd2ba] text-[#14442c]/45"
-      : "from-[#16452c] to-[#08190f] text-[#c9a54e]/55";
+      ? "from-[#efe9db] to-[#ddd2ba] text-[#265136]/45"
+      : "from-[#265136] to-[#08190f] text-[#c9a54e]/55";
 
   return (
     <div

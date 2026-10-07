@@ -71,28 +71,47 @@ export function Kicker({ children }: { children: ReactNode }) {
   );
 }
 
-/** Nakasentrong ulo ng section, pare-pareho ang type scale sa buong site. */
+/**
+ * Nakasentrong ulo ng section, pare-pareho ang type scale sa buong site.
+ *
+ * Ang `size="lg"` ay isang sadyang pagtaas para sa lead heading ng isang
+ * pahina (hal. "Floor by floor" sa Clubhouse). Hindi nito ginagalaw ang
+ * default — nananatiling pare-pareho ang ibang section sa buong site.
+ */
 export function EditorialHeading({
   kicker,
   title,
   intro,
+  size = "default",
 }: {
-  kicker: string;
+  kicker?: string;
   title: ReactNode;
   intro?: string;
+  size?: "default" | "lg";
 }) {
+  const isLg = size === "lg";
   return (
-    <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-      <Kicker>{kicker}</Kicker>
+    <div className={`mx-auto text-center ${isLg ? "max-w-2xl xl:max-w-3xl" : "max-w-xl xl:max-w-2xl"}`}>
+      {kicker ? <Kicker>{kicker}</Kicker> : null}
       <h2
         data-reveal="up"
         style={delay(90)}
-        className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#14271d] sm:text-3xl xl:text-4xl"
+        className={`${kicker ? "mt-3 " : ""}font-medium tracking-[-0.035em] text-[#14271d] ${
+          isLg
+            ? "text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.02]"
+            : "text-2xl sm:text-3xl xl:text-4xl"
+        }`}
       >
         {title}
       </h2>
       {intro ? (
-        <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">
+        <p
+          data-reveal="up"
+          style={delay(180)}
+          className={`text-[#5d685f] ${
+            isLg ? "mt-5 text-base leading-8 xl:text-lg xl:leading-9" : "mt-4 text-sm leading-7 xl:text-base xl:leading-8"
+          }`}
+        >
           {intro}
         </p>
       ) : null}

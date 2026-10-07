@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
-import { EDITORIAL_SECTION_ALT, EditorialHeading, Kicker, Shell, Watermark, delay } from "@/components/EditorialKit";
-import { CLUB_PHONE } from "@/lib/site-content";
+import ScrollReveal from "@/components/ScrollReveal";
+import { EDITORIAL_SECTION_ALT, Shell, delay } from "@/components/EditorialKit";
 
 /**
  * The Packages page, sa parehong editorial na wika ng Visit at Events.
@@ -23,9 +24,10 @@ const PACKAGES = [
   {
     slug: "stay-and-play",
     href: "/packages/stay-and-play",
+    image: "/packages-stay-play-hero-v2.png",
     name: "Stay & Play",
-    summary: "One night, one round",
-    who: "The simplest way to see the course",
+    summary: "A one-night stay with a round of golf",
+    who: "",
     inclusions: [
       "One night in the accommodation of your choice",
       "One round with a caddie",
@@ -35,10 +37,11 @@ const PACKAGES = [
   },
   {
     slug: "buddy-trip",
-    name: "Buddy Golf Trip",
-    summary: "Two nights, two rounds, one memorable group escape",
-    who: "Golf, meals, and good company",
     href: "/packages/buddy-trip",
+    image: "/packages-group-getaway-hero-v2.jpeg",
+    name: "Group Golf Getaway",
+    summary: "A two-night group getaway with two rounds of golf",
+    who: "",
     inclusions: [
       "A flexible three-day itinerary for your group",
       "Two rounds with caddies",
@@ -48,29 +51,10 @@ const PACKAGES = [
   },
 ] as const;
 
-const ADD_ONS = [
-  ["Airport transfers", "Collection from Naga Airport or your hotel, arranged with 24 hours’ notice."],
-  ["Additional rounds", "Extra rounds added to any package at the resident guest rate."],
-  ["Club rental", "Full sets in right- and left-handed configurations, reserved with your tee time."],
-  ["Private dining", "A separate room and a menu built for your group rather than the day’s service."],
-  ["Extra nights", "Add nights on either side of a package at the package room rate."],
-  ["Non-golfer itinerary", "For partners and family who would rather be anywhere but the fairway."],
-] as const;
-
-const GOOD_TO_KNOW = [
-  [
-    "Rates are quoted, not listed",
-    "Every package is priced on the dates, the group, and the accommodation you choose. Send the details and the club comes back with a figure.",
-  ],
-  [
-    "Book earlier for weekends",
-    "Weekend mornings fill first because members and their guests have priority. Weekday packages can usually be arranged on shorter notice.",
-  ],
-  [
-    "Packages can be rebuilt",
-    "None of these are fixed. If the shape is close but the nights or rounds are wrong, say so and the club will adjust it.",
-  ],
-] as const;
+/* NASA /faq NA ANG DATING "Before you enquire". Tatlong tanong tungkol sa
+   buong club ang mga iyon — presyo, abiso, at kung nababago ang package —
+   at hindi lang sa mga package. Nasa FAQ_GROUPS sila ngayon sa
+   site-content.ts, at may pindutan ang footer papunta roon. */
 
 function CheckIcon() {
   return (
@@ -80,188 +64,134 @@ function CheckIcon() {
   );
 }
 
-function PhoneIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
-      <path
-        d="M6.5 3.5 9 4l1 3-1.8 1.4a12 12 0 0 0 5.4 5.4L15 12l3 1 .5 2.5A2 2 0 0 1 16.4 18 13 13 0 0 1 6 7.6 2 2 0 0 1 6.5 3.5Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function ThePackages() {
   return (
     <section id="packages" className={EDITORIAL_SECTION_ALT}>
-      <Watermark speed={0.12} offsetY="16%" />
-      <Shell>
-        <EditorialHeading
-          kicker="Choose your trip"
-          title="Two ways to put a trip together."
-          intro="Choose the format that fits your stay, then open its itinerary for the full day-by-day plan."
-        />
-
-        <div className="mt-10 grid gap-x-10 gap-y-10 lg:grid-cols-2">
-          {PACKAGES.map((pack, index) => (
-            <article
-              key={pack.slug}
-              id={pack.slug}
+      <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-12">
+        <div className="grid gap-8 border-b border-[#1f3f2e]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <h2
               data-reveal="up"
-              style={delay((index % 2) * 90)}
-              className="scroll-mt-28 border-t border-[#173b2a]/12 pt-8"
+              style={delay(110)}
+              className="mt-4 text-[clamp(2.25rem,4vw,4rem)] font-medium leading-none tracking-[-0.055em] text-[#14271d]"
             >
-              <p className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">
-                {String(index + 1).padStart(2, "0")} · {pack.who}
-              </p>
-              <h3 className="mt-5 text-xl font-semibold tracking-[-0.03em] text-[#174630]">
-                {pack.name}
-              </h3>
-              <p className="mt-2 text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">{pack.summary}</p>
+              Two ways to put a trip together.
+            </h2>
+          </div>
+          <p
+            data-reveal="up"
+            style={delay(220)}
+            className="max-w-2xl text-base leading-8 text-[#56625b] lg:justify-self-end"
+          >
+            Choose the format that fits your stay, then open its itinerary for the full day-by-day plan.
+          </p>
+        </div>
 
-              <ul className="mt-6 space-y-3">
-                {pack.inclusions.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-7 xl:text-base xl:leading-8 text-[#4b5a51] sm:text-base">
-                    <span className="text-[#2f7a52]">
-                      <CheckIcon />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+        <div className="mt-12 space-y-20 lg:mt-20 lg:space-y-32">
+          {PACKAGES.map((pack, index) => {
+            const imageOnRight = index % 2 === 1;
+            return (
+              <article
+                key={pack.slug}
+                id={pack.slug}
+                className={`${imageOnRight ? "lg:grid-cols-[1fr_3fr]" : "lg:grid-cols-[3fr_1fr]"} grid scroll-mt-28 items-center gap-10 lg:gap-12`}
+              >
+                {/* Scroll reveal via IntersectionObserver (ScrollReveal.tsx):
+                    galing sa sariling panig ang larawan, nag-a-animate ulit sa
+                    bawat pasok — scroll down man o pataas. */}
+                <Link
+                  href={pack.href}
+                  data-scroll-anim={imageOnRight ? "slide-right" : "slide-left"}
+                  className={`${imageOnRight ? "lg:order-2" : ""} group relative isolate block aspect-[3/2] overflow-hidden bg-[#1f3f2e] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
+                >
+                  {/* Napakalapad na panorama ang getaway hero (2.36:1), at nasa
+                      kanang bahagi nakatipon ang apat na manlalaro. Sa 3/2 na
+                      frame ay pinuputol ng default na object-center ang isa sa
+                      kanila — tatlo lang ang nakikita. Itinutok sa kanan ang
+                      buddy-trip para buo ang grupo; nasa gitna pa rin ang iba.
 
-              <p className="mt-6 font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
-                Rate on request
-              </p>
-              {"href" in pack && (
-                <Link href={pack.href} className="mt-5 inline-flex h-11 items-center rounded-full bg-[#2f644b] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.13em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a]">
-                  View itinerary →
+                      INLINE STYLE, HINDI `object-right` NA KLASE. Bagong klase
+                      ito sa proyekto, at minsang hindi nire-regenerate ng dev
+                      ang CSS para sa ganitong bago — kaya nananatili sa gitna
+                      ang larawan at tatlo pa rin ang kita. Gaya ng inline na
+                      transform sa [section]/page.tsx, tiyak itong tumatalab. */}
+                  <Image
+                    src={pack.image}
+                    alt={`${pack.name} at CamSur Uptown Golf Club`}
+                    fill
+                    sizes="(max-width: 1023px) calc(100vw - 3rem), 800px"
+                    style={pack.slug === "buddy-trip" ? { objectPosition: "right" } : undefined}
+                    className="object-cover transition duration-700 group-hover:scale-[1.02]"
+                  />
                 </Link>
-              )}
-            </article>
-          ))}
+
+                {/* Umaangat na teksto (data-scroll-anim="rise"), kasabay ng
+                    side-slide ng larawan; nag-a-animate ulit sa bawat pasok. */}
+                <div data-scroll-anim="rise" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
+                  <p className="relative text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+                    {pack.who}
+                  </p>
+                  <h3 className="relative mt-3 font-display text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#14271d]">
+                    {pack.name}
+                  </h3>
+                  <p className="relative mt-4 text-[17px] leading-8 text-[#3f4c45]">{pack.summary}</p>
+
+                  <ul className="relative mt-7 border-t border-[#1f3f2e]/12">
+                    {pack.inclusions.map((item) => (
+                      <li key={item} className="flex gap-3 border-b border-[#1f3f2e]/12 py-3 text-[13px] font-semibold uppercase leading-6 tracking-[0.06em] text-[#3f4c45]">
+                        <span className="text-[#265136]">
+                          <CheckIcon />
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="relative mt-6 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f] xl:text-[11px]">
+                    Rate on request
+                  </p>
+                  <Link
+                    href={pack.href}
+                    className="relative mt-5 inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] xl:text-[11px]"
+                  >
+                    View itinerary →
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
-      </Shell>
-    </section>
-  );
-}
-
-function AddOns() {
-  return (
-    <section
-      id="add-ons"
-      className={EDITORIAL_SECTION_ALT}
-    >
-      <div
-        data-parallax="-0.1"
-        className="pointer-events-none absolute -left-24 top-8 -z-10 h-72 w-72 rounded-full bg-[#c9a54e]/[0.09] blur-3xl"
-        aria-hidden="true"
-      />
-      <Shell>
-        <EditorialHeading
-          kicker="Add to any package"
-          title="The parts you bolt on."
-          intro="These sit on top of whichever package you start from, and none of them require a different booking."
-        />
-
-        <div className="mt-10 grid gap-x-14 gap-y-2 sm:grid-cols-2">
-          {ADD_ONS.map(([title, description], index) => (
-            <div
-              key={title}
-              data-reveal="up"
-              style={delay((index % 2) * 90)}
-              className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-[#173b2a]/12 py-7"
-            >
-              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <div>
-                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">{title}</h3>
-                <p className="mt-1.5 max-w-sm text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Shell>
-    </section>
-  );
-}
-
-function GoodToKnow() {
-  return (
-    <section id="good-to-know" className={EDITORIAL_SECTION_ALT}>
-      <Watermark speed={-0.09} offsetY="16%" />
-      <Shell>
-        <EditorialHeading
-          kicker="Good to know"
-          title="Before you enquire."
-          intro="Three things worth knowing so the first email gets you a useful answer rather than a follow-up question."
-        />
-
-        <div className="mt-10 border-t border-[#173b2a]/12">
-          {GOOD_TO_KNOW.map(([title, description], index) => (
-            <div
-              key={title}
-              data-reveal="up"
-              style={delay(index * 90)}
-              className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#173b2a]/12" : ""}`}
-            >
-              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <div className="min-w-0">
-                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#14271d]">{title}</h3>
-                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Shell>
+      </div>
     </section>
   );
 }
 
 function PackagesCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#1c3b2d] py-14 text-white sm:py-16">
-      <div
-        data-parallax="0.14"
-        className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"
-        aria-hidden="true"
-      />
+    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
       <Shell>
         <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
           <div>
-            <Kicker>Build your package</Kicker>
             <h2
               data-reveal="up"
               style={delay(90)}
-              className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
+              className="text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
             >
               Send us your dates.
             </h2>
           </div>
           <div data-reveal="up" style={delay(180)}>
-            <p className="text-sm leading-7 xl:text-base xl:leading-8 text-white/60">
+            <p className="text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">
               Tell the club your dates, how many are playing, and which package is closest to what you want. You will
               get back a quote built around those three things.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
                 href="/plan-your-visit"
-                className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                className="inline-flex h-11 items-center rounded-full bg-[#265136] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e]"
               >
                 Request a quote
               </Link>
-              <a
-                href={CLUB_PHONE.href}
-                className="inline-flex h-11 items-center gap-2.5 rounded-full border border-white/22 px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white/85 transition hover:border-[#e7d18d]/60 hover:text-[#f1d98f]"
-              >
-                <PhoneIcon />
-                {CLUB_PHONE.label}
-              </a>
             </div>
           </div>
         </div>
@@ -274,9 +204,8 @@ export default function PackagesDetails() {
   return (
     <>
       <ScrollMotion />
+      <ScrollReveal />
       <ThePackages />
-      <AddOns />
-      <GoodToKnow />
       <PackagesCta />
     </>
   );

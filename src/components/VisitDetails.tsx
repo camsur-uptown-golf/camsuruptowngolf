@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Kicker, Shell, Watermark, delay } from "@/components/EditorialKit";
-import { CLUB_PHONE } from "@/lib/site-content";
+import { CLUB_PHONE, TRAVEL_ROUTES } from "@/lib/site-content";
 
 /**
  * Visitor information for the Visit page.
@@ -16,29 +16,9 @@ import { CLUB_PHONE } from "@/lib/site-content";
  *  - dress code at etiquette rules
  */
 
-const ROUTES = [
-  {
-    icon: "plane",
-    time: 25,
-    unit: "min",
-    from: "Naga Airport (Pili)",
-    note: "Daily flights from Manila, roughly one hour each way. Taxis and club transfers wait at arrivals.",
-  },
-  {
-    icon: "pin",
-    time: 20,
-    unit: "min",
-    from: "Naga City center",
-    note: "Follow the road toward Mt. Isarog and watch for the club gate on your right.",
-  },
-  {
-    icon: "car",
-    time: 2,
-    unit: "hrs",
-    from: "Legazpi City",
-    note: "Via the Maharlika Highway. A straightforward drive, best made in daylight.",
-  },
-] as const;
+/* Nasa site-content.ts na ang mga ruta: ginagamit din sila ng footer, at
+   ayaw nating may dalawang bersyon ng parehong travel time. */
+const ROUTES = TRAVEL_ROUTES;
 
 const ARRIVAL_NOTES = [
   ["parking", "Parking", "Free on-site parking beside the clubhouse for guests and visitors."],
@@ -135,7 +115,7 @@ type TravelIconName = "plane" | "pin" | "car" | "parking" | "shuttle";
 function TravelIcon({ name }: { name: TravelIconName }) {
   return (
     <span
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#174630]"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#265136]"
       aria-hidden="true"
     >
       <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none">
@@ -172,19 +152,15 @@ function GettingHere() {
     <section id="getting-here" className={EDITORIAL_SECTION_ALT}>
       <Watermark speed={0.12} />
       <Shell>
-        <EditorialHeading
-          kicker="Getting here"
-          title="Closer than you think."
-          intro="The club sits on the Naga side of Mt. Isarog, within a short drive of the airport, the city, and most hotels in the area."
-        />
 
-        <div className="mt-10 border-t border-[#173b2a]/12">
+
+        <div className="mt-10 border-t border-[#1f3f2e]/12">
           {ROUTES.map((route, index) => (
             <div
               key={route.from}
               data-reveal="up"
               style={delay(index * 90)}
-              className={`grid items-baseline gap-x-8 gap-y-4 py-8 sm:grid-cols-[auto_minmax(0,1fr)_auto] ${index ? "border-t border-[#173b2a]/12" : ""}`}
+              className={`grid items-baseline gap-x-8 gap-y-4 py-8 sm:grid-cols-[auto_minmax(0,1fr)_auto] ${index ? "border-t border-[#1f3f2e]/12" : ""}`}
             >
               <div className="self-center">
                 <TravelIcon name={route.icon} />
@@ -195,7 +171,7 @@ function GettingHere() {
               </div>
               {/* Ang oras ang pinakamalaking bagay sa hilera — iyon ang
                   unang hinahanap ng bumibisita. */}
-              <p className="flex items-baseline gap-2 text-[clamp(2.6rem,4vw,3.75rem)] font-normal leading-none tracking-[-0.04em] text-[#174630] sm:justify-self-end">
+              <p className="flex items-baseline gap-2 text-[clamp(2.6rem,4vw,3.75rem)] font-normal leading-none tracking-[-0.04em] text-[#265136] sm:justify-self-end">
                 {route.time}
                 <span className="font-navigation text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
                   {route.unit}
@@ -252,10 +228,10 @@ function GreenFees() {
                 key={fee.item}
                 data-reveal="up"
                 style={delay(60 + index * 70)}
-                className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-[#173b2a]/12 py-6 first:border-t-0 first:pt-0"
+                className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-[#1f3f2e]/12 py-6 first:border-t-0 first:pt-0"
               >
                 <div className="min-w-0">
-                  <dt className="text-xl font-medium tracking-[-0.02em] text-[#174630] sm:text-2xl">{fee.item}</dt>
+                  <dt className="text-xl font-medium tracking-[-0.02em] text-[#265136] sm:text-2xl">{fee.item}</dt>
                   <p className="mt-2 max-w-md text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{fee.detail}</p>
                 </div>
                 <dd className="shrink-0 font-navigation text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
@@ -269,7 +245,7 @@ function GreenFees() {
         <div data-reveal="up" className="mt-10">
           <Link
             href="/plan-your-visit"
-            className="inline-flex h-11 items-center rounded-full bg-[#2f644b] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a]"
+            className="inline-flex h-11 items-center rounded-full bg-[#265136] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e]"
           >
             Request current rates
           </Link>
@@ -291,7 +267,7 @@ function ClubGuidelines() {
 
         <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:gap-12">
           <div data-reveal="left">
-            <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">What to wear</h3>
+            <h3 className="text-base font-semibold tracking-[-0.02em] text-[#265136]">What to wear</h3>
 
             <p className="mt-8 font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
               Welcome on course
@@ -299,7 +275,7 @@ function ClubGuidelines() {
             <ul className="mt-4 space-y-3">
               {DRESS_WELCOME.map((rule) => (
                 <li key={rule} className="flex gap-3 text-sm leading-8 text-[#4b5a51] sm:text-base">
-                  <span className="text-[#2f7a52]">
+                  <span className="text-[#265136]">
                     <CheckIcon />
                   </span>
                   {rule}
@@ -321,16 +297,16 @@ function ClubGuidelines() {
               ))}
             </ul>
 
-            <p className="mt-8 border-t border-[#173b2a]/12 pt-6 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">
+            <p className="mt-8 border-t border-[#1f3f2e]/12 pt-6 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">
               Smart casual applies throughout the clubhouse, and caps come off in the dining room.
             </p>
           </div>
 
           <div data-reveal="right" style={delay(120)}>
-            <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">On-course etiquette</h3>
-            <div className="mt-8 border-t border-[#173b2a]/12">
+            <h3 className="text-base font-semibold tracking-[-0.02em] text-[#265136]">On-course etiquette</h3>
+            <div className="mt-8 border-t border-[#1f3f2e]/12">
               {ETIQUETTE.map(([title, description], index) => (
-                <div key={title} className={`grid grid-cols-[44px_minmax(0,1fr)] gap-4 py-6 ${index ? "border-t border-[#173b2a]/12" : ""}`}>
+                <div key={title} className={`grid grid-cols-[44px_minmax(0,1fr)] gap-4 py-6 ${index ? "border-t border-[#1f3f2e]/12" : ""}`}>
                   <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
                     {String(index + 1).padStart(2, "0")}
                   </p>
@@ -364,13 +340,13 @@ function GuestInformation() {
               key={title}
               data-reveal="up"
               style={delay(index * 100)}
-              className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-[#173e2b]/12 py-7"
+              className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 border-t border-[#1f3f2e]/12 py-7"
             >
               <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <div>
-                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#174630]">{title}</h3>
+                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#265136]">{title}</h3>
                 <p className="mt-1.5 max-w-sm text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
               </div>
             </div>
@@ -393,12 +369,12 @@ function Faqs() {
               key={faq.question}
               data-reveal="up"
               style={delay(index * 70)}
-              className="group border-b border-[#173b2a]/15 first:border-t first:border-[#173b2a]/15"
+              className="group border-b border-[#1f3f2e]/15 first:border-t first:border-[#1f3f2e]/15"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-8 py-7 text-lg font-medium tracking-[-0.015em] text-[#14271d] transition-colors hover:text-[#174630] sm:text-xl [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-8 py-7 text-lg font-medium tracking-[-0.015em] text-[#14271d] transition-colors hover:text-[#265136] sm:text-xl [&::-webkit-details-marker]:hidden">
                 {faq.question}
                 <span
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#2f644b]/25 text-[#2f644b] transition duration-300 group-open:rotate-45 group-open:border-[#2f644b] group-open:bg-[#2f644b] group-open:text-white"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#265136]/25 text-[#265136] transition duration-300 group-open:rotate-45 group-open:border-[#265136] group-open:bg-[#265136] group-open:text-white"
                   aria-hidden="true"
                 >
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">

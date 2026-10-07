@@ -80,9 +80,9 @@ export const CLUBHOUSE_BRIEF =
 /** "THE ESTATE" sa pahina 11, at ang lockers sa pahina 33. */
 export const CLUBHOUSE_FACTS = [
   { value: "4", label: "Lakes" },
-  { value: "3", label: "Floors, plus a roof" },
+  { value: "3", label: "Levels + rooftop" },
   { value: "9", label: "Main areas" },
-  { value: "300", label: "Lockers" },
+  { value: "300", label: "Member lockers" },
   { value: "2,695", label: "Square metres" },
 ] as const;
 
@@ -181,12 +181,13 @@ export const CLUBHOUSE_SPACES = [
       { src: "/clubhouse/concept/arrival-bronze-drum.jpg", alt: "The bronze drum that shelters the drop-off" },
       { src: "/clubhouse/concept/arrival-threshold.jpg", alt: "The timber-lined threshold between the drop-off and the hall" },
     ],
-    name: "The arrival canopy",
+    name: "The bronze canopy",
     floor: "Arrival",
     image: "/clubhouse/concept/arrival-canopy.jpg",
     imageAlt: "Bronze-clad porte-cochère at the clubhouse drop-off",
     description:
-      "Cars and carts pull in under a covered bronze canopy. Staff take your bag straight to the cart, so you walk in with your hands free — and the course is already in view.",
+      "Arrive beneath the bronze canopy as staff transfer your bag directly to the cart, leaving you free to take in the course.",
+    features: ["Drop-off zone", "External bag drop", "Golf cart parking"],
   },
   {
     id: "the-hall",
@@ -194,12 +195,13 @@ export const CLUBHOUSE_SPACES = [
       { src: "/clubhouse/concept/arrival-welcome-hall.jpg", alt: "The hall opening out beneath the oculus" },
       { src: "/clubhouse/concept/reception-desk.jpg", alt: "The reception desk, one continuous ribbon of stone and bronze" },
     ],
-    name: "The entrance hall",
+    name: "Entrance hall",
     floor: "Ground",
     image: "/clubhouse/concept/entrance-hall.jpg",
     imageAlt: "Entrance hall beneath the planted oculus",
     description:
-      "The room everything else opens off. You check in here, wait for the rest of your group, and see the course through the glass. A planted opening in the ceiling brings daylight down from the roof garden.",
+      "The clubhouse’s central welcome point, where check-in, daylight, and sweeping course views come together beneath the planted oculus.",
+    features: ["Players’ gathering", "Outdoor terrace"],
   },
   {
     id: "golf-shop",
@@ -207,12 +209,13 @@ export const CLUBHOUSE_SPACES = [
       { src: "/clubhouse/concept/golf-shop-counter.jpg", alt: "The counter and apparel rails under daylight" },
       { src: "/clubhouse/concept/golf-shop-fitting.jpg", alt: "Walnut joinery for fitting and display" },
     ],
-    name: "The golf shop",
+    name: "Golf shop",
     floor: "Ground",
     image: "/clubhouse/concept/golf-shop.jpg",
     imageAlt: "Golf shop with timber fins and a topographic rug",
     description:
-      "Clubs, balls, gloves and clothing, laid out in a quiet, daylit room — shown as objects rather than stock, on shelves and rails of walnut.",
+      "A calm, daylit boutique presenting clubs, apparel, and essentials against finely crafted walnut displays.",
+    features: ["External bag drop", "Golf cart parking"],
   },
   {
     id: "locker-rooms",
@@ -222,17 +225,19 @@ export const CLUBHOUSE_SPACES = [
     imageAlt: "Walnut locker room with a sculpted central bench",
     gallery: [],
     description:
-      "Three hundred lockers for a full field, in two mirrored wings of 150 — one for men, one for women. Each wing keeps its own showers and bathrooms, and the plan puts the dry zone first: entrance, bench and lockers, then on to the showers.",
+      "Three hundred lockers across dedicated men’s and women’s wings, each flowing from dry changing areas to private showers.",
+    features: [],
   },
   {
     id: "spa",
-    name: "Showers & wellness",
+    name: "Showers",
     floor: "Ground",
     image: "/clubhouse/concept/showers-wellness.jpg",
     imageAlt: "Private shower suites facing a backlit stone wall",
     gallery: [],
     description:
-      "A spa rather than a changing room. Private shower suites face a backlit stone wall and a quiet water feature, with frosted glass, rain heads and warm timber — a moment of decompression after the round.",
+      "Private rain showers, warm timber, backlit stone, and water features create a restorative retreat after the round.",
+    features: [],
   },
   {
     id: "members-lounge",
@@ -250,7 +255,8 @@ export const CLUBHOUSE_SPACES = [
     image: "/clubhouse/concept/members-lounge.jpg",
     imageAlt: "Members’ lounge facing a full sweep of glass",
     description:
-      "Sofas and a coffee bar facing a long wall of glass. This is the room to sit in before a round and to stay in after one, with the fairways in view the whole time.",
+      "A refined lounge and coffee bar framed by uninterrupted fairway views, designed for the moments before and after play.",
+    features: ["Restaurant & café", "Outdoor terrace"],
   },
   {
     id: "practice-bays",
@@ -262,11 +268,12 @@ export const CLUBHOUSE_SPACES = [
     image: "/clubhouse/concept/practice-bays.jpg",
     imageAlt: "Practice bays opening onto the lawn through folding screens",
     description:
-      "Covered bays with mats, launch monitors and clubs to try. The timber screens fold back so you hit straight out onto the grass. Suitable for a first lesson or a tune-up before a round.",
+      "Covered, technology-equipped bays open directly onto the grass for lessons, warm-ups, and focused practice.",
+    features: ["Players’ gathering", "Bar & refreshments"],
   },
   {
     id: "vip",
-    name: "The VIP wing",
+    name: "VIP wing",
     floor: "Lower",
     image: "/clubhouse/concept/vip-lounge.jpg",
     imageAlt: "The VIP lounge, with the course in view through a timber screen",
@@ -277,7 +284,8 @@ export const CLUBHOUSE_SPACES = [
       { src: "/clubhouse/concept/vip-suites.jpg", alt: "The suite of lounges, connected to the rooftop and a dedicated cart bay" },
     ],
     description:
-      "A discreet entrance and a private set of rooms for owners, guests of honour and championship players. A dedicated drum of timber and travertine receives guests away from the main flow, and the lounge keeps the course in full view through a timber screen. Food is plated in a directly connected kitchen and drinks are poured at its own bar. The whole wing can be closed off for a tournament patron or an owner\u2019s day.",
+      "A private wing with its own entrance, lounges, bar, and kitchen, created for distinguished guests and championship occasions.",
+    features: ["VIP lounge", "Premium entrance"],
   },
   {
     id: "rooftop",
@@ -286,12 +294,13 @@ export const CLUBHOUSE_SPACES = [
       { src: "/clubhouse/concept/rooftop-sunset-dining.jpg", alt: "Dining on the roof as the light goes" },
       { src: "/clubhouse/concept/rooftop-pool-gardens.jpg", alt: "The stepped pool and the planted sky gardens" },
     ],
-    name: "The rooftop",
+    name: "Sky bar & gardens",
     floor: "Rooftop",
     image: "/clubhouse/concept/rooftop-bar.jpg",
     imageAlt: "Rooftop bar and gardens around the pool oculus",
     description:
-      "A bar and restaurant on the roof, under parasols and among planted trees, with a stepped pool alongside. The last stop of the day, looking down on the holes you have just played.",
+      "A rooftop bar and restaurant set among gardens and a stepped pool, with panoramic views across the course.",
+    features: ["Rooftop bar", "Pergolas", "Planters & seating", "Skylights"],
   },
 ] as const;
 
@@ -388,13 +397,13 @@ export const CLUBHOUSE_DAY = [
   {
     time: "Afternoon",
     image: "/clubhouse/concept/day-afternoon.jpg",
-    title: "Shower & lounge",
+    title: "Lounge",
     detail: "The spa, the trophy corridor and the members’ lounge, across the upper floor.",
   },
   {
     time: "Evening",
     image: "/clubhouse/concept/day-evening.jpg",
-    title: "Rooftop & table",
+    title: "Rooftop & bar",
     detail: "Drinks on the roof among the trees, then dinner with the course lit up below.",
   },
 ] as const;

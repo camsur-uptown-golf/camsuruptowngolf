@@ -3,19 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import ConceptCarousel from "@/components/ConceptCarousel";
+// import HomeClubhouseOverview from "@/components/HomeClubhouseOverview"; // temporarily hidden
 import PackagesCarousel from "@/components/PackagesCarousel";
-import OffCourseSection from "@/components/OffCourseSection";
 import HeroVideo from "@/components/HeroVideo";
 import ScrollMotion from "@/components/ScrollMotion";
-import { Eyebrow } from "@/components/ImgPlaceholder";
+import { T } from "@/components/T";
 import { TEASER_POSTER } from "@/lib/site-content";
 
-/** `count` drives the count-up; leave it null for values that are not numbers. */
+/** `count` drives the count-up; leave it null for values that are not numbers.
+    Ang `labelKey` ang i18n key ng label — isinasalin sa piniling wika via <T>. */
 const COURSE_FACTS = [
-  { value: "18", count: 18, label: "Championship holes", Icon: FlagIcon },
-  { value: "72", count: 72, label: "Course par", Icon: ScorecardIcon },
-  { value: "54.23", count: null, label: "Hectares", Icon: AreaIcon },
-  { value: "Mt. Isarog", count: null, label: "Signature backdrop", Icon: MountainIcon },
+  { value: "18", count: 18, labelKey: "facts.holes", Icon: null },
+  { value: "72", count: 72, labelKey: "facts.par", Icon: null },
+  { value: "54.23", count: null, labelKey: "facts.hectares", Icon: null },
+  { value: "", count: null, labelKey: "facts.architect", Icon: ImgDesignerMark },
 ] as const;
 
 /** Stagger helper — reads back out in CSS as `transition-delay`. */
@@ -29,66 +30,22 @@ function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-/* Course-snapshot icons. Pare-parehong 24x24 stroke-only para pantay ang
-   bigat nila sa isang linya sa tabi ng bawat numero. */
-function StatIcon({ children }: { children: React.ReactNode }) {
+function ImgDesignerMark() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-4 w-4 shrink-0 text-[#c9a54e]"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+    <span
+      className="block h-5 w-9 shrink-0 bg-[#f3dda0]"
+      style={{
+        WebkitMaskImage: "url('/branding/mc-gold.png')",
+        WebkitMaskPosition: "left center",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskSize: "contain",
+        maskImage: "url('/branding/mc-gold.png')",
+        maskPosition: "left center",
+        maskRepeat: "no-repeat",
+        maskSize: "contain",
+      }}
       aria-hidden="true"
-    >
-      {children}
-    </svg>
-  );
-}
-
-function FlagIcon() {
-  return (
-    <StatIcon>
-      <path d="M7 20V4" />
-      <path d="M7 5l8 2.7L7 10.4" />
-      <path d="M3.5 20h7.5" />
-    </StatIcon>
-  );
-}
-
-function ScorecardIcon() {
-  return (
-    <StatIcon>
-      <rect x="4" y="3.5" width="16" height="17" rx="2.5" />
-      <path d="M8 9.5h8M8 13.5h8M8 17.5h4" />
-    </StatIcon>
-  );
-}
-
-function AreaIcon() {
-  return (
-    <StatIcon>
-      <rect x="4" y="4" width="16" height="16" rx="1.5" />
-      <path d="M8 4v3M4 8h3M16 20v-3M20 16h-3" />
-    </StatIcon>
-  );
-}
-
-function MountainIcon() {
-  return (
-    <StatIcon>
-      <path d="M2.5 19.5 9 10l4.2 5.4L16 12l5.5 7.5z" />
-    </StatIcon>
-  );
-}
-
-function ScrollArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 14" className="h-2.5 w-4" fill="none" aria-hidden="true">
-      <path d="M3 2.5 12 11l9-8.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    />
   );
 }
 
@@ -116,44 +73,44 @@ function Hero() {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,16,10,0.68)_0%,rgba(2,16,10,0.24)_48%,rgba(2,16,10,0.08)_72%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,14,9,0.42)_0%,transparent_30%,transparent_58%,rgba(2,16,10,0.72)_100%)]" />
       </div>
+      <CourseSnapshot />
     </section>
   );
 }
 
-// Ang -mt at ang h ay laging magkatugma: iyon ang nagpapapatong sa banda sa
-// ibabang gilid ng hero nang hindi nagbabago ang taas ng hero.
 function CourseSnapshot() {
   return (
-    <section id="course-snapshot" className="relative z-20 border-y border-[#d1af58]/22 bg-[#1c3b2d] font-navigation text-white lg:-mt-[68px] lg:h-[68px]" aria-label="Course snapshot">
-      {/* The band sits on the hero, so a gold hairline reads as its edge. */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" aria-hidden="true" />
-      {/* No reveal on the scroll cue: it already carries a translate, and a
-          reveal would reset that transform when it lands. */}
-      <a href="#course-snapshot" aria-label="Discover the course" className="group absolute left-1/2 top-0 z-30 flex -translate-x-1/2 -translate-y-full flex-col items-center text-[#d1af58]">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d1af58]/80 bg-black/[0.04] backdrop-blur-[1px] transition-colors group-hover:border-[#f1d98f] group-hover:bg-[#d1af58]/10 group-hover:text-[#f1d98f]">
-          <span className="flex items-center justify-center">
-            <ScrollArrowIcon />
-          </span>
-        </span>
-        <span className="mt-2 h-3 w-px bg-[#d1af58]/80 transition-colors group-hover:bg-[#f1d98f] sm:h-4" aria-hidden="true" />
-      </a>
-      <div className="mx-auto grid max-w-7xl grid-cols-2 px-6 sm:grid-cols-4 lg:h-full lg:px-8">
-        {COURSE_FACTS.map(({ value, count, label, Icon }, index) => (
+    <section
+      id="course-snapshot"
+      className="absolute inset-x-0 bottom-4 z-20 px-4 font-navigation text-white sm:bottom-6 sm:px-6 lg:bottom-7 lg:px-8"
+      aria-label="Course snapshot"
+    >
+      <div className="mx-auto grid w-full max-w-[50rem] grid-cols-2 sm:grid-cols-4 lg:w-[54%] lg:min-w-[40rem]">
+        {COURSE_FACTS.map(({ value, count, labelKey, Icon }, index) => (
           <div
-            key={label}
+            key={labelKey}
             data-reveal="up"
             style={delay(index * 90)}
-            className={`relative py-3 sm:px-5 sm:py-3.5 lg:flex lg:flex-col lg:justify-center lg:py-0 ${index % 2 ? "border-l border-[#c9a54e]/15 pl-5" : "pr-5"} ${index > 1 ? "border-t border-[#c9a54e]/15 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-[#c9a54e]/15" : "sm:pl-0"}`}
+            className="relative flex min-h-14 flex-col items-center justify-center px-3 py-2 text-center sm:min-h-[4.75rem] sm:px-4"
           >
-            <div className="flex items-center gap-2">
-              <Icon />
-              <p
-                className={`${count === null ? "text-xs sm:text-sm" : "text-lg sm:text-xl"} font-semibold leading-none tracking-[-0.02em] text-[#f2d98d]`}
-              >
-                {count === null ? value : <span data-count={count}>{value}</span>}
-              </p>
+            <div className="flex min-h-7 items-center justify-center sm:min-h-8">
+              {Icon ? <Icon /> : null}
+              {/* IISANG SUKAT ANG APAT. Nakadikit dati ang laki sa `count`:
+                  maliit (`text-xs`) kapag `null`, malaki kapag may bilang.
+                  May silbi iyon noong "Mt. Isarog" ang ikaapat — mahabang
+                  salita na hindi kasya sa 20px. Ngayong marka na ang ikaapat,
+                  ang 54.23 na lang ang tinatamaan niyon: numero rin ito gaya
+                  ng 18 at 72, pero 14px habang 20px ang dalawa.
+
+                  Para sa count-up na lang ang `count`, hindi na para sa
+                  laki — dalawang magkaibang bagay ang pinagsasama niyon. */}
+              {value ? (
+                <p className="font-navigation text-2xl font-semibold leading-none tabular-nums tracking-[-0.02em] text-[#f3dda0] sm:text-xl">
+                  {count === null ? value : <span data-count={count}>{value}</span>}
+                </p>
+              ) : null}
             </div>
-            <p className="mt-1.5 text-[8px] font-medium uppercase leading-tight tracking-[0.14em] text-white/55 sm:text-[9px] xl:text-[10px]">{label}</p>
+            <p className="mt-1 text-[8px] font-medium uppercase leading-tight tracking-[0.12em] text-white/60 sm:text-[10px] xl:text-[11px]"><T k={labelKey} /></p>
           </div>
         ))}
       </div>
@@ -163,10 +120,10 @@ function CourseSnapshot() {
 
 function Introduction() {
   return (
-    <section id="story" className="relative isolate flex min-h-[520px] items-center overflow-hidden bg-[#f7f5ee] text-[#14271d]">
+    <section id="story" className="relative isolate flex min-h-[400px] items-center overflow-hidden bg-[#f7f5ee] text-[#14271d]">
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center" aria-hidden="true">
         {/* Safe to parallax: a floating watermark has no container edge to expose. */}
-        <div data-parallax="0.1" className="relative h-[290px] w-[340px] overflow-hidden opacity-[0.075] sm:h-[350px] sm:w-[420px]">
+        <div data-parallax="0.1" className="relative h-[290px] w-[340px] overflow-hidden opacity-[0.1] sm:h-[350px] sm:w-[420px]">
           <Image
             src="/camsur-uptown-logo.png"
             alt=""
@@ -176,31 +133,45 @@ function Introduction() {
           />
         </div>
       </div>
-      <div className="mx-auto flex max-w-[1280px] flex-col items-center px-6 py-16 text-center sm:py-20 lg:px-10 lg:py-20">
-        <div data-reveal="up">
-          <Eyebrow className="mb-5 text-[#98782f]">A New Golf Destination in Bicol</Eyebrow>
-        </div>
-        <h1
-          data-reveal="up"
-          style={delay(110)}
-          className="max-w-[1080px] font-display text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.96] tracking-[-0.055em] text-[#17251e]"
-        >
-          Championship golf in the heart of Bicol.
-        </h1>
+      <div className="mx-auto flex max-w-[1280px] flex-col items-center px-6 py-10 text-center sm:py-12 lg:px-10">
         <p
           data-reveal="up"
-          style={delay(220)}
-          className="mt-7 max-w-4xl text-base font-medium leading-8 text-[#56625b] sm:text-lg sm:leading-9"
+          className="mb-5 font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#98782f] sm:text-xs"
         >
-          Set beneath the silhouette of Mt. Isarog, CamSur Uptown Golf Club brings together a carefully planned championship course, wide open views, and the warmth that Bicol is known for.
+          Est. 2026
         </p>
+        <h1
+          data-reveal="up"
+          style={{ ...delay(110), fontFamily: "var(--font-cormorant-garamond), Georgia, serif" }}
+          className="max-w-[1120px] text-[#17251e]"
+        >
+          <span className="block text-[clamp(2.5rem,4.2vw,4.5rem)] font-medium leading-[0.94] tracking-[-0.055em]">
+            CamSur Uptown Golf Club
+          </span>
+          <span className="mx-auto mt-3 block max-w-[1040px] text-[clamp(1.15rem,1.9vw,2rem)] font-normal leading-[1.12] tracking-[-0.025em] text-[#26362e] sm:mt-4">
+            <T k="home.designedBy" />{" "}
+            <a
+              href="https://www.img.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-[#8a681f] underline-offset-4 transition-colors hover:text-[#265136] hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136]"
+            >
+              IMG
+            </a>{" "}
+            — <T k="home.imgTagline" />
+          </span>
+        </h1>
+
+        {/* Hindi inuulit ang headline: inilalarawan nito ang karakter ng
+            laro at ang balanse ng accessibility at strategy. */}
+
         <Link
-          href="/plan-your-visit"
+          href="/golf"
           data-reveal="up"
           style={delay(330)}
-          className="mt-8 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#2f644b] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_14px_34px_rgba(20,68,44,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#3a765a]"
+          className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#265136] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_14px_34px_rgba(20,68,44,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#1f3f2e] xl:text-[12px]"
         >
-          Plan your round <ArrowIcon />
+          <T k="action.planRound" /> <ArrowIcon />
         </Link>
       </div>
     </section>
@@ -210,17 +181,18 @@ function Introduction() {
 export default function Home() {
   return (
     <>
-      <ScrollMotion />
+      {/* replay: umuulit ang mga reveal sa bawat pasok (scroll down o pataas),
+          kaya walang dead air. */}
+      <ScrollMotion replay />
       <main>
         <Hero />
-        <CourseSnapshot />
         <Introduction />
         {/* Ang balot na ito ang sumasagip sa mga siwang sa pagitan ng mga
             section sa loob, kaya kasama siya kapag pinalitan ang kulay. */}
         <div className="bg-[#f7f5ee]">
           <ConceptCarousel />
+          {/* <HomeClubhouseOverview /> */}
           <PackagesCarousel />
-          <OffCourseSection />
         </div>
       </main>
       <Footer />

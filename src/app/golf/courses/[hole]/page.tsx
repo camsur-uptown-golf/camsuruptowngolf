@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import RequestCallback from "@/components/RequestCallback";
 import Scorecard from "@/components/Scorecard";
 import ScrollMotion from "@/components/ScrollMotion";
+import HeroWords from "@/components/HeroWords";
 import { Container, SectionHeading, delay } from "@/components/SectionKit";
 import { HOLE_PROFILES } from "@/lib/course-holes";
 import { COURSE_PAGES } from "@/lib/site-content";
@@ -68,7 +69,8 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
   return (
     <>
       <main>
-        <ScrollMotion />
+        {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
+        <ScrollMotion replay />
         <section id="top" className="relative isolate min-h-[660px] overflow-hidden bg-[#071d13] text-white">
           <Image
             src={concept.image}
@@ -89,11 +91,11 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           <FairwayDivider fill="#f7f5ee" />
           <div className="mx-auto flex min-h-[660px] max-w-7xl items-center justify-center px-6 py-24 lg:px-8">
             <div className="w-full text-center">
-              <h1
-                data-reveal="up"
-                className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white"
-              >
-                Hole No. {index + 1}
+              {/* Word-by-word na pagpasok sa pag-load (HeroWords). Inalis ang
+                  `data-reveal="up"`: iisa na lang ang entrance, ang word-by-word.
+                  Nananatili ang `data-reveal="line"` na guhit sa ibaba. */}
+              <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white">
+                <HeroWords text={`Hole No. ${index + 1}`} />
               </h1>
               <span
                 data-reveal="line"
@@ -124,7 +126,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             <div className="mx-auto max-w-4xl text-center">
               {/* Pareho ng SectionHeading ang sukat at tracking — 0.24em at
                   sm: ang dati, kaya bahagyang iba sa ibang eyebrow ng pahina. */}
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d1af58] xl:text-[11px]">
                 Aerial routing study · {String(index + 1).padStart(2, "0")} / 18
               </p>
               {/* Ang pangalan ng butas, hindi ang dating iisang editorial na
@@ -139,14 +141,6 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               <p className="mx-auto mt-6 max-w-3xl text-sm font-medium leading-7 text-[#536058] sm:text-base sm:leading-8 lg:text-lg lg:leading-9">
                 {concept.description}
               </p>
-              {/* Tumuturo na sa form sa ibaba ng mismong pahina, hindi sa
-                  ibang pahina — nandoon na ang hinahanap ng pipindot nito. */}
-              <Link
-                href="#request-call-back"
-                className="mt-7 inline-flex h-11 min-w-[170px] items-center justify-center rounded-full bg-[#2f644b] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#3a765a] sm:h-12 sm:min-w-[190px] sm:text-[11px]"
-              >
-                Request a call back
-              </Link>
             </div>
 
           </Container>
@@ -158,7 +152,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               overflow-hidden ng section). Walang vw dito, walang pagkaputol. */}
           {/* Walang sariling background: minamana nito ang cream ng section,
               kaya tiyak na magkatugma. Ang border-y na lang ang naghihiwalay. */}
-          <div className="mt-14 border-y border-[#173b2a]/10 px-6 py-9 text-[#14271d] sm:mt-16 sm:px-10 sm:py-11">
+          <div className="mt-14 border-y border-[#1f3f2e]/10 px-6 py-6 text-[#14271d] sm:mt-16 sm:px-10 sm:py-8">
             <dl className="mx-auto grid max-w-6xl grid-cols-3 text-center">
               {[
                 { label: "Yards", value: scorecard.yards.toLocaleString() },
@@ -169,13 +163,13 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                   key={label}
                   data-reveal="up"
                   style={delay(statIndex * 90)}
-                  className={`flex min-h-20 flex-col items-center justify-start px-3 sm:min-h-24 sm:px-8 ${statIndex ? "border-l border-[#173b2a]/15" : ""}`}
+                  className={`flex min-h-16 flex-col items-center justify-start px-3 sm:min-h-20 sm:px-8 ${statIndex ? "border-l border-[#1f3f2e]/15" : ""}`}
                 >
                   <dt className="font-navigation text-[10px] font-semibold uppercase tracking-[0.13em] text-[#4f5d55] sm:text-xs">
                     {label}
                   </dt>
                   {value ? (
-                    <dd className="mt-4 font-display text-4xl font-medium leading-none tracking-[-0.04em] text-[#14271d] sm:text-5xl">
+                    <dd className="mt-3 font-display text-3xl font-medium leading-none tracking-[-0.04em] text-[#14271d] sm:text-4xl">
                       {value}
                     </dd>
                   ) : (
@@ -205,6 +199,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                 pahinang iisang butas lang naman. Buong scorecard na ngayon,
                 at naka-highlight ang butas ng pahinang ito. */}
             <SectionHeading
+              size="lg"
               eyebrow="Scorecard"
               title="The full eighteen."
               intro="All tee colors are shown, with confirmed yardages displayed for the Black tees only. This hole is highlighted across the card."
@@ -228,7 +223,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
 
 
         {slug === "no-6" && (
-          <section className="relative isolate overflow-hidden border-t border-[#173b2a]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+          <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
             <Container>
               <SectionHeading eyebrow="Lakeside course views" title="See the lakeside course from every angle." />
 
@@ -258,19 +253,6 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           </section>
         )}
 
-        <section id="request-call-back" className="scroll-mt-24 border-t border-[#173b2a]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
-          <Container>
-            <SectionHeading
-              eyebrow="Plan your round"
-              title="Request a call back."
-              intro="Tell us a bit more about the trip you have in mind and the club will call you back within 48 hours, at the time you choose."
-            />
-            <div className="mt-10">
-              <RequestCallback context={`${holeLabel(concept)}`} />
-            </div>
-          </Container>
-        </section>
-
         <nav aria-label="Course navigation" className="grid bg-[#f3f0e7] sm:grid-cols-2">
           <Link href={`/golf/courses/${previous.slug}`} className="group relative min-h-72 overflow-hidden border-b border-white/15 sm:border-b-0 sm:border-r">
             <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover" />
@@ -291,6 +273,19 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             </div>
           </Link>
         </nav>
+
+        <section id="request-call-back" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+          <Container>
+            <SectionHeading
+              eyebrow="Plan your round"
+              title="Request a call back."
+              intro="Tell us a bit more about the trip you have in mind and the club will call you back within 48 hours, at the time you choose."
+            />
+            <div className="mt-10">
+              <RequestCallback context={`${holeLabel(concept)}`} />
+            </div>
+          </Container>
+        </section>
       </main>
       <Footer />
     </>

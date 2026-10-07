@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "inquiries": "node scripts/inquiries.mjs"
+    "inquiries": "node scripts/inquiries.mjs",
+    "seed-availability": "node scripts/seed-availability.mjs"
   },
   "dependencies": {
     "next": "^16.3.6",

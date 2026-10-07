@@ -11,9 +11,10 @@ import { usePathname } from "next/navigation";
  *   data-parallax="0.12"                    — drifts against the scroll
  *   data-count="25"                         — counts up when it enters view
  *
- * Dalawang direksyon ang lahat: hindi minsanan ang reveal. Bumabalik ito sa
- * nakatagong estado kapag lumabas ng viewport, kaya umaandar ulit pag-scroll
- * pabalik — pataas man o pababa.
+ * Minsanan ang reveal: pumapasok ang animation sa unang pagkakita, at
+ * mananatili na ang elemento — hindi na ito ibinabalik sa nakatagong estado
+ * kahit lumabas ng viewport. Kaya hindi nawawala ang larawan at teksto habang
+ * nagsi-scroll; ang animation ang nangyayari, hindi ang pagkawala.
  *
  * Isang rAF loop lang ang humahawak sa reveals at parallax. Sinasadya ang
  * paggamit ng getBoundingClientRect sa halip na IntersectionObserver: hindi
@@ -25,11 +26,7 @@ import { usePathname } from "next/navigation";
  * hindi mag-forced reflow sa bawat frame.
  */
 
-/** Kailangang lumagpas nang ganito karami ang elemento bago ito i-reset.
-    Ang puwang sa pagitan ng papasok at palabas na hangganan ang pumipigil
-    sa pagkurap-kurap kapag huminto ang scroll mismo sa gilid. */
-const EXIT_MARGIN = 80;
-export default function ScrollMotion() {
+export default function ScrollMotion({ replay = false }: { replay?: boolean } = {}) {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -100,21 +97,21 @@ export default function ScrollMotion() {
 
       for (const el of targets) {
         const rect = el.getBoundingClientRect();
-        const shown = el.classList.contains("is-in");
-
         // Papasok: kahit anong pagpatong sa viewport. Huwag itong higpitan —
         // ang course snapshot ng homepage ay nakadikit sa ilalim ng h-svh na
         // hero, kaya sa mas mahigpit na hangganan ay mananatili itong blangko
         // hangga't hindi nag-i-scroll. Kung nakikita sa pag-load, lumalabas
         // ito sa pag-load.
-        if (!shown && rect.top < viewportHeight && rect.bottom > 0) {
-          entering.push(el);
-          continue;
-        }
+        const inView = rect.top < viewportHeight && rect.bottom > 0;
+        const isIn = el.classList.contains("is-in");
 
-        // Palabas: kailangang malinaw nang nakalampas, hindi basta dumampi sa
-        // gilid, para hindi kumurap-kurap ang animation.
-        if (shown && (rect.top > viewportHeight + EXIT_MARGIN || rect.bottom < -EXIT_MARGIN)) {
+        if (inView && !isIn) {
+          entering.push(el);
+        } else if (replay && !inView && isIn) {
+          // REPLAY MODE: inaalis ang .is-in paglabas sa tanaw, kaya umuulit ang
+          // reveal sa bawat pasok — scroll down man o pataas (walang dead air).
+          // Sa default (one-time) mode, hindi ito inaalis kaya nananatili ang
+          // laman tulad ng dati.
           leaving.push(el);
         }
       }
@@ -159,7 +156,7 @@ export default function ScrollMotion() {
       document.removeEventListener("visibilitychange", repaintWhenVisible);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [pathname]);
+  }, [pathname, replay]);
 
   return null;
 }

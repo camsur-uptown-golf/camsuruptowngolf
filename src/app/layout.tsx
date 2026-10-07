@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist, Geist_Mono, Montserrat } from "next/font/google";
+import { Cormorant_Garamond, Cormorant_SC, Geist_Mono, Manrope, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
-import PageCurtain from "@/components/PageCurtain";
 import RouteScrollReset from "@/components/RouteScrollReset";
+import { LanguageProvider } from "@/i18n/LanguageProvider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+/* Kasama na ang `vietnamese` subset sa mga Latin face na nagbubuhat ng
+   teksto — may sariling diacritics ang Vietnamese (ầ, ệ, ỡ…). Para sa CJK
+   (Korean/Chinese/Japanese) ay hindi Latin ang glyphs, kaya system CJK font
+   stacks ang inilalapat per-locale sa globals.css sa halip. */
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin", "vietnamese"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -17,16 +22,23 @@ const geistMono = Geist_Mono({
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
+  display: "swap",
 });
 
-/**
- * Editorial display face. Variable ito, kaya isang file lang ang nadadala
- * para sa buong hanay ng bigat na ginagamit ng mga pamagat.
- */
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
+/** Editorial display face for hero, image, and section titles. */
+const cormorantSC = Cormorant_SC({
+  variable: "--font-cormorant-sc",
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin", "vietnamese"],
+  display: "swap",
+});
+
+/** Mixed-case serif used where titles should not appear in small caps. */
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-cormorant-garamond",
+  weight: ["400", "500", "600"],
+  subsets: ["latin", "vietnamese"],
   display: "swap",
 });
 
@@ -40,16 +52,26 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${manrope.variable} ${geistMono.variable} ${montserrat.variable} ${cormorantSC.variable} ${cormorantGaramond.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* Nauuna sa RouteScrollReset: pareho silang nakikinig sa capture
-            phase, at kailangang makansela muna ng kurtina ang click bago
-            mag-scroll pataas ang kasalukuyang pahina. */}
-        <PageCurtain />
-        <RouteScrollReset />
-        <Header />
-        {children}
+        {/* Binabalot ng LanguageProvider ang buong app: dito nakukuha ng
+            Header at ng iba pang client component ang kasalukuyang wika at ang
+            `t()`. Client ito pero pumapasa lang ng {children} (server), kaya
+            hindi nagiging client ang mga pahina. */}
+        <LanguageProvider>
+          {/* Naka-off muna ang PageCurtain (`components/PageCurtain.tsx`).
+              Naiwan ang file — hindi ito binura — kaya isang import at isang
+              linya lang ang kailangan para ibalik. Kapag ibinalik, dapat
+              nauuna ito sa RouteScrollReset: pareho silang nakikinig sa
+              capture phase, at kailangang makansela muna ng kurtina ang click
+              bago mag-scroll pataas ang kasalukuyang pahina. Basahin din ang
+              comment sa loob ng RouteScrollReset — may inalis doon na
+              kaakibat nito. */}
+          <RouteScrollReset />
+          <Header />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

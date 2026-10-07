@@ -113,11 +113,11 @@ export default function PageCurtain() {
   return (
     <div
       aria-hidden="true"
-      /* `#173b2a` ang pangunahing green ng site — ito ang laman ng mga dark
+      /* `#1f3f2e` ang pangunahing green ng site — ito ang laman ng mga dark
          green na section block at ang pinakamadalas na kulay sa buong
          codebase. Dating `#071d13` ito: halos itim na, at halatang hindi
          kapareho ng kulay na iniiwan at binubuksan ng kurtina. */
-      className={`${phase === "idle" ? "invisible" : "visible"} pointer-events-none fixed inset-0 z-[200] flex items-center justify-center bg-[#173b2a]`}
+      className={`${phase === "idle" ? "invisible" : "visible"} pointer-events-none fixed inset-0 z-[200] flex items-center justify-center bg-[#1f3f2e]`}
       style={{
         transform,
         transition: `transform ${phase === "leaving" ? SLIDE_OUT_MS : SLIDE_IN_MS}ms cubic-bezier(0.76, 0, 0.24, 1)`,

@@ -38,6 +38,25 @@ export type CallbackRow = CallbackInput & {
   status: string;
 };
 
+/**
+ * "Ask about availability" mula sa isang accommodation page.
+ *
+ * Kusang alam ng page kung aling stay ang tinitingnan, kaya naka-pre-fill
+ * ang slug/title — hindi ito pinipili ng bisita. Isang `preferredDate` lang
+ * (YYYY-MM-DD mula sa `<input type="date">`), hindi check-in/check-out.
+ */
+export type AvailabilityInput = {
+  accommodationSlug: string;
+  accommodationTitle: string;
+  preferredDate: string;
+  guests: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile: string;
+  message?: string;
+};
+
 /* Sa dev ay pinapatakbo ulit ng hot reload ang module, kaya kung walang
    cache ay maiipon ang bukas na handle sa parehong file. */
 const globalCache = globalThis as unknown as { __inquiriesDb?: DatabaseSync };
@@ -80,6 +99,23 @@ function applySchema(connection: DatabaseSync) {
       email      TEXT    NOT NULL UNIQUE,
       consented  INTEGER NOT NULL DEFAULT 1
     );
+
+    CREATE TABLE IF NOT EXISTS availability_requests (
+      id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+      created_at          TEXT    NOT NULL,
+      accommodation_slug  TEXT    NOT NULL,
+      accommodation_title TEXT    NOT NULL,
+      preferred_date      TEXT    NOT NULL,
+      guests              INTEGER NOT NULL,
+      first_name          TEXT    NOT NULL,
+      last_name           TEXT    NOT NULL,
+      email               TEXT    NOT NULL,
+      mobile              TEXT    NOT NULL,
+      message             TEXT,
+      status              TEXT    NOT NULL DEFAULT 'new'
+    );
+    CREATE INDEX IF NOT EXISTS idx_availability_created
+      ON availability_requests (created_at DESC);
   `);
 }
 
@@ -120,6 +156,30 @@ export function saveCallbackRequest(input: CallbackInput) {
       input.callWindows.join(", "),
       input.question ?? null,
       input.context ?? null,
+    );
+
+  return Number(result.lastInsertRowid);
+}
+
+export function saveAvailabilityRequest(input: AvailabilityInput) {
+  const result = db()
+    .prepare(
+      `INSERT INTO availability_requests
+        (created_at, accommodation_slug, accommodation_title, preferred_date,
+         guests, first_name, last_name, email, mobile, message)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    )
+    .run(
+      new Date().toISOString(),
+      input.accommodationSlug,
+      input.accommodationTitle,
+      input.preferredDate,
+      input.guests,
+      input.firstName,
+      input.lastName,
+      input.email,
+      input.mobile,
+      input.message ?? null,
     );
 
   return Number(result.lastInsertRowid);

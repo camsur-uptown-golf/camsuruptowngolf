@@ -5,7 +5,7 @@
   --foreground: #171717;
 
   /* Camsur Uptown Golf Club brand */
-  --brand-green: #14442c;
+  --brand-green: #265136;
   --brand-green-deep: #0a2418;
   --brand-gold: #c9a54e;
   --brand-gold-light: #f0dca0;
@@ -22,9 +22,9 @@
   --color-gold-light: var(--brand-gold-light);
   --color-cream: var(--brand-cream);
 
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-manrope);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-cormorant-sc);
   --font-navigation: var(--font-montserrat);
 }
 
@@ -38,20 +38,58 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
 }
 
-/* Editorial display face for every major title across the site. Navigation,
-   labels, body copy, and compact card headings stay sans-serif for clarity.
+/* ── Font-switching kada wika (i18n) ─────────────────────────────────────────
+   Inilalagay ng LanguageProvider ang `data-locale` sa <html>. Para sa CJK
+   (Korean/Chinese/Japanese) ay walang glyph ang mga Latin na brand face
+   (Cormorant/Manrope/Montserrat), kaya ini-override natin dito ang mismong
+   `--font-*` variables papunta sa SYSTEM CJK font stacks — agad na nagre-render,
+   walang dinadownload. Dahil sa `[data-locale=…]` selector ay mas mataas ang
+   specificity kaysa sa next/font na class, panalo ang override na ito.
+
+   Ang Vietnamese ay Latin — hindi kailangan ng override; ang `vietnamese`
+   subset sa layout.tsx ang bumabalot sa diacritics nito. Ang English/Filipino/
+   Bikol ay ang orihinal na brand face pa rin. */
+html[data-locale="KO"] {
+  --font-manrope: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-montserrat: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-cormorant-sc: "Nanum Myeongjo", "Apple SD Gothic Neo", "Noto Serif KR", serif;
+  --font-cormorant-garamond: "Nanum Myeongjo", "Apple SD Gothic Neo", "Noto Serif KR", serif;
+}
+html[data-locale="JA"] {
+  --font-manrope: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
+  --font-montserrat: "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
+  --font-cormorant-sc: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  --font-cormorant-garamond: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+}
+html[data-locale="ZH"] {
+  --font-manrope: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --font-montserrat: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-cormorant-sc: "Songti SC", "SimSun", "Noto Serif SC", serif;
+  --font-cormorant-garamond: "Songti SC", "SimSun", "Noto Serif SC", serif;
+}
+
+/* All prose uses Manrope site-wide. Display figures and compact navigation
+   labels retain their dedicated brand faces. */
+main p:not(.font-display):not(.font-navigation) {
+  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Cormorant SC is the shared editorial face for hero, image, and section
+   titles. Navigation, labels, body copy, and compact cards stay sans-serif.
 
    Dumaraan ito sa --font-display, hindi sa pangalan ng font mismo: iisang
    linya lang sa @theme sa itaas ang kailangang baguhin para mapalitan ang
    display face ng buong site. */
 main h1,
-main h2 {
+main h2,
+main h3.font-display,
+main h3.font-serif {
   font-family: var(--font-display), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  /* Walang epekto ito sa font na walang optical size axis. */
-  font-optical-sizing: auto;
+  letter-spacing: -0.04em;
 }
 
 html {
@@ -180,6 +218,157 @@ html {
   transform: translate3d(0, var(--parallax-y, 0px), 0) scale(var(--parallax-scale, 1.3));
 }
 
+/* Scroll-driven na "action" ng naka-pin (sticky) na Villa del Rey hero.
+   Isinusulat ng HeroRevealMotion ang progreso ng scroll sa --p ng #top
+   (0 sa taas → 1 kapag natabunan na ng isang viewport). Banayad na zoom ang
+   larawan; umaangat at kumukupas ang logo bago pa ito tuluyang matabunan. */
+[data-hero-media] {
+  transform: scale(calc(1 + var(--p, 0) * 0.1));
+  transform-origin: center;
+  will-change: transform;
+}
+[data-hero-logo] {
+  transform: translate3d(0, calc(var(--p, 0) * -40px), 0);
+  opacity: calc(1 - var(--p, 0) * 1.15);
+  will-change: transform, opacity;
+}
+
+/* WORD-BY-WORD na pagpasok ng golf hero title kapag na-load ang pahina.
+   Bawat salita (.hero-word) ay umaangat, kumukupas-papasok, at naglilinaw
+   mula sa blur — sunud-sunod ayon sa `animation-delay` na isinusulat kada
+   span (base 200ms + 120ms kada salita).
+
+   Nasa mga salita ito, hindi sa <h1>, kaya hiwalay sa scroll-driven na
+   [data-hero-logo] (nasa titulo mismo) at sa drop-shadow (filter) nito —
+   ang word-by-word ang isang beses, ang kupas-sa-scroll ang nagpapatuloy.
+   `backwards` ang fill: nakatago muna ang bawat salita (0% frame) habang
+   naghihintay ng turn nito kaya walang kislap, at walang naiiwang estado
+   pagkatapos — tugma na sa natural na salita, kaya walang talon. */
+@keyframes hero-word-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    filter: blur(8px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+.hero-word {
+  display: inline-block;
+  animation: hero-word-in 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  will-change: transform, opacity, filter;
+}
+
+/* Para sa hero na LARAWAN/LOGO (hindi teksto), gaya ng wordmark ng Villa Del
+   Rey: isang-beses na eleganteng pagpasok — fade + banayad na angat +
+   naglalahong blur, sa house easing. Katulad ng word-by-word ngunit buo, dahil
+   hindi mahahati sa salita ang isang larawan. Ilagay sa WRAPPER (hindi sa
+   larawang may [data-hero-logo]) kaya hiwalay sa scroll-fade nito; `backwards`
+   ang fill kaya nakatago muna bago magsimula at walang naiiwang estado. */
+@keyframes hero-media-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0) scale(0.985);
+    filter: blur(10px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.hero-media-reveal {
+  animation: hero-media-in 1300ms cubic-bezier(0.22, 1, 0.36, 1) 220ms backwards;
+  will-change: transform, opacity, filter;
+}
+
+/* STAGGERED na pagpasok ng mga item sa mega menu (HIGHLIGHTS) pagbukas nito.
+   Bawat link ay umaangat-papasok nang sunud-sunod (`animationDelay` kada index,
+   +45ms, isinusulat sa markup). Mount-driven: conditional render ang panel,
+   kaya tumatakbo ang animation sa bawat pagbukas at sa bawat palit ng section.
+   `backwards` ang fill kaya nakatago muna bawat item hanggang sa turn nito, at
+   walang naiiwang transform kaya hindi naaapektuhan ang hover (kulay lang). */
+@keyframes mega-item-in {
+  0% {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mega-item {
+  animation: mega-item-in 460ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Gintong X (clear) ng site search. `type="search"` ang input, kaya ang
+   browser mismo ang naglalagay ng cancel button — default na kulay ito (asul
+   sa ilang browser). Pinapalitan ng gintong (#f3dda0, kapareho ng search icon
+   sa tabi) na X gamit ang mask: ang background-color ang kulay, ang SVG ang
+   hugis. Naka-scope sa search input lang. Webkit/Chromium ito; sa Firefox ay
+   walang native cancel button, kaya walang naaapektuhan. */
+#site-search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background-color: #f3dda0;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 18 18M18 6 6 18' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 18 18M18 6 6 18' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: opacity 150ms ease;
+}
+
+#site-search-input::-webkit-search-cancel-button:hover {
+  opacity: 0.75;
+}
+
+/* SCROLL REVEAL na pinapatakbo ng IntersectionObserver (ScrollReveal.tsx).
+   Nilalagyan ng `.in-view` ang bawat `[data-scroll-anim]` kapag pumasok sa
+   tanaw, at inaalis kapag umalis — kaya NAG-A-ANIMATE ULIT sa bawat pasok,
+   scroll down man o pataas. Time-based (transition) ito kaya tiyak na nakikita
+   ang galaw, at gumagana sa LAHAT ng browser (hindi gaya ng scroll-driven na
+   `animation-timeline` na pabago-bago ang suporta).
+
+   `slide-left/right` = galing-gilid na larawan; `rise` = umaangat na teksto.
+   Ang starting (hidden) state ay nasa `scripting: enabled`, kaya buo pa rin
+   ang laman kapag naka-off ang JS. May reduced-motion guard sa ibaba. */
+@media (scripting: enabled) {
+  [data-scroll-anim] {
+    opacity: 0;
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  [data-scroll-anim="slide-left"] {
+    transform: translate3d(-120px, 0, 0);
+  }
+  [data-scroll-anim="slide-right"] {
+    transform: translate3d(120px, 0, 0);
+  }
+  [data-scroll-anim="rise"] {
+    transform: translate3d(0, 64px, 0);
+  }
+  [data-scroll-anim].in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal],
   [data-reveal].is-in {
@@ -189,4 +378,10 @@ html {
   }
   [data-parallax] { transform: none; }
   .parallax-media { transform: scale(var(--parallax-scale, 1.3)); }
+  [data-hero-media] { transform: none; }
+  [data-hero-logo] { transform: none; opacity: 1; }
+  .hero-word { animation: none; }
+  .hero-media-reveal { animation: none; }
+  .mega-item { animation: none; }
+  [data-scroll-anim] { opacity: 1; transform: none; transition: none; }
 }

@@ -45,10 +45,7 @@ export default function ShopExperience() {
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(3,14,9,0.62)_0%,rgba(3,14,9,0.12)_42%,rgba(3,14,9,0.9)_100%)]" />
 
         <div className="mx-auto w-full max-w-6xl px-6 pb-16 pt-64 text-center sm:px-10 sm:pb-20 lg:px-12 lg:pb-24">
-          <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.28em] text-[#efd98f]">
-            CamSur Uptown Golf Club · Opening 2026
-          </p>
-          <h1 className="mx-auto mt-5 max-w-5xl font-serif text-[clamp(3.2rem,7.2vw,7rem)] font-normal leading-[0.9] tracking-[-0.055em]">
+          <h1 className="mx-auto max-w-5xl font-serif text-[clamp(3.2rem,7.2vw,7rem)] font-normal leading-[0.9] tracking-[-0.055em]">
             The CamSur Uptown Pro Shop
           </h1>
           <p className="mx-auto mt-7 max-w-2xl text-sm leading-7 xl:text-base xl:leading-8 text-white/76 sm:text-base">
@@ -106,7 +103,7 @@ export default function ShopExperience() {
 
         <section className="bg-[#f5f3ec] py-16 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="grid gap-9 border-b border-[#173b2a]/15 pb-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+            <div className="grid gap-9 border-b border-[#1f3f2e]/15 pb-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
               <div>
                 <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Inside the shop</p>
                 <h2 data-reveal="up" className="mt-4 font-serif text-[clamp(2.8rem,5vw,5rem)] leading-[0.95] tracking-[-0.05em]">
@@ -119,7 +116,7 @@ export default function ShopExperience() {
             </div>
 
             <div className="mt-10 grid gap-x-10 lg:grid-cols-[1.05fr_0.95fr]">
-              <div data-reveal="left" className="relative min-h-[430px] overflow-hidden bg-[#153626] sm:min-h-[560px]">
+              <div data-reveal="left" className="relative min-h-[430px] overflow-hidden bg-[#1f3f2e] sm:min-h-[560px]">
                 <Image
                   src="/clubhouse/pro-shop.jpg"
                   alt="Apparel displays and fitting area inside the pro shop"
@@ -129,9 +126,9 @@ export default function ShopExperience() {
                 />
               </div>
 
-              <div className="border-t border-[#173b2a]/15 lg:border-t-0">
+              <div className="border-t border-[#1f3f2e]/15 lg:border-t-0">
                 {SHOP_FEATURES.map((feature) => (
-                  <div key={feature.id} id={feature.id} className="scroll-mt-32 grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#173b2a]/15 py-7 sm:grid-cols-[3rem_1fr] sm:py-8">
+                  <div key={feature.id} id={feature.id} className="scroll-mt-32 grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#1f3f2e]/15 py-7 sm:grid-cols-[3rem_1fr] sm:py-8">
                     <p className="pt-1 text-[10px] xl:text-[11px] font-bold tracking-[0.16em] text-[#a07d30]">{feature.number}</p>
                     <div>
                       <h3 className="text-xl font-semibold tracking-[-0.035em] sm:text-2xl">{feature.title}</h3>

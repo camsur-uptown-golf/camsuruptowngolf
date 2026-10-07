@@ -35,7 +35,7 @@ export default function InteractiveCourseMap() {
 
           return (
             <g key={number} aria-label={`Hole ${number}`} filter="url(#map-label-shadow)">
-              <circle cx={position.x} cy={position.y} r="1.08" fill="#174630" stroke="#e7d18d" strokeWidth="0.16" />
+              <circle cx={position.x} cy={position.y} r="1.08" fill="#265136" stroke="#e7d18d" strokeWidth="0.16" />
               <text
                 x={position.x}
                 y={position.y + 0.36}

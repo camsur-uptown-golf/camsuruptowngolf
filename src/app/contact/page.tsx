@@ -60,8 +60,8 @@ function PinIcon() {
 
 function DetailCard({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
-    <div className="border border-[#173b2a]/12 bg-white p-6">
-      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#174630]">
+    <div className="border border-[#1f3f2e]/12 bg-white p-6">
+      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#265136]">
         {icon}
       </span>
       <p className="mt-4 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f]">{label}</p>
@@ -76,7 +76,7 @@ export default function ContactPage() {
       <main>
         <ScrollMotion />
 
-        <section id="top" className="bg-[#1c3b2d] px-6 pb-14 pt-40 text-white sm:pb-16 sm:pt-44 lg:px-8">
+        <section id="top" className="bg-[#1f3f2e] px-6 pb-14 pt-40 text-white sm:pb-16 sm:pt-44 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">
               Contact us
@@ -99,14 +99,14 @@ export default function ContactPage() {
           <Container>
             <div className="grid gap-5 sm:grid-cols-3">
               <DetailCard icon={<PhoneIcon />} label="By phone">
-                <a href={CLUB_PHONE.href} className="font-semibold transition-colors hover:text-[#2f644b]">
+                <a href={CLUB_PHONE.href} className="font-semibold transition-colors hover:text-[#265136]">
                   {CLUB_PHONE.label}
                 </a>
                 <p className="mt-1 text-[#667269]">Mondays to Sundays</p>
               </DetailCard>
 
               <DetailCard icon={<MailIcon />} label="By email">
-                <a href={CLUB_EMAIL.href} className="font-semibold break-words transition-colors hover:text-[#2f644b]">
+                <a href={CLUB_EMAIL.href} className="font-semibold break-words transition-colors hover:text-[#265136]">
                   {CLUB_EMAIL.label}
                 </a>
                 <p className="mt-1 text-[#667269]">Replies within 48 hours</p>
@@ -125,7 +125,7 @@ export default function ContactPage() {
                 doon para sa may balak nang bumisita. */}
             <p className="mt-8 text-center text-sm leading-7 text-[#5d685f]">
               Planning a round, a stay, or an event?{" "}
-              <Link href="/plan-your-visit" className="font-semibold text-[#2f644b] underline underline-offset-4 hover:text-[#3a765a]">
+              <Link href="/plan-your-visit" className="font-semibold text-[#265136] underline underline-offset-4 hover:text-[#1f3f2e]">
                 Plan your visit
               </Link>{" "}
               has everything the club needs to prepare for you.
@@ -133,7 +133,7 @@ export default function ContactPage() {
           </Container>
         </section>
 
-        <section id="message" className="scroll-mt-24 border-t border-[#173b2a]/10 bg-white py-14 text-[#14271d] sm:py-16">
+        <section id="message" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-white py-14 text-[#14271d] sm:py-16">
           <Container>
             <SectionHeading
               eyebrow="Send a message"

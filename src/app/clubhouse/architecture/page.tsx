@@ -104,7 +104,7 @@ export default function ClubhouseArchitecturePage() {
               intro="A single tactile family runs from structure to detail — stone, timber and bronze, softened by plaster, wool and glass."
             />
 
-            <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[#173b2a]/10 bg-[#173b2a]/10 sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-[#1f3f2e]/10 bg-[#1f3f2e]/10 sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">
               {CLUBHOUSE_MATERIALS.map((material, index) => (
                 <div key={material.name} data-reveal="up" style={delay(index * 80)} className="bg-white p-6 sm:p-7">
                   <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] xl:text-[11px]">
@@ -142,7 +142,7 @@ export default function ClubhouseArchitecturePage() {
                   key={floor.floor}
                   data-reveal="up"
                   style={delay(index * 100)}
-                  className="rounded-2xl border border-[#173b2a]/10 bg-white p-6 sm:p-7"
+                  className="rounded-2xl border border-[#1f3f2e]/10 bg-white p-6 sm:p-7"
                 >
                   <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] xl:text-[11px]">
                     {floor.floor}
@@ -151,7 +151,7 @@ export default function ClubhouseArchitecturePage() {
                     {floor.rows.map(([room, area]) => (
                       <div
                         key={room}
-                        className="flex items-baseline justify-between gap-4 border-b border-[#173b2a]/8 py-2.5 text-sm"
+                        className="flex items-baseline justify-between gap-4 border-b border-[#1f3f2e]/8 py-2.5 text-sm"
                       >
                         <dt className="text-[#56625b]">{room}</dt>
                         <dd className="shrink-0 font-navigation text-[12px] font-semibold tabular-nums text-[#14271d]">
@@ -175,7 +175,7 @@ export default function ClubhouseArchitecturePage() {
             <div
               data-reveal="up"
               style={delay(320)}
-              className="mt-6 flex items-baseline justify-between gap-4 rounded-2xl bg-[#173b2a] px-6 py-6 text-white sm:px-8"
+              className="mt-6 flex items-baseline justify-between gap-4 rounded-2xl bg-[#1f3f2e] px-6 py-6 text-white sm:px-8"
             >
               <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#d8b65b] xl:text-[11px]">
                 Gross total
@@ -189,7 +189,7 @@ export default function ClubhouseArchitecturePage() {
 
         <section className={EDITORIAL_SECTION}>
           <Shell>
-            <div className="rounded-2xl border border-[#173b2a]/10 bg-white p-8 text-center sm:p-12">
+            <div className="rounded-2xl border border-[#1f3f2e]/10 bg-white p-8 text-center sm:p-12">
               <p
                 data-reveal="up"
                 className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]"
@@ -212,14 +212,14 @@ export default function ClubhouseArchitecturePage() {
                 href={CLUBHOUSE_DESIGNER.websiteHref}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-4 inline-flex items-center gap-1.5 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#2f644b] xl:text-[11px]"
+                className="mt-4 inline-flex items-center gap-1.5 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f] transition-colors hover:text-[#265136] xl:text-[11px]"
               >
                 {CLUBHOUSE_DESIGNER.website} <span aria-hidden="true">↗</span>
               </a>
               <p
                 data-reveal="up"
                 style={delay(260)}
-                className="mx-auto mt-6 max-w-lg border-t border-[#173b2a]/10 pt-6 text-xs leading-6 text-[#7a847d]"
+                className="mx-auto mt-6 max-w-lg border-t border-[#1f3f2e]/10 pt-6 text-xs leading-6 text-[#7a847d]"
               >
                 {CLUBHOUSE_CONCEPT_NOTE}
               </p>
@@ -229,7 +229,7 @@ export default function ClubhouseArchitecturePage() {
               <Link
                 href="/clubhouse"
                 data-reveal="up"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#2f644b] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#3a765a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f644b] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#265136] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
               >
                 See what is inside
               </Link>
