@@ -15,6 +15,7 @@ export default function ImageLightbox() {
   const [shot, setShot] = useState<Shot | null>(null);
   const [gallery, setGallery] = useState<GalleryShot[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [imageStatus, setImageStatus] = useState<"loading" | "ready" | "error">("loading");
   const loadToken = useRef(0);
 
   const loadShot = useCallback((nextShot: GalleryShot) => {
@@ -23,6 +24,7 @@ export default function ImageLightbox() {
 
     probe.onload = () => {
       if (token !== loadToken.current) return;
+      setImageStatus("loading");
       setShot({
         ...nextShot,
         width: probe.naturalWidth,
@@ -31,6 +33,7 @@ export default function ImageLightbox() {
     };
     probe.onerror = () => {
       if (token !== loadToken.current) return;
+      setImageStatus("loading");
       setShot({ ...nextShot, width: 1600, height: 1000 });
     };
     probe.src = nextShot.src;
@@ -41,6 +44,7 @@ export default function ImageLightbox() {
     setShot(null);
     setGallery([]);
     setActiveIndex(0);
+    setImageStatus("loading");
   }, []);
 
   const move = useCallback(
@@ -157,11 +161,38 @@ export default function ImageLightbox() {
           width={shot.width}
           height={shot.height}
           sizes="100vw"
-          priority
-          className="h-auto max-h-[86vh] w-auto max-w-full object-contain"
+          loading="eager"
+          decoding="sync"
+          onLoad={() => setImageStatus("ready")}
+          onError={() => setImageStatus("error")}
+          className={`h-auto max-h-[86vh] w-auto max-w-full object-contain transition-opacity duration-150 ${
+            imageStatus === "ready" ? "opacity-100" : "opacity-0"
+          }`}
         />
 
-        {shot.alt ? (
+        {imageStatus === "loading" ? (
+          <span
+            role="status"
+            className="pointer-events-none fixed left-1/2 top-1/2 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#10251a]/80"
+          >
+            <span
+              aria-hidden="true"
+              className="size-5 rounded-full border-2 border-white/35 border-t-white motion-safe:animate-spin"
+            />
+            <span className="sr-only">Loading photo</span>
+          </span>
+        ) : null}
+
+        {imageStatus === "error" ? (
+          <span
+            role="alert"
+            className="pointer-events-none fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#10251a]/80 px-5 py-3 text-sm font-semibold text-white"
+          >
+            Photo unavailable
+          </span>
+        ) : null}
+
+        {imageStatus === "ready" && shot.alt ? (
           <span className="pointer-events-none absolute inset-x-0 bottom-0 block bg-gradient-to-t from-[#050d09]/85 via-[#050d09]/35 to-transparent px-5 pb-5 pt-16 sm:px-7 sm:pb-6">
             <span className="block text-[13px] font-semibold uppercase leading-tight tracking-[0.08em] text-white sm:text-sm">
               {shot.alt}
