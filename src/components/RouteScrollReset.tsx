@@ -1,40 +1,116 @@
 "use client";
 
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
-function scrollToTopImmediately() {
-  const root = document.documentElement;
-  const previousScrollBehavior = root.style.scrollBehavior;
+const ROUTE_SCROLL_RESET_ATTRIBUTE = "data-route-scroll-reset";
+const NAVIGATION_FAILSAFE_MS = 2_000;
+const RESET_RELEASE_DELAY_MS = 150;
 
-  root.style.scrollBehavior = "auto";
+function holdImmediateScrolling() {
+  document.documentElement.setAttribute(ROUTE_SCROLL_RESET_ATTRIBUTE, "");
+}
+
+function releaseImmediateScrolling() {
+  document.documentElement.removeAttribute(ROUTE_SCROLL_RESET_ATTRIBUTE);
+}
+
+function scrollToTopImmediately() {
+  holdImmediateScrolling();
   window.scrollTo(0, 0);
-  root.style.scrollBehavior = previousScrollBehavior;
 }
 
 export default function RouteScrollReset() {
   const pathname = usePathname();
+  const navigationFailsafeRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const handleNavigationClick = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const link = target.closest<HTMLAnchorElement>("a[href]");
+      if (
+        !link ||
+        link.download ||
+        (link.target && link.target !== "_self")
+      ) {
+        return;
+      }
+
+      const destination = new URL(link.href, window.location.href);
+      if (
+        destination.origin !== window.location.origin ||
+        destination.pathname === window.location.pathname
+      ) {
+        return;
+      }
+
+      // This runs in capture phase, before Next handles the link. Keeping the
+      // override active prevents Next's route scroll reset from inheriting the
+      // site's intentional smooth scrolling.
+      holdImmediateScrolling();
+
+      if (navigationFailsafeRef.current !== null) {
+        window.clearTimeout(navigationFailsafeRef.current);
+      }
+
+      navigationFailsafeRef.current = window.setTimeout(() => {
+        releaseImmediateScrolling();
+        navigationFailsafeRef.current = null;
+      }, NAVIGATION_FAILSAFE_MS);
+    };
+
+    document.addEventListener("click", handleNavigationClick, true);
+
+    return () => {
+      document.removeEventListener("click", handleNavigationClick, true);
+      if (navigationFailsafeRef.current !== null) {
+        window.clearTimeout(navigationFailsafeRef.current);
+      }
+      releaseImmediateScrolling();
+    };
+  }, []);
 
   useLayoutEffect(() => {
     window.history.scrollRestoration = "manual";
     scrollToTopImmediately();
 
-    const frame = window.requestAnimationFrame(scrollToTopImmediately);
-    return () => window.cancelAnimationFrame(frame);
+    if (navigationFailsafeRef.current !== null) {
+      window.clearTimeout(navigationFailsafeRef.current);
+      navigationFailsafeRef.current = null;
+    }
+
+    let secondFrame = 0;
+    let releaseTimer = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      scrollToTopImmediately();
+      secondFrame = window.requestAnimationFrame(() => {
+        scrollToTopImmediately();
+        releaseTimer = window.setTimeout(() => {
+          scrollToTopImmediately();
+          releaseImmediateScrolling();
+        }, RESET_RELEASE_DELAY_MS);
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+      window.clearTimeout(releaseTimer);
+    };
   }, [pathname]);
 
-  /* INALIS ANG PAG-SCROLL BAGO MAG-NAVIGATE, KASAMA NG PAGECURTAIN.
-     May pangalawang effect dito dati na nakikinig sa bawat click sa loob
-     ng site at nag-i-scroll pataas bago pa lumipat ng ruta. May silbi iyon
-     noong may kurtina: kinakansela ng PageCurtain ang click, kaya nakatakip
-     na ang kurtina bago pa tumalon ang pahina — hindi ito nakikita.
-
-     Wala nang kurtina, kaya walang nagkakansela ng click at walang
-     tumatakip. Ang pag-scroll na iyon ay magiging kitang-kitang pagtalon
-     ng kasalukuyang pahina bago pa man dumating ang bago. Ang
-     `useLayoutEffect` sa itaas ang sapat na: nasa itaas na ang bagong
-     pahina pagdating nito.
-
-     Kapag ibinalik ang PageCurtain, ibalik din ito. */
   return null;
 }

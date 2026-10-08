@@ -97,6 +97,11 @@ html {
   scroll-padding-top: 80px;
 }
 
+/* Route changes must reset immediately; same-page anchors remain smooth. */
+html[data-route-scroll-reset] {
+  scroll-behavior: auto !important;
+}
+
 @keyframes hero-scale {
   from { transform: scale(1.035); }
   to { transform: scale(1); }

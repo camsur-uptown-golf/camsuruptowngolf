@@ -64,19 +64,20 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
 
   /* Naka-pin (sticky top-0) na hero na tinatabunan ng susunod na section, may
      scroll-zoom sa larawan at umaangat/kumukupas na title — gaya ng Villa del
-     Rey stay. Ginagamit ito ng Golf, Packages, Events at Experiences. Dahil
+     Rey stay. Ginagamit ito ng Golf at Packages. Normal-flow ang Events at
+     Experiences hero para hindi kontrolado ng scroll ang larawan o title. Dahil
      naka-pin ang hero, ang scroll-zoom (data-hero-media) ang galaw, hindi ang
      rect-based parallax — kaya wala nang parallax na section. */
-  const usesStickyReveal = isPackages || isEvents || isGolf || isExperiences;
+  const usesStickyReveal = isPackages || isGolf;
   const usesHeroParallax = false;
 
   /* Patag ang Golf, Experiences at Clubhouse heroes; ang iba lang ang may
      landscape wave. Sa Clubhouse ay may anim na pahina ng kuwarto sa ilalim
      nito na patag ang hero — kapag may alon dito, dalawang magkaibang anyo
-     ang isang seksyon. Ang mga sticky-reveal (packages, events) ay walang wave:
+     ang isang seksyon. Ang mga sticky-reveal page ay walang wave:
      ang pagtabon ng susunod na section na mismo ang transition papuntang cream. */
   const usesFairwayDivider =
-    usesFairwayHero && !isGolf && !isExperiences && !isClubhouse && !usesStickyReveal;
+    usesFairwayHero && !isGolf && !isEvents && !isExperiences && !isClubhouse && !usesStickyReveal;
 
   /* Ang harapang burol ay dapat eksaktong katumbas ng background ng unang
      section sa ilalim — kahit bahagyang pagkakaiba ay lumilitaw bilang tahi. */
@@ -85,26 +86,20 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
   return (
     <>
       <main>
-        {/* Naka-pin ang clubhouse hero: nananatili ang larawan sa sukat ng
-            viewport habang tumatakbo ang sequence (title out → stats in →
-            hold), saka lang bumibitaw papunta sa section sa ilalim. Ang balot
-            na `h-[220svh]` ang nagbibigay ng scroll distance; sa ibang pahina
-            ay `contents` — parang walang balot, kaya walang naaapektuhan. */}
-        <div
-          id={isClubhouse ? "clubhouse-hero-track" : undefined}
-          className={isClubhouse ? "relative h-[220svh]" : "contents"}
-        >
+        {/* Normal-flow hero ang Clubhouse: walang pinning o scroll-progress
+            track. Ang ibang sticky-reveal page lang ang nananatiling pinned. */}
+        <div className="contents">
         <section
           id="top"
           className={`relative isolate flex overflow-hidden bg-[#071d13] text-white ${
             usesStickyReveal ? "items-center justify-center" : "items-end"
           } ${
-            // Naka-pin ang hero (sticky top-0); umaangat ang susunod na section
-            // para tabunan ito — reveal, gaya ng Villa del Rey. Ang clubhouse ay
-            // sticky din pero sa loob ng sariling h-[220svh] na track.
-            isClubhouse || usesStickyReveal
+            // Naka-pin lang ang mga pahinang sadyang gumagamit ng sticky reveal.
+            usesStickyReveal
               ? "sticky top-0 h-svh min-h-[680px]"
-              : "min-h-[660px]"
+              : isClubhouse
+                ? "h-svh min-h-[680px]"
+                : "min-h-[660px]"
           }`}
         >
           <Image
@@ -192,7 +187,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         </section>
         </div>
 
-        {/* Para sa sticky-reveal (packages, events): naka-`relative z-10` at
+        {/* Para sa sticky-reveal pages: naka-`relative z-10` at
             solidong cream ang buong susunod na nilalaman kaya ito ang umaangat
             at tumatabon sa naka-pin na hero habang nagsi-scroll — reveal, gaya
             ng Villa del Rey. Sa ibang section ay walang klase ang balot, kaya
@@ -365,9 +360,8 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         )}
         </div>
       </main>
-      {/* Scroll-driven na galaw ng naka-pin na hero (zoom + pag-angat ng title)
-          para sa packages at events — dito gumagamit ng mekanismong villa-del-rey
-          (sticky + cover). Ang clubhouse ay may sariling sticky-sequence. */}
+      {/* Scroll-driven na galaw ng mga pahinang sadyang may naka-pin na hero.
+          Normal-flow ang Clubhouse, Events at Experiences hero. */}
       {usesStickyReveal ? <HeroRevealMotion /> : null}
       <Footer />
     </>
