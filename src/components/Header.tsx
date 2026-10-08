@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ACCOMMODATIONS, CLUB_PHONE, COURSE_PAGES, SITE_SECTIONS } from "@/lib/site-content";
+import { HOLE_PROFILES } from "@/lib/course-holes";
+import { searchSiteItems, type SiteSearchItem } from "@/lib/site-search";
 import HeaderUtilities from "@/components/HeaderUtilities";
 import { useTranslation } from "@/i18n/LanguageProvider";
 import type { TranslationKey } from "@/i18n/dictionaries";
@@ -239,20 +241,101 @@ function CloseIcon() {
   );
 }
 
-const SEARCH_ITEMS = [
+const SEARCH_SECTION_KEYWORDS: Readonly<Record<string, readonly string[]>> = {
+  golf: ["course", "golf course", "championship course", "book a tee time", "plan my round"],
+  clubhouse: ["club house", "facilities", "golf facilities"],
+  packages: ["golf packages", "golf trips", "stay and play", "group golf"],
+  events: ["golf events", "tournaments", "corporate events", "weddings", "celebrations"],
+  experiences: ["activities", "things to do", "non golf activities"],
+  accommodations: ["accommodation", "where can i stay", "rooms", "hotel", "resort stay"],
+};
+
+const SEARCH_LABEL_KEYWORDS: Readonly<Record<string, readonly string[]>> = {
+  "Stay & Play": ["stay and play"],
+  "Private Celebrations": ["wedding", "wedding venue", "private event", "celebration"],
+  "Corporate Events": ["corporate event", "company event"],
+  "Golf Tournaments": ["golf tournament", "competition"],
+  "Members’ lounge": ["members lounge", "member lounge"],
+  Wakepark: ["wake park"],
+  "Pickle Ball": ["pickleball"],
+};
+
+const SEARCH_ITEMS: readonly SiteSearchItem[] = [
+  {
+    label: "18 Championship Holes · Par 72",
+    href: "/golf",
+    category: "Golf",
+    keywords: [
+      "how many holes",
+      "number of holes",
+      "18 holes",
+      "championship holes",
+      "par 72",
+      "course par",
+      "golf course",
+    ],
+  },
   ...SITE_SECTIONS.flatMap((section) => [
-    { label: section.label, href: `/${section.slug}`, category: "Explore" },
-    ...section.links.map((link) => ({
-      label: link.label,
-      href: link.href,
-      category: section.label,
-    })),
+    {
+      label: section.label,
+      href: `/${section.slug}`,
+      category: "Explore",
+      keywords: [
+        section.eyebrow,
+        section.title,
+        section.description,
+        ...(SEARCH_SECTION_KEYWORDS[section.slug] ?? []),
+      ],
+    },
+    ...section.links.map((link, index) => {
+      const holeNumber = section.slug === "golf" ? index + 1 : null;
+      const hole = holeNumber === null ? null : HOLE_PROFILES[holeNumber];
+
+      return {
+        label: link.label,
+        href: link.href,
+        category: section.label,
+        keywords: hole && holeNumber
+          ? [
+              `hole ${holeNumber}`,
+              `hole number ${holeNumber}`,
+              `hole no ${holeNumber}`,
+              `hole no ${String(holeNumber).padStart(2, "0")}`,
+              hole.name,
+              `par ${hole.par}`,
+              `${hole.yards} yards`,
+              `${hole.blueMetres} metres`,
+              hole.description,
+            ]
+          : SEARCH_LABEL_KEYWORDS[link.label] ?? [],
+      };
+    }),
   ]),
-  { label: "Plan Your Visit", href: "/plan-your-visit", category: "Visitor information" },
-  { label: "Getting Here", href: "/getting-here", category: "Visitor information" },
-  { label: "Frequently Asked Questions", href: "/faq", category: "Visitor information" },
-  { label: "Contact Us", href: "/contact", category: "Visitor information" },
-] as const;
+  {
+    label: "Plan Your Visit",
+    href: "/plan-your-visit",
+    category: "Visitor information",
+    keywords: ["visit", "booking", "book a tee time", "plan a trip", "request a callback"],
+  },
+  {
+    label: "Getting Here",
+    href: "/getting-here",
+    category: "Visitor information",
+    keywords: ["how to get here", "how do i get there", "directions", "location", "airport", "travel"],
+  },
+  {
+    label: "Frequently Asked Questions",
+    href: "/faq",
+    category: "Visitor information",
+    keywords: ["faq", "questions", "help", "booking questions"],
+  },
+  {
+    label: "Contact Us",
+    href: "/contact",
+    category: "Visitor information",
+    keywords: ["contact", "contact number", "phone number", "booking line", "email address"],
+  },
+];
 
 const FEATURED_SEARCH_ITEMS = SEARCH_ITEMS.filter((item) => item.category === "Explore");
 
@@ -319,11 +402,10 @@ export default function Header() {
    */
   const isAwayFromHome = pathname !== "/";
 
-  const normalizedSearchQuery = searchQuery.trim().toLocaleLowerCase();
-  const searchResults = (normalizedSearchQuery
-    ? SEARCH_ITEMS.filter((item) => `${item.label} ${item.category}`.toLocaleLowerCase().includes(normalizedSearchQuery))
-    : FEATURED_SEARCH_ITEMS
-  ).slice(0, 8);
+  const normalizedSearchQuery = searchQuery.trim();
+  const searchResults = normalizedSearchQuery
+    ? searchSiteItems(SEARCH_ITEMS, normalizedSearchQuery)
+    : FEATURED_SEARCH_ITEMS;
 
   const openSearch = (trigger: HTMLButtonElement) => {
     cancelScheduledClose();
