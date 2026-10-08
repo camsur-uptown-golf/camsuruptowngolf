@@ -164,10 +164,14 @@ export default function RequestCallback({ context }: { context?: string }) {
             inputMode="numeric"
             aria-invalid={guestError || undefined}
             aria-describedby={guestError ? "rc-guests-error" : undefined}
-            onBlur={(event) => setGuestError(!event.currentTarget.validity.valid)}
+            onBlur={(event) => {
+              const input = event.currentTarget;
+              setGuestError(input.value !== "" && !input.validity.valid);
+            }}
             onChange={(event) => {
               if (guestError) {
-                setGuestError(!event.currentTarget.validity.valid);
+                const input = event.currentTarget;
+                setGuestError(input.value !== "" && !input.validity.valid);
               }
             }}
             onInvalid={(event) => {

@@ -126,10 +126,14 @@ export default function AvailabilityRequest({
             inputMode="numeric"
             aria-invalid={guestError || undefined}
             aria-describedby={guestError ? "av-guests-error" : undefined}
-            onBlur={(event) => setGuestError(!event.currentTarget.validity.valid)}
+            onBlur={(event) => {
+              const input = event.currentTarget;
+              setGuestError(input.value !== "" && !input.validity.valid);
+            }}
             onChange={(event) => {
               if (guestError) {
-                setGuestError(!event.currentTarget.validity.valid);
+                const input = event.currentTarget;
+                setGuestError(input.value !== "" && !input.validity.valid);
               }
             }}
             onInvalid={(event) => {
