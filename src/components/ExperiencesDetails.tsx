@@ -161,6 +161,8 @@ export default function ExperiencesDetails() {
         </Shell>
       </section>
 
+      {/* Normal-flow full-screen panels: walang sticky stage o scroll-scrub.
+          Minsan lang pumapasok ang caption at nananatiling visible. */}
       <ExperiencesActivities kicker="Experience" items={ACTIVITIES} />
 
       <ExperiencesCta />

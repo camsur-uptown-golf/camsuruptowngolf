@@ -49,8 +49,9 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
   return (
     <>
       <main>
-        {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
-        <ScrollMotion replay />
+        {/* One-time reveals: once visible, content stays visible and never
+            reverses when the user scrolls back up. */}
+        <ScrollMotion />
 
         <section id="top" className="relative isolate flex min-h-[560px] items-end overflow-hidden bg-[#071d13] text-white sm:min-h-[640px]">
           <Image
@@ -93,10 +94,9 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             nawawala nang buo ang section na ito sa halip na mag-iwan ng
             blangkong ulo.
 
-            Scrollytelling ang mga kuha — kapareho ng mga kuwarto sa
-            `/clubhouse`. Ang ulo ay nasa walang-overflow na section (sinisira
-            ng overflow-hidden ang sticky), at sariling seksyon na ang mga
-            larawan sa ClubhouseGallery. */}
+            Normal-flow, full-screen panels ang mga kuha — kapareho ng mga
+            kuwarto sa `/clubhouse`. Walang sticky stage o scroll-scrub; ang
+            caption ay minsan lang nagre-reveal at nananatiling visible. */}
         {space.gallery.length > 0 ? (
           <>
             <section className="relative isolate scroll-mt-24 bg-[#f7f5ee] pt-4 pb-10 sm:pt-6 sm:pb-14">
