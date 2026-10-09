@@ -40,6 +40,7 @@ function Required() {
 export default function RequestCallback({ context }: { context?: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [windowError, setWindowError] = useState(false);
+  const [guestError, setGuestError] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -103,7 +104,7 @@ export default function RequestCallback({ context }: { context?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate={false} className="mx-auto max-w-3xl">
+    <form onSubmit={handleSubmit} onReset={() => setGuestError(false)} noValidate={false} className="mx-auto max-w-3xl">
       <div className="grid gap-6 sm:grid-cols-2 sm:gap-x-8">
         <div>
           <label className={LABEL} htmlFor="rc-first">
@@ -153,8 +154,37 @@ export default function RequestCallback({ context }: { context?: string }) {
             How many guests?
             <Required />
           </label>
-          <input id="rc-guests" name="guests" type="number" min={1} max={100} required inputMode="numeric" className={`${FIELD} mt-2.5`} />
-          <p className="mt-2 text-xs leading-5 text-[#8a938c]">Please enter a number from 1 to 100.</p>
+          <input
+            id="rc-guests"
+            name="guests"
+            type="number"
+            min={1}
+            max={100}
+            required
+            inputMode="numeric"
+            aria-invalid={guestError || undefined}
+            aria-describedby={guestError ? "rc-guests-error" : undefined}
+            onBlur={(event) => {
+              const input = event.currentTarget;
+              setGuestError(input.value !== "" && !input.validity.valid);
+            }}
+            onChange={(event) => {
+              if (guestError) {
+                const input = event.currentTarget;
+                setGuestError(input.value !== "" && !input.validity.valid);
+              }
+            }}
+            onInvalid={(event) => {
+              event.preventDefault();
+              setGuestError(true);
+            }}
+            className={`${FIELD} mt-2.5`}
+          />
+          {guestError ? (
+            <p id="rc-guests-error" role="alert" className="mt-2 text-xs font-semibold leading-5 text-[#a8492f]">
+              Please enter a number from 1 to 100.
+            </p>
+          ) : null}
         </div>
 
         <div className="sm:col-span-2">
