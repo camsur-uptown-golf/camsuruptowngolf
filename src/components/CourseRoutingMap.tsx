@@ -12,10 +12,12 @@ const HOLE_LINKS = COURSE_PAGES.map((course, index) => ({
 }));
 
 export default function CourseRoutingMap() {
-  const [activeHole, setActiveHole] = useState(1);
+  const [hoveredHole, setHoveredHole] = useState<number | null>(null);
+  const [focusedHole, setFocusedHole] = useState<number | null>(null);
   const [scale, setScale] = useState(0.96);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
+  const activeHole = hoveredHole ?? focusedHole;
 
   useEffect(() => {
     const handleFullscreenChange = () => setIsFullscreen(document.fullscreenElement === mapRef.current);
@@ -45,6 +47,7 @@ export default function CourseRoutingMap() {
         <div
           ref={mapRef}
           data-reveal="scale"
+          onMouseLeave={() => setHoveredHole(null)}
           className={`${isFullscreen ? "h-screen w-screen" : "aspect-square min-h-[340px] w-full sm:aspect-[16/10] sm:min-h-[520px]"} relative overflow-hidden bg-[#f8f5ea]`}
         >
           <div
@@ -68,8 +71,9 @@ export default function CourseRoutingMap() {
                   key={hole.number}
                   href={hole.href}
                   aria-label={`Explore hole number ${hole.number}`}
-                  onMouseEnter={() => setActiveHole(hole.number)}
-                  onFocus={() => setActiveHole(hole.number)}
+                  onMouseEnter={() => setHoveredHole(hole.number)}
+                  onFocus={() => setFocusedHole(hole.number)}
+                  onBlur={() => setFocusedHole(null)}
                   className={`absolute z-10 grid h-7 w-7 place-content-center rounded-[50%_50%_50%_10%] border font-display shadow-[0_6px_12px_rgba(8,27,18,0.3)] transition-[background-color,color,transform] duration-200 sm:h-9 sm:w-9 ${
                     selected
                       ? "border-[#ead99e] bg-[#1f3f2e] text-[#f8e9b7]"
@@ -125,14 +129,16 @@ export default function CourseRoutingMap() {
               </button>
             </div>
 
-            <Link
-              href={HOLE_LINKS[activeHole - 1].href}
-              aria-live="polite"
-              aria-label={`Open hole number ${activeHole}`}
-              className="pointer-events-auto absolute bottom-4 right-2 rounded-full border border-[#d8c783]/70 bg-[#1f3f2e]/90 px-4 py-2 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#f8e9b7] transition-colors hover:bg-[#1f3f2e] sm:bottom-6 sm:right-4 sm:text-[11px]"
-            >
-              Hole {String(activeHole).padStart(2, "0")}
-            </Link>
+            {activeHole !== null ? (
+              <Link
+                href={HOLE_LINKS[activeHole - 1].href}
+                aria-live="polite"
+                aria-label={`Open hole number ${activeHole}`}
+                className="pointer-events-auto absolute bottom-4 right-2 rounded-full border border-[#d8c783]/70 bg-[#1f3f2e]/90 px-4 py-2 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#f8e9b7] transition-colors hover:bg-[#1f3f2e] sm:bottom-6 sm:right-4 sm:text-[11px]"
+              >
+                Hole {String(activeHole).padStart(2, "0")}
+              </Link>
+            ) : null}
           </div>
         </div>
       </div>
