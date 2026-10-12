@@ -240,7 +240,7 @@ export default function ConceptCarousel() {
             <h3 className="mt-2 max-w-full font-serif text-[clamp(2rem,2.5vw,3rem)] font-medium leading-[0.92] tracking-[-0.05em]">
               {t("course.holeNo")} {active + 1}
             </h3>
-            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-10 min-w-[112px] items-center justify-center rounded-full bg-[#265136] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#1f3f2e]">
+            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-10 min-w-[112px] items-center justify-center rounded-full bg-[#e7d18d] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:bg-[#f3dfa0]">
               {t("action.explore")}
             </Link>
           </div>

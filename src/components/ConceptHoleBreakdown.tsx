@@ -194,7 +194,7 @@ export default function ConceptHoleBreakdown({
               <summary className="flex cursor-pointer list-none items-center justify-between font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#3e4c45] [&::-webkit-details-marker]:hidden">
                 View this hole on the concept map<span className="text-lg text-[#98782f] transition group-open:rotate-45">+</span>
               </summary>
-              <a href="#aerial-study" className="mt-4 inline-flex rounded-full bg-[#265136] px-5 py-3 font-navigation text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.15em] text-white transition hover:bg-[#1f3f2e]">Open aerial study ↑</a>
+              <a href="#aerial-study" className="mt-4 inline-flex rounded-full bg-[#e7d18d] px-5 py-3 font-navigation text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.15em] text-[#14271d] transition hover:bg-[#f3dfa0]">Open aerial study ↑</a>
             </details>
           </div>
         </div>

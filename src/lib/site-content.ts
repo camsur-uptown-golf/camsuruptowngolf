@@ -463,7 +463,7 @@ export const SITE_SECTIONS = [
       { label: "Massage", href: "https://visitcamsur.com/facilities/massage", image: "/experiences/massage.webp" },
       { label: "ATV", href: "https://visitcamsur.com/facilities/atv", image: "/experiences/atv.webp" },
       { label: "Lago Del Rey", href: "https://visitcamsur.com/facilities/lagodelrey", image: "/experiences/lago-del-rey.webp" },
-      { label: "Bike Track", href: "https://visitcamsur.com/facilities/bike-track", image: "/experiences/bike-track.webp" },
+      { label: "Pump Track", href: "https://visitcamsur.com/facilities/bike-track", image: "/experiences/bike-track.webp" },
       { label: "Skate Park", href: "https://visitcamsur.com/facilities/skate-park", image: "/experiences/skate-park.webp" },
       { label: "Kiddie Park", href: "https://visitcamsur.com/facilities/kiddiepark", image: "/experiences/kiddie-park.webp" },
       { label: "Billiards", href: "https://visitcamsur.com/facilities/billiards", image: "/experiences/billiards.webp" },

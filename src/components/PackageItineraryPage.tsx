@@ -83,7 +83,7 @@ export default function PackageItineraryPage({ active, title, description, image
               <div data-reveal="up" className="max-w-4xl border-b border-[#1f3f2e]/18 pb-10">
                 <p className="text-sm font-medium leading-7 text-[#46554c]">{description}</p>
                 <p className="mt-5 text-sm leading-7 text-[#59665e]">This itinerary is only a starting point — the club can shape the tee times, meals, accommodation, transfers, and pace around your dates and your group.</p>
-                <Link href="/packages" className="mt-7 inline-flex h-10 items-center rounded-full bg-[#265136] px-6 font-navigation text-[9px] font-bold uppercase tracking-[0.13em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e]">Compare packages</Link>
+                <Link href="/packages" className="mt-7 inline-flex h-10 items-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[9px] font-bold uppercase tracking-[0.13em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]">Compare packages</Link>
               </div>
               <div className="max-w-4xl">
                 {days.map((day, index) => (

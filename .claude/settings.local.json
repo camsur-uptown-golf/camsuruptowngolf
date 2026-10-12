@@ -10,7 +10,27 @@
       "PowerShell($out = npm run build 2>&1 | Out-String; Write-Output \"EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Compiled|34/34|Error|Failed\" | Select-Object -First 5\\) -join \"`n\")",
       "PowerShell(npx tsc --noEmit; if \\($?\\) { npm run lint; if \\($?\\) { $out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Error|Failed|Compiled successfully|Generating static pages using \\\\d+ workers \\\\\\(\\\\d+/\\\\d+\\\\\\) in\" | Select-Object -First 4\\) -join \"`n\" } })",
       "PowerShell($out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Compiled|Generating static pages using|Failed\" | Select-Object -First 3\\) -join \"`n\"; Write-Output \"--- recheck ---\"; npx tsc --noEmit; if \\($?\\) { Write-Output \"tsc OK\"; npm run lint })",
-      "PowerShell(npx tsc --noEmit; if \\($?\\) { npm run lint; if \\($?\\) { $out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Compiled|Generating static pages using|Failed\" | Select-Object -First 3\\) -join \"`n\" } })"
+      "PowerShell(npx tsc --noEmit; if \\($?\\) { npm run lint; if \\($?\\) { $out = npm run build 2>&1 | Out-String; Write-Output \"BUILD EXIT=$LASTEXITCODE\"; \\($out -split \"`n\" | Select-String -Pattern \"Compiled|Generating static pages using|Failed\" | Select-Object -First 3\\) -join \"`n\" } })",
+      "Bash(curl -s -o /dev/null -w \"dev server on :3000 -> %{http_code}\\\\n\" --max-time 4 http://localhost:3000/)",
+      "Bash(grep -n \"slug:\" src/lib/site-content.ts | grep -iE \"gota|villa|lodge\" && echo \"--- generateStaticParams in [stay] ---\" && sed -n '/generateStaticParams/,/^}/p' \"src/app/accommodations/[stay]/page.tsx\" && echo \"--- is this file identical to argenio? ---\" && diff -q \"src/app/accommodations/[stay]/page.tsx\" \"/c/Users/User/Documents/camsuruptowngolf-argenio/src/app/accommodations/[stay]/page.tsx\" && echo \"identical\")",
+      "Read(//c/Users/User/Downloads/**)",
+      "Bash(where ffmpeg *)",
+      "Bash(ls /c/ffmpeg* /c/Users/User/AppData/Local/Microsoft/WinGet/Links/)",
+      "Bash(ffprobe -v error -show_entries format=duration,bit_rate:stream=index,codec_type,codec_name,width,height,r_frame_rate,bit_rate,pix_fmt,profile -of default=nw=1 \"/c/Users/User/Downloads/golf club images.mp4\")",
+      "Bash(ffmpeg -v error -y -i '/c/Users/User/Downloads/golf club images.mp4' -vf fps=1/4,scale=320:-2,tile=3x3 -frames:v 1 C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/clubhouse-video-sheet.jpg)",
+      "Bash(time ffmpeg -v error -y -i \"/c/Users/User/Downloads/golf club images.mp4\" -an -vf \"scale=1920:-2:flags=lanczos\" -c:v libx264 -preset slow -crf 23 -profile:v high -pix_fmt yuv420p -movflags +faststart public/clubhouse/clubhouse-hero-1920.mp4)",
+      "Bash(awk '{printf \"%.1f MB\\\\n\", $5/1048576}')",
+      "Bash(ffmpeg -v error -y -ss 22.5 -i '/c/Users/User/Downloads/golf club images.mp4' -vf scale=1920:-2:flags=lanczos,crop=640:360:640:300 -frames:v 1 C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/q-src.png)",
+      "Bash(ffmpeg -v error -y -ss 22.5 -i public/clubhouse/clubhouse-hero-1920.mp4 -vf crop=640:360:640:300 -frames:v 1 C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/q-23.png)",
+      "Bash(ffmpeg -v error -y -ss 22.5 -i C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/test-crf28.mp4 -vf crop=640:360:640:300 -frames:v 1 C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/q-28.png)",
+      "Bash(ffmpeg -v error -y -i C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/q-src.png -i C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/q-23.png -i C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/q-28.png -filter_complex hstack=inputs=3 C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/q-compare.png)",
+      "Bash(mv -f C:/Users/User/AppData/Local/Temp/claude/C--Users-User-projects-camsuruptowngolf/6e653bb0-8cbf-4a89-b515-2bb3676693f7/scratchpad/test-crf28.mp4 public/clubhouse/clubhouse-hero-1920.mp4)",
+      "Bash(ffmpeg -v error -y -i \"/c/Users/User/Downloads/golf club images.mp4\" -an -vf \"scale=1280:-2:flags=lanczos\" -c:v libx264 -preset slow -crf 28 -profile:v high -pix_fmt yuv420p -movflags +faststart public/clubhouse/clubhouse-hero-1280.mp4)",
+      "Bash(ffmpeg -v error -y -ss 0.2 -i \"/c/Users/User/Downloads/golf club images.mp4\" -vf \"scale=1920:-2:flags=lanczos\" -frames:v 1 -c:v libwebp -quality 80 public/clubhouse/clubhouse-hero-poster.webp)",
+      "Bash(awk '{printf \"  %-32s %6.1f MB\\\\n\", $NF, $5/1048576}')",
+      "Bash(sed 's|public/clubhouse/||')",
+      "Bash(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 public/clubhouse/clubhouse-hero-1920.mp4)",
+      "Bash(ffprobe -v error -show_entries stream=codec_type -of csv=p=0 public/clubhouse/clubhouse-hero-1920.mp4)"
     ]
   }
 }

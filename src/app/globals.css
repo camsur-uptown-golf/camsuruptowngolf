@@ -97,6 +97,11 @@ html {
   scroll-padding-top: 80px;
 }
 
+/* Route changes must reset immediately; same-page anchors remain smooth. */
+html[data-route-scroll-reset] {
+  scroll-behavior: auto !important;
+}
+
 @keyframes hero-scale {
   from { transform: scale(1.035); }
   to { transform: scale(1); }
@@ -384,4 +389,25 @@ html {
   .hero-media-reveal { animation: none; }
   .mega-item { animation: none; }
   [data-scroll-anim] { opacity: 1; transform: none; transition: none; }
+}
+
+/* Course map hover preview (CourseRoutingMap): banayad na fade + angat para
+   hindi biglang sumulpot ang card. Opacity lang ang ina-animate — ang
+   `transform` ay ginagamit na ng card para sa posisyon nito. */
+@keyframes map-preview-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.map-preview {
+  animation: map-preview-in 180ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-preview { animation: none; }
+}
+
+/* HomeClubhouseDay: pumupuno ang gold na bahagi ng timeline habang aktibo
+   ang isang oras; sa `animationend` lumilipat sa susunod na panel. */
+@keyframes day-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }

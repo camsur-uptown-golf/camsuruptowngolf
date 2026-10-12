@@ -9,6 +9,7 @@ import RequestCallback from "@/components/RequestCallback";
 import Scorecard from "@/components/Scorecard";
 import ScrollMotion from "@/components/ScrollMotion";
 import HeroWords from "@/components/HeroWords";
+import HoleProgressEyebrow from "@/components/HoleProgressEyebrow";
 import { Container, SectionHeading, delay } from "@/components/SectionKit";
 import { HOLE_PROFILES } from "@/lib/course-holes";
 import { COURSE_PAGES } from "@/lib/site-content";
@@ -126,9 +127,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             <div className="mx-auto max-w-4xl text-center">
               {/* Pareho ng SectionHeading ang sukat at tracking — 0.24em at
                   sm: ang dati, kaya bahagyang iba sa ibang eyebrow ng pahina. */}
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d1af58] xl:text-[11px]">
-                Aerial routing study · {String(index + 1).padStart(2, "0")} / 18
-              </p>
+              <HoleProgressEyebrow current={concept.holes[0]} total={COURSE_PAGES.length} />
               {/* Ang pangalan ng butas, hindi ang dating iisang editorial na
                   headline na pareho sa lahat ng 18 pahina. */}
               {/* Tatlong antas ang dapat: 72px ang "No. 1" sa hero, 36px ang

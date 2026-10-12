@@ -67,5 +67,8 @@ export const HOLE_POSITIONS: Record<number, { x: number; y: number }> = {
   18: { x: 33.6, y: 69 },
 };
 
+/** Posisyon ng clubhouse sa masterplan (parehong sukat ng HOLE_POSITIONS). */
+export const CLUBHOUSE_POSITION = { x: 49.8, y: 55.4 };
+
 /** Ang pinakabagong masterplan na kasama ng HOLE_POSITIONS sa itaas. */
 export const COURSE_PLAN_IMAGE = "/golf/course-map-master-source-v1.png";

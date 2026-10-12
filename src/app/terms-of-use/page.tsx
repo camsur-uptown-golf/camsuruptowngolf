@@ -195,7 +195,7 @@ export default function TermsOfUsePage() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     <a
                       href={CLUB_EMAIL.href}
-                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#265136] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#1f3f2e]"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:bg-[#f3dfa0]"
                     >
                       {CLUB_EMAIL.label}
                     </a>

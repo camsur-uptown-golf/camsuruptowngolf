@@ -4,6 +4,9 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import ConceptCarousel from "@/components/ConceptCarousel";
 // import HomeClubhouseOverview from "@/components/HomeClubhouseOverview"; // temporarily hidden
+// import HomeExplore from "@/components/HomeExplore"; // temporarily hidden
+import HomeClubhouseDay from "@/components/HomeClubhouseDay";
+import HomeVillaDelRey from "@/components/HomeVillaDelRey";
 import PackagesCarousel from "@/components/PackagesCarousel";
 import HeroVideo from "@/components/HeroVideo";
 import ScrollMotion from "@/components/ScrollMotion";
@@ -169,7 +172,7 @@ function Introduction() {
           href="/golf"
           data-reveal="up"
           style={delay(330)}
-          className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#265136] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-[0_14px_34px_rgba(20,68,44,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#1f3f2e] xl:text-[12px]"
+          className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#e7d18d] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f3dfa0] xl:text-[12px]"
         >
           <T k="action.planRound" /> <ArrowIcon />
         </Link>
@@ -190,7 +193,10 @@ export default function Home() {
         {/* Ang balot na ito ang sumasagip sa mga siwang sa pagitan ng mga
             section sa loob, kaya kasama siya kapag pinalitan ang kulay. */}
         <div className="bg-[#f7f5ee]">
+          {/* <HomeExplore /> */}
           <ConceptCarousel />
+          <HomeClubhouseDay />
+          <HomeVillaDelRey />
           {/* <HomeClubhouseOverview /> */}
           <PackagesCarousel />
         </div>

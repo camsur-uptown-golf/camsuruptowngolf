@@ -36,6 +36,7 @@ export default function AvailabilityRequest({
   accommodationTitle: string;
 }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [guestError, setGuestError] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -88,7 +89,7 @@ export default function AvailabilityRequest({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto max-w-3xl">
+    <form onSubmit={handleSubmit} onReset={() => setGuestError(false)} className="mx-auto max-w-3xl">
       <div className="mb-6 border border-[#1f3f2e]/15 bg-white/60 px-4 py-3">
         <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f]">Stay</p>
         <p className="mt-1 text-sm font-medium text-[#14271d]">{accommodationTitle}</p>
@@ -123,9 +124,29 @@ export default function AvailabilityRequest({
             max={100}
             required
             inputMode="numeric"
+            aria-invalid={guestError || undefined}
+            aria-describedby={guestError ? "av-guests-error" : undefined}
+            onBlur={(event) => {
+              const input = event.currentTarget;
+              setGuestError(input.value !== "" && !input.validity.valid);
+            }}
+            onChange={(event) => {
+              if (guestError) {
+                const input = event.currentTarget;
+                setGuestError(input.value !== "" && !input.validity.valid);
+              }
+            }}
+            onInvalid={(event) => {
+              event.preventDefault();
+              setGuestError(true);
+            }}
             className={`${FIELD} mt-2.5`}
           />
-          <p className="mt-2 text-xs leading-5 text-[#8a938c]">Please enter a number from 1 to 100.</p>
+          {guestError ? (
+            <p id="av-guests-error" role="alert" className="mt-2 text-xs font-semibold leading-5 text-[#a8492f]">
+              Please enter a number from 1 to 100.
+            </p>
+          ) : null}
         </div>
 
         <div>
@@ -186,7 +207,7 @@ export default function AvailabilityRequest({
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#265136] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#e7d18d] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "sending" ? "Sending…" : "Ask about availability"}
         </button>

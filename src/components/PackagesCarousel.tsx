@@ -207,7 +207,7 @@ export default function PackagesCarousel() {
             type="button"
             onClick={() => setActive((current) => (current + 1) % SLIDES.length)}
             aria-label={`Next slide: ${SLIDES[(active + 1) % SLIDES.length].title}`}
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-transparent text-[#e7d18d] shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:translate-x-0.5 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d]"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[#e7d18d] transition hover:translate-x-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d]"
           >
             <ArrowIcon />
           </button>

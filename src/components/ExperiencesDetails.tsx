@@ -27,12 +27,7 @@ const ACTIVITIES = [
   {
     id: "wakepark",
     name: "Wakepark",
-    image: "/experiences/wakepark.webp",
-    /* Background video (Cloudinary CDN). `f_auto,q_auto` — awtomatikong
-       pinipili ng Cloudinary ang pinakamagaan na format/quality kada browser.
-       Ang `/experiences/wakepark.webp` sa itaas ang poster/fallback habang
-       nilo-load o kung mabigo ang video. Landscape ang clip, kaya object-cover. */
-    video: "https://res.cloudinary.com/diwrwmjgw/video/upload/f_auto,q_auto/snapgram_compressed_k4dqif.mp4",
+    image: "/experiences/wakepark-riders.webp",
     href: "https://visitcamsur.com/facilities/wakepark",
     description:
       "A cable wake system over open water, with gear and instruction for first-timers as well as riders working on their own lines.",
@@ -40,23 +35,23 @@ const ACTIVITIES = [
   {
     id: "pickle-ball",
     name: "Pickle Ball",
-    image: "/experiences/pickleball-enhanced.png",
+    image: "/experiences/pickleball-indoor.webp",
     href: "https://pickleball.camsur.com/",
     description:
-      "Courts for the game that takes about ten minutes to learn and considerably longer to stop playing. The CamSur Pickleball Club runs its own booking and schedule.",
+      "Courts for the game that takes about ten minutes to learn and considerably longer to stop playing. Covered, well-lit courts keep play going through midday heat and afternoon rain, with room for doubles, drills, and friendly rivalries. The CamSur Pickleball Club runs its own booking and schedule.",
   },
   {
     id: "playground-basketball",
     name: "Outdoor/Indoor Basketball Court",
-    image: "/experiences/playground-basketball.webp",
+    image: "/experiences/basketball-arena.webp",
     href: "https://visitcamsur.com/facilities/playground",
     description:
-      "Outdoor and indoor courts for pick-up games and afternoons that need no plan at all.",
+      "Outdoor and indoor courts for pick-up games and afternoons that need no plan at all. Shoot around between rounds, gather the group for a full-court run, or catch a local league night when the stands fill up and the whole arena gets loud.",
   },
   {
     id: "massage",
     name: "Massage",
-    image: "/experiences/massage.webp",
+    image: "/experiences/massage-spa.webp",
     href: "https://visitcamsur.com/facilities/massage",
     description:
       "Treatment rooms for recovery after a round, a ride, or a long stretch on the water. Unhurried sessions to ease tired legs and shoulders, with the quiet of the resort just beyond the door.",
@@ -64,7 +59,7 @@ const ACTIVITIES = [
   {
     id: "atv",
     name: "ATV",
-    image: "/experiences/atv.webp",
+    image: "/experiences/atv-ride.webp",
     href: "https://visitcamsur.com/facilities/atv",
     description:
       "Guided all-terrain rides that begin on open ground and work out to the rougher trails past the landscaped areas — climbs, descents, and enough loose dirt to put the quiet corners of the property well behind you.",
@@ -72,38 +67,39 @@ const ACTIVITIES = [
   {
     id: "lago-del-rey",
     name: "Lago Del Rey",
-    image: "/experiences/lago-del-rey.webp",
+    image: "/experiences/lago-del-rey-paddle.webp",
     href: "https://visitcamsur.com/facilities/lagodelrey",
     description:
       "The resort lake at an easy pace — paddle time, open water, and the best light on the property late in the afternoon.",
   },
   {
     id: "bike-track",
-    name: "Bike Track",
-    image: "/experiences/bike-track.webp",
+    name: "Pump Track",
+    image: "/experiences/pump-track-night.webp",
     href: "https://visitcamsur.com/facilities/bike-track",
     description: "A dirt circuit with lines that suit a casual lap as comfortably as a faster run.",
   },
   {
     id: "skate-park",
     name: "Skate Park",
-    image: "/experiences/skate-park.webp",
+    image: "/experiences/skate-park-sunset.webp",
     href: "https://visitcamsur.com/facilities/skate-park",
     description: "Concrete bowls and ledges, open to skaters and BMX riders alike.",
   },
   {
     id: "kiddie-park",
     name: "Kiddie Park",
-    image: "/experiences/kiddie-park.webp",
+    image: "/experiences/kiddie-park-playground.webp",
     href: "https://visitcamsur.com/facilities/kiddiepark",
     description: "A play area planned for younger guests, within sight of the surrounding grounds.",
   },
   {
     id: "billiards",
     name: "Billiards",
-    image: "/experiences/billiards.webp",
+    image: "/experiences/billiards-lounge.webp",
     href: "https://visitcamsur.com/facilities/billiards",
-    description: "Indoor tables for the gap between activities, or for an afternoon the rain has rearranged.",
+    description:
+      "Indoor tables for the gap between activities, or for an afternoon the rain has rearranged. An open-air lounge with garden views, cues on the wall, and space for the whole group to rack up, settle a friendly bet, and unwind after the day's round.",
   },
 ] as const;
 
@@ -161,6 +157,8 @@ export default function ExperiencesDetails() {
         </Shell>
       </section>
 
+      {/* Normal-flow full-screen panels: walang sticky stage o scroll-scrub.
+          Minsan lang pumapasok ang caption at nananatiling visible. */}
       <ExperiencesActivities kicker="Experience" items={ACTIVITIES} />
 
       <ExperiencesCta />

@@ -73,10 +73,8 @@ function occasionCountWord() {
 
 function Occasions() {
   return (
-    /* HINDI EDITORIAL_SECTION_ALT: may `overflow-hidden` iyon, at sinisira
-       niyon ang `position: sticky` ng mga scrollytelling na larawan. Kaparehong
-       dahilan kung bakit sariling walang-overflow na section ang ClubhouseRooms
-       sa `/clubhouse`. Pinananatili pa rin ang cream na background. */
+    /* Normal-flow full-screen panels ang mga occasion. Walang sticky stage o
+       scroll-scrub; minsan lang pumapasok ang caption at nananatiling visible. */
     <section id="occasions" className="relative isolate scroll-mt-24 bg-[#f7f5ee] pt-8 sm:pt-10">
       {/* Nakasentrong ulo — contained pa rin sa 1100px na hanay. */}
       <div className="relative mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-12">
@@ -88,10 +86,8 @@ function Occasions() {
         />
       </div>
 
-      {/* Ang teksto ay NASA LOOB na ng larawan — buong clubhouse na transition
-          (sticky top-0 h-screen, caption na kusang umuusbong sa kaliwang ibaba).
-          Tingnan ang EventsOccasions; kaparehong tales ng bilang ng
-          ClubhouseRooms. */}
+      {/* Nasa loob pa rin ng larawan ang teksto, pero hindi na kontrolado o
+          binabaligtad ng scroll position ang larawan at caption. */}
       <div className="mt-8 sm:mt-10">
         <EventsOccasions occasions={OCCASIONS} />
       </div>

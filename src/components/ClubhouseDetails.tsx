@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
-import ScrollReveal from "@/components/ScrollReveal";
 import BackToHeroButton from "@/components/BackToHeroButton";
 import ClubhouseRooms from "@/components/ClubhouseRooms";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
@@ -27,13 +26,10 @@ export default function ClubhouseDetails() {
   return (
     <>
       <ScrollMotion />
-      <ScrollReveal />
 
-      {/* Ang mga area bilang scrollytelling tour — ito na ang unang malaking
+      {/* Ang mga area bilang full-screen visual tour — ito na ang unang malaking
           bahagi: nauuna ang nakikita (mga larawan ng espasyo) bago ang mas
-          teknikal na breakdown kada palapag sa ibaba. Hiwalay na section ang
-          ulo nito dahil ang ClubhouseRooms ay naka-sticky, at sinisira iyon ng
-          `overflow-hidden` ng EDITORIAL_SECTION. */}
+          teknikal na breakdown kada palapag sa ibaba. */}
       <section className="relative isolate scroll-mt-24 bg-[#f7f5ee] pb-10 pt-4 sm:pb-12 sm:pt-6">
         <div className="relative mx-auto w-full max-w-4xl px-6 sm:px-10 lg:px-12 xl:max-w-5xl">
           <EditorialHeading size="lg" title="Nine ways to experience the clubhouse." />
@@ -69,12 +65,10 @@ export default function ClubhouseDetails() {
                 key={part.time}
                 className={`${imageOnRight ? "lg:grid-cols-[1fr_2.4fr]" : "lg:grid-cols-[2.4fr_1fr]"} grid items-center gap-10 lg:gap-14`}
               >
-                {/* Scroll reveal via IntersectionObserver (ScrollReveal.tsx):
-                    galing-gilid ang larawan, umaangat ang teksto, at nag-a-
-                    animate ULIT sa bawat pasok — scroll down man o pataas, kaya
-                    walang dead air. */}
+                {/* One-time timed reveal. Pagkatapos pumasok, hindi na ito
+                    nire-reset o binabaligtad kapag nag-scroll pataas. */}
                 <div
-                  data-scroll-anim={imageOnRight ? "slide-right" : "slide-left"}
+                  data-reveal={imageOnRight ? "right" : "left"}
                   className={`${imageOnRight ? "lg:order-2" : ""} relative aspect-[3/2] overflow-hidden rounded-2xl bg-[#1f3f2e] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
                 >
                   <Image
@@ -86,7 +80,7 @@ export default function ClubhouseDetails() {
                   />
                 </div>
 
-                <div data-scroll-anim="rise" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
+                <div data-reveal="up" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
                   <p className="relative font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
                     {part.time}
                   </p>

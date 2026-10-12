@@ -245,7 +245,7 @@ function GreenFees() {
         <div data-reveal="up" className="mt-10">
           <Link
             href="/plan-your-visit"
-            className="inline-flex h-11 items-center rounded-full bg-[#265136] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#1f3f2e]"
+            className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
           >
             Request current rates
           </Link>

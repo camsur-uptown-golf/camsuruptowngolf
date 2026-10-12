@@ -48,7 +48,7 @@ export default function FloatingCallbackCta() {
       href="#request-call-back"
       aria-hidden={!isVisible}
       tabIndex={isVisible ? 0 : -1}
-      className={`${isVisible ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-5 opacity-0"} fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-[90] inline-flex min-h-12 -translate-x-1/2 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#f3dda0]/35 bg-[#265136]/95 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#f3dda0] shadow-[0_16px_40px_rgba(6,26,17,0.34)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f3dda0] sm:px-7 sm:text-[11px]`}
+      className={`${isVisible ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-5 opacity-0"} fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-[90] inline-flex min-h-12 -translate-x-1/2 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#f3dda0]/35 bg-[#e7d18d]/95 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#14271d] shadow-[0_16px_40px_rgba(6,26,17,0.34)] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f3dda0] sm:px-7 sm:text-[11px]`}
     >
       <PhoneIcon />
       Request a call back

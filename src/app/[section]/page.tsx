@@ -64,19 +64,25 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
 
   /* Naka-pin (sticky top-0) na hero na tinatabunan ng susunod na section, may
      scroll-zoom sa larawan at umaangat/kumukupas na title — gaya ng Villa del
-     Rey stay. Ginagamit ito ng Golf, Packages, Events at Experiences. Dahil
-     naka-pin ang hero, ang scroll-zoom (data-hero-media) ang galaw, hindi ang
-     rect-based parallax — kaya wala nang parallax na section. */
+     Rey stay. Ginagamit ito ng Golf, Packages, Events at Experiences.
+
+     HERO LANG ANG MAY SCROLL-DRIVEN NA GALAW. Normal-flow pa rin ang mga
+     panel sa ilalim (EventsOccasions, ExperiencesActivities): walang sticky
+     stage, walang scroll-scrub, minsan lang pumapasok ang caption. Ang hero
+     lang ang sumusunod sa scroll — iyon ang ibinalik.
+
+     Dahil naka-pin ang hero, ang scroll-zoom (data-hero-media) ang galaw,
+     hindi ang rect-based parallax — kaya wala nang parallax na section. */
   const usesStickyReveal = isPackages || isEvents || isGolf || isExperiences;
   const usesHeroParallax = false;
 
   /* Patag ang Golf, Experiences at Clubhouse heroes; ang iba lang ang may
      landscape wave. Sa Clubhouse ay may anim na pahina ng kuwarto sa ilalim
      nito na patag ang hero — kapag may alon dito, dalawang magkaibang anyo
-     ang isang seksyon. Ang mga sticky-reveal (packages, events) ay walang wave:
+     ang isang seksyon. Ang mga sticky-reveal page ay walang wave:
      ang pagtabon ng susunod na section na mismo ang transition papuntang cream. */
   const usesFairwayDivider =
-    usesFairwayHero && !isGolf && !isExperiences && !isClubhouse && !usesStickyReveal;
+    usesFairwayHero && !isGolf && !isEvents && !isExperiences && !isClubhouse && !usesStickyReveal;
 
   /* Ang harapang burol ay dapat eksaktong katumbas ng background ng unang
      section sa ilalim — kahit bahagyang pagkakaiba ay lumilitaw bilang tahi. */
@@ -107,16 +113,61 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               : "min-h-[660px]"
           }`}
         >
-          <Image
-            src={section.image}
-            alt={`${section.label} at CamSur Uptown Golf Club`}
-            fill
-            priority
-            sizes="100vw"
-            data-parallax={usesHeroParallax ? "-0.06" : undefined}
-            data-hero-media={usesStickyReveal ? "" : undefined}
-            className={`-z-20 object-cover ${usesHeroParallax ? "parallax-media" : ""}`}
-          />
+          {/* Video ang hero ng Clubhouse, kaya hindi na kinukuha ang larawan
+              dito: ang poster ng video ang nakikita habang naglo-load, at
+              isang 4K na larawang hindi naman lilitaw ay sayang na download.
+              Nananatili ang `section.image` sa site-content — ginagamit pa
+              iyon ng mega menu at ng mga card. */}
+          {!isClubhouse ? (
+            <Image
+              src={section.image}
+              alt={`${section.label} at CamSur Uptown Golf Club`}
+              fill
+              priority
+              sizes="100vw"
+              data-parallax={usesHeroParallax ? "-0.06" : undefined}
+              data-hero-media={usesStickyReveal ? "" : undefined}
+              className={`-z-20 object-cover ${usesHeroParallax ? "parallax-media" : ""}`}
+            />
+          ) : null}
+          {/* Clubhouse: paglalakad mula sa itaas hanggang sa pool (35s, walang
+              audio). Dalawang sukat: 1280 (6.5 MB) sa cellphone, 1920
+              (12.2 MB) sa iba — 127 MB ang orihinal. Nauuna ang `<source>` na
+              may `media` dahil ang unang tumugma ang pinipili ng browser. */}
+          {isClubhouse ? (
+            <video
+              poster="/clubhouse/clubhouse-hero-poster.webp"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+              tabIndex={-1}
+              className="absolute inset-0 -z-20 h-full w-full object-cover"
+            >
+              <source src="/clubhouse/clubhouse-hero-1280.mp4" type="video/mp4" media="(max-width: 767px)" />
+              <source src="/clubhouse/clubhouse-hero-1920.mp4" type="video/mp4" />
+            </video>
+          ) : null}
+          {/* Experiences: background video sa ibabaw ng larawan (lokal na MP4,
+              walang audio, ~6MB). Ang larawan sa likod ang nakikita habang
+              nilo-load o kung hindi suportado; muted + playsInline ang
+              kailangan ng browser bago payagan ang autoplay. */}
+          {isExperiences ? (
+            <video
+              src="/experiences/experiences-hero.mp4"
+              poster="/experiences/experiences-hero-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+              tabIndex={-1}
+              className="absolute inset-0 -z-20 h-full w-full object-cover"
+            />
+          ) : null}
           <div
             className={`absolute inset-0 -z-10 ${
               isPackages
@@ -192,7 +243,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         </section>
         </div>
 
-        {/* Para sa sticky-reveal (packages, events): naka-`relative z-10` at
+        {/* Para sa sticky-reveal pages: naka-`relative z-10` at
             solidong cream ang buong susunod na nilalaman kaya ito ang umaangat
             at tumatabon sa naka-pin na hero habang nagsi-scroll — reveal, gaya
             ng Villa del Rey. Sa ibang section ay walang klase ang balot, kaya
@@ -346,7 +397,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               <Link
                 href="/contact"
                 data-reveal="up"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#265136] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
               >
                 Contact us
               </Link>
@@ -366,8 +417,8 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         </div>
       </main>
       {/* Scroll-driven na galaw ng naka-pin na hero (zoom + pag-angat ng title)
-          para sa packages at events — dito gumagamit ng mekanismong villa-del-rey
-          (sticky + cover). Ang clubhouse ay may sariling sticky-sequence. */}
+          para sa golf, packages, events at experiences. Ang clubhouse ay may
+          sariling sticky-sequence sa ClubhouseHeroOverlay. */}
       {usesStickyReveal ? <HeroRevealMotion /> : null}
       <Footer />
     </>
