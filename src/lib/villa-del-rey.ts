@@ -1,5 +1,8 @@
+/* `slug` = ruta ng availability page ng bahay:
+   /accommodations/villa-del-rey/{slug} (app/accommodations/[stay]/[house]). */
 export const VILLA_DEL_REY_STAYS = [
   {
+    slug: "villas",
     name: "Villas",
     description:
       "Spacious villa accommodation with a refined bedroom and a private poolside setting.",
@@ -47,6 +50,7 @@ export const VILLA_DEL_REY_STAYS = [
     ],
   },
   {
+    slug: "cabins",
     name: "Cabins",
     description:
       "Contemporary standalone cabins with landscaped outdoor space and a calm, light-filled bedroom.",
@@ -62,6 +66,7 @@ export const VILLA_DEL_REY_STAYS = [
     ],
   },
   {
+    slug: "cabana",
     name: "Cabana",
     description:
       "Compact resort cabanas arranged along garden paths, with simple interiors designed for an easy stay.",
@@ -72,6 +77,7 @@ export const VILLA_DEL_REY_STAYS = [
     gallery: [],
   },
   {
+    slug: "dwell",
     name: "Dwell",
     description:
       "A clean modern retreat pairing a private garden-facing exterior with a warm timber-lined bedroom.",
@@ -82,3 +88,8 @@ export const VILLA_DEL_REY_STAYS = [
     gallery: [],
   },
 ] as const;
+
+/** Ruta ng availability page ng isang bahay sa Villa Del Rey. */
+export function villaHouseHref(slug: string) {
+  return `/accommodations/villa-del-rey/${slug}`;
+}

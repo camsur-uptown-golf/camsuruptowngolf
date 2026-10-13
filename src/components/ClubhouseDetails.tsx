@@ -4,7 +4,7 @@ import ScrollMotion from "@/components/ScrollMotion";
 import BackToHeroButton from "@/components/BackToHeroButton";
 import ClubhouseRooms from "@/components/ClubhouseRooms";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
-import { CLUBHOUSE_DAY } from "@/lib/clubhouse";
+import { CLUBHOUSE_DAY, roomCountWord } from "@/lib/clubhouse";
 
 /**
  * Ang pahina ng Clubhouse: kung ano ang nasa loob ng gusali.
@@ -32,7 +32,7 @@ export default function ClubhouseDetails() {
           teknikal na breakdown kada palapag sa ibaba. */}
       <section className="relative isolate scroll-mt-24 bg-[#f7f5ee] pb-10 pt-4 sm:pb-12 sm:pt-6">
         <div className="relative mx-auto w-full max-w-4xl px-6 sm:px-10 lg:px-12 xl:max-w-5xl">
-          <EditorialHeading size="lg" title="Nine ways to experience the clubhouse." />
+          <EditorialHeading size="lg" title={`${roomCountWord()} ways to experience the clubhouse.`} />
         </div>
       </section>
 

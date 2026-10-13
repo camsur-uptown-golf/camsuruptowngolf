@@ -53,6 +53,13 @@ export function trailFor(pathname: string): Crumb[] {
      ng Home sa breadcrumb, kahit nananatili ang `/accommodations/` sa URL
      para hindi mabago ang mga umiiral na detail route. */
   if (section.slug === "accommodations" && segments.length > 1) {
+    /* Bahay sa loob ng isang stay (hal. /accommodations/villa-del-rey/villas):
+       idinadagdag muna ang stay bilang magulang. */
+    if (segments.length > 2) {
+      const parentHref = `/${segments.slice(0, 2).join("/")}`;
+      const parent = section.links.find((item) => item.href === parentHref);
+      crumbs.push({ label: parent?.label ?? titleCase(segments[1]), href: parentHref });
+    }
     const link = section.links.find((item) => item.href === path);
     crumbs.push({ label: link?.label ?? titleCase(segments[segments.length - 1]), href: path });
     return crumbs;

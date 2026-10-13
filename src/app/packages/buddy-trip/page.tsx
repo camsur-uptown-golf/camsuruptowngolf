@@ -22,46 +22,43 @@ export const metadata: Metadata = {
 const days = [
   {
     label: "Arrival",
-    title: "Get everyone in, settle the group, and warm up together.",
+    title: "Arrive, check in and warm up together.",
     intro:
-      "Groups rarely arrive all at once, so the first day stays deliberately relaxed — late arrivals never hold up the rest, and everyone eases in at their own pace.",
+      "Groups rarely arrive at the same time, so the first day is kept relaxed. Everyone settles in at their own pace, and late arrivals never hold up the rest.",
     moments: [
       [
         "Afternoon",
-        "Check in, settle the group, and leave your clubs with our team. Transfers and tee times for both rounds are confirmed here, so nothing is left to chance.",
+        "Check in at Villa Del Rey and hand your clubs to our team. Tee times and transfers for both rounds are confirmed on arrival.",
       ],
       [
         "Late afternoon",
-        "The practice bays, or a twilight nine for whoever has arrived and is keen to play.",
+        "Time at the practice range, or a twilight nine for anyone ready to play, subject to availability.",
       ],
-      ["Evening", "A welcome dinner at the clubhouse — Bicol cooking and good company to set the tone for the trip."],
+      ["Evening", "A welcome dinner at the clubhouse featuring Bicol cuisine, to start the trip together."],
     ],
   },
   {
     label: "First round",
-    title: "Play in the morning, keep the afternoon yours.",
+    title: "A morning round, then the afternoon is yours.",
     intro:
-      "The first round eases the group into the course, and the rest of the day is entirely yours to shape.",
+      "The first round introduces the group to the course. The rest of the day is free to spend however you like.",
     moments: [
-      ["Morning", "Eighteen holes across our championship routing, in flights your group decides."],
-      ["Midday", "Lunch at the clubhouse and the first look at the cards."],
-      [
-        "Afternoon",
-        "Completely free. Some groups head to the practice bays, others to the pool or the wakepark, and some simply unwind. Nothing here is scheduled.",
-      ],
+      ["Morning", "Eighteen holes on our championship course, with flights and pairings set by your group."],
+      ["Midday", "Lunch at the clubhouse and a first look at the scorecards."],
+      ["Afternoon", "Free time. Return to the practice range, relax by the pool, try the wakepark, or simply unwind."],
     ],
   },
   {
-    label: "Second round",
-    title: "The round that settles it, then an easy road home.",
+    label: "Final round",
+    title: "The deciding round, then an easy trip home.",
     intro:
-      "The second round is the one the group plays for, and the day is arranged so no one has to rush off straight from the eighteenth.",
+      "The final round is usually the one with something on the line. The day is planned so no one has to rush off after the last hole.",
     moments: [
-      ["Early morning", "Breakfast and a proper range session before the first tee."],
-      ["Morning", "The second eighteen — usually the one with something riding on it."],
+      ["Early morning", "Breakfast and a full range session before the first tee."],
+      ["Morning", "Your second 18-hole round on the championship course."],
       [
         "Midday",
-        "Lunch, the group photo, and an unhurried check-out. We hold your luggage while you finish, with transfers to Naga or on to your next stop.",
+        "Lunch, a group photo and a relaxed check-out. We hold your luggage while you play, and transfers to Naga or your next stop can be arranged.",
       ],
     ],
   },
@@ -72,16 +69,24 @@ export default function BuddyTripPage() {
     <PackageItineraryPage
       active="buddy-trip"
       title="Group Golf Getaway"
-      description="A three-day getaway built for a foursome or a full group — two nights beside the course, two championship rounds, and enough open time in between that it feels less like an itinerary and more like a proper trip with your people."
+      tagline="Two nights, two championship rounds and plenty of time together, arranged around your group."
+      overviewTitle="Two rounds, two nights, one group."
+      description="The Group Golf Getaway is designed for friends who play together. We arrange tee times, pairings, transfers and a group dinner around your party, so the trip runs smoothly from the first arrival to the final putt, with free time in between to enjoy the club."
       image="/packages-group-getaway-hero-v2.jpeg"
+      facts={[
+        ["Duration", "3 days, 2 nights"],
+        ["Golf", "Two 18-hole rounds"],
+        ["Stay", "Villa Del Rey"],
+        ["Ideal for", "Foursomes and golf groups"],
+      ]}
       days={days}
       inclusions={[
         "Two nights at Villa Del Rey",
         "Two 18-hole rounds with caddies",
-        "Breakfast each morning and one group dinner",
+        "Daily breakfast and one group dinner",
         "Range balls before both rounds",
         "Shared transfers between your accommodation and the club",
-        "Flights and pairings arranged around your group",
+        "Tee times, flights and pairings arranged for your group",
       ]}
     />
   );

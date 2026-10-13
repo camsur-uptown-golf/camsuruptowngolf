@@ -432,43 +432,8 @@ export const SITE_SECTIONS = [
     image: "/clubhouse-rooftop-pool-gardens-clean-4k-v2.png",
     links: ["Golf Tournaments", "Corporate Events", "Private Celebrations"].map((label) => ({ label, href: "/events" })),
   },
-  /* Tungkol sa hinahandog sa labas ng golf course. May kasamang Dining
-     dito dati bilang hiwalay na section; inalis ito kasama ng /dining. */
-  {
-    slug: "experiences",
-    label: "Experiences",
-    eyebrow: "Experience",
-    title: "World-class experiences beyond the course",
-    description: "Wakepark, pickle ball, basketball, ATV trails, and the quieter corners of the resort — there's something here for everyone.",
-    image: "/experiences/banner11-dehazed.jpg",
-    /* Isa-isa ang bawat pasilidad dito, hindi ang apat na pangkat: ito ang
-       aktwal na hinahanap ng bisita sa menu. Ang bawat anchor ay tumuturo sa
-       `id` ng hilera sa ExperiencesDetails.tsx — kapag may binago doon,
-       sundan dito. Walang Golf dito: sarili niyang section iyon sa nav. */
-    links: [
-      /* Ang mga facility ay may sarili nang official external pages. Sinadya
-         (hiniling) ang pagkakasunod-sunod, hindi alpabetiko. Sa 5×5 na mega
-         menu: unang haligi = 1–5, pangalawang haligi = 6–10. */
-      { label: "Wakepark", href: "https://visitcamsur.com/facilities/wakepark", image: "/experiences/wakepark.webp" },
-      {
-        label: "Pickle Ball",
-        href: "https://pickleball.camsur.com/",
-        image: "/experiences/pickleball-enhanced.png",
-      },
-      {
-        label: "Outdoor/Indoor Basketball Court",
-        href: "https://visitcamsur.com/facilities/playground",
-        image: "/experiences/playground-basketball.webp",
-      },
-      { label: "Massage", href: "https://visitcamsur.com/facilities/massage", image: "/experiences/massage.webp" },
-      { label: "ATV", href: "https://visitcamsur.com/facilities/atv", image: "/experiences/atv.webp" },
-      { label: "Lago Del Rey", href: "https://visitcamsur.com/facilities/lagodelrey", image: "/experiences/lago-del-rey.webp" },
-      { label: "Pump Track", href: "https://visitcamsur.com/facilities/bike-track", image: "/experiences/bike-track.webp" },
-      { label: "Skate Park", href: "https://visitcamsur.com/facilities/skate-park", image: "/experiences/skate-park.webp" },
-      { label: "Kiddie Park", href: "https://visitcamsur.com/facilities/kiddiepark", image: "/experiences/kiddie-park.webp" },
-      { label: "Billiards", href: "https://visitcamsur.com/facilities/billiards", image: "/experiences/billiards.webp" },
-    ],
-  },
+  /* Nauuna ang Accommodations sa "Beyond Golf" (experiences) sa nav —
+     sinadya (hiniling). */
   {
     slug: "accommodations",
     label: "Accommodations",
@@ -492,6 +457,43 @@ export const SITE_SECTIONS = [
        maliit na entry sa srcset — iyon naman ang trabaho ng next/image. */
     image: "/villa-del-rey/stays/villa-pool-4k.jpg",
     links: ACCOMMODATIONS.map((stay) => ({ label: stay.title, href: `/accommodations/${stay.slug}` })),
+  },
+  /* Tungkol sa hinahandog sa labas ng golf course. May kasamang Dining
+     dito dati bilang hiwalay na section; inalis ito kasama ng /dining. */
+  {
+    slug: "experiences",
+    label: "Experiences",
+    eyebrow: "Experience",
+    title: "World-class experiences beyond the course",
+    description: "Wakepark, pickle ball, basketball, ATV trails, and the quieter corners of the resort — there's something here for everyone.",
+    image: "/experiences/banner11-dehazed.jpg",
+    /* Isa-isa ang bawat pasilidad dito, hindi ang apat na pangkat: ito ang
+       aktwal na hinahanap ng bisita sa menu. Ang bawat anchor ay tumuturo sa
+       `id` ng hilera sa ExperiencesDetails.tsx — kapag may binago doon,
+       sundan dito. Walang Golf dito: sarili niyang section iyon sa nav. */
+    links: [
+      /* Ang mga facility ay may sarili nang official external pages. Sinadya
+         (hiniling) ang pagkakasunod-sunod, hindi alpabetiko. Sa 5×5 na mega
+         menu: unang haligi = 1–5, pangalawang haligi = 6–10. */
+      { label: "Wakepark", href: "https://visitcamsur.com/facilities/wakepark", image: "/experiences/wakepark-riders.webp" },
+      {
+        label: "Pickle Ball",
+        href: "https://pickleball.camsur.com/",
+        image: "/experiences/pickleball-indoor.webp",
+      },
+      {
+        label: "Outdoor/Indoor Basketball Court",
+        href: "https://visitcamsur.com/facilities/playground",
+        image: "/experiences/basketball-arena.webp",
+      },
+      { label: "Massage", href: "https://visitcamsur.com/facilities/massage", image: "/experiences/massage-spa.webp" },
+      { label: "ATV", href: "https://visitcamsur.com/facilities/atv", image: "/experiences/atv-ride.webp" },
+      { label: "Lago Del Rey", href: "https://visitcamsur.com/facilities/lagodelrey", image: "/experiences/lago-del-rey-paddle.webp" },
+      { label: "Pump Track", href: "https://visitcamsur.com/facilities/bike-track", image: "/experiences/pump-track-night.webp" },
+      { label: "Skate Park", href: "https://visitcamsur.com/facilities/skate-park", image: "/experiences/skate-park-sunset.webp" },
+      { label: "Kiddie Park", href: "https://visitcamsur.com/facilities/kiddiepark", image: "/experiences/kiddie-park-playground.webp" },
+      { label: "Billiards", href: "https://visitcamsur.com/facilities/billiards", image: "/experiences/billiards-lounge.webp" },
+    ],
   },
 ] as const;
 

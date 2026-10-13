@@ -4,7 +4,7 @@ import ScrollMotion from "@/components/ScrollMotion";
 import ScrollReveal from "@/components/ScrollReveal";
 import StayFeatures from "@/components/StayFeatures";
 import { delay } from "@/components/EditorialKit";
-import { VILLA_DEL_REY_STAYS } from "@/lib/villa-del-rey";
+import { VILLA_DEL_REY_STAYS, villaHouseHref } from "@/lib/villa-del-rey";
 
 /**
  * Ang apat na uri ng tuluyan sa Villa Del Rey.
@@ -119,10 +119,10 @@ export default function VillaDelReyStays() {
                   />
                 </div>
 
-                {/* Same-page anchor papunta sa <section id="availability"> ng
-                    accommodation page — doon ang form, hindi na /plan-your-visit. */}
+                {/* Papunta sa sariling availability page ng bahay na ito
+                    (/accommodations/villa-del-rey/{slug}). */}
                 <Link
-                  href="#availability"
+                  href={villaHouseHref(stayType.slug)}
                   data-reveal="up"
                   style={delay(270)}
                   className="mt-8 inline-flex h-12 max-w-full items-center justify-center gap-3 whitespace-nowrap rounded-full border border-[#265136]/25 px-5 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#265136] transition hover:-translate-y-0.5 hover:border-[#265136] hover:bg-[#265136] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:px-7 sm:text-[11px] sm:tracking-[0.12em] xl:text-[12px]"
@@ -192,41 +192,6 @@ export default function VillaDelReyStays() {
           </article>
         );
       })}
-
-      {/* Wala pang anumang CTA ang pahinang ito bago nito. */}
-      <div className="bg-[#f7f5ee] text-[#14271d]">
-        <div className="mx-auto max-w-[1600px] px-4 py-12 text-center sm:px-8 sm:py-14 lg:px-8">
-          <p
-            data-reveal="up"
-            className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]"
-          >
-            Plan your stay
-          </p>
-          <h2
-            data-reveal="up"
-            style={delay(90)}
-            className="mx-auto mt-4 max-w-2xl text-[clamp(2.2rem,3.6vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.05em]"
-          >
-            Reserve your room at Villa Del Rey.
-          </h2>
-          <p
-            data-reveal="up"
-            style={delay(180)}
-            className="mx-auto mt-5 max-w-xl text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8"
-          >
-            Tell the team your dates and how many are travelling, and they will come back with what is
-            available across the four stay types.
-          </p>
-          <div data-reveal="up" style={delay(270)} className="mt-8 flex justify-center">
-            <Link
-              href="/plan-your-visit"
-              className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
-            >
-              Inquire about your stay
-            </Link>
-          </div>
-        </div>
-      </div>
     </section>
   );
 }

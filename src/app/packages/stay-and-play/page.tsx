@@ -22,33 +22,30 @@ export const metadata: Metadata = {
 const days = [
   {
     label: "Arrival",
-    title: "Settle in, then ease onto the course the same afternoon.",
+    title: "Check in and settle into the club.",
     intro:
-      "Just a short drive from Naga, the club is made for an easy start — check in, hand over your clubs, and there is usually still light for a relaxed warm-up before the round that matters tomorrow.",
+      "Arrive at your own pace. Our team takes care of your clubs and confirms your tee time, leaving the afternoon free to warm up or take a first look at the course.",
     moments: [
       [
         "Afternoon",
-        "Check in and confirm tomorrow’s tee time. Our team takes your clubs and stores them securely overnight, so you travel light.",
+        "Check in at Villa Del Rey and confirm your tee time. Your clubs are collected and stored securely overnight.",
       ],
       [
         "Late afternoon",
-        "Loosen up at the practice bays, or slip out for a relaxed twilight nine while the light holds.",
+        "Warm up at the practice range, or play a twilight nine while the light holds, subject to availability.",
       ],
-      ["Evening", "An unhurried dinner at the clubhouse, then an early night before the main event."],
+      ["Evening", "Dinner at the clubhouse, then an early night ahead of your round."],
     ],
   },
   {
-    label: "The round",
-    title: "A full championship eighteen, with nowhere to rush off to.",
+    label: "Round day",
+    title: "Eighteen holes on the championship course.",
     intro:
-      "The round is the heart of the package, and everything around it is arranged so your morning never feels rushed.",
+      "Your round is the centerpiece of the stay, and the morning is planned so you reach the first tee relaxed and ready.",
     moments: [
-      ["Early morning", "Breakfast, then range balls as your caddie meets you at the first tee."],
-      ["Morning", "Eighteen holes across our championship routing, played at a comfortable, unhurried pace."],
-      [
-        "Midday",
-        "Lunch at the clubhouse, then an easy check-out — our team brings your clubs and luggage to the car for the drive home.",
-      ],
+      ["Early morning", "Breakfast, followed by range balls and a warm-up before you meet your caddie at the first tee."],
+      ["Morning", "A full 18-hole round on our championship course, played at a comfortable pace."],
+      ["Midday", "Lunch at the clubhouse and an easy check-out. Our team brings your clubs and luggage to your car."],
     ],
   },
 ] as const;
@@ -58,16 +55,24 @@ export default function Page() {
     <PackageItineraryPage
       active="stay-and-play"
       title="Stay & Play"
-      description="The easiest way to turn one great round into a proper golf getaway — without taking a week off. Stay a night beside the course, play a full championship eighteen in the morning, and keep the pace unhurried from arrival to the final putt."
+      tagline="One night beside the fairways and a full championship round. A complete golf getaway in two days."
+      overviewTitle="A night by the course, a morning on it."
+      description="Stay & Play is the simplest way to turn a round of golf into a proper getaway. Arrive in the afternoon, settle into Villa Del Rey, and wake up minutes from the first tee. Your round, breakfast, range balls and transfers are arranged in advance, so all that is left to do is play."
       image="/packages-stay-play-hero-v2.png"
+      facts={[
+        ["Duration", "2 days, 1 night"],
+        ["Golf", "18 holes with a caddie"],
+        ["Stay", "Villa Del Rey"],
+        ["Ideal for", "Couples and solo golfers"],
+      ]}
       days={days}
       inclusions={[
         "One night at Villa Del Rey",
         "One 18-hole round with a caddie",
-        "Breakfast on the morning of the round",
-        "Range balls before the round",
+        "Breakfast on the morning of your round",
+        "Range balls before your round",
         "Transfers between your accommodation and the club",
-        "Overnight club storage",
+        "Secure overnight club storage",
       ]}
     />
   );

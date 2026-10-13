@@ -53,7 +53,7 @@ export default function NewsletterSignup() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mt-6 flex flex-col gap-2 sm:max-w-md sm:flex-row lg:flex-col xl:flex-row">
+      <div className="mt-5 flex flex-col gap-3 sm:max-w-2xl sm:flex-row">
         <input
           type="email"
           name="email"
@@ -61,7 +61,7 @@ export default function NewsletterSignup() {
           autoComplete="email"
           placeholder="Email address"
           aria-label="Email address"
-          className="min-w-0 flex-1 rounded-full border border-white/15 bg-white/[0.035] px-5 py-3.5 text-sm text-white placeholder-white/35 outline-none transition focus:border-[#c9a54e]/65 focus:bg-white/[0.055]"
+          className="min-w-0 flex-1 rounded-full border border-white/15 bg-white/[0.035] px-5 py-3.5 text-sm text-white placeholder-white/45 outline-none transition focus:border-[#c9a54e]/65 focus:bg-white/[0.055]"
         />
         <button
           type="submit"
@@ -72,7 +72,7 @@ export default function NewsletterSignup() {
         </button>
       </div>
 
-      <label className="mt-4 flex max-w-md gap-3 text-[11px] leading-5 text-white/42">
+      <label className="mt-4 flex max-w-2xl gap-3 text-[11px] leading-5 text-white/65">
         {/* Kailangan ng `required`: ang pagsang-ayon ang batayan ng pag-iimbak
             ng email sa ilalim ng RA 10173, kaya hindi ito opsyonal. */}
         <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#c9a54e]" />
@@ -80,12 +80,12 @@ export default function NewsletterSignup() {
           I agree to receive news and offers from CamSur Uptown, and I have read the{" "}
           {/* TODO: ikabit sa totoong Privacy Policy kapag mayroon na. Hindi ito
               link ngayon dahil walang pahinang matuturo. */}
-          <span className="text-white/80">Privacy Policy</span>.
+          <span className="text-white">Privacy Policy</span>.
         </span>
       </label>
 
       {status === "error" ? (
-        <p role="alert" className="mt-3 max-w-md text-[11px] leading-5 text-[#f0b8a4]">
+        <p role="alert" className="mt-3 max-w-2xl text-[11px] leading-5 text-[#f0b8a4]">
           {message}
         </p>
       ) : null}

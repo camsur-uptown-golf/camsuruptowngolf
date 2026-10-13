@@ -66,6 +66,9 @@ export default function HomeClubhouseDay() {
             >
               {t("home.day.title")}
             </h2>
+            <p data-reveal="up" className="mt-4 max-w-md text-[17px] leading-8 text-[#3f4c45]">
+              {t("home.day.intro")}
+            </p>
           </div>
           <Link
             href="/clubhouse"
@@ -165,7 +168,7 @@ export default function HomeClubhouseDay() {
                     isActive ? "pointer-events-none opacity-0" : "opacity-100 delay-200"
                   }`}
                 >
-                  <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-white lg:rotate-180 lg:[writing-mode:vertical-rl]">
+                  <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-white sm:text-[12px] lg:rotate-180 lg:[writing-mode:vertical-rl]">
                     {part.title}
                   </span>
                 </div>
@@ -176,10 +179,10 @@ export default function HomeClubhouseDay() {
                     isActive ? "translate-y-0 opacity-100 delay-300" : "pointer-events-none translate-y-4 opacity-0"
                   }`}
                 >
-                  <h3 className="font-display text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[1.02] tracking-[-0.04em] text-white">
+                  <h3 className="font-display text-[clamp(1.75rem,2.6vw,2.6rem)] font-medium leading-[1.02] tracking-[-0.04em] text-white">
                     {part.title}
                   </h3>
-                  <p className="mt-4 max-w-lg text-[15px] leading-7 text-white/85 sm:text-[17px] sm:leading-8">{part.detail}</p>
+                  <p className="mt-3 max-w-md text-[14px] leading-6 text-white/85 sm:text-[15px] sm:leading-7">{part.detail}</p>
                 </div>
               </div>
             );

@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import { CLUB_ADDRESS } from "@/lib/site-content";
 
 /**
  * Ang mga link ng footer.
@@ -48,8 +50,8 @@ const LINK_GROUPS: { title: string; links: { label: string; href: string }[] }[]
   {
     title: "Before you book",
     links: [
-      { label: "Frequently asked questions", href: "/faq" },
-      { label: "How to get here", href: "/getting-here" },
+      { label: "Frequently Asked Questions", href: "/faq" },
+      { label: "How to Get Here", href: "/getting-here" },
     ],
   },
 ];
@@ -70,110 +72,123 @@ const SOCIALS: { label: string; href: string | null; path: string }[] = [
   { label: "TikTok", href: null, path: "M16.5 3c.3 2.1 1.6 3.6 3.6 3.9v2.4c-1.2.1-2.5-.3-3.6-1v5.8c0 3-2.3 5.4-5.2 5.4S6.1 17.1 6.1 14.1c0-2.8 2.1-5.1 4.8-5.4v2.5c-1.3.2-2.4 1.4-2.4 2.9 0 1.6 1.2 2.9 2.7 2.9s2.7-1.3 2.7-2.9V3h2.6z" },
 ];
 
-/* Pareho ang anyo ng pamagat ng "Sign up to our newsletter" at "Follow us"
-   — dalawang magkatabing seksyon sa itaas ng footer. */
-const BAND_HEADING =
-  "text-base font-semibold uppercase tracking-[0.14em] text-[#c9a54e] sm:text-lg";
+/* Iisang anyo ng lahat ng pamagat sa footer: mga hanay ng link, "Follow us",
+   at "Sign up to our newsletter". */
+const SECTION_HEADING = "font-navigation text-[11px] font-semibold uppercase tracking-[0.16em] text-[#dcc578]";
 
+/* Mga link: malalaking titik, makapal, may luwag — gaya ng reference. */
+const NAV_LINK =
+  "font-navigation text-[13px] font-semibold leading-5 tracking-[0.02em] text-white transition-colors hover:text-[#e7d18d] focus-visible:text-[#e7d18d] focus-visible:outline-none";
+
+/**
+ * Layout ng footer (hango sa Pinehurst): logo at contact sa kaliwa; sa kanan
+ * ang apat na hanay ng link sa itaas, at sa ilalim nito ang "Follow us" (sa
+ * ilalim ng unang hanay) at ang newsletter (sumasaklaw sa natitirang tatlo).
+ * Nagsa-stack ang lahat sa cellphone.
+ */
 export default function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden bg-[#1f3f2e] text-white">
-      <div className="h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" />
       <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-[#c9a54e]/[0.035] blur-3xl" aria-hidden="true" />
 
-      <div className="relative mx-auto max-w-7xl px-6 pb-8 pt-10 sm:pt-12 lg:px-8 lg:pt-12">
-        {/* LINK COLUMNS — nasa itaas na ngayon (inilipat sa ilalim ang
-            newsletter + follow us). Inalis muna ang club info block
-            (logo + address + contact) — ibalik kapag kailangan. */}
-        <nav
-          aria-label="Footer navigation"
-          className="grid min-w-0 grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 lg:gap-x-12 xl:gap-x-16"
-        >
-          {LINK_GROUPS.map((group) => (
-            <div key={group.title}>
-              <p className={`${BAND_HEADING} mb-5`}>
-                {group.title}
-              </p>
-              <ul className="space-y-3">
-                {group.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-[13px] font-medium text-white/68 transition-colors hover:text-[#f0dca0]"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+      <div className="relative mx-auto max-w-7xl px-6 pb-8 pt-12 sm:pt-14 lg:px-8 lg:pt-16">
+        <div className="grid gap-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
+          {/* LOGO + CONTACT */}
+          {/* Sa cellphone at tablet, katabi ng logo ang contact (sa kanan) para walang
+              bakanteng espasyo; sa desktop, nasa ilalim ulit ng logo. */}
+          <div className="flex items-center justify-between gap-6 sm:justify-start sm:gap-12 lg:block">
+            <Link href="/" aria-label="CamSur Uptown Golf Club, home" className="inline-block shrink-0">
+              <Image
+                src="/camsur-uptown-logo.png"
+                alt="CamSur Uptown Golf Club"
+                width={132}
+                height={176}
+                className="h-40 w-auto sm:h-36 lg:h-44"
+              />
+            </Link>
+            <address className="min-w-0 space-y-1 lg:mt-8 text-[13px] font-semibold not-italic leading-7 text-white">
+              {CLUB_ADDRESS.lines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+              {/* Inalis muna ang phone at email dito (CLUB_PHONE / CLUB_EMAIL
+                  sa site-content) — ibalik kapag kailangan na ulit. */}
+            </address>
+          </div>
+
+          <div className="min-w-0">
+            {/* LINKS — apat na hanay, may gold na pamagat sa itaas ng bawat isa. */}
+            <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
+              {LINK_GROUPS.map((group) => (
+                <div key={group.title} className="min-w-0">
+                  <p className={`mb-5 ${SECTION_HEADING}`}>
+                    {group.title}
+                  </p>
+                  <ul className="space-y-3.5">
+                    {group.links.map((link) => (
+                      <li key={link.href}>
+                        <Link href={link.href} className={NAV_LINK}>
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </nav>
+
+            <div className="mt-12 grid gap-10 sm:grid-cols-4 sm:gap-x-8 lg:mt-14">
+              {/* FOLLOW US — sa ilalim ng unang hanay. Buhay na link kapag may
+                  href; muted na placeholder habang wala pa (tingnan `SOCIALS`). */}
+              <section aria-labelledby="footer-follow-title" className="min-w-0">
+                <h2 id="footer-follow-title" className={SECTION_HEADING}>
+                  Follow us
+                </h2>
+                <div className="mt-5 flex flex-wrap gap-2.5">
+                  {SOCIALS.map((social) =>
+                    social.href ? (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={social.label}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/70 text-white transition hover:border-[#e7d18d] hover:bg-[#c9a54e]/15 hover:text-[#e7d18d]"
+                      >
+                        <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor">
+                          <path d={social.path} />
+                        </svg>
+                      </a>
+                    ) : (
+                      <span
+                        key={social.label}
+                        aria-hidden="true"
+                        title={`${social.label} — coming soon`}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 text-white/55"
+                      >
+                        <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor">
+                          <path d={social.path} />
+                        </svg>
+                      </span>
+                    ),
+                  )}
+                </div>
+              </section>
+
+              {/* NEWSLETTER — sumasaklaw sa natitirang tatlong hanay. */}
+              <section aria-labelledby="footer-newsletter-title" className="min-w-0 sm:col-span-3">
+                <h2 id="footer-newsletter-title" className={SECTION_HEADING}>
+                  Sign up to our newsletter
+                </h2>
+                <NewsletterSignup />
+              </section>
             </div>
-          ))}
-        </nav>
-
-        {/* Hairline na naghahati sa link columns at sa newsletter/follow us. */}
-        <div className="my-8 h-px bg-white/10 lg:my-10" />
-
-        {/* NEWSLETTER + FOLLOW US — inilipat sa ILALIM (bago ang copyright bar).
-            Newsletter sa kaliwa, follow us sa kanan; nagsa-stack sa cellphone. */}
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <section aria-labelledby="footer-follow-title" className="min-w-0">
-            <h2 id="footer-follow-title" className={BAND_HEADING}>
-              Follow us
-            </h2>
-            <p className="mt-3 max-w-md text-sm leading-6 text-white/55">
-              Follow us on social media for regular updates and a look behind the scenes.
-            </p>
-            {/* Buhay na link kapag may href; muted na placeholder (hindi link)
-                habang wala pa — tingnan ang komento sa `SOCIALS`. */}
-            <div className="mt-6 flex flex-wrap gap-3">
-              {SOCIALS.map((social) =>
-                social.href ? (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.label}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/70 transition hover:border-[#c9a54e]/50 hover:bg-[#c9a54e]/10 hover:text-[#f0dca0]"
-                  >
-                    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor">
-                      <path d={social.path} />
-                    </svg>
-                  </a>
-                ) : (
-                  <span
-                    key={social.label}
-                    aria-hidden="true"
-                    title={`${social.label} — coming soon`}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/25"
-                  >
-                    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor">
-                      <path d={social.path} />
-                    </svg>
-                  </span>
-                ),
-              )}
-            </div>
-          </section>
-
-          <section
-            aria-labelledby="footer-newsletter-title"
-            className="min-w-0 lg:border-l lg:border-white/10 lg:pl-16"
-          >
-            <h2 id="footer-newsletter-title" className={BAND_HEADING}>
-              Sign up to our newsletter
-            </h2>
-            <p className="mt-3 max-w-md text-sm leading-6 text-white/55">
-              Course updates, event announcements, and occasional offers sent straight to your inbox.
-            </p>
-            <NewsletterSignup />
-          </section>
+          </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 text-[11px] text-white/35 sm:flex-row sm:items-center sm:justify-between lg:mt-10">
+        <div className="mt-12 flex flex-col gap-3 border-t border-[#c9a54e]/35 pt-6 text-[11px] text-white/55 sm:flex-row sm:items-center sm:justify-between lg:mt-14">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <p>© 2026 CamSur Uptown Golf Club. All rights reserved.</p>
-            <Link href="/terms-of-use" className="font-medium text-white/50 transition-colors hover:text-[#f0dca0]">
+            <Link href="/terms-of-use" className="font-medium text-white/80 transition-colors hover:text-[#e7d18d]">
               Terms of Use
             </Link>
           </div>

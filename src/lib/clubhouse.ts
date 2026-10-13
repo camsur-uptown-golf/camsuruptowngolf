@@ -240,6 +240,19 @@ export const CLUBHOUSE_SPACES = [
     features: [],
   },
   {
+    id: "pool",
+    /* "Pool deck" at "pool pavilion" ang tawag ng VM·STUDIO (Plate 01 —
+       Aerial, "Clubhouse & Pool Deck"), hindi "pool bar". */
+    name: "Bar and pool area",
+    floor: "Ground",
+    image: "/clubhouse/concept/pool.jpg",
+    imageAlt: "The pool deck and its pavilion, looking out across the lake to the fairways",
+    gallery: [],
+    description:
+      "A sweeping pool deck beside the lake, centered on a curved pool pavilion, with shaded cabanas, sun loungers, and open views across the fairways.",
+    features: ["Pool pavilion", "Cabanas", "Lake views"],
+  },
+  {
     id: "members-lounge",
     gallery: [
       { src: "/clubhouse/concept/coffee-bar.jpg", alt: "The stone coffee bar anchoring the lounge" },
@@ -397,13 +410,13 @@ export const CLUBHOUSE_DAY = [
   {
     time: "Afternoon",
     image: "/clubhouse/concept/day-afternoon.jpg",
-    title: "Lounge",
-    detail: "The spa, the trophy corridor and the members’ lounge, across the upper floor.",
+    title: "Members’ Lounge",
+    detail: "Unwind after your round in the members’ lounge, visit the spa, or walk the trophy corridor, all on the upper floor.",
   },
   {
     time: "Evening",
     image: "/clubhouse/concept/day-evening.jpg",
-    title: "Rooftop & bar",
-    detail: "Drinks on the roof among the trees, then dinner with the course lit up below.",
+    title: "Rooftop Bar",
+    detail: "End the day with drinks on the rooftop, then stay for dinner as the course lights up below.",
   },
 ] as const;

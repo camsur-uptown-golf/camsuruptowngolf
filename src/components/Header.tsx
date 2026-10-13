@@ -130,9 +130,10 @@ const SECTION_EXTRAS: Record<
     {
       heading: "Discover",
       /* Maiksi ang label dahil 159px lang ang haligi: sa "CamSur Uptown" ay
-         naiiwan ang arrow sa sariling linya. Wala itong `image` — larawan ng
-         section ang nananatili sa preview, at "Visit the site" ang button. */
-      items: [{ label: "Visit CamSur", href: "https://visitcamsur.com/" }],
+         naiiwan ang arrow sa sariling linya. Ang `image` ay ang dating
+         larawan ng section: video na ang default na preview ng Experiences,
+         kaya tahasan itong nakalagay para lumabas ang larawan pag-hover. */
+      items: [{ label: "Visit CamSur", href: "https://visitcamsur.com/", image: "/experiences/banner11-dehazed.jpg" }],
     },
     {
       heading: "Dining",
@@ -568,7 +569,7 @@ export default function Header() {
     if (openMenu !== "accommodations") return;
     const timer = window.setInterval(() => {
       setAccommodationSlideIndex((current) => (current + 1) % VILLA_DEL_REY_STAYS.length);
-    }, 3600);
+    }, 2000);
     return () => window.clearInterval(timer);
   }, [openMenu]);
 
@@ -957,7 +958,7 @@ export default function Header() {
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMobileMenuOpen((open) => !open)}
-            className={`${mobileMenuOpen ? "text-[#f1d98f]" : "text-white"} flex items-center gap-3 font-navigation text-xs font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#f1d98f]`}
+            className={`${mobileMenuOpen ? "text-[#f8e9b7]" : "text-[#f3dda0]"} flex items-center gap-3 font-navigation text-xs font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#f8e9b7]`}
           >
             {t("mobile.menu")}
             <span className="relative flex h-4 w-6 shrink-0 items-center justify-center" aria-hidden="true">
@@ -970,7 +971,7 @@ export default function Header() {
           <a
             href={PHONE_HREF}
             aria-label={`Call ${PHONE_LABEL}`}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/35 text-white/90 transition hover:border-[#f1d98f] hover:text-[#f1d98f]"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#f3dda0]/40 text-[#f3dda0] transition hover:border-[#f3dda0] hover:text-[#f8e9b7]"
           >
             <PhoneIcon />
           </a>
@@ -1384,6 +1385,22 @@ export default function Header() {
               >
                 <div className={`${hidesHighlights ? "min-h-[245px] rounded-xl" : "min-h-[129px] rounded-lg"} relative flex-1 overflow-hidden bg-[#265136]`}>
                   <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes={hidesHighlights ? "600px" : "220px"} className="mega-preview-image object-cover opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
+                  {/* Experiences: ang hero video ng /experiences ang default na
+                      preview (720px na kopya, ~1.3MB, walang audio). Kapag may
+                      naka-hover na facility, ang larawan nito ang lumalabas. */}
+                  {activeSection.slug === "experiences" && !hoveredExtra && (previewImage ?? activeSection.image) === activeSection.image ? (
+                    <video
+                      src="/experiences/experiences-hero-720.mp4"
+                      poster="/experiences/experiences-hero-poster.jpg"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      aria-hidden="true"
+                      tabIndex={-1}
+                      className="absolute inset-0 h-full w-full object-cover opacity-85 transition-opacity duration-500 group-hover:opacity-100"
+                    />
+                  ) : null}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#071a12]/78 via-[#071a12]/25 to-transparent" aria-hidden="true" />
                   {accommodationSlide ? (
                     <div className="absolute inset-x-3 bottom-3">
