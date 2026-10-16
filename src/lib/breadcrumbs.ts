@@ -18,6 +18,7 @@ export type Crumb = { label: string; href: string };
 const STANDALONE: Record<string, string> = {
   "plan-your-visit": "Plan your visit",
   contact: "Contact",
+  members: "Member's login",
   faq: "FAQs",
   "getting-here": "How to get here",
   "terms-of-use": "Terms of use",

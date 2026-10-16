@@ -117,7 +117,7 @@ function ThePackages() {
                       transform sa [section]/page.tsx, tiyak itong tumatalab. */}
                   <Image
                     src={pack.image}
-                    alt={`${pack.name} at CamSur Uptown Golf Club`}
+                    alt={`${pack.name} at CamSur Uptown Golf`}
                     fill
                     sizes="(max-width: 1023px) calc(100vw - 3rem), 800px"
                     style={pack.slug === "buddy-trip" ? { objectPosition: "right" } : undefined}

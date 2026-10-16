@@ -17,6 +17,7 @@ import ScrollMotion from "@/components/ScrollMotion";
 import HeroRevealMotion from "@/components/HeroRevealMotion";
 import { EDITORIAL_SECTION, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
 import { ACCOMMODATIONS, CLUB_PHONE, SITE_SECTIONS } from "@/lib/site-content";
+import Tr from "@/components/Tr";
 
 export const dynamicParams = false;
 
@@ -29,7 +30,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ section: string }> }): Promise<Metadata> {
   const { section: slug } = await params;
   const section = SITE_SECTIONS.find((item) => item.slug === slug);
-  return section ? { title: `${section.label} | CamSur Uptown Golf Club`, description: section.description } : {};
+  return section ? { title: `${section.label} | CamSur Uptown Golf`, description: section.description } : {};
 }
 
 /** Stagger helper — nababasa sa CSS bilang `transition-delay`. */
@@ -93,12 +94,14 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
       <main>
         {/* Naka-pin ang clubhouse hero: nananatili ang larawan sa sukat ng
             viewport habang tumatakbo ang sequence (title out → stats in →
-            hold), saka lang bumibitaw papunta sa section sa ilalim. Ang balot
+            hold), saka umaangat sa ibabaw nito ang nilalaman bilang card
+            (`-mt-[60svh]` sa ibaba — ang huling 60svh ng track ay para roon,
+            habang naka-pin pa ang video). Ang balot
             na `h-[220svh]` ang nagbibigay ng scroll distance; sa ibang pahina
             ay `contents` — parang walang balot, kaya walang naaapektuhan. */}
         <div
           id={isClubhouse ? "clubhouse-hero-track" : undefined}
-          className={isClubhouse ? "relative h-[220svh]" : "contents"}
+          className={isClubhouse ? "relative h-[280svh]" : "contents"}
         >
         <section
           id="top"
@@ -121,7 +124,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {!isClubhouse ? (
             <Image
               src={section.image}
-              alt={`${section.label} at CamSur Uptown Golf Club`}
+              alt={`${section.label} at CamSur Uptown Golf`}
               fill
               priority
               sizes="100vw"
@@ -248,8 +251,24 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
             at tumatabon sa naka-pin na hero habang nagsi-scroll — reveal, gaya
             ng Villa del Rey. Sa ibang section ay walang klase ang balot, kaya
             walang naaapektuhan. */}
-        <div className={usesStickyReveal ? "relative z-10 bg-[#f7f5ee]" : ""}>
-        <div className="bg-[#f7f5ee]">
+        {/* CLUBHOUSE: card na umaangat sa ibabaw ng naka-pin na video, gaya ng
+            homepage — tuwid na itaas, anino, at gintong "hawakan". Ang
+            `-mt-[60svh]` ang nagpapasok dito sa huling bahagi ng track, kaya
+            dumadaan ito sa ibabaw ng video bago bumitaw ang sticky. Sa
+            ClubhouseHeroOverlay ang pagdilim ng video kasabay nito. */}
+        <div
+          className={
+            isClubhouse
+              ? "relative z-10 -mt-[60svh] bg-[#f7f5ee] shadow-[0_-28px_70px_rgba(2,14,9,0.45)]"
+              : usesStickyReveal
+                ? "relative z-10 bg-[#f7f5ee]"
+                : ""
+          }
+        >
+        {isClubhouse ? (
+          <span className="pointer-events-none absolute left-1/2 top-4 z-10 h-[3px] w-12 -translate-x-1/2 rounded-full bg-[#d8b65b]/70 sm:top-5" aria-hidden="true" />
+        ) : null}
+        <div className={`bg-[#f7f5ee] ${isClubhouse ? "pt-4" : ""}`}>
           <Breadcrumbs />
         </div>
 
@@ -268,7 +287,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-8 border-b border-[#1f3f2e]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
               <div>
-                <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]">Explore {section.label}</p>
+                <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]"><Tr t="Explore {0}" v={[section.label]} /></p>
                 <h2
                   data-reveal="up"
                   style={revealDelay(110)}

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import ForecastDays from "@/components/ForecastDays";
 import { CLUB_PHONE } from "@/lib/site-content";
+import Tr from "@/components/Tr";
 
 /**
  * "Ask about availability" na form para sa isang accommodation.
@@ -37,6 +39,8 @@ export default function AvailabilityRequest({
 }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [guestError, setGuestError] = useState(false);
+  /* Para sa forecast sa ilalim ng petsa — kung uulan ba sa araw na iyon. */
+  const [preferredDate, setPreferredDate] = useState("");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -76,7 +80,7 @@ export default function AvailabilityRequest({
           Your availability request is on its way.
         </h3>
         <p className="mt-4 text-sm leading-7 text-[#5d685f]">
-          The club will get back to you about {accommodationTitle} within 48 hours. You can also reach us directly.
+          <Tr t="The club will get back to you about {0} within 48 hours. You can also reach us directly." v={[accommodationTitle]} />
         </p>
         <a
           href={CLUB_PHONE.href}
@@ -89,7 +93,10 @@ export default function AvailabilityRequest({
   }
 
   return (
-    <form onSubmit={handleSubmit} onReset={() => setGuestError(false)} className="mx-auto max-w-3xl">
+    <form onSubmit={handleSubmit} onReset={() => {
+        setGuestError(false);
+        setPreferredDate("");
+      }} className="mx-auto max-w-3xl">
       <div className="mb-6 border border-[#1f3f2e]/15 bg-white/60 px-4 py-3">
         <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f]">Stay</p>
         <p className="mt-1 text-sm font-medium text-[#14271d]">{accommodationTitle}</p>
@@ -107,8 +114,14 @@ export default function AvailabilityRequest({
             type="date"
             required
             min={today()}
+            onChange={(event) => setPreferredDate(event.target.value)}
             className={`${FIELD} mt-2.5`}
           />
+          {preferredDate ? (
+            <div className="mt-3">
+              <ForecastDays dates={[preferredDate]} />
+            </div>
+          ) : null}
         </div>
 
         <div>
@@ -199,7 +212,7 @@ export default function AvailabilityRequest({
 
       {status === "error" ? (
         <p role="alert" className="mt-6 text-sm leading-6 text-[#a8492f]">
-          Something went wrong sending your request. Please call the club on {CLUB_PHONE.label}.
+          <Tr t="Something went wrong sending your request. Please call the club on {0}." v={[CLUB_PHONE.label]} />
         </p>
       ) : null}
 

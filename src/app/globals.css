@@ -4,7 +4,7 @@
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Camsur Uptown Golf Club brand */
+  /* Camsur Uptown Golf brand */
   --brand-green: #265136;
   --brand-green-deep: #0a2418;
   --brand-gold: #c9a54e;
@@ -58,6 +58,12 @@ html[data-locale="KO"] {
   --font-cormorant-sc: "Nanum Myeongjo", "Apple SD Gothic Neo", "Noto Serif KR", serif;
   --font-cormorant-garamond: "Nanum Myeongjo", "Apple SD Gothic Neo", "Noto Serif KR", serif;
 }
+/* Sa Korean ay sa pagitan ng mga salita (espasyo) dapat bumabali ang linya,
+   hindi sa gitna ng salita ("있습니 / 다"). */
+html[data-locale="KO"] body {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
 html[data-locale="JA"] {
   --font-manrope: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
   --font-montserrat: "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
@@ -69,6 +75,44 @@ html[data-locale="ZH"] {
   --font-montserrat: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   --font-cormorant-sc: "Songti SC", "SimSun", "Noto Serif SC", serif;
   --font-cormorant-garamond: "Songti SC", "SimSun", "Noto Serif SC", serif;
+}
+
+/* Sa 1024–1439px ay masikip ang nav kahit sa English (5–6px na lang ang
+   pagitan nito at ng "Plan Your Visit"), kaya bahagyang mas makitid ang
+   padding ng bawat item doon. */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  nav[data-nav] :is(a, button) {
+    padding-inline: 0.42rem;
+  }
+}
+
+/* ── Mas mahahabang wika sa nav (Filipino, Bikol, Vietnamese) ─────────────────
+   Mas mahaba nang ~25% ang mga label ng nav sa mga wikang ito ("MGA
+   KAGANAPAN" laban sa "EVENTS"), kaya sa 1024–1512px ay bumabangga ang nav sa
+   "Plan Your Visit" at natatabunan ang search. Dito lang lumiliit ang puwang:
+   mas masikip na letter-spacing at mas makitid na padding ng bawat item.
+   Hindi ginagalaw ang laki ng font — babasahin pa rin ito nang madali.
+   (Panalo ito sa mga Tailwind utility dahil wala ito sa isang @layer.) */
+html:is([data-locale="FIL"], [data-locale="BCL"], [data-locale="VI"]) nav[data-nav] {
+  letter-spacing: 0.04em;
+}
+html:is([data-locale="FIL"], [data-locale="BCL"], [data-locale="VI"]) nav[data-nav] :is(a, button) {
+  padding-inline: 0.4rem;
+}
+/* 1024–1439px: dito pinakamasikip (tingnan ang sukat sa itaas), kaya mas
+   masikip pa ang nav at mas makitid ang "Plan Your Visit". */
+@media (max-width: 1439px) {
+  html:is([data-locale="FIL"], [data-locale="BCL"], [data-locale="VI"]) nav[data-nav] {
+    letter-spacing: 0.02em;
+    column-gap: 0.125rem;
+  }
+  html:is([data-locale="FIL"], [data-locale="BCL"], [data-locale="VI"]) nav[data-nav] :is(a, button) {
+    padding-inline: 0.3rem;
+  }
+  html:is([data-locale="FIL"], [data-locale="BCL"], [data-locale="VI"]) header a[href="/plan-your-visit"] {
+    padding-inline: 1.1rem;
+    letter-spacing: 0.04em;
+  }
 }
 
 /* All prose uses Manrope site-wide. Display figures and compact navigation
@@ -219,6 +263,38 @@ html {
    Huwag maglagay ng parallax sa larawang nasa gitna ng pahina maliban
    kung malaki ang scale: mas mahaba ang travel doon (viewport + taas ng
    elemento), kaya madaling malantad ang gilid. */
+/* ── Pag-atras ng hero sa homepage ───────────────────────────────────────────
+   Habang umaangat ang Introduction sa ibabaw ng naka-sticky na hero, dumidilim
+   ang hero (ang ::after) at bahagyang lumalalim ang larawan sa loob nito.
+   HINDI lumiliit ang hero mismo: sinubukan iyon, at lumilitaw ang kulay ng
+   balot sa kaliwa't kanan na parang dalawang guhit. Naka-angkla sa scroll mismo (`animation-timeline`), kaya
+   walang JavaScript at sumusunod ito sa bilis ng pag-scroll.
+
+   Sa browser na walang scroll-driven animation ay walang pag-atras — pero
+   gumagana pa rin ang pag-angat ng card, dahil `sticky` lang iyon. */
+@supports (animation-timeline: scroll()) {
+  .hero-recede::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    background: #020e09;
+    animation: hero-dim linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 70svh;
+  }
+}
+@keyframes hero-dim {
+  from { opacity: 0; }
+  to { opacity: 0.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-recede::after {
+    animation: none;
+  }
+}
+
 .parallax-media {
   transform: translate3d(0, var(--parallax-y, 0px), 0) scale(var(--parallax-scale, 1.3));
 }

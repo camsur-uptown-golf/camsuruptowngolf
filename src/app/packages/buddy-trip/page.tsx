@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PackageItineraryPage from "@/components/PackageItineraryPage";
 
 export const metadata: Metadata = {
-  title: "Group Golf Getaway | CamSur Uptown Golf Club",
+  title: "Group Golf Getaway | CamSur Uptown Golf",
   description:
     "A three-day golf getaway for your group at CamSur Uptown — two nights by the course, two full rounds, shared tables, and plenty of unscheduled time in between.",
 };
@@ -45,7 +45,7 @@ const days = [
     moments: [
       ["Morning", "Eighteen holes on our championship course, with flights and pairings set by your group."],
       ["Midday", "Lunch at the clubhouse and a first look at the scorecards."],
-      ["Afternoon", "Free time. Return to the practice range, relax by the pool, try the wakepark, or simply unwind."],
+      ["Afternoon", "Free time. Return to the practice range, relax by the pool, try wakeboarding, or simply unwind."],
     ],
   },
   {

@@ -5,11 +5,12 @@ import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Container } from "@/components/SectionKit";
 import { CLUB_EMAIL, CLUB_PHONE } from "@/lib/site-content";
+import Tr from "@/components/Tr";
 
 export const metadata: Metadata = {
-  title: "Terms of Use | CamSur Uptown Golf Club",
+  title: "Terms of Use | CamSur Uptown Golf",
   description:
-    "Terms governing the use of the CamSur Uptown Golf Club website, including information about concept materials, bookings, availability, intellectual property, and external links.",
+    "Terms governing the use of the CamSur Uptown Golf website, including information about concept materials, bookings, availability, intellectual property, and external links.",
 };
 
 const EFFECTIVE_DATE = "September 17, 2026";
@@ -27,7 +28,7 @@ const SECTIONS = [
     id: "website-information",
     title: "Website information and design-stage materials",
     paragraphs: [
-      "The website is intended to introduce CamSur Uptown Golf Club, its proposed course, facilities, accommodations, dining, experiences, events, and packages.",
+      "The website is intended to introduce CamSur Uptown Golf, its proposed course, facilities, accommodations, dining, experiences, events, and packages.",
       "Golf course measurements, routing, par and handicap information, tee positions, water features, facilities, package inclusions, schedules, renderings, maps, photographs, and visual concepts may be based on currently available design-stage or reference materials. They may change following final surveying, construction, operational review, availability, or approval.",
       "Illustrations and enhanced images are provided to communicate the intended experience. They should not be treated as a guarantee that every physical detail, view, finish, facility, or landscape feature will appear exactly as shown.",
     ],
@@ -61,7 +62,7 @@ const SECTIONS = [
     id: "intellectual-property",
     title: "Intellectual property",
     paragraphs: [
-      "Unless otherwise stated, the website's branding, logos, text, layouts, maps, illustrations, photographs, video, graphics, and other content are owned by or licensed to CamSur Uptown Golf Club and are protected by applicable intellectual-property laws.",
+      "Unless otherwise stated, the website's branding, logos, text, layouts, maps, illustrations, photographs, video, graphics, and other content are owned by or licensed to CamSur Uptown Golf and are protected by applicable intellectual-property laws.",
       "You may view and share links to public pages for personal, non-commercial use. You may not copy, republish, sell, modify, distribute, scrape, or use website content for commercial, promotional, training, or competing purposes without prior written permission.",
     ],
   },
@@ -86,7 +87,7 @@ const SECTIONS = [
     title: "Disclaimers and limitation of liability",
     paragraphs: [
       "We work to keep the website accurate and available, but it is provided on an as-is and as-available basis. We do not guarantee uninterrupted access, error-free content, or that every published detail will remain current.",
-      "To the fullest extent permitted by law, CamSur Uptown Golf Club will not be liable for indirect, incidental, or consequential loss arising solely from reliance on website content, temporary website unavailability, or use of an external link. Nothing in these terms excludes liability that cannot lawfully be excluded.",
+      "To the fullest extent permitted by law, CamSur Uptown Golf will not be liable for indirect, incidental, or consequential loss arising solely from reliance on website content, temporary website unavailability, or use of an external link. Nothing in these terms excludes liability that cannot lawfully be excluded.",
     ],
   },
   {
@@ -114,11 +115,11 @@ export default function TermsOfUsePage() {
               Terms of Use
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-white/68 sm:text-base sm:leading-8">
-              These terms explain how you may use the CamSur Uptown Golf Club website and how to understand the
+              These terms explain how you may use the CamSur Uptown Golf website and how to understand the
               concept, booking, and facility information presented here.
             </p>
             <p className="mt-5 font-navigation text-[10px] font-semibold uppercase tracking-[0.16em] text-[#d8b65b]/85">
-              Effective {EFFECTIVE_DATE}
+              <Tr t="Effective {0}" v={[EFFECTIVE_DATE]} />
             </p>
           </div>
         </section>

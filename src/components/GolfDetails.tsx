@@ -64,7 +64,7 @@ function Overview() {
           <div data-reveal="up" className="relative mx-auto mb-8 h-48 w-60 overflow-hidden sm:mb-10">
             <Image
               src="/camsur-uptown-logo.png"
-              alt="CamSur Uptown Golf Club emblem"
+              alt="CamSur Uptown Golf emblem"
               width={720}
               height={958}
               sizes="230px"

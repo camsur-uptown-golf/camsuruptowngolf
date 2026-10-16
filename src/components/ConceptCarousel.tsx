@@ -198,7 +198,7 @@ export default function ConceptCarousel() {
                 >
                   <Image
                     src={slide.image}
-                    alt={`${slide.title} — CamSur Uptown Golf Club hole`}
+                    alt={`${slide.title} — CamSur Uptown Golf hole`}
                     fill
                     priority={index === 0}
                     sizes="(min-width: 640px) 52vw, calc(100vw - 3rem)"

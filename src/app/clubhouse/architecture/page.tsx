@@ -18,7 +18,7 @@ import {
 } from "@/lib/clubhouse";
 
 export const metadata: Metadata = {
-  title: "Clubhouse Architecture | CamSur Uptown Golf Club",
+  title: "Clubhouse Architecture | CamSur Uptown Golf",
   description:
     "The architectural concept behind the CamSur Uptown clubhouse by VM·STUDIO — the brief, the approach, the material palette and the area schedule.",
 };

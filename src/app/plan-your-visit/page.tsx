@@ -6,6 +6,7 @@ import RequestCallback from "@/components/RequestCallback";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Container, SectionHeading } from "@/components/SectionKit";
 import { CLUB_PHONE } from "@/lib/site-content";
+import Tr from "@/components/Tr";
 
 /**
  * Ang pupuntahan ng bawat "Plan your visit", "Plan your round", at "Plan your
@@ -19,7 +20,7 @@ import { CLUB_PHONE } from "@/lib/site-content";
  * dahilan kung bakit narito ang tao.
  */
 export const metadata: Metadata = {
-  title: "Plan your visit | CamSur Uptown Golf Club",
+  title: "Plan your visit | CamSur Uptown Golf",
   description:
     "Tell the club when you would like to play or stay, and the team will call you back within 48 hours at the time you choose.",
 };
@@ -55,7 +56,7 @@ export default function PlanYourVisitPage() {
                 href={CLUB_PHONE.href}
                 className="mt-7 inline-flex h-11 items-center gap-2.5 rounded-full border border-white/55 bg-[#10271b]/30 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#e7d18d] hover:bg-[#10271b]/60 hover:text-[#f1d98f] sm:text-[11px]"
               >
-                Or call {CLUB_PHONE.label}
+                <Tr t="Or call {0}" v={[CLUB_PHONE.label]} />
               </a>
             </div>
           </div>

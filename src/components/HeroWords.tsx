@@ -1,4 +1,7 @@
+"use client";
+
 import { Fragment } from "react";
+import { lookup, useSiteStrings } from "@/i18n/site-strings";
 import type { CSSProperties } from "react";
 
 /**
@@ -13,6 +16,11 @@ import type { CSSProperties } from "react";
  * nagbabanggaan: isang beses ang word-by-word, tuloy-tuloy ang kupas-sa-scroll
  * ng magulang. Ang " " na text node sa pagitan ng mga span ay breakable space,
  * kaya nananatili ang natural (multi-line) na wrap at ang `text-balance`.
+ *
+ * ISINASALIN MUNA ANG BUONG TITLE bago hatiin (`useSiteStrings`). Kapag kada
+ * salita ang salin, "The" + "Heart" + … ang lalabas — mali ang pagkakasunod
+ * sa Korean/Japanese. Naka-`translate="no"` ang mga salita para hindi na
+ * galawin ng DomTranslator.
  */
 export default function HeroWords({
   text,
@@ -25,12 +33,15 @@ export default function HeroWords({
   /** dagdag na ms kada sunod na salita. */
   step?: number;
 }) {
+  const dict = useSiteStrings();
+  const translated = (dict && lookup(dict, text)) ?? text;
   return (
     <>
-      {text.split(" ").map((word, index) => (
+      {translated.split(" ").map((word, index) => (
         <Fragment key={`${word}-${index}`}>
           {index > 0 ? " " : null}
           <span
+            translate="no"
             className="hero-word"
             style={{ animationDelay: `${startDelay + index * step}ms` } as CSSProperties}
           >

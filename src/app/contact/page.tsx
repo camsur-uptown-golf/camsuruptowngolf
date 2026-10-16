@@ -7,6 +7,7 @@ import RequestCallback from "@/components/RequestCallback";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Container, SectionHeading } from "@/components/SectionKit";
 import { CLUB_ADDRESS, CLUB_EMAIL, CLUB_PHONE } from "@/lib/site-content";
+import Tr from "@/components/Tr";
 
 /**
  * Ang pupuntahan ng "Contact Us" sa header at sa footer.
@@ -22,9 +23,9 @@ import { CLUB_ADDRESS, CLUB_EMAIL, CLUB_PHONE } from "@/lib/site-content";
  * admin kung saan galing ang bawat isa.
  */
 export const metadata: Metadata = {
-  title: "Contact us | CamSur Uptown Golf Club",
+  title: "Contact us | CamSur Uptown Golf",
   description:
-    "Reach CamSur Uptown Golf Club by phone or email, or send a message and the team will come back to you within 48 hours.",
+    "Reach CamSur Uptown Golf by phone or email, or send a message and the team will come back to you within 48 hours.",
 };
 
 function PhoneIcon() {
@@ -124,11 +125,14 @@ export default function ContactPage() {
             {/* Iba ang layunin ng dalawang pahina, kaya bukas ang daan papunta
                 doon para sa may balak nang bumisita. */}
             <p className="mt-8 text-center text-sm leading-7 text-[#5d685f]">
-              Planning a round, a stay, or an event?{" "}
-              <Link href="/plan-your-visit" className="font-semibold text-[#265136] underline underline-offset-4 hover:text-[#1f3f2e]">
-                Plan your visit
-              </Link>{" "}
-              has everything the club needs to prepare for you.
+              <Tr
+                t="Planning a round, a stay, or an event? {0} has everything the club needs to prepare for you."
+                v={[
+                  <Link key="plan" href="/plan-your-visit" className="font-semibold text-[#265136] underline underline-offset-4 hover:text-[#1f3f2e]">
+                    Plan your visit
+                  </Link>,
+                ]}
+              />
             </p>
           </Container>
         </section>

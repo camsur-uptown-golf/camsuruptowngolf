@@ -26,7 +26,7 @@ import { CLUB_PHONE, FAQ_GROUPS } from "@/lib/site-content";
  * browser na sumusuporta sa hidden=until-found.
  */
 export const metadata: Metadata = {
-  title: "Frequently asked questions | CamSur Uptown Golf Club",
+  title: "Frequently asked questions | CamSur Uptown Golf",
   description:
     "Rates, booking, caddies, dress code, accommodation, and transfers — the questions the club is asked most often, answered before you enquire.",
 };

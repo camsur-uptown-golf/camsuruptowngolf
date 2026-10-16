@@ -16,7 +16,7 @@ import { EditorialHeading, Shell, delay } from "@/components/EditorialKit";
  * TODO (para sa club): kumpirmahin bago i-publish —
  *  - kumpletong listahan ng pasilidad at kung alin ang bukas sa bisita
  *  - oras ng bukas, bayad, at kung alin ang kailangang i-book nang maaga
- *  - hinihinging edad, waiver, o gamit sa Wakepark, ATV, at Bike Track
+ *  - hinihinging edad, waiver, o gamit sa Wakeboarding, ATV, at Bike Track
  */
 
 /* Iisang hanay, inaayos nang pataas-pababa ayon sa ibinigay na pagkakasunod.
@@ -26,7 +26,7 @@ import { EditorialHeading, Shell, delay } from "@/components/EditorialKit";
 const ACTIVITIES = [
   {
     id: "wakepark",
-    name: "Wakepark",
+    name: "Wakeboarding",
     image: "/experiences/wakepark-riders.webp",
     href: "https://visitcamsur.com/facilities/wakepark",
     description:
@@ -151,7 +151,7 @@ export default function ExperiencesDetails() {
         <Shell>
           <EditorialHeading
             title="Come find your adventure."
-            intro="Take on the wakepark, pickle ball, basketball, and ATV trails, or unwind with a massage and the resort's quieter corners — there's something here for everyone."
+            intro="Take on wakeboarding, pickle ball, basketball, and ATV trails, or unwind with a massage and the resort's quieter corners — there's something here for everyone."
             size="lg"
           />
         </Shell>

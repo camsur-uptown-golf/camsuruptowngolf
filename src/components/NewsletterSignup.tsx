@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Tr from "@/components/Tr";
 
 /**
  * Newsletter sa footer.
@@ -77,10 +78,16 @@ export default function NewsletterSignup() {
             ng email sa ilalim ng RA 10173, kaya hindi ito opsyonal. */}
         <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#c9a54e]" />
         <span>
-          I agree to receive news and offers from CamSur Uptown, and I have read the{" "}
           {/* TODO: ikabit sa totoong Privacy Policy kapag mayroon na. Hindi ito
               link ngayon dahil walang pahinang matuturo. */}
-          <span className="text-white">Privacy Policy</span>.
+          <Tr
+            t="I agree to receive news and offers from CamSur Uptown, and I have read the {0}."
+            v={[
+              <span key="privacy" className="text-white">
+                Privacy Policy
+              </span>,
+            ]}
+          />
         </span>
       </label>
 

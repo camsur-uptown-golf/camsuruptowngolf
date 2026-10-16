@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import { ACCOMMODATIONS, CLUB_PHONE, COURSE_PAGES, SITE_SECTIONS } from "@/lib/site-content";
 import { HOLE_PROFILES } from "@/lib/course-holes";
 import { searchSiteItems, type SiteSearchItem } from "@/lib/site-search";
-import HeaderUtilities from "@/components/HeaderUtilities";
 import { useTranslation } from "@/i18n/LanguageProvider";
 import type { TranslationKey } from "@/i18n/dictionaries";
 
@@ -192,7 +191,7 @@ function CalendarIcon({ className = "h-4 w-4 shrink-0" }: { className?: string }
  * nagkaiba ang dalawang nav dito, iba ang sukat ng pill kapag naka-scroll.
  */
 const NAV_ITEM_CLASS =
-  "pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-2 py-2.5 transition-colors duration-200 hover:bg-[#56725f] hover:text-[#f3dda0] xl:px-3";
+  "pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-2 py-2.5 transition-colors duration-200 hover:text-[#f8e9b7] xl:px-3";
 
 /* Pang-CTA sa mega menu. Hiwalay sa `ChevronIcon`: chevron iyon para sa
    mga listahan at drawer, at mahaba ang arrow na ito para sa pindutan. */
@@ -257,7 +256,7 @@ const SEARCH_LABEL_KEYWORDS: Readonly<Record<string, readonly string[]>> = {
   "Corporate Events": ["corporate event", "company event"],
   "Golf Tournaments": ["golf tournament", "competition"],
   "Members’ lounge": ["members lounge", "member lounge"],
-  Wakepark: ["wake park"],
+  Wakeboarding: ["wakepark", "wake park", "wake boarding"],
   "Pickle Ball": ["pickleball"],
 };
 
@@ -759,12 +758,12 @@ export default function Header() {
           /* Nakatago sa cellphone: nasa loob na ng pill ang buong logo doon.
              Desktop pataas lang ang may hiwalay na logo. */
           className={`${isScrolled ? "h-14 w-14" : "h-44 w-[132px] lg:h-52 lg:w-[156px]"} pointer-events-auto relative hidden shrink-0 justify-self-start lg:block`}
-          aria-label="Camsur Uptown Golf Club — home"
+          aria-label="Camsur Uptown Golf — home"
         >
           <span data-logo="full" className={`${isScrolled ? "invisible opacity-0" : "visible opacity-100"} absolute inset-0`}>
             <Image
               src="/camsur-uptown-logo.png"
-              alt="Camsur Uptown Golf Club"
+              alt="Camsur Uptown Golf"
               width={176}
               height={234}
               priority
@@ -828,7 +827,7 @@ export default function Header() {
                    hindi na kailangang sukatin muli kapag may idinagdag o
                    inalis sa SITE_SECTIONS. Ang `max-w` ang humahawak nito sa
                    loob ng screen kapag marami na ang item. */
-                "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-[#d8b65b]/20 bg-[#265136]/88 p-1.5 opacity-100 shadow-[0_12px_35px_rgba(0,0,0,0.16)]"} ${desktopPanelOpen ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-[#f3dda0] backdrop-blur-md xl:text-[11px] xl:tracking-[0.09em]`}
+                "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-transparent p-1.5 opacity-100 [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]"} ${desktopPanelOpen ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-[#f3dda0] xl:text-[12px] xl:tracking-[0.09em] min-[1400px]:text-[13px]`}
           >
             {isAwayFromHome ? (
               <Link href="/" onClick={closeDesktopMenu} className={NAV_ITEM_CLASS}>
@@ -843,7 +842,7 @@ export default function Header() {
                 aria-expanded={openMenu === item.slug}
                 aria-haspopup="true"
                 aria-controls="desktop-mega-menu"
-                className={`${openMenu === item.slug ? "bg-[#56725f] text-[#f3dda0]" : ""} ${NAV_ITEM_CLASS}`}
+                className={`${openMenu === item.slug ? "text-[#f8e9b7]" : ""} ${NAV_ITEM_CLASS}`}
               >
                 {sectionLabel(item.slug, item.label).toUpperCase()}
               </button>
@@ -855,7 +854,7 @@ export default function Header() {
                 aria-label="Search this site"
                 aria-expanded={searchOpen}
                 aria-controls="site-search-panel"
-                className={`${searchOpen ? "bg-[#56725f]" : ""} flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#f3dda0] transition-colors duration-200 hover:bg-[#56725f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]`}
+                className={`${searchOpen ? "text-[#f8e9b7]" : "text-[#f3dda0]"} flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 hover:text-[#f8e9b7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]`}
               >
                 <SearchIcon />
               </button>
@@ -863,24 +862,14 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* Weather + language — naka-center sa itaas ng nav pill. Palaging
-            mounted ang component kahit naka-scroll at visually hidden: sa
-            ganitong paraan hindi nawawala ang huling temperature at hindi
-            bumabalik sa `—°` kapag umakyat muli sa hero. */}
-        <div
-          className={`${isScrolled ? "pointer-events-none invisible opacity-0" : "pointer-events-auto visible opacity-100"} absolute left-1/2 top-[28px] hidden -translate-x-1/2 transition-opacity duration-200 lg:block`}
-        >
-          <HeaderUtilities />
-        </div>
-
         {/* "Contact Us" ito dati at ang "Plan your visit" ay nasa maliit na
             hilera sa itaas ng nav. Pinagpalit: isang pangunahing pindutan
             lang ang header, at ang pagpaplano ng pagbisita ang hinihiling
             nito — hindi ang pagtatanong. Nananatili ang /contact sa footer
             at sa loob ng /plan-your-visit. */}
-        {/* "Plan Your Visit" — nasa kanan. Ang weather + language ay hindi na
-            dito; nakalutang na sila nang naka-center sa itaas ng nav pill sa
-            ibaba. */}
+        {/* "Plan Your Visit" — nasa kanan. Ang weather, language, at member's
+            login ay nasa sticky na bar sa kanang gilid ng screen
+            (`HeaderUtilities`, naka-mount sa layout). */}
         <div
           className={`${isScrolled ? "translate-y-0" : "-translate-y-9"} pointer-events-auto hidden justify-self-end lg:col-start-3 lg:block`}
         >
@@ -933,7 +922,7 @@ export default function Header() {
         <div className="pointer-events-auto flex w-auto items-center justify-self-center gap-7 rounded-full border border-white/20 bg-[#265136]/95 px-4 py-2 shadow-[0_14px_36px_rgba(0,0,0,0.22)] backdrop-blur-xl lg:hidden">
           <Link
             href="/"
-            aria-label="Camsur Uptown Golf Club — home"
+            aria-label="Camsur Uptown Golf — home"
             className="flex h-10 shrink-0 items-center"
           >
             {/* Shield lang, walang wordmark. Sinubukan ang buong logo dito
@@ -1112,7 +1101,7 @@ export default function Header() {
             <div className="flex items-center justify-between px-3 pb-2 pt-2">
               <div>
                 {/* Buong pangalan ng club, gaya ng sa footer — hindi pinaikli. */}
-                <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]">CamSur Uptown Golf Club</p>
+                <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]">CamSur Uptown Golf</p>
                 <p className="mt-1 text-sm font-semibold text-white/90">{t("mobile.explore")}</p>
               </div>
               <span className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-white/45">{t("mobile.menu")}</span>
@@ -1201,9 +1190,9 @@ export default function Header() {
             aria-expanded={openMenu === item.slug}
             aria-haspopup="true"
             aria-controls="desktop-mega-menu"
-            className={`${openMenu === item.slug ? "bg-[#56725f] text-[#f3dda0]" : ""} ${NAV_ITEM_CLASS}`}
+            className={`${openMenu === item.slug ? "text-[#f8e9b7]" : ""} ${NAV_ITEM_CLASS}`}
           >
-            {item.label.toUpperCase()}
+            {sectionLabel(item.slug, item.label).toUpperCase()}
           </button>
         ))}
         <span className="ml-0.5 flex items-center border-l border-[#f3dda0]/20 pl-1">
@@ -1213,7 +1202,7 @@ export default function Header() {
             aria-label="Search this site"
             aria-expanded={searchOpen}
             aria-controls="site-search-panel"
-            className={`${searchOpen ? "bg-[#56725f]" : ""} flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#f3dda0] transition-colors duration-200 hover:bg-[#56725f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]`}
+            className={`${searchOpen ? "text-[#f8e9b7]" : "text-[#f3dda0]"} flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 hover:text-[#f8e9b7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]`}
           >
             <SearchIcon />
           </button>

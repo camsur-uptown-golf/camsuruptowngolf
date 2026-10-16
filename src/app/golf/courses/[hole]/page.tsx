@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: { params: Promise<{ hole: str
   const course = COURSE_PAGES.find((item) => item.slug === slug);
   /* Dating pare-pareho ang pamagat ng lahat ng 18 pahina dahil iisang
      editorial headline ang `course.title`. Bawat butas ay sarili na niya. */
-  return course ? { title: `${holeLabel(course)} | CamSur Uptown Golf Club`, description: course.description } : {};
+  return course ? { title: `${holeLabel(course)} | CamSur Uptown Golf`, description: course.description } : {};
 }
 
 export default async function HolePage({ params }: { params: Promise<{ hole: string }> }) {

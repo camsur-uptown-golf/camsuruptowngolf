@@ -149,7 +149,7 @@ export default function ShopExperience() {
                 Begin your next round here.
               </h2>
               <p data-reveal="up" className="mt-6 max-w-2xl text-sm leading-7 xl:text-base xl:leading-8 text-white/62 sm:text-base">
-                Ask about merchandise, tournament orders, and opening updates from CamSur Uptown Golf Club.
+                Ask about merchandise, tournament orders, and opening updates from CamSur Uptown Golf.
               </p>
             </div>
             <Link

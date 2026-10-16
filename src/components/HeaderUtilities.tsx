@@ -1,79 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { LOCALE_LABELS, SWITCHER_LOCALES } from "@/i18n/config";
 import { useTranslation } from "@/i18n/LanguageProvider";
+import ForecastDays from "@/components/ForecastDays";
+import WeatherIcon from "@/components/WeatherIcon";
+import { CURRENT_URL, dateRange, describeWeather, todayInManila } from "@/lib/weather";
+import { weatherPhrases } from "@/lib/weather-i18n";
 
 /**
- * Maliliit na utility sa kanang bahagi ng header, katabi ng "Plan Your Visit":
- * live na weather sa Pili (icon + temp) at isang language selector.
+ * Maliliit na utility na nakadikit sa kanang gilid ng screen:
+ * live na weather sa Pili (icon + temp), isang language selector, at ang
+ * Member's Login.
  *
- * Client component dahil live ang weather (kinukuha sa Open-Meteo) at
- * interactive ang wika. Nakatago sa ibaba ng `xl` — masikip ang gitna doon
- * dahil malapad ang naka-sentrong nav pill, kaya sa mas malalaking screen lang
- * sila lumalabas, gaya ng icon ng CTA.
+ * Client component dahil live ang weather (kinukuha sa Open-Meteo, tingnan
+ * ang `lib/weather.ts`) at interactive ang wika. Pindutan din ang weather:
+ * ipinapakita nito ang forecast ng susunod na pitong araw.
  */
 
-/* San Jose, Pili, Camarines Sur — dito mismo ang club (hindi Naga). */
-const PILI = { lat: 13.584308, lon: 123.253267 } as const;
-
-/* Open-Meteo: libre, walang API key, may CORS kaya kayang tawagin sa browser. */
-const WEATHER_URL =
-  `https://api.open-meteo.com/v1/forecast?latitude=${PILI.lat}&longitude=${PILI.lon}` +
-  `&current=temperature_2m,weather_code&timezone=Asia%2FManila`;
-
 type Weather = { tempC: number; code: number };
-type WeatherKind = "sun" | "partly" | "cloud" | "rain" | "storm";
-
-function describeWeather(code: number): { label: string; kind: WeatherKind } {
-  if (code === 0) return { label: "Clear", kind: "sun" };
-  if (code === 1 || code === 2) return { label: "Partly cloudy", kind: "partly" };
-  if (code === 3) return { label: "Cloudy", kind: "cloud" };
-  if (code === 45 || code === 48) return { label: "Fog", kind: "cloud" };
-  if (code >= 95) return { label: "Storm", kind: "storm" };
-  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return { label: "Rain", kind: "rain" };
-  if (code >= 71 && code <= 86) return { label: "Rain", kind: "rain" };
-  return { label: "—", kind: "cloud" };
-}
 
 /* ---------- Icons (stroke-based, katugma ng header) ---------- */
-
-function WeatherIcon({ kind, className = "h-4 w-4" }: { kind: WeatherKind; className?: string }) {
-  if (kind === "sun") {
-    return (
-      <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-    );
-  }
-  if (kind === "partly") {
-    return (
-      <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-        <circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M8 2.5v1M2.5 8h1M4.4 4.4l.7.7M11.6 4.4l-.7.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M9 17.5a3.2 3.2 0 0 1 .3-6.4 4 4 0 0 1 7.6.9 2.8 2.8 0 0 1-.4 5.5H9Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-  if (kind === "rain" || kind === "storm") {
-    return (
-      <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-        <path d="M7.5 14.5a3.5 3.5 0 0 1 .3-7 4.4 4.4 0 0 1 8.4 1 3 3 0 0 1-.4 6H7.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        {kind === "storm" ? (
-          <path d="m12 15-1.5 3h2L11 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        ) : (
-          <path d="M9 17.5 8 20M12.5 17.5 11.5 20M16 17.5 15 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        )}
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-      <path d="M7 16.5a3.5 3.5 0 0 1 .3-7 4.4 4.4 0 0 1 8.4 1 3 3 0 0 1-.4 6H7Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 function GlobeIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -89,6 +37,32 @@ function ChevronIcon({ className = "h-3 w-3" }: { className?: string }) {
     <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
       <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+function UserIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
+      <circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M5 20a7 7 0 0 1 14 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* ---------- Member's login ---------- */
+
+/* Wala pang member portal, kaya sa /members muna ito tumuturo — isang
+   placeholder na may paraan para makausap ang club. */
+function MemberLogin() {
+  const { t } = useTranslation();
+  return (
+    <Link
+      href="/members"
+      className="flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[9px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#f8e9b7] text-center"
+    >
+      <UserIcon className="h-5 w-5" />
+      <span>{t("action.memberLogin")}</span>
+    </Link>
   );
 }
 
@@ -119,16 +93,18 @@ function LanguageSelector() {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("lang.select")}
-        className="flex items-center gap-1.5 rounded-full px-2 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors hover:bg-white/10"
+        className={`${open ? "text-[#f8e9b7]" : ""} flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[9px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#f8e9b7]`}
       >
-        <GlobeIcon />
-        <span>{locale}</span>
-        <ChevronIcon className={`${open ? "rotate-180" : ""} h-3 w-3 transition-transform`} />
+        <GlobeIcon className="h-5 w-5" />
+        <span className="flex items-center gap-0.5">
+          {locale}
+          <ChevronIcon className={`${open ? "rotate-90" : ""} h-2.5 w-2.5 transition-transform`} />
+        </span>
       </button>
       {open ? (
         <ul
           role="listbox"
-          className="absolute right-0 top-[calc(100%+8px)] z-[60] min-w-[136px] overflow-hidden rounded-xl border border-[#f3dda0]/15 bg-[#265136] py-1 text-white shadow-[0_18px_42px_rgba(6,26,17,0.4)]"
+          className="absolute right-[calc(100%+10px)] top-1/2 z-[60] -translate-y-1/2 min-w-[136px] overflow-hidden rounded-xl border border-white/15 bg-black/75 py-1 normal-case tracking-normal text-white shadow-[0_18px_42px_rgba(0,0,0,0.4)] backdrop-blur-md [text-shadow:none]"
         >
           {SWITCHER_LOCALES.map((code) => (
             <li key={code}>
@@ -155,14 +131,38 @@ function LanguageSelector() {
 
 /* ---------- Weather (icon + temp, live) ---------- */
 
+/* Pindutan na ang weather: pinindot, lumalabas sa kaliwa ang forecast ng
+   susunod na pitong araw (`ForecastDays`, dark tone). Sa unang pindot pa
+   lang kinukuha ang mga petsa para walang hydration mismatch sa "ngayon". */
 function WeatherNow() {
   const [weather, setWeather] = useState<Weather | null>(null);
+  const [open, setOpen] = useState(false);
+  const [week, setWeek] = useState<string[]>([]);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (event: PointerEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [open]);
+
+  function toggle() {
+    if (week.length === 0) {
+      const start = todayInManila();
+      const end = new Date(Date.parse(`${start}T00:00:00Z`) + 6 * 86_400_000).toISOString().slice(0, 10);
+      setWeek(dateRange(start, end));
+    }
+    setOpen((v) => !v);
+  }
 
   useEffect(() => {
     let alive = true;
     const load = async () => {
       try {
-        const res = await fetch(WEATHER_URL, { cache: "no-store" });
+        const res = await fetch(CURRENT_URL, { cache: "no-store" });
         if (!res.ok) return;
         const data = await res.json();
         const current = data?.current;
@@ -186,29 +186,116 @@ function WeatherNow() {
   }, []);
 
   const w = weather ? describeWeather(weather.code) : null;
+  /* Ang lagay ng langit ngayon ("Cloudy", "Maulap", "흐림"…) sa ilalim ng
+     temperatura — sariling salin, kaya naka-`translate="no"`. */
+  const { locale } = useTranslation();
+  const sky = w ? (weatherPhrases(locale).sky[w.label as keyof ReturnType<typeof weatherPhrases>["sky"]] ?? w.label) : "";
 
   return (
-    <span
-      className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em]"
-      title={weather ? `Pili — ${w?.label}, ${Math.round(weather.tempC)}°C` : "Pili weather"}
-    >
-      <WeatherIcon kind={w?.kind ?? "cloud"} />
-      <span className="tabular-nums">{weather ? `${Math.round(weather.tempC)}°C` : "—°"}</span>
-      <span className="sr-only">
-        {weather ? `Pili weather, ${w?.label}, ${Math.round(weather.tempC)} degrees.` : "Loading Pili weather."}
-      </span>
-    </span>
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={toggle}
+        aria-expanded={open}
+        aria-controls="weather-forecast"
+        className={`${open ? "text-[#f8e9b7]" : ""} flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[10px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#f8e9b7]`}
+        title={weather ? `Pili — ${w?.label}, ${Math.round(weather.tempC)}°C` : "Pili weather"}
+      >
+        <WeatherIcon kind={w?.kind ?? "cloud"} className="h-5 w-5" />
+        <span className="tabular-nums">{weather ? `${Math.round(weather.tempC)}°C` : "—°"}</span>
+        <span translate="no" className="min-h-[10px] text-[8px] leading-tight tracking-[0.1em] opacity-75">{sky}</span>
+        <span className="sr-only">
+          {weather ? `Pili weather, ${w?.label}, ${Math.round(weather.tempC)} degrees. ` : "Loading Pili weather. "}
+          Show the 7-day forecast.
+        </span>
+      </button>
+      {open ? (
+        <div
+          id="weather-forecast"
+          className="absolute right-[calc(100%+10px)] top-1/2 z-[60] w-[300px] -translate-y-1/2 rounded-xl border border-white/15 bg-black/75 p-3 normal-case tracking-normal text-white shadow-[0_18px_42px_rgba(0,0,0,0.4)] backdrop-blur-md [text-shadow:none]"
+        >
+          <p className="mb-2 px-1 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0]">Next 7 days at the club</p>
+          {week.length > 0 ? <ForecastDays dates={week} tone="dark" /> : null}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
 /* ---------- Cluster ---------- */
 
+/* STICKY SA KANANG GILID NG SCREEN, GITNA PATAYO. Nakadikit ito sa gilid
+   (`right-0`, bilog lang ang kaliwang kanto) at laging nakikita kahit
+   naka-scroll. HINDI BERDE ang background — ayaw ng club ng berdeng
+   pill dito. Madilim at malinaw na salamin (`bg-black/30` + blur) ito
+   para mabasa pa rin ang gintong teksto kahit sa mapuputing section. `z-40`:
+   nasa ilalim ito ng mega menu at ng mobile menu. Nakatago sa ibaba ng `lg`
+   — doon ay masyadong makitid ang screen at may sariling menu ang
+   cellphone.
+
+   BUKAS AGAD. Nakikita na ang tatlo pagka-load ng pahina; ang arrow sa
+   itaas ang nagsasara at nagbubukas. Naaalala ang pili sa localStorage
+   (`cu-utilities`), kaya kapag isinara ng bisita ay sarado pa rin ito sa
+   susunod na pahina at pagbisita. Bukas ang default sa server render at
+   unang client render (walang hydration mismatch); pagka-mount saka
+   binabasa ang naalalang pili.
+
+   Hindi na ito sumasara sa click sa labas: bukas ito bilang default, kaya
+   halos bawat click sa pahina ay magsasara rito. Ang mga popover sa loob
+   (weather, wika) ay may sariling pagsara sa click sa labas.
+
+   Laging naka-mount ang tatlo (`hidden` lang kapag sarado) para hindi
+   mawala ang huling temperatura. */
+const UTILITIES_KEY = "cu-utilities";
+
 export default function HeaderUtilities() {
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    let saved: string | null = null;
+    try {
+      saved = localStorage.getItem(UTILITIES_KEY);
+    } catch {
+      /* walang storage (private mode) — bukas na lang palagi. */
+    }
+    if (saved !== "closed") return;
+    /* Pagkatapos ng hydration, gaya ng LanguageProvider. */
+    const timer = window.setTimeout(() => setOpen(false), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  function toggle() {
+    setOpen((current) => {
+      const next = !current;
+      try {
+        localStorage.setItem(UTILITIES_KEY, next ? "open" : "closed");
+      } catch {
+        /* walang storage — sa pahinang ito lang ang pili. */
+      }
+      return next;
+    });
+  }
+
   return (
-    <div className="flex items-center gap-2 text-[#f3dda0] drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)] xl:gap-3">
-      <WeatherNow />
-      <span className="h-4 w-px bg-[#f3dda0]/25" aria-hidden="true" />
-      <LanguageSelector />
-    </div>
+    <aside
+      aria-label="Club utilities"
+      className={`${open ? "w-[112px]" : "w-11"} fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-stretch rounded-l-2xl border border-r-0 border-white/15 bg-black/30 text-[#f3dda0] shadow-[0_12px_35px_rgba(0,0,0,0.2)] backdrop-blur-md transition-[width] duration-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.45)] lg:flex`}
+    >
+      <button
+        type="button"
+        onClick={toggle}
+        aria-expanded={open}
+        aria-controls="club-utilities"
+        aria-label={open ? "Hide club utilities" : "Show club utilities"}
+        className="flex w-full items-center justify-center py-3.5 transition-colors hover:text-[#f8e9b7]"
+      >
+        <ChevronIcon className={`${open ? "-rotate-90" : "rotate-90"} h-4 w-4 transition-transform`} />
+      </button>
+      <div id="club-utilities" className={`${open ? "flex" : "hidden"} flex-col items-stretch divide-y divide-[#f3dda0]/15 border-t border-[#f3dda0]/15`}>
+        <WeatherNow />
+        <LanguageSelector />
+        <MemberLogin />
+      </div>
+    </aside>
   );
 }

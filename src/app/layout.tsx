@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Cormorant_SC, Geist_Mono, Manrope, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
+import HeaderUtilities from "@/components/HeaderUtilities";
 import RouteScrollReset from "@/components/RouteScrollReset";
+import DomTranslator from "@/i18n/DomTranslator";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import "./globals.css";
 
@@ -43,7 +45,7 @@ const cormorantGaramond = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "CamSur Uptown Golf Club",
+  title: "CamSur Uptown Golf",
   description:
     "A new championship golf destination beneath Mt. Isarog in Camarines Sur, Philippines — with course-side stays, clubhouse dining, and event spaces.",
 };
@@ -70,6 +72,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               kaakibat nito. */}
           <RouteScrollReset />
           <Header />
+          <HeaderUtilities />
+          {/* Isinasalin ang buong site sa piniling wika — tingnan ang i18n/DomTranslator.tsx. */}
+          <DomTranslator />
           {children}
         </LanguageProvider>
       </body>

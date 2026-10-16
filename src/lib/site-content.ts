@@ -24,19 +24,15 @@ export const CALL_WINDOWS = [
 export const CLUB_PHONE = { label: "+63 916 300 7914", href: "tel:+639163007914" } as const;
 
 /* Ibinigay ng club. Isang pinagmumulan lang ito: ginagamit ng footer, ng
-   /contact at ng /terms-of-use, kaya hindi sila maaaring maghiwalay.
-
-   PAKITINGNAN: "info.camsuruptowngolf.com" ang naipasa — tuldok, hindi
-   "@". Domain iyon at hindi email, kaya hindi gagana ang `mailto:`.
-   "info@camsuruptowngolf.com" ang inilagay dito. Kapag mali ang hula,
-   dito lang ang palitan. */
-export const CLUB_EMAIL = { label: "info@camsuruptowngolf.com", href: "mailto:info@camsuruptowngolf.com" } as const;
+   /contact, ng /terms-of-use, at ng /members, kaya hindi sila maaaring
+   maghiwalay. Ang Gmail ng club (kinumpirma ng club). */
+export const CLUB_EMAIL = { label: "camsuruptowngolf@gmail.com", href: "mailto:camsuruptowngolf@gmail.com" } as const;
 
 /* Tunay na lokasyon ng club: San Jose, Pili, Camarines Sur (kumpirmado sa
    mapa — 13.584308, 123.253267). PAKITINGNAN: 4418 ang karaniwang ZIP ng
    Pili — kumpirmahin ang eksaktong barangay/ZIP ng club bago i-publish. */
 export const CLUB_ADDRESS = {
-  lines: ["CamSur Uptown Golf Club", "San Jose, Pili", "Camarines Sur 4418, Philippines"],
+  lines: ["CamSur Uptown Golf", "San Jose, Pili", "Camarines Sur 4418, Philippines"],
 } as const;
 
 /**
@@ -304,7 +300,7 @@ export const CONCEPTS = [
 ] as const;
 
 /** Shared editorial headline for the individual hole pages. */
-const COURSE_HEADLINE = "A Great Start for CamSur Uptown Golf Club, and for You";
+const COURSE_HEADLINE = "A Great Start for CamSur Uptown Golf, and for You";
 const ROUTING_IMAGE_DIMENSIONS = [
   { width: 2880, height: 1814 },
   { width: 2880, height: 1171 },
@@ -426,7 +422,7 @@ export const SITE_SECTIONS = [
   {
     slug: "events",
     label: "Events",
-    eyebrow: "Events at CamSur Uptown Golf Club",
+    eyebrow: "Events at CamSur Uptown Golf",
     title: "A course-side setting for every occasion",
     description: "Tournaments, corporate days, and private celebrations, hosted beside the course.",
     image: "/clubhouse-rooftop-pool-gardens-clean-4k-v2.png",
@@ -465,7 +461,7 @@ export const SITE_SECTIONS = [
     label: "Experiences",
     eyebrow: "Experience",
     title: "World-class experiences beyond the course",
-    description: "Wakepark, pickle ball, basketball, ATV trails, and the quieter corners of the resort — there's something here for everyone.",
+    description: "Wakeboarding, pickle ball, basketball, ATV trails, and the quieter corners of the resort — there's something here for everyone.",
     image: "/experiences/banner11-dehazed.jpg",
     /* Isa-isa ang bawat pasilidad dito, hindi ang apat na pangkat: ito ang
        aktwal na hinahanap ng bisita sa menu. Ang bawat anchor ay tumuturo sa
@@ -475,7 +471,7 @@ export const SITE_SECTIONS = [
       /* Ang mga facility ay may sarili nang official external pages. Sinadya
          (hiniling) ang pagkakasunod-sunod, hindi alpabetiko. Sa 5×5 na mega
          menu: unang haligi = 1–5, pangalawang haligi = 6–10. */
-      { label: "Wakepark", href: "https://visitcamsur.com/facilities/wakepark", image: "/experiences/wakepark-riders.webp" },
+      { label: "Wakeboarding", href: "https://visitcamsur.com/facilities/wakepark", image: "/experiences/wakepark-riders.webp" },
       {
         label: "Pickle Ball",
         href: "https://pickleball.camsur.com/",

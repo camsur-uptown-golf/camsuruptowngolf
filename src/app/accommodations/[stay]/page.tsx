@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ stay: str
   const stay = ACCOMMODATIONS.find((item) => item.slug === slug);
   return stay
     ? {
-        title: `${stay.title} | CamSur Uptown Golf Club`,
+        title: `${stay.title} | CamSur Uptown Golf`,
         description: stay.description,
       }
     : {};

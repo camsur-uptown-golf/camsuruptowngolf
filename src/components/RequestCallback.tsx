@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import VisitForecast from "@/components/VisitForecast";
 import { CALL_WINDOWS, CLUB_PHONE } from "@/lib/site-content";
+import Tr from "@/components/Tr";
 
 /**
  * "Request a call back" na form.
@@ -209,6 +211,10 @@ export default function RequestCallback({ context }: { context?: string }) {
           </select>
         </div>
 
+        <div className="sm:col-span-2">
+          <VisitForecast />
+        </div>
+
         <fieldset className="sm:col-span-2">
           <legend className={LABEL}>
             The best time to call me back is
@@ -255,7 +261,7 @@ export default function RequestCallback({ context }: { context?: string }) {
 
       {status === "error" ? (
         <p role="alert" className="mt-6 text-sm leading-6 text-[#a8492f]">
-          Something went wrong sending your request. Please call the club on {CLUB_PHONE.label}.
+          <Tr t="Something went wrong sending your request. Please call the club on {0}." v={[CLUB_PHONE.label]} />
         </p>
       ) : null}
 

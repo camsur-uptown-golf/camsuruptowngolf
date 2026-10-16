@@ -25,9 +25,16 @@ export default function ClubhouseHeroOverlay() {
       /* Progreso sa loob ng naka-pin na track: 0 sa taas, 1 kapag bibitaw na
          ang sticky hero papunta sa section sa ilalim. Pixel-independent ito —
          gumagana sa anumang taas ng track o viewport. */
+      /* Ang huling 60% ng tanaw ng track ay para sa card na umaangat (tingnan
+         ang `-mt-[60svh]` sa [section]/page.tsx), kaya hindi iyon kasama sa
+         progreso ng title/stats: tapos na ang mga iyon bago pa umangat ang card. */
       const rect = track.getBoundingClientRect();
-      const maxProgress = Math.max(1, rect.height - window.innerHeight);
+      const overlap = window.innerHeight * 0.6;
+      const maxProgress = Math.max(1, rect.height - window.innerHeight - overlap);
       const progress = clamp(-rect.top / maxProgress);
+      /* 0 → 1 habang umaangat ang card: pagdilim ng video sa ilalim nito. */
+      const cover = clamp((-rect.top - maxProgress) / overlap);
+      overlay.style.setProperty("--clubhouse-cover", String(cover));
 
       /* Unang umaalis ang title; kasunod na papasok ang stats at mananatili;
          umaalis ang stats sa dulo habang bumibitaw ang hero. */
@@ -68,10 +75,13 @@ export default function ClubhouseHeroOverlay() {
           "--clubhouse-facts-opacity": "0",
           "--clubhouse-title-shift": "0px",
           "--clubhouse-facts-shift": "20px",
+          "--clubhouse-cover": "0",
         } as CSSProperties
       }
       aria-hidden="true"
     >
+      {/* Dumidilim ang video habang tinatabunan ng card. */}
+      <div className="absolute inset-0 bg-[#020e09]" style={{ opacity: "calc(var(--clubhouse-cover) * 0.5)" }} />
       <div
         className="absolute inset-0 flex items-center justify-center px-6 text-center will-change-[opacity,transform]"
         style={{

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell, Watermark, delay } from "@/components/EditorialKit";
 import { ARRIVAL_NOTES, CLUB_ADDRESS, CLUB_PHONE, TRAVEL_ROUTES } from "@/lib/site-content";
+import Tr from "@/components/Tr";
 
 /**
  * Paano makakarating sa club.
@@ -25,9 +26,9 @@ import { ARRIVAL_NOTES, CLUB_ADDRESS, CLUB_PHONE, TRAVEL_ROUTES } from "@/lib/si
  * address (barangay, bayan, ZIP), at ilagay sila rito at sa CLUB_ADDRESS.
  */
 export const metadata: Metadata = {
-  title: "How to get here | CamSur Uptown Golf Club",
+  title: "How to get here | CamSur Uptown Golf",
   description:
-    "Driving times from Naga Airport, Naga City, and Legazpi, with parking and transfer arrangements for guests of CamSur Uptown Golf Club.",
+    "Driving times from Naga Airport, Naga City, and Legazpi, with parking and transfer arrangements for guests of CamSur Uptown Golf.",
 };
 
 type TravelIconName = (typeof TRAVEL_ROUTES)[number]["icon"] | (typeof ARRIVAL_NOTES)[number]["icon"];
@@ -193,7 +194,7 @@ export default function GettingHerePage() {
                     href={CLUB_PHONE.href}
                     className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
                   >
-                    Call {CLUB_PHONE.label}
+                    <Tr t="Call {0}" v={[CLUB_PHONE.label]} />
                   </a>
                   <Link
                     href="/plan-your-visit"

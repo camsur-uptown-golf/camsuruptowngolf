@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ space: st
   const space = CLUBHOUSE_SPACES.find((item) => item.id === slug);
   if (!space) return {};
   return {
-    title: `${space.name} | CamSur Uptown Golf Club`,
+    title: `${space.name} | CamSur Uptown Golf`,
     description: space.description,
   };
 }

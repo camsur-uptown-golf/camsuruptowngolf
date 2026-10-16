@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import AvailabilityRequest from "@/components/AvailabilityRequest";
 import { VILLA_DEL_REY_STAYS, villaHouseHref } from "@/lib/villa-del-rey";
+import Tr from "@/components/Tr";
 
 /**
  * Availability page ng isang bahay sa Villa Del Rey:
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const house = findHouse(stay, slug);
   return house
     ? {
-        title: `${house.name} at Villa Del Rey | CamSur Uptown Golf Club`,
+        title: `${house.name} at Villa Del Rey | CamSur Uptown Golf`,
         description: house.description,
       }
     : {};
@@ -55,7 +56,7 @@ export default async function VillaHousePage({ params }: { params: Params }) {
             Villa Del Rey · Availability
           </p>
           <h1 className="mx-auto mt-4 max-w-3xl text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium leading-[1] tracking-[-0.05em]">
-            Ask about {house.name}
+            <Tr t="Ask about {0}" v={[house.name]} />
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-[15px] leading-7 text-white/75">
             Share your preferred date and number of guests, and the team will come back to you about availability.

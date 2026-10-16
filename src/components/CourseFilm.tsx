@@ -36,7 +36,7 @@ export default function CourseFilm() {
       {playing ? (
         <iframe
           src={PLAYER_SRC}
-          title="CamSur Uptown Golf Club teaser film"
+          title="CamSur Uptown Golf teaser film"
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
           className="absolute inset-0 h-full w-full border-0"

@@ -30,7 +30,7 @@ function ArrowIcon() {
 const BANNER = {
   href: "/packages",
   image: "/packages-main-hero-v2.png",
-  alt: "Golfers walking back to the clubhouse at sunset, CamSur Uptown Golf Club",
+  alt: "Golfers walking back to the clubhouse at sunset, CamSur Uptown Golf",
   title: "Plan Your Golf Getaway",
   blurbKey: "packages.blurbMain",
 } as const;

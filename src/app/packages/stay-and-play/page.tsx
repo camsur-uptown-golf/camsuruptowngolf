@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PackageItineraryPage from "@/components/PackageItineraryPage";
 
 export const metadata: Metadata = {
-  title: "Stay & Play | CamSur Uptown Golf Club",
+  title: "Stay & Play | CamSur Uptown Golf",
   description:
     "A two-day, course-side golf getaway at CamSur Uptown — one night beside the fairways, one full championship round, and an unhurried pace from arrival to the final putt.",
 };

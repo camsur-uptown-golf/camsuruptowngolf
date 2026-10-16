@@ -97,10 +97,10 @@ export default function Footer() {
           {/* Sa cellphone at tablet, katabi ng logo ang contact (sa kanan) para walang
               bakanteng espasyo; sa desktop, nasa ilalim ulit ng logo. */}
           <div className="flex items-center justify-between gap-6 sm:justify-start sm:gap-12 lg:block">
-            <Link href="/" aria-label="CamSur Uptown Golf Club, home" className="inline-block shrink-0">
+            <Link href="/" aria-label="CamSur Uptown Golf, home" className="inline-block shrink-0">
               <Image
                 src="/camsur-uptown-logo.png"
-                alt="CamSur Uptown Golf Club"
+                alt="CamSur Uptown Golf"
                 width={132}
                 height={176}
                 className="h-40 w-auto sm:h-36 lg:h-44"
@@ -187,7 +187,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-[#c9a54e]/35 pt-6 text-[11px] text-white/55 sm:flex-row sm:items-center sm:justify-between lg:mt-14">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <p>© 2026 CamSur Uptown Golf Club. All rights reserved.</p>
+            <p>© 2026 CamSur Uptown Golf. All rights reserved.</p>
             <Link href="/terms-of-use" className="font-medium text-white/80 transition-colors hover:text-[#e7d18d]">
               Terms of Use
             </Link>

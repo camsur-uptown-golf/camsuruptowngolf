@@ -54,7 +54,7 @@ function ImgDesignerMark() {
 
 function Hero() {
   return (
-    <section id="top" className="relative isolate h-svh min-h-[680px] overflow-hidden bg-[#061a11] text-white">
+    <section id="top" className="hero-recede sticky top-0 isolate h-svh min-h-[680px] overflow-hidden bg-[#061a11] text-white">
       <div className="absolute inset-0" aria-hidden="true">
         {/* Only the media drifts; the gradients below stay put so the fade into
             the course snapshot strip does not move with it. */}
@@ -123,7 +123,12 @@ function CourseSnapshot() {
 
 function Introduction() {
   return (
-    <section id="story" className="relative isolate flex min-h-[400px] items-center overflow-hidden bg-[#f7f5ee] text-[#14271d]">
+    <section
+      id="story"
+      className="relative isolate z-10 flex min-h-[400px] items-center overflow-hidden bg-[#f7f5ee] text-[#14271d] shadow-[0_-28px_70px_rgba(2,14,9,0.45)]"
+    >
+      {/* Maliit na gintong guhit sa itaas — ang "hawakan" ng card na umaangat. */}
+      <span className="pointer-events-none absolute left-1/2 top-4 h-[3px] w-12 -translate-x-1/2 rounded-full bg-[#d8b65b]/70 sm:top-5" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center" aria-hidden="true">
         {/* Safe to parallax: a floating watermark has no container edge to expose. */}
         <div data-parallax="0.1" className="relative h-[290px] w-[340px] overflow-hidden opacity-[0.1] sm:h-[350px] sm:w-[420px]">
@@ -149,7 +154,7 @@ function Introduction() {
           className="max-w-[1120px] text-[#17251e]"
         >
           <span className="block text-[clamp(2.5rem,4.2vw,4.5rem)] font-medium leading-[0.94] tracking-[-0.055em]">
-            CamSur Uptown Golf Club
+            CamSur Uptown Golf
           </span>
           <span className="mx-auto mt-3 block max-w-[1040px] text-[clamp(1.15rem,1.9vw,2rem)] font-normal leading-[1.12] tracking-[-0.025em] text-[#26362e] sm:mt-4">
             <T k="home.designedBy" />{" "}
@@ -188,11 +193,22 @@ export default function Home() {
           kaya walang dead air. */}
       <ScrollMotion replay />
       <main>
-        <Hero />
-        <Introduction />
+        {/* PAGLIPAT MULA SA HERO. Naka-`sticky` ang hero sa loob ng balot na
+            ito, kaya nananatili ito habang umaangat sa ibabaw nito ang
+            Introduction — isang card na may tuwid na itaas at anino. Kasabay
+            nito ay dumidilim ang hero — `.hero-recede` sa globals.css. Hanggang dulo lang ng balot ang
+            sticky, kaya pagkatapos ng Introduction ay normal nang umaalis ang
+            hero; hindi ito naiiwang nakadikit sa likod ng buong pahina.
+            */}
+        <div className="relative bg-[#061a11]">
+          <Hero />
+          <Introduction />
+        </div>
         {/* Ang balot na ito ang sumasagip sa mga siwang sa pagitan ng mga
             section sa loob, kaya kasama siya kapag pinalitan ang kulay. */}
-        <div className="bg-[#f7f5ee]">
+        {/* `relative z-10`: tinatakpan nito ang anino ng Introduction na
+            lumalampas pababa, kaya walang guhit sa pagitan ng dalawa. */}
+        <div className="relative z-10 bg-[#f7f5ee]">
           {/* <HomeExplore /> */}
           <ConceptCarousel />
           <HomeClubhouseDay />
