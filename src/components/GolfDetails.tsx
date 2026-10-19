@@ -134,16 +134,22 @@ function GolfCta() {
             Book your first round.
           </h2>
           <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8">
-            Tell the club when you would like to play and how many are in your group, and the team will take care of
-            the tee time, the caddies, and anything else you need.
+            Choose your date and tee time online and secure it with a downpayment — or tell the club what you have in
+            mind and the team will arrange it for you.
           </p>
 
           <div data-reveal="up" style={delay(270)} className="mt-7 flex flex-wrap justify-center gap-3">
-            {/* Dating papunta sa /visit — wala na ang section na iyon, kaya
-                sa contact na dumidiretso ang pangunahing aksyon dito. */}
+            {/* Pangunahin: ang online na tee-time booking. Nananatili ang
+                Plan your visit para sa mga grupo at event na kailangang kausapin. */}
+            <Link
+              href="/golf/book"
+              className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+            >
+              Reserve a tee time
+            </Link>
             <Link
               href="/plan-your-visit"
-              className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+              className="inline-flex h-11 items-center rounded-full border border-[#265136]/30 px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
             >
               Plan your visit
             </Link>

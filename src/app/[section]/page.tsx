@@ -237,7 +237,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                   data-hero-logo=""
                   className="mx-auto max-w-3xl text-balance text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
                 >
-                  <HeroWords text="A course shaped by Camarines Sur" />
+                  <HeroWords text="A world-class course, shaped by IMG" />
                 </h1>
               </div>
             </div>

@@ -135,9 +135,13 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
                     {busy === plan.id ? (
                       "Please wait…"
                     ) : currentPlan ? (
-                      <Tr t="Switch to {0}" v={[<span key="n" translate="no">{plan.name}</span>]} />
+                      <span>
+                        <Tr t="Switch to {0}" v={[<span key="n" translate="no">{plan.name}</span>]} />
+                      </span>
                     ) : (
-                      <Tr t="Choose {0}" v={[<span key="n" translate="no">{plan.name}</span>]} />
+                      <span>
+                        <Tr t="Choose {0}" v={[<span key="n" translate="no">{plan.name}</span>]} />
+                      </span>
                     )}
                   </button>
                 )}

@@ -77,6 +77,11 @@ export function trailFor(pathname: string): Crumb[] {
     crumbs.push({ label: link.label, href: path });
     return crumbs;
   }
+  /* Booking ng tee time (wala sa mga link ng section). */
+  if (path === "/golf/book") {
+    crumbs.push({ label: "Reserve a tee time", href: path });
+    return crumbs;
+  }
 
   /* Ang mga kuwarto sa clubhouse ay nasa `links` na, pero hindi ang
      `/clubhouse/architecture`. Tinitingnan pa rin ito dito para tiyak. */
