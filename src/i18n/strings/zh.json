@@ -1613,5 +1613,16 @@
  "{0} tee times available": "可预订 {0} 个开球时间",
  "Tee off at {0} from Hole {1}, finishing around {2}.": "{0} 从第 {1} 洞开球，约 {2} 结束。",
  "Choose a tee time to continue.": "请选择开球时间以继续。",
- "Booking steps": "预订步骤"
+ "Booking steps": "预订步骤",
+ "Date & tee time": "日期与开球时间",
+ "Stay the night": "留宿一晚",
+ "Change": "更改",
+ "Done": "完成",
+ "{0} players": "{0} 名球员",
+ "No add-ons": "无附加服务",
+ "No overnight stay": "不留宿",
+ "Choose your date and tee time first.": "请先选择日期和开球时间。",
+ "Add your details to finish.": "填写您的信息即可完成。",
+ "Enter your name, email, and mobile number.": "请输入姓名、邮箱和手机号码。",
+ "Reserve tee time": "预订开球时间"
 }

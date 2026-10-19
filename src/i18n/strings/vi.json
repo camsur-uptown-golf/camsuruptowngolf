@@ -1613,5 +1613,16 @@
  "{0} tee times available": "Còn {0} giờ phát bóng",
  "Tee off at {0} from Hole {1}, finishing around {2}.": "Phát bóng lúc {0} từ hố {1}, kết thúc khoảng {2}.",
  "Choose a tee time to continue.": "Chọn giờ phát bóng để tiếp tục.",
- "Booking steps": "Các bước đặt chỗ"
+ "Booking steps": "Các bước đặt chỗ",
+ "Date & tee time": "Ngày & giờ phát bóng",
+ "Stay the night": "Nghỉ qua đêm",
+ "Change": "Thay đổi",
+ "Done": "Xong",
+ "{0} players": "{0} người chơi",
+ "No add-ons": "Không có dịch vụ thêm",
+ "No overnight stay": "Không lưu trú",
+ "Choose your date and tee time first.": "Hãy chọn ngày và giờ phát bóng trước.",
+ "Add your details to finish.": "Thêm thông tin của bạn để hoàn tất.",
+ "Enter your name, email, and mobile number.": "Nhập họ tên, email và số điện thoại.",
+ "Reserve tee time": "Đặt giờ phát bóng"
 }

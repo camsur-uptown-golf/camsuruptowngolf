@@ -144,6 +144,70 @@ function Stepper({ value, min, max, onChange, label }: { value: number; min: num
   );
 }
 
+/* ISANG PAHINA, MGA CARD NA NAGSASARA. Dating "isang hakbang + Back/Next":
+   para baguhin ang petsa ay kailangang bumalik at mag-Next ulit sa bawat
+   hakbang. Ngayon: bukas ang kasalukuyang hakbang; ang tapos na ay isang
+   linya ng napili + "Change"; ang pagbago ay bumabalik agad sa kinaroroonan
+   mo. Ganito ang checkout ng Airbnb/Apple. */
+type CardState = "open" | "done" | "todo";
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
+      <path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function StepCard({
+  n,
+  title,
+  summary,
+  state,
+  onChange,
+  children,
+}: {
+  n: number;
+  title: string;
+  summary?: React.ReactNode;
+  state: CardState;
+  onChange?: () => void;
+  children?: React.ReactNode;
+}) {
+  return (
+    <section
+      id={`booking-step-${n}`}
+      className={`scroll-mt-28 border bg-white transition ${
+        state === "open" ? "border-[#265136]/40 shadow-[0_18px_44px_rgba(20,39,29,0.08)]" : "border-[#1f3f2e]/12"
+      } ${state === "todo" ? "bg-white/50" : ""}`}
+    >
+      <header className="flex items-center gap-4 px-5 py-4 sm:px-6">
+        <span
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+            state === "done" ? "bg-[#265136] text-[#f3dda0]" : state === "open" ? "border-2 border-[#265136] text-[#265136]" : "border border-[#1f3f2e]/20 text-[#9aa39d]"
+          }`}
+        >
+          {state === "done" ? <CheckIcon /> : n}
+        </span>
+        <div className="min-w-0 flex-1">
+          <h2 className={`text-base font-semibold tracking-[-0.01em] ${state === "todo" ? "text-[#9aa39d]" : "text-[#14271d]"}`}>{title}</h2>
+          {state === "done" && summary ? <p className="mt-0.5 truncate text-sm text-[#667269]">{summary}</p> : null}
+        </div>
+        {state === "done" && onChange ? (
+          <button
+            type="button"
+            onClick={onChange}
+            className="shrink-0 rounded-full border border-[#265136]/25 px-4 py-1.5 text-xs font-semibold text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
+          >
+            Change
+          </button>
+        ) : null}
+      </header>
+      {state === "open" ? <div className="border-t border-[#1f3f2e]/10 px-5 pb-6 pt-5 sm:px-6">{children}</div> : null}
+    </section>
+  );
+}
+
 export default function TeeTimeBooking({
   today,
   prefill,
@@ -156,9 +220,13 @@ export default function TeeTimeBooking({
 }) {
   const router = useRouter();
   const [date, setDate] = useState(today);
-  /* ISANG HAKBANG SA ISANG PAGKAKATAON, may Back at Next; laging nakikita
-     ang Summary sa gilid. */
-  const [step, setStep] = useState(1);
+  /* `open` = ang nakabukas na card (null = lahat sarado, tapos na);
+     `furthest` = pinakamalayong naabot — doon bumabalik pagkatapos ng Change. */
+  const [open, setOpen] = useState<number | null>(1);
+  const [furthest, setFurthest] = useState(1);
+  /* Natapos na minsan ang lahat — mananatiling "done" ang huling card kahit
+     may binabago sa itaas. */
+  const [complete, setComplete] = useState(false);
   const dict = useSiteStrings();
   const tr = (text: string) => (dict && lookup(dict, text)) ?? text;
   const [round, setRound] = useState<Round>("full");
@@ -215,12 +283,39 @@ export default function TeeTimeBooking({
   const price = useMemo(() => quote({ holes, players, addons, villa }), [holes, players, addons, villa]);
   const openCount = slots.filter((slot) => slot.status === "open").length;
   const canSubmit = validDate && selectedOpen && contact.name.trim() && contact.email.trim() && contact.phone.trim() && status === "idle";
-  const STEPS = ["Date & time", "Players", "Add-ons", "Stay", "Details"] as const;
-  const stepReady = (n: number) => (n === 1 ? validDate && selectedOpen : true);
+  const STEPS = ["Date & tee time", "Players", "Add-ons", "Stay the night", "Your details"] as const;
+  const contactReady = Boolean(contact.name.trim() && contact.email.trim() && contact.phone.trim());
+  const stepReady = (n: number) => (n === 1 ? validDate && selectedOpen : n === 5 ? contactReady : true);
+  const cardState = (n: number): CardState =>
+    open === n ? "open" : n < furthest || (n === furthest && complete && stepReady(n)) ? "done" : "todo";
+
+  function scrollTo(n: number) {
+    window.setTimeout(() => document.getElementById(`booking-step-${n}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+  }
+  /** Bukas ang isang tapos na card para baguhin. */
   function goTo(n: number) {
-    if (n > step && !stepReady(step)) return;
-    setStep(n);
-    document.getElementById("booking-steps")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setOpen(n);
+    scrollTo(n);
+  }
+  /** "Continue": isara ang card at buksan ang susunod na hindi pa tapos —
+      o, kapag pagbabago lang ito, bumalik agad sa pinakamalayong naabot. */
+  function proceed(n: number) {
+    if (!stepReady(n)) return;
+    /* Tapos na ang lahat at pagbabago lang ito → isara lahat, handa nang magbayad. */
+    if (furthest === STEPS.length && n !== STEPS.length && stepReady(STEPS.length)) {
+      setOpen(null);
+      return;
+    }
+    const next = Math.max(furthest, n + 1);
+    if (next > STEPS.length) {
+      setFurthest(STEPS.length);
+      setComplete(true);
+      setOpen(null);
+      return;
+    }
+    setFurthest(next);
+    setOpen(next);
+    scrollTo(next);
   }
 
   function changeRound(next: Round) {
@@ -278,40 +373,19 @@ export default function TeeTimeBooking({
 
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
-      <div id="booking-steps" className="scroll-mt-28">
-        {/* Progreso: bawat hakbang; puwedeng balikan ang mga natapos na. */}
-        <ol className="mb-8 grid grid-cols-5 gap-1.5" aria-label="Booking steps">
-          {STEPS.map((label, i) => {
-            const n = i + 1;
-            const reachable = n < step || (n === step + 1 && stepReady(step));
-            return (
-              <li key={label}>
-                <button
-                  type="button"
-                  disabled={!reachable && n !== step}
-                  onClick={() => goTo(n)}
-                  aria-current={n === step ? "step" : undefined}
-                  className="group block w-full text-left disabled:cursor-default"
-                >
-                  <span className={`block h-1 rounded-full ${n <= step ? "bg-[#265136]" : "bg-[#1f3f2e]/12"}`} />
-                  <span
-                    className={`mt-2 hidden text-[10px] font-semibold uppercase tracking-[0.1em] sm:block ${
-                      n === step ? "text-[#265136]" : n < step ? "text-[#667269] group-hover:text-[#265136]" : "text-[#9aa39d]"
-                    }`}
-                  >
-                    {label}
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
-        {/* 1. Petsa */}
-        {step === 1 ? (
-        <section>
-          <p className={STEP}>Step 1</p>
-          <h2 className={TITLE}>Find your date & tee time</h2>
-          <p className="mt-2 text-sm leading-6 text-[#667269]">Choose your date and round to see available times before continuing.</p>
+      <div id="booking-steps" className="space-y-3">
+        <StepCard
+          n={1}
+          title={STEPS[0]}
+          state={cardState(1)}
+          onChange={() => goTo(1)}
+          summary={
+            <span translate="no">
+              {new Date(`${date}T00:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })} · {tr(round === "full" ? "Full course" : round === "front" ? "Front nine" : "Back nine")}
+              {selected ? ` · ${formatTime(selected.time)}` : ""}
+            </span>
+          }
+        >
           <label id="booking-date-label" htmlFor="booking-date" className="mt-5 block text-sm font-semibold">Date of play</label>
           <BookingDatePicker
             id="booking-date"
@@ -401,14 +475,26 @@ export default function TeeTimeBooking({
             </div>
           ) : null}
           </div>
-        </section>
-        ) : null}
+          <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+            {!stepReady(1) ? <p className="text-xs text-[#8a938c]">Choose a tee time to continue.</p> : null}
+            <button
+              type="button"
+              disabled={!stepReady(1)}
+              onClick={() => proceed(1)}
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {1 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </StepCard>
 
-        {/* Players */}
-        {step === 2 ? (
-        <section>
-          <p className={STEP}>Step 2</p>
-          <h2 className={TITLE}>Players</h2>
+        <StepCard
+          n={2}
+          title={STEPS[1]}
+          state={cardState(2)}
+          onChange={() => goTo(2)}
+          summary={<Tr t="{0} players" v={[String(players)]} />}
+        >
           <div className="mt-4 flex items-center justify-between gap-4 border border-[#1f3f2e]/12 bg-white px-4 py-3">
             <span className="text-sm text-[#3f4c45]">{`Up to ${COURSE.maxPlayers} players per tee time`}</span>
             <Stepper value={players} min={1} max={COURSE.maxPlayers} onChange={changePlayers} label="Players" />
@@ -425,14 +511,32 @@ export default function TeeTimeBooking({
               />
             ))}
           </div>
-        </section>
-        ) : null}
+          <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+            {!stepReady(2) ? <p className="text-xs text-[#8a938c]"></p> : null}
+            <button
+              type="button"
+              disabled={!stepReady(2)}
+              onClick={() => proceed(2)}
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {2 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </StepCard>
 
-        {/* 5. Add-ons */}
-        {step === 3 ? (
-        <section>
-          <p className={STEP}>Step 3</p>
-          <h2 className={TITLE}>Add-ons</h2>
+        <StepCard
+          n={3}
+          title={STEPS[2]}
+          state={cardState(3)}
+          onChange={() => goTo(3)}
+          summary={
+            ADDONS.some((addon) => (addons[addon.id] ?? 0) > 0)
+              ? ADDONS.filter((addon) => (addons[addon.id] ?? 0) > 0)
+                  .map((addon) => `${tr(addon.name)} × ${addons[addon.id]}`)
+                  .join(", ")
+              : tr("No add-ons")
+          }
+        >
           <div className="mt-4 divide-y divide-[#1f3f2e]/10 border border-[#1f3f2e]/12 bg-white">
             {ADDONS.map((addon) => (
               <div key={addon.id} className="flex items-center justify-between gap-4 px-4 py-3">
@@ -452,14 +556,26 @@ export default function TeeTimeBooking({
               </div>
             ))}
           </div>
-        </section>
-        ) : null}
+          <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+            {!stepReady(3) ? <p className="text-xs text-[#8a938c]"></p> : null}
+            <button
+              type="button"
+              disabled={!stepReady(3)}
+              onClick={() => proceed(3)}
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {3 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </StepCard>
 
-        {/* 6. Villa */}
-        {step === 4 ? (
-        <section>
-          <p className={STEP}>Step 4 · Optional</p>
-          <h2 className={TITLE}>Stay the night at Villa Del Rey</h2>
+        <StepCard
+          n={4}
+          title={STEPS[3]}
+          state={cardState(4)}
+          onChange={() => goTo(4)}
+          summary={villa ? <span translate="no">{VILLA_NIGHTS.find((v) => v.slug === villa)?.name}</span> : tr("No overnight stay")}
+        >
           <p className="mt-2 text-xs leading-5 text-[#667269]">
             {late
               ? "Your round finishes late in the afternoon — rest by the course tonight instead of driving home."
@@ -499,56 +615,49 @@ export default function TeeTimeBooking({
               );
             })}
           </div>
-        </section>
-        ) : null}
+          <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+            {!stepReady(4) ? <p className="text-xs text-[#8a938c]"></p> : null}
+            <button
+              type="button"
+              disabled={!stepReady(4)}
+              onClick={() => proceed(4)}
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {4 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </StepCard>
 
-        {/* 7. Contact */}
-        {step === 5 ? (
-        <section>
-          <p className={STEP}>Step 5</p>
-          <h2 className={TITLE}>Your details</h2>
+        <StepCard
+          n={5}
+          title={STEPS[4]}
+          state={cardState(5)}
+          onChange={() => goTo(5)}
+          summary={<span translate="no">{[contact.name, contact.email].filter(Boolean).join(" · ")}</span>}
+        >
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             <input className={FIELD} placeholder="Full name" autoComplete="name" value={contact.name} onChange={(e) => setContact({ ...contact, name: e.target.value })} />
             <input className={FIELD} placeholder="Email" type="email" autoComplete="email" value={contact.email} onChange={(e) => setContact({ ...contact, email: e.target.value })} />
             <input className={FIELD} placeholder="Mobile number" type="tel" autoComplete="tel" value={contact.phone} onChange={(e) => setContact({ ...contact, phone: e.target.value })} />
           </div>
-        </section>
-        ) : null}
-
-        {/* Back / Next */}
-        <div className="mt-10 flex items-center justify-between gap-3 border-t border-[#1f3f2e]/10 pt-6">
-          {step > 1 ? (
+          <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+            {!stepReady(5) ? <p className="text-xs text-[#8a938c]">Enter your name, email, and mobile number.</p> : null}
             <button
               type="button"
-              onClick={() => goTo(step - 1)}
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-[#265136]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
-            >
-              <span aria-hidden="true">←</span> Back
-            </button>
-          ) : (
-            <span />
-          )}
-          {step < STEPS.length ? (
-            <button
-              type="button"
-              disabled={!stepReady(step)}
-              onClick={() => goTo(step + 1)}
+              disabled={!stepReady(5)}
+              onClick={() => proceed(5)}
               className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              Next <span aria-hidden="true">→</span>
+              {5 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
             </button>
-          ) : null}
-        </div>
-        {step === 1 && !selectedOpen ? (
-          <p className="mt-3 text-right text-xs text-[#8a938c]">Choose a tee time to continue.</p>
-        ) : null}
+          </div>
+        </StepCard>
       </div>
 
       {/* Buod — dumidikit sa gilid sa desktop. */}
       <aside className="border border-[#1f3f2e]/12 bg-white p-6 lg:sticky lg:top-28">
         <div className="flex items-center justify-between gap-3">
           <p className={STEP}>Summary</p>
-          {step > 1 ? <button type="button" onClick={() => goTo(1)} className="text-xs font-semibold text-[#265136] underline">Edit date & time</button> : null}
         </div>
         <dl className="mt-4 space-y-1.5 text-sm text-[#3f4c45]">
           <div className="flex justify-between gap-3">
@@ -597,20 +706,9 @@ export default function TeeTimeBooking({
           </p>
         ) : null}
 
-        {step < STEPS.length ? (
-          <button
-            type="button"
-            onClick={() => goTo(step + 1)}
-            disabled={!stepReady(step)}
-            className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#265136] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            Continue
-          </button>
-        ) : null}
         <button
           type="button"
           onClick={submit}
-          hidden={step < STEPS.length}
           disabled={!canSubmit}
           className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:bg-[#f3dfa0] disabled:cursor-not-allowed disabled:opacity-50"
         >
@@ -626,6 +724,11 @@ export default function TeeTimeBooking({
             "Choose a tee time"
           )}
         </button>
+        {!canSubmit && status === "idle" ? (
+          <p className="mt-2 text-center text-xs text-[#8a938c]">
+            {!selectedOpen ? "Choose your date and tee time first." : "Add your details to finish."}
+          </p>
+        ) : null}
         <p className="mt-3 text-[11px] leading-5 text-[#8a938c]">
           {testMode ? null : `Pay by GCash, Maya, GrabPay, or card. Your tee time is held for ${COURSE.holdMinutes} minutes while you pay.`}{" "}
           Free cancellation up to 48 hours before your tee time; the downpayment is kept for later cancellations or no-shows.

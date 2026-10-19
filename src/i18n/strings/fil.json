@@ -1613,5 +1613,16 @@
  "{0} tee times available": "{0} tee time ang available",
  "Tee off at {0} from Hole {1}, finishing around {2}.": "Magti-tee off nang {0} mula sa Hole {1}, matatapos nang mga {2}.",
  "Choose a tee time to continue.": "Pumili ng tee time para magpatuloy.",
- "Booking steps": "Mga hakbang ng booking"
+ "Booking steps": "Mga hakbang ng booking",
+ "Date & tee time": "Petsa at tee time",
+ "Stay the night": "Magpalipas ng gabi",
+ "Change": "Baguhin",
+ "Done": "Tapos",
+ "{0} players": "{0} manlalaro",
+ "No add-ons": "Walang dagdag",
+ "No overnight stay": "Walang overnight stay",
+ "Choose your date and tee time first.": "Piliin muna ang petsa at tee time.",
+ "Add your details to finish.": "Ilagay ang iyong detalye para matapos.",
+ "Enter your name, email, and mobile number.": "Ilagay ang pangalan, email, at mobile number.",
+ "Reserve tee time": "I-reserve ang tee time"
 }

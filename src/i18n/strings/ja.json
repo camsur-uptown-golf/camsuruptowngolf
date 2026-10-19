@@ -1613,5 +1613,16 @@
  "{0} tee times available": "予約可能なティータイム {0}件",
  "Tee off at {0} from Hole {1}, finishing around {2}.": "{0}に{1}番ホールからスタートし、{2}頃に終了予定です。",
  "Choose a tee time to continue.": "続けるにはティータイムを選択してください。",
- "Booking steps": "予約の手順"
+ "Booking steps": "予約の手順",
+ "Date & tee time": "日付とティータイム",
+ "Stay the night": "宿泊",
+ "Change": "変更",
+ "Done": "完了",
+ "{0} players": "{0}名",
+ "No add-ons": "オプションなし",
+ "No overnight stay": "宿泊なし",
+ "Choose your date and tee time first.": "まず日付とティータイムをお選びください。",
+ "Add your details to finish.": "お客様情報を入力して完了してください。",
+ "Enter your name, email, and mobile number.": "お名前、メールアドレス、携帯電話番号を入力してください。",
+ "Reserve tee time": "ティータイムを予約"
 }
