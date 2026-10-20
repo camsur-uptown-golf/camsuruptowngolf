@@ -414,11 +414,11 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
               <Link
-                href="/contact"
+                href="/plan-your-visit"
                 data-reveal="up"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
               >
-                Contact us
+                Plan your visit
               </Link>
               <a
                 href={CLUB_PHONE.href}

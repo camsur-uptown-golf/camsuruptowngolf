@@ -100,15 +100,15 @@ function Overview() {
           >
             <div>
               <dt className="font-display text-xl font-semibold text-[#265136]">18</dt>
-              <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Holes</dd>
+              <dd className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#98782f] xl:text-[11px]">Holes</dd>
             </div>
             <div className="border-l border-[#1f3f2e]/12 pl-5">
               <dt className="font-display text-xl font-semibold text-[#265136]">54.23</dt>
-              <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Hectares</dd>
+              <dd className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#98782f] xl:text-[11px]">Hectares</dd>
             </div>
             <div className="border-l border-[#1f3f2e]/12 pl-5">
               <dt className="font-display text-xl font-semibold text-[#265136]">7</dt>
-              <dd className="mt-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#98782f] xl:text-[10px]">Water features</dd>
+              <dd className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#98782f] xl:text-[11px]">Water features</dd>
             </div>
           </dl>
         </div>

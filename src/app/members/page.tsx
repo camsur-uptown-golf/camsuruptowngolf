@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
+import HeroBackdrop from "@/components/HeroBackdrop";
 import MemberAuth from "@/components/MemberAuth";
 import MemberLogout from "@/components/MemberLogout";
 import MembershipPlans from "@/components/MembershipPlans";
@@ -68,7 +69,8 @@ export default async function MembersPage() {
     return (
       <>
         <main>
-          <section id="top" className="bg-[#1f3f2e] px-6 pb-14 pt-40 text-white sm:pb-16 sm:pt-44 lg:px-8">
+          <section id="top" className="relative isolate flex min-h-[520px] items-end overflow-hidden bg-[#1f3f2e] px-6 pb-14 pt-40 text-white sm:min-h-[560px] sm:pb-16 sm:pt-44 lg:px-8">
+            <HeroBackdrop src="/clubhouse/concept/members-lounge.jpg" alt="Members’ lounge concept overlooking the tropical golf course" />
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">
                 Member&apos;s area

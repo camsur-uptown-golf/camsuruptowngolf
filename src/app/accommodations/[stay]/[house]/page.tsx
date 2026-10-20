@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
+import HeroBackdrop from "@/components/HeroBackdrop";
 import AvailabilityRequest from "@/components/AvailabilityRequest";
 import { VILLA_DEL_REY_STAYS, villaHouseHref } from "@/lib/villa-del-rey";
 import Tr from "@/components/Tr";
@@ -51,7 +52,8 @@ export default async function VillaHousePage({ params }: { params: Params }) {
   return (
     <>
       <main className="bg-[#f7f5ee] text-[#14271d]">
-        <section className="bg-[#1f3f2e] px-6 pb-14 pt-40 text-center text-white sm:pb-16 sm:pt-44 lg:px-8">
+        <section id="top" className="relative isolate min-h-[380px] overflow-hidden bg-[#1f3f2e] px-6 pb-14 pt-64 text-center text-white sm:min-h-[560px] sm:pb-16 sm:pt-72 lg:px-8">
+          <HeroBackdrop src={house.exterior} alt={`${house.name} at Villa Del Rey — ${house.setting}`} />
           <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e7d18d] xl:text-[11px]">
             Villa Del Rey · Availability
           </p>
@@ -89,7 +91,6 @@ export default async function VillaHousePage({ params }: { params: Params }) {
                     src={house.exterior}
                     alt={`${house.name} at Villa Del Rey`}
                     fill
-                    priority
                     sizes="(min-width: 1024px) 400px, 100vw"
                     className="object-cover"
                   />

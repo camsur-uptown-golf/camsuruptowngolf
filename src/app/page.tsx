@@ -25,13 +25,6 @@ const COURSE_FACTS = [
 /** Stagger helper — reads back out in CSS as `transition-delay`. */
 const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
-function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 function ImgDesignerMark() {
   return (
@@ -113,7 +106,7 @@ function CourseSnapshot() {
                 </p>
               ) : null}
             </div>
-            <p className="mt-1 text-[8px] font-medium uppercase leading-tight tracking-[0.12em] text-white/60 sm:text-[10px] xl:text-[11px]"><T k={labelKey} /></p>
+            <p className="mt-1 text-[10px] font-medium uppercase leading-tight tracking-[0.1em] text-white/70 sm:text-[10px] xl:text-[11px]"><T k={labelKey} /></p>
           </div>
         ))}
       </div>
@@ -179,7 +172,7 @@ function Introduction() {
           style={delay(330)}
           className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#e7d18d] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f3dfa0] xl:text-[12px]"
         >
-          <T k="action.planRound" /> <ArrowIcon />
+          <T k="action.planRound" />
         </Link>
       </div>
     </section>

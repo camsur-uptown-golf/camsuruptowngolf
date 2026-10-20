@@ -7,8 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import { ACCOMMODATIONS, CLUB_PHONE, COURSE_PAGES, SITE_SECTIONS } from "@/lib/site-content";
 import { HOLE_PROFILES } from "@/lib/course-holes";
 import { searchSiteItems, type SiteSearchItem } from "@/lib/site-search";
+import { MobileUtilities } from "@/components/HeaderUtilities";
 import { useTranslation } from "@/i18n/LanguageProvider";
 import type { TranslationKey } from "@/i18n/dictionaries";
+import headerLogo from "../../public/branding/camsur-uptown-golf-header-v4.png";
 
 /* Slug ng section → translation key. Nasa data (SITE_SECTIONS) ang English na
    label; dito isinasalin ang bawat isa sa piniling wika. Kapag may bagong
@@ -315,7 +317,7 @@ const SEARCH_ITEMS: readonly SiteSearchItem[] = [
     label: "Plan Your Visit",
     href: "/plan-your-visit",
     category: "Visitor information",
-    keywords: ["visit", "booking", "book a tee time", "plan a trip", "request a callback"],
+    keywords: ["visit", "booking", "book a tee time", "plan a trip", "request a callback", "contact", "contact number", "phone number", "email address"],
   },
   {
     label: "Getting Here",
@@ -328,12 +330,6 @@ const SEARCH_ITEMS: readonly SiteSearchItem[] = [
     href: "/faq",
     category: "Visitor information",
     keywords: ["faq", "questions", "help", "booking questions"],
-  },
-  {
-    label: "Contact Us",
-    href: "/contact",
-    category: "Visitor information",
-    keywords: ["contact", "contact number", "phone number", "booking line", "email address"],
   },
 ];
 
@@ -757,33 +753,32 @@ export default function Header() {
              sa bawat paglipat ng pahina. Ang sukat ng homepage ang sinusunod. */
           /* Nakatago sa cellphone: nasa loob na ng pill ang buong logo doon.
              Desktop pataas lang ang may hiwalay na logo. */
-          className={`${isScrolled ? "h-14 w-14" : "h-44 w-[132px] lg:h-52 lg:w-[156px]"} pointer-events-auto relative hidden shrink-0 justify-self-start lg:block`}
+          className="pointer-events-auto relative hidden shrink-0 justify-self-start overflow-visible lg:block"
+          style={{
+            width: isScrolled ? 56 : 156,
+            height: isScrolled ? 56 : "auto",
+          }}
           aria-label="Camsur Uptown Golf — home"
         >
-          <span data-logo="full" className={`${isScrolled ? "invisible opacity-0" : "visible opacity-100"} absolute inset-0`}>
-            <Image
-              src="/camsur-uptown-logo.png"
-              alt="Camsur Uptown Golf"
-              width={176}
-              height={234}
-              priority
-              className="h-full w-full object-contain drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]"
-            />
-          </span>
-          <span
-            data-logo="mark"
-            className={`${isScrolled ? "visible opacity-100" : "invisible opacity-0"} absolute left-1/2 top-1/2 block h-14 w-14 -translate-x-1/2 -translate-y-1/2 overflow-hidden`}
-            aria-hidden="true"
-          >
-            <Image
-              src="/camsur-uptown-mark-transparent.png"
-              alt=""
-              width={911}
-              height={1251}
-              priority
-              className="h-full w-full object-contain drop-shadow-[0_3px_10px_rgba(0,0,0,0.3)]"
-            />
-          </span>
+          {/* Keep the full image in the document flow so the header reserves
+              room for every text line, including Golf and Est. 2026. */}
+          <Image
+            data-logo={isScrolled ? "mark" : "full"}
+            src={isScrolled ? "/camsur-uptown-mark-transparent.png" : headerLogo}
+            alt="Camsur Uptown Golf"
+            width={isScrolled ? 911 : headerLogo.width}
+            height={isScrolled ? 1251 : headerLogo.height}
+            sizes={isScrolled ? "56px" : "156px"}
+            preload
+            style={{
+              display: "block",
+              width: "100%",
+              height: isScrolled ? "100%" : "auto",
+              maxHeight: "none",
+              objectFit: "contain",
+            }}
+            className="drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]"
+          />
         </Link>
 
         {/* 820px ang lapad nito para sa nav sa hero. Kapag naka-scroll ay
@@ -810,8 +805,8 @@ export default function Header() {
             kaya iisa ang angkla nila at hindi na sila maaaring maghiwalay.
             Ganito na rin pala ang compact nav sa ibaba — sinusundan lang
             nito iyon. Ang `top-[68px]` ang posisyon nito sa hilera;
-            hindi nagbabago ang taas ng header dahil ang marka (208px) ang
-            nagtatakda niyon, hindi ang nav. */}
+            naka-angkla rin nang hiwalay ang Plan Your Visit para manatili
+            silang magkatapat kahit mas mataas na ang buong logo. */}
         <div className={`${isScrolled ? "w-auto" : "w-[min(820px,calc(100vw-34rem))] 2xl:w-[900px]"} hidden -translate-x-1/2 flex-col items-center gap-0 lg:absolute lg:left-1/2 lg:top-[68px] lg:flex`}>
           <nav
             data-nav="hero"
@@ -871,7 +866,9 @@ export default function Header() {
             login ay nasa sticky na bar sa kanang gilid ng screen
             (`HeaderUtilities`, naka-mount sa layout). */}
         <div
-          className={`${isScrolled ? "translate-y-0" : "-translate-y-9"} pointer-events-auto hidden justify-self-end lg:col-start-3 lg:block`}
+          className="pointer-events-auto hidden justify-self-end lg:col-start-3 lg:block"
+          // Keep the action aligned with the navigation as the full logo grows.
+          style={isScrolled ? undefined : { position: "absolute", right: 28, top: 92, transform: "translateY(-50%)" }}
         >
           <Link
             href="/plan-your-visit"
@@ -1150,6 +1147,9 @@ export default function Header() {
             hindi nawawala ang paraan para tumawag. Hindi na rin grid ito —
             sa isang item, nananatili ang gap-2 at hindi buong lapad ang
             pindutan. */}
+        {/* Weather, wika, at Member's Login — ang side bar sa desktop ay
+            nakatago sa cellphone, kaya dito sila sa loob ng menu. */}
+        <MobileUtilities onNavigate={closeMobileNav} />
         <Link
           href="/plan-your-visit"
           onClick={closeMobileNav}
@@ -1486,7 +1486,6 @@ export default function Header() {
                   className={`${previewLabel ? "hidden" : "inline-flex"} ${hidesHighlights ? "max-w-[280px]" : "w-full"} mt-3 shrink-0 items-center justify-center gap-2 rounded-full bg-[#e7d18d] px-4 py-2.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition duration-200 group-hover:bg-[#f3dfa0] xl:text-[10px]`}
                 >
                   Explore
-                  <ArrowRightIcon />
                 </span>
               </Link>
             </div>
@@ -1569,7 +1568,6 @@ export default function Header() {
                             >
                               <span className="inline-flex items-center gap-2 rounded-full bg-[#e7d18d] px-4 py-2 text-[9px] font-bold uppercase tracking-[0.16em] text-[#14271d] xl:text-[10px]">
                                 Explore
-                                <ArrowRightIcon />
                               </span>
                             </span>
                             <span className="absolute inset-x-3 bottom-2.5 flex items-end justify-between gap-2">

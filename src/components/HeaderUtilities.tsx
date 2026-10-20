@@ -299,3 +299,67 @@ export default function HeaderUtilities() {
     </aside>
   );
 }
+
+/* ---------- Pang-cellphone ---------- */
+
+/**
+ * Ang tatlong utility sa loob ng mobile menu (nakatago ang side bar sa ibaba
+ * ng `lg`): weather ngayon, wika, at Member's Login — magkakatabi sa isang
+ * hilera sa itaas ng "Plan Your Visit".
+ */
+export function MobileUtilities({ onNavigate }: { onNavigate?: () => void }) {
+  const { locale, setLocale, t } = useTranslation();
+  const [weather, setWeather] = useState<Weather | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    fetch(CURRENT_URL, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        const current = data?.current;
+        if (alive && current && typeof current.temperature_2m === "number") {
+          setWeather({ tempC: current.temperature_2m, code: Number(current.weather_code) });
+        }
+      })
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const w = weather ? describeWeather(weather.code) : null;
+  const sky = w ? (weatherPhrases(locale).sky[w.label as keyof ReturnType<typeof weatherPhrases>["sky"]] ?? w.label) : "";
+  const tile = "flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-2xl border border-white/12 bg-white/[0.06] px-2 py-2 text-center text-[#f3dda0]";
+
+  return (
+    <div className="mt-3 grid grid-cols-3 gap-2">
+      <div className={tile} title="Pili weather">
+        <WeatherIcon kind={w?.kind ?? "cloud"} className="h-5 w-5" />
+        <span translate="no" className="text-[11px] font-semibold leading-tight tabular-nums">
+          {weather ? `${Math.round(weather.tempC)}°C` : "—°"}
+          {sky ? <span className="block text-[10px] font-medium uppercase tracking-[0.08em] text-white/60">{sky}</span> : null}
+        </span>
+      </div>
+      <label className={`${tile} relative cursor-pointer`}>
+        <GlobeIcon className="h-5 w-5" />
+        <span className="text-[11px] font-semibold uppercase tracking-[0.08em]">{locale}</span>
+        <select
+          aria-label={t("lang.select")}
+          value={locale}
+          onChange={(event) => setLocale(event.target.value as typeof locale)}
+          className="absolute inset-0 cursor-pointer opacity-0"
+        >
+          {SWITCHER_LOCALES.map((code) => (
+            <option key={code} value={code}>
+              {LOCALE_LABELS[code]}
+            </option>
+          ))}
+        </select>
+      </label>
+      <Link href="/members" onClick={onNavigate} className={`${tile} transition hover:border-[#f3dda0]/50`}>
+        <UserIcon className="h-5 w-5" />
+        <span className="text-[10px] font-semibold uppercase leading-tight tracking-[0.06em]">{t("action.memberLogin")}</span>
+      </Link>
+    </div>
+  );
+}

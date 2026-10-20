@@ -29,7 +29,7 @@ export default function ExperiencesActivities({ kicker, items }: { kicker: strin
           key={item.id}
           id={item.id}
           data-activity-panel
-          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-black"
+          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]"
         >
           {/* Larawan: nasa likod bilang poster/fallback. Kapag may video ang
               activity, tumutugtog ito sa ibabaw; kung mabigo (404 o hindi
@@ -76,7 +76,7 @@ export default function ExperiencesActivities({ kicker, items }: { kicker: strin
                 rel="noreferrer"
                 className="mt-6 inline-flex h-11 items-center gap-3 rounded-full border border-[#e7d18d]/70 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#f0d98f] transition-colors hover:border-[#e7d18d] hover:bg-[#e7d18d] hover:text-[#14271d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d] xl:text-[11px]"
               >
-                View facility <span aria-hidden="true">↗</span>
+                View facility
               </a>
             </div>
           </div>

@@ -244,9 +244,9 @@ export default function HomeVillaDelRey() {
                       <Link
                         href={villaHouseHref(stay.slug)}
                         tabIndex={isActive ? undefined : -1}
-                        className="mb-5 inline-flex h-10 items-center gap-2 rounded-full border border-[#265136]/30 px-5 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white xl:text-[11px]"
+                        className="mb-5 inline-flex h-10 items-center gap-2 rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#8a681f] transition hover:border-[#e7d18d] hover:bg-[#e7d18d] hover:text-[#14271d] xl:text-[11px]"
                       >
-                        Ask about availability <span aria-hidden="true">→</span>
+                        Ask about availability
                       </Link>
                     </div>
                   </div>
@@ -261,9 +261,6 @@ export default function HomeVillaDelRey() {
               className="group inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
             >
               {t("home.stay.cta")}
-              <svg viewBox="0 0 24 24" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" aria-hidden="true">
-                <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
             </Link>
           </div>
         </div>

@@ -55,7 +55,9 @@ export default function ClubhouseRoomsRail({
   return (
     <nav
       aria-label={label}
-      className={`fixed right-3 top-1/2 z-40 -translate-y-1/2 transition-all duration-500 sm:right-5 lg:right-7 ${
+      /* Nakatago sa cellphone: sa makitid na screen ay tumatabon ito sa teksto
+         ng bawat card. */
+      className={`fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 transition-all duration-500 sm:right-5 md:block lg:right-7 ${
         visible ? "pointer-events-auto opacity-100" : "pointer-events-none translate-x-3 opacity-0"
       }`}
     >

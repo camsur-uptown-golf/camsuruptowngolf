@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
+import HeroBackdrop from "@/components/HeroBackdrop";
 import ScrollMotion from "@/components/ScrollMotion";
 import { Container } from "@/components/SectionKit";
 import { CLUB_EMAIL, CLUB_PHONE } from "@/lib/site-content";
@@ -106,7 +107,8 @@ export default function TermsOfUsePage() {
       <main className="bg-[#f7f5ee] text-[#14271d]">
         <ScrollMotion />
 
-        <section className="bg-[#1f3f2e] px-6 pb-16 pt-40 text-white sm:pb-20 sm:pt-44 lg:px-8">
+        <section id="top" className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#1f3f2e] px-6 pb-16 pt-40 text-white sm:min-h-[560px] sm:pb-20 sm:pt-44 lg:px-8">
+          <HeroBackdrop src="/hero-images/terms-v2.webp" alt="Guest information folio and brass pen on a table inside the clubhouse" imageClassName="object-[65%_center] sm:object-center" />
           <div className="mx-auto max-w-4xl text-center">
             <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">
               Legal information
@@ -114,7 +116,7 @@ export default function TermsOfUsePage() {
             <h1 className="mt-4 font-display text-[clamp(2.8rem,6vw,5.5rem)] font-medium leading-[0.92] tracking-[-0.06em]">
               Terms of Use
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-white/68 sm:text-base sm:leading-8">
+            <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-white/85 sm:text-base sm:leading-8">
               These terms explain how you may use the CamSur Uptown Golf website and how to understand the
               concept, booking, and facility information presented here.
             </p>
@@ -207,10 +209,10 @@ export default function TermsOfUsePage() {
                       {CLUB_PHONE.label}
                     </a>
                     <Link
-                      href="/contact"
+                      href="/plan-your-visit"
                       className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:border-[#265136]"
                     >
-                      Contact page
+                      Plan your visit
                     </Link>
                   </div>
                 </div>

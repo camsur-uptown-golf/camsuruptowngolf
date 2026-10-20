@@ -22,9 +22,9 @@ export default function ClubhouseRooms() {
         <article
           key={space.id}
           id={space.id}
-          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-black"
+          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]"
         >
-          <div className="relative min-h-svh overflow-hidden bg-black">
+          <div className="relative min-h-svh overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]">
             <Image src={space.image} alt={space.imageAlt} fill sizes="100vw" className="object-cover" />
 
             {/* Palaging nakikita ang scrim at caption. Hindi na binabago ng

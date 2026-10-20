@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import FairwayDivider from "@/components/FairwayDivider";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
-import RequestCallback from "@/components/RequestCallback";
+import QuickQuestion from "@/components/QuickQuestion";
 import Scorecard from "@/components/Scorecard";
 import ScrollMotion from "@/components/ScrollMotion";
 import HeroWords from "@/components/HeroWords";
@@ -275,13 +275,15 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
 
         <section id="request-call-back" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
           <Container>
+            {/* Tanong lang ang dala ng bisita rito, kaya maikling form (QuickQuestion)
+                — hindi ang buong RequestCallback ng /plan-your-visit. */}
             <SectionHeading
               eyebrow="Plan your round"
-              title="Request a call back."
-              intro="Tell us a bit more about the trip you have in mind and the club will call you back within 48 hours, at the time you choose."
+              title="Have a question about the course?"
+              intro="Ask the club anything about the course and you will get an answer within 48 hours."
             />
             <div className="mt-10">
-              <RequestCallback context={`${holeLabel(concept)}`} />
+              <QuickQuestion context={holeLabel(concept)} />
             </div>
           </Container>
         </section>

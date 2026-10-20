@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
+import HeroBackdrop from "@/components/HeroBackdrop";
 import ReservationActions from "@/components/ReservationActions";
 import Tr from "@/components/Tr";
 import { ADDONS, COURSE, VILLA_NIGHTS, formatTime, toMinutes, toTime } from "@/lib/golf-booking";
@@ -63,7 +64,8 @@ export default async function ReservationPage({ params }: { params: Promise<{ co
   return (
     <>
       <main className="bg-[#f7f5ee] text-[#14271d]">
-        <section className="bg-[#1f3f2e] px-6 pb-14 pt-40 text-center text-white sm:pb-16 sm:pt-44 lg:px-8">
+        <section id="top" className="relative isolate min-h-[380px] overflow-hidden bg-[#1f3f2e] px-6 pb-14 pt-64 text-center text-white sm:min-h-[560px] sm:pb-16 sm:pt-72 lg:px-8">
+          <HeroBackdrop src="/hero-images/tee-time-v3-logo.webp" alt="Golf ball printed with the CamSur Uptown Golf logo and driver ready for a morning tee time" imageClassName="object-[60%_center] sm:object-center" />
           <span className={`inline-flex rounded-full px-3 py-1 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] ${state.tone}`}>
             {state.label}
           </span>

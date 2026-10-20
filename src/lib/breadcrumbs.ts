@@ -17,7 +17,6 @@ export type Crumb = { label: string; href: string };
 /** Mga pahinang walang section sa itaas. */
 const STANDALONE: Record<string, string> = {
   "plan-your-visit": "Plan your visit",
-  contact: "Contact",
   members: "Member's login",
   faq: "FAQs",
   "getting-here": "How to get here",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
+import HeroBackdrop from "@/components/HeroBackdrop";
 import ScrollMotion from "@/components/ScrollMotion";
 import { EDITORIAL_SECTION_ALT, Shell, Watermark, delay } from "@/components/EditorialKit";
 import { CLUB_PHONE, FAQ_GROUPS } from "@/lib/site-content";
@@ -39,12 +40,9 @@ export default function FaqPage() {
 
         <section
           id="top"
-          className="relative isolate overflow-hidden bg-[#14271d] px-6 pb-14 pt-48 text-white sm:px-8 sm:pb-16 sm:pt-52 lg:px-12 lg:pt-56"
+          className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#14271d] px-6 pb-14 pt-48 text-white sm:min-h-[560px] sm:px-8 sm:pb-16 sm:pt-52 lg:px-12 lg:pt-56"
         >
-          <div
-            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_20%,rgba(201,165,78,0.10),transparent_34%)]"
-            aria-hidden="true"
-          />
+          <HeroBackdrop src="/hero-images/faq-v2.webp" alt="Golf bag, shoes and glove prepared beside a clubhouse terrace bench" imageClassName="object-[70%_center] sm:object-center" />
 
           <div className="mx-auto w-full max-w-7xl">
             <div className="max-w-2xl">

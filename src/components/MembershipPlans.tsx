@@ -62,7 +62,7 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
               } ${isCurrent ? "ring-2 ring-[#d8b65b] ring-offset-2 ring-offset-[#f7f5ee]" : ""}`}
             >
               {dark ? (
-                <span className="absolute -top-3 left-7 rounded-full bg-[#e7d18d] px-3 py-1 font-navigation text-[9px] font-bold uppercase tracking-[0.14em] text-[#14271d]">
+                <span className="absolute -top-3 left-7 rounded-full bg-[#e7d18d] px-3 py-1 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d]">
                   Most popular
                 </span>
               ) : null}

@@ -31,7 +31,7 @@ export default function EventsOccasions({ occasions }: { occasions: readonly Occ
         <article
           key={occasion.title}
           data-occasion-panel
-          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-black"
+          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]"
         >
           <Image src={occasion.image} alt={occasion.imageAlt} fill sizes="100vw" className="object-cover" />
 

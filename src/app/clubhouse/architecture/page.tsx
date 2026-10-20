@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
+import HeroBackdrop from "@/components/HeroBackdrop";
 import ScrollMotion from "@/components/ScrollMotion";
 import { EDITORIAL_SECTION, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
 import {
@@ -40,7 +41,8 @@ export default function ClubhouseArchitecturePage() {
       <main>
         <ScrollMotion />
 
-        <section className="relative isolate overflow-hidden bg-[#071d13] pb-16 pt-44 text-white sm:pb-20 sm:pt-52">
+        <section id="top" className="relative isolate flex min-h-[440px] items-end overflow-hidden bg-[#071d13] pb-16 pt-44 text-white sm:min-h-[640px] sm:pb-20 sm:pt-52">
+          <HeroBackdrop src="/clubhouse/concept/approach-west-elevation.jpg" alt="West elevation of the VM·STUDIO clubhouse concept, showing bronze screens, curved terraces and its lakeside setting" />
           <Shell>
             <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e] xl:text-[11px]">
               Architectural concept
@@ -52,7 +54,7 @@ export default function ClubhouseArchitecturePage() {
             >
               A landscape that became a building.
             </h1>
-            <p data-reveal="up" style={delay(200)} className="mt-6 max-w-2xl text-sm leading-7 text-white/65 xl:text-base xl:leading-8">
+            <p data-reveal="up" style={delay(200)} className="mt-6 max-w-2xl text-sm leading-7 text-white/85 xl:text-base xl:leading-8">
               {CLUBHOUSE_BRIEF}
             </p>
             <Link

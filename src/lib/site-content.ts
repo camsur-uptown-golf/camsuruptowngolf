@@ -24,7 +24,7 @@ export const CALL_WINDOWS = [
 export const CLUB_PHONE = { label: "+63 916 300 7914", href: "tel:+639163007914" } as const;
 
 /* Ibinigay ng club. Isang pinagmumulan lang ito: ginagamit ng footer, ng
-   /contact, ng /terms-of-use, at ng /members, kaya hindi sila maaaring
+   /plan-your-visit, ng /terms-of-use, at ng /members, kaya hindi sila maaaring
    maghiwalay. Ang Gmail ng club (kinumpirma ng club). */
 export const CLUB_EMAIL = { label: "camsuruptowngolf@gmail.com", href: "mailto:camsuruptowngolf@gmail.com" } as const;
 
@@ -177,8 +177,11 @@ export const FAQ_GROUPS = [
 ] as const;
 
 /**
- * "Golf Club" hero clip — direktang 4K MP4 (3840x2160, 60fps, ~20s, 48 MB),
- * naka-compress mula sa 362 MB gamit ang two-pass x264 para kayanin ng web.
+ * CamSur Uptown Golf hero — direktang 4K MP4 (3840x2160, 60fps, ~20s).
+ * Updated ang flag sa unang shot at ang closing logo: walang "Club", at
+ * katamtaman ang "Golf", kapareho ng header logo at original brand colors.
+ * Render: scripts/render-flag-logo.py, tapos scripts/render-hero-ending.mjs.
+ * Naka-backup pa rin ang dating video sa /hero-golf-club.mp4.
  *
  * Lokal na file sa /public, hindi embed, kaya native <video> ang ginagamit at
  * wala nang panlabas na player script. Maikli ang clip kaya natural lang na
@@ -187,7 +190,7 @@ export const FAQ_GROUPS = [
  * Isang bagay lang: walang adaptive streaming ang isang MP4 — pareho ang
  * 4K na natatanggap ng nasa cellphone at ng nasa desktop.
  */
-export const TEASER_VIDEO = "/hero-golf-club.mp4";
+export const TEASER_VIDEO = "/hero-golf-v3.mp4";
 
 /** Poster frame ng teaser, para may makita habang naglo-load ang video. */
 export const TEASER_POSTER =

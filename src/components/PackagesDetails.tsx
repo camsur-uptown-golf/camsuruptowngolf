@@ -154,7 +154,7 @@ function ThePackages() {
                     href={pack.href}
                     className="relative mt-5 inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] xl:text-[11px]"
                   >
-                    View itinerary →
+                    View itinerary
                   </Link>
                 </div>
               </article>

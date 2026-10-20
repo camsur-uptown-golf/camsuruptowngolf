@@ -17,13 +17,6 @@ const PLAYER_SRC = `https://fast.wistia.net/embed/iframe/${MEDIA_ID}?playerColor
 
 const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden="true">
-      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 export default function CourseFilm() {
   const [playing, setPlaying] = useState(false);
@@ -84,7 +77,7 @@ export default function CourseFilm() {
                 style={delay(330)}
                 className="mt-8 inline-flex h-12 items-center gap-3 rounded-full bg-[#e7d18d] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
               >
-                Explore the course <ArrowIcon />
+                Explore the course
               </Link>
             </div>
 

@@ -35,7 +35,13 @@
   }
 }
 
+/* Hindi dapat lumapad ang pahina kaysa sa screen. Ang mga elementong
+   gumagalaw papasok mula sa gilid (`data-reveal="right"`) ay pansamantalang
+   nasa labas ng screen; sa cellphone ay pinalalapad niyon ang layout kaya
+   lumilihis ang MENU pill. `clip` (hindi `hidden`) para hindi masira ang
+   mga `sticky` na elemento. */
 body {
+  overflow-x: clip;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
@@ -113,6 +119,16 @@ html:is([data-locale="FIL"], [data-locale="BCL"], [data-locale="VI"]) nav[data-n
     padding-inline: 1.1rem;
     letter-spacing: 0.04em;
   }
+}
+
+/* WALANG TEXT-SHADOW ANG MGA PINDUTAN. Ang teksto sa ibabaw ng larawan ay
+   may malakas na itim na anino (para mabasa), at minamana iyon ng pindutang
+   nasa loob — kaya kapag nag-hover at naging ginto na may madilim na teksto,
+   lumalabo at parang may mantsa ang mga titik. Ang mga pill na pindutan
+   (`rounded-full`) ay malinaw na sa sarili nilang background. */
+a.rounded-full,
+button.rounded-full {
+  text-shadow: none;
 }
 
 /* All prose uses Manrope site-wide. Display figures and compact navigation

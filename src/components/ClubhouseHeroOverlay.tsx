@@ -13,6 +13,7 @@ const clamp = (value: number) => Math.min(1, Math.max(0, value));
 export default function ClubhouseHeroOverlay() {
   const overlayRef = useRef<HTMLDivElement>(null);
 
+
   useEffect(() => {
     let frame = 0;
 
@@ -102,7 +103,7 @@ export default function ClubhouseHeroOverlay() {
       </div>
 
       <div
-        className="absolute inset-x-0 bottom-4 px-4 will-change-[opacity,transform] sm:bottom-6 sm:px-6 lg:bottom-8 lg:px-8"
+        className="absolute inset-x-0 bottom-24 px-4 will-change-[opacity,transform] sm:bottom-10 sm:px-6 lg:bottom-12 lg:px-8"
         style={{
           opacity: "var(--clubhouse-facts-opacity)",
           transform: "translateY(var(--clubhouse-facts-shift))",
@@ -115,12 +116,12 @@ export default function ClubhouseHeroOverlay() {
           {HERO_FACTS.map((fact) => (
             <div
               key={fact.label}
-              className="flex min-h-[68px] flex-col justify-center px-2 py-3 sm:min-h-[80px] sm:px-4"
+              className="flex min-h-[84px] flex-col justify-center px-2 py-3 sm:min-h-[104px] sm:px-4"
             >
-              <dt className="font-display text-xl font-medium leading-none tracking-[-0.04em] text-[#f2d98d] sm:text-2xl">
+              <dt className="font-display text-3xl font-medium leading-none tracking-[-0.04em] text-[#f2d98d] sm:text-4xl lg:text-5xl">
                 {fact.value}
               </dt>
-              <dd className="mt-1.5 font-navigation text-[8px] font-bold uppercase leading-4 tracking-[0.14em] text-white/60 sm:text-[9px]">
+              <dd className="mt-2 font-navigation text-[10px] font-bold uppercase leading-4 tracking-[0.14em] text-white/75 sm:text-xs lg:text-[13px]">
                 {fact.label}
               </dd>
             </div>

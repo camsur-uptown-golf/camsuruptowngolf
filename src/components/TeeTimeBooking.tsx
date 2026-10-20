@@ -212,14 +212,17 @@ export default function TeeTimeBooking({
   today,
   prefill,
   testMode = false,
+  initial,
 }: {
   today: string;
   /** Walang PayMongo: confirmed agad ang booking, walang bayad. */
   testMode?: boolean;
+  /** Mula sa quick-book ng /plan-your-visit (`?date=&round=&players=`). */
+  initial?: { date?: string; round?: Round; players?: number };
   prefill: { name: string; email: string; phone: string } | null;
 }) {
   const router = useRouter();
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState(initial?.date && initial.date >= today ? initial.date : today);
   /* `open` = ang nakabukas na card (null = lahat sarado, tapos na);
      `furthest` = pinakamalayong naabot — doon bumabalik pagkatapos ng Change. */
   const [open, setOpen] = useState<number | null>(1);
@@ -229,7 +232,7 @@ export default function TeeTimeBooking({
   const [complete, setComplete] = useState(false);
   const dict = useSiteStrings();
   const tr = (text: string) => (dict && lookup(dict, text)) ?? text;
-  const [round, setRound] = useState<Round>("full");
+  const [round, setRound] = useState<Round>(initial?.round ?? "full");
   const holes: Holes = round === "full" ? 18 : 9;
   const [time, setTime] = useState<string | null>(null);
   /* Kasama ang susi (petsa+round) ng availability, para "loading" kapag
@@ -240,7 +243,7 @@ export default function TeeTimeBooking({
   const key = `${date}|${holes}|${refresh}`;
   const availability = loaded?.key === key ? loaded.data : null;
   const loading = validDate && loaded?.key !== key;
-  const [players, setPlayers] = useState(2);
+  const [players, setPlayers] = useState(initial?.players && initial.players >= 1 && initial.players <= COURSE.maxPlayers ? initial.players : 2);
   const [names, setNames] = useState<string[]>([]);
   const [addons, setAddons] = useState<Partial<Record<AddonId, number>>>({});
   const [villa, setVilla] = useState<string | null>(null);
@@ -483,7 +486,7 @@ export default function TeeTimeBooking({
               onClick={() => proceed(1)}
               className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {1 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+              {1 < furthest ? "Done" : "Continue"}
             </button>
           </div>
         </StepCard>
@@ -519,7 +522,7 @@ export default function TeeTimeBooking({
               onClick={() => proceed(2)}
               className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {2 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+              {2 < furthest ? "Done" : "Continue"}
             </button>
           </div>
         </StepCard>
@@ -564,7 +567,7 @@ export default function TeeTimeBooking({
               onClick={() => proceed(3)}
               className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {3 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+              {3 < furthest ? "Done" : "Continue"}
             </button>
           </div>
         </StepCard>
@@ -623,7 +626,7 @@ export default function TeeTimeBooking({
               onClick={() => proceed(4)}
               className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {4 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+              {4 < furthest ? "Done" : "Continue"}
             </button>
           </div>
         </StepCard>
@@ -648,7 +651,7 @@ export default function TeeTimeBooking({
               onClick={() => proceed(5)}
               className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {5 < furthest ? "Done" : "Continue"} <span aria-hidden="true">→</span>
+              {5 < furthest ? "Done" : "Continue"}
             </button>
           </div>
         </StepCard>

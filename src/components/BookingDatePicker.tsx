@@ -147,8 +147,10 @@ function Calendar({
   );
 }
 
-export default function BookingDatePicker({ id, value, min, max, onChange }: {
+export default function BookingDatePicker({ id, value, min, max, onChange, compact = false }: {
   id: string;
+  /** Walang shortcut na row at buong lapad — para sa quick-book bar. */
+  compact?: boolean;
   value: string;
   min: string;
   max: string;
@@ -192,7 +194,7 @@ export default function BookingDatePicker({ id, value, min, max, onChange }: {
   }
 
   return (
-    <div translate="no" className="mt-3 max-w-xs">
+    <div translate="no" className={compact ? "w-full" : "mt-3 max-w-xs"}>
       <div
         ref={root}
         className="relative"
@@ -228,7 +230,7 @@ export default function BookingDatePicker({ id, value, min, max, onChange }: {
         </button>
         {open ? <Calendar id={`${id}-calendar`} value={value} min={min} max={max} lang={lang} tr={tr} onSelect={select} onClose={close} /> : null}
       </div>
-      <div role="group" aria-label={tr("Choose a date")} className="mt-2 flex flex-wrap gap-1.5">
+      <div role="group" aria-label={tr("Choose a date")} className={compact ? "hidden" : "mt-2 flex flex-wrap gap-1.5"}>
         {shortcuts.filter((shortcut) => shortcut.date <= max).map((shortcut) => (
           <button
             key={shortcut.label}

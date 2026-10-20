@@ -20,7 +20,7 @@ export default function ClubhouseGallery({
         <figure
           key={shot.src}
           data-shot-panel
-          className="relative min-h-svh overflow-hidden bg-black"
+          className="relative min-h-svh overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]"
         >
           <Image src={shot.src} alt={shot.alt} fill sizes="100vw" className="object-cover" />
 

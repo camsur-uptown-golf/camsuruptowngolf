@@ -4,13 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "@/i18n/LanguageProvider";
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
-      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 /**
  * Ang teaser ng Packages sa homepage — iisang banner na lang.
@@ -77,7 +70,6 @@ export default function PackagesCarousel() {
               className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e7d18d] [text-shadow:none] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d]"
             >
               See packages
-              <ArrowIcon />
             </Link>
           </div>
         </div>
