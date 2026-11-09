@@ -1,6 +1,26 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /* Ang `process.cwd()` sa db.ts (lokal na SQLite sa data/) ay nagpapasama sa
+     BUONG proyekto sa bawat server function — ~780 MB na may mga video, lampas
+     sa 250 MB na limit ng Vercel ("Error" pagkatapos ng "Deploying outputs").
+     Walang server code na nagbabasa ng mga ito; ang public/ ay sa CDN. */
+  outputFileTracingExcludes: {
+    "/**": [
+      "public/**/*",
+      "exports/**/*",
+      "output/**/*",
+      "tmp/**/*",
+      "mobile/**/*",
+      "media-archive/**/*",
+      "brand-brain/**/*",
+      "reports/**/*",
+      "research_notes/**/*",
+      "docs/**/*",
+      "scripts/**/*",
+      "data/**/*",
+    ],
+  },
   images: {
     remotePatterns: [
       // Poster frame ng Wistia teaser, ginagamit ng course film section.
