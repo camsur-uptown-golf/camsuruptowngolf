@@ -144,6 +144,7 @@ export type OAuthProfile = {
   emailVerified: boolean;
   firstName: string;
   lastName: string;
+  picture: string | null;
 };
 
 function decodeJwtPayload(token: string): Record<string, unknown> {
@@ -208,5 +209,7 @@ export async function exchangeCode(
     emailVerified: verified,
     firstName: firstName || email.split("@")[0],
     lastName,
+    /* Litrato ng Google account (kasama sa `profile` scope); wala sa Apple. */
+    picture: typeof claims.picture === "string" && claims.picture.startsWith("https://") ? claims.picture.slice(0, 500) : null,
   };
 }

@@ -68,6 +68,15 @@ const MEGA_STYLES: Record<string, "cards" | "names" | "rules"> = {
  * hairline ang naghahati ngayon ng heading sa listahan, kaya hindi na
  * kailangang pumuti ang teksto para mabasa ito bilang pamuno.
  */
+/* "Plan your stay" sa mega menu ng Villa Del Rey. */
+const STAY_PLANNING = [
+  { href: "/packages/stay-and-play", label: "Stay & Play", detail: "One night by the fairways and a full round." },
+  { href: "/packages/buddy-trip", label: "Buddy Trip", detail: "Two nights and two rounds for your group." },
+  { href: "/golf/book", label: "Tee time + villa night", detail: "Book a round and add a night at Villa Del Rey." },
+  { href: "/getting-here", label: "Getting here", detail: "Driving times from Naga, Legazpi and the airport." },
+  { href: "/faq", label: "FAQ", detail: "Booking, rates, and what to expect." },
+] as const;
+
 const MEGA_HEADING =
   "mb-4 border-b border-white/10 pb-3 text-[11px] font-bold uppercase tracking-[0.2em] text-[#efd99b]";
 
@@ -1512,20 +1521,24 @@ export default function Header() {
               <div className={`flex flex-col px-6 pb-6 ${megaColumnTop}`}>
                 <p className={MEGA_HEADING}>Plan your stay</p>
                 <div className="grid flex-1 content-start">
-                  <Link
-                    href="/faq"
-                    onClick={closeDesktopMenu}
-                    className="mega-item group/help border-b border-white/10 py-5 text-white/75 transition-colors hover:text-[#efd99b]"
-                    style={{ animationDelay: "90ms" }}
-                  >
-                    <span className="flex items-center justify-between gap-3">
-                      <span className="text-[12px] font-semibold uppercase tracking-[0.06em]">FAQ</span>
-                      <span className="text-[#e2c77a] transition-transform group-hover/help:translate-x-1" aria-hidden="true">→</span>
-                    </span>
-                    <span className="mt-2 block text-[11px] leading-5 text-white/50">
-                      Booking, rates, and what to expect.
-                    </span>
-                  </Link>
+                  {/* Mga susunod na hakbang sa pagpaplano ng tuluyan — puro
+                      totoong pahina: ang dalawang package, ang tee time na may
+                      villa night (add-on sa /golf/book), daan papunta, at FAQ. */}
+                  {STAY_PLANNING.map((item, index) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeDesktopMenu}
+                      className="mega-item group/help border-b border-white/10 py-4 text-white/75 transition-colors hover:text-[#efd99b]"
+                      style={{ animationDelay: `${90 + index * 45}ms` }}
+                    >
+                      <span className="flex items-center justify-between gap-3">
+                        <span className="text-[12px] font-semibold uppercase tracking-[0.06em]">{item.label}</span>
+                        <span className="text-[#e2c77a] transition-transform group-hover/help:translate-x-1" aria-hidden="true">→</span>
+                      </span>
+                      <span className="mt-1.5 block text-[11px] leading-5 text-white/50">{item.detail}</span>
+                    </Link>
+                  ))}
                 </div>
               </div>
             ) : null}

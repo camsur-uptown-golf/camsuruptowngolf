@@ -173,14 +173,6 @@ export default function HomeVillaDelReyBento() {
                         </span>
                       </span>
                     </span>
-                    <span
-                      aria-hidden="true"
-                      className={`flex shrink-0 items-center justify-center rounded-full border border-white/35 text-white transition-all duration-300 group-hover:border-[#e2c77a] group-hover:bg-[#e2c77a] group-hover:text-[#03321b] ${
-                        featured ? "h-10 w-10 sm:h-12 sm:w-12 sm:text-lg" : "hidden h-10 w-10 sm:flex"
-                      }`}
-                    >
-                      →
-                    </span>
                   </span>
                 </Link>
               </li>

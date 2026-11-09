@@ -39,6 +39,8 @@ export type Member = {
   /** Membership plan (`membership-plans.ts`), o `null` kung wala pa. */
   plan: string | null;
   planSince: string | null;
+  /** Litrato ng Google account (https), kapag Google ang ginamit; kung hindi, `null`. */
+  picture: string | null;
 };
 
 export type SignupInput = {
@@ -101,6 +103,7 @@ async function applySchema(client: Client) {
   /* "Continue with Google / Apple": ang `sub` ng account sa provider. */
   await addColumn("google_sub");
   await addColumn("apple_sub");
+  await addColumn("picture");
   await client.batch(
     [
       "CREATE UNIQUE INDEX IF NOT EXISTS members_google_sub ON members(google_sub) WHERE google_sub IS NOT NULL",
@@ -158,6 +161,7 @@ function toMember(row: Row): Member {
     lastLoginAt: text(row.last_login_at),
     plan: text(row.plan),
     planSince: text(row.plan_since),
+    picture: text(row.picture),
   };
 }
 
@@ -181,6 +185,7 @@ export async function createMember(input: SignupInput): Promise<Member | null> {
       lastLoginAt: null,
       plan: null,
       planSince: null,
+      picture: null,
     };
   } catch (error) {
     if (isUniqueViolation(error)) return null;
@@ -231,7 +236,7 @@ export async function memberFromSession(token: string | undefined): Promise<Memb
   const client = await connection();
   const row = (
     await client.execute({
-      sql: `SELECT m.id, m.email, m.first_name, m.last_name, m.mobile, m.created_at, m.last_login_at, m.plan, m.plan_since
+      sql: `SELECT m.id, m.email, m.first_name, m.last_name, m.mobile, m.created_at, m.last_login_at, m.plan, m.plan_since, m.picture
             FROM member_sessions s JOIN members m ON m.id = s.member_id
             WHERE s.token_hash = ? AND s.expires_at > ?`,
       args: [sha256(token), new Date().toISOString()],
@@ -312,6 +317,8 @@ export type OAuthIdentity = {
   emailVerified: boolean;
   firstName: string;
   lastName: string;
+  /** Google lang ang nagbibigay; sinasariwa sa bawat login. */
+  picture?: string | null;
 };
 
 /**
@@ -331,25 +338,29 @@ export async function findOrCreateOAuthMember(identity: OAuthIdentity): Promise<
   const client = await connection();
   const linked = (await client.execute({ sql: `SELECT * FROM members WHERE ${column} = ?`, args: [identity.sub] })).rows[0];
   const now = new Date().toISOString();
+  const picture = identity.picture ?? null;
   if (linked) {
-    await client.execute({ sql: "UPDATE members SET last_login_at = ? WHERE id = ?", args: [now, linked.id] });
-    return { ...toMember(linked), lastLoginAt: now };
+    await client.execute({
+      sql: "UPDATE members SET last_login_at = ?, picture = COALESCE(?, picture) WHERE id = ?",
+      args: [now, picture, linked.id],
+    });
+    return { ...toMember(linked), lastLoginAt: now, ...(picture ? { picture } : {}) };
   }
 
   const byEmail = (await client.execute({ sql: "SELECT * FROM members WHERE email = ?", args: [identity.email] })).rows[0];
   if (byEmail) {
     if (!identity.emailVerified) return null;
     await client.execute({
-      sql: `UPDATE members SET ${column} = ?, last_login_at = ? WHERE id = ?`,
-      args: [identity.sub, now, byEmail.id],
+      sql: `UPDATE members SET ${column} = ?, last_login_at = ?, picture = COALESCE(?, picture) WHERE id = ?`,
+      args: [identity.sub, now, picture, byEmail.id],
     });
-    return { ...toMember(byEmail), lastLoginAt: now };
+    return { ...toMember(byEmail), lastLoginAt: now, ...(picture ? { picture } : {}) };
   }
 
   const result = await client.execute({
-    sql: `INSERT INTO members (email, password_hash, first_name, last_name, created_at, last_login_at, ${column})
-          VALUES (?, ?, ?, ?, ?, ?, ?)`,
-    args: [identity.email, hashPassword(randomBytes(32).toString("hex")), identity.firstName, identity.lastName, now, now, identity.sub],
+    sql: `INSERT INTO members (email, password_hash, first_name, last_name, created_at, last_login_at, ${column}, picture)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [identity.email, hashPassword(randomBytes(32).toString("hex")), identity.firstName, identity.lastName, now, now, identity.sub, picture],
   });
   return {
     id: Number(result.lastInsertRowid),
@@ -361,5 +372,6 @@ export async function findOrCreateOAuthMember(identity: OAuthIdentity): Promise<
     lastLoginAt: now,
     plan: null,
     planSince: null,
+    picture,
   };
 }

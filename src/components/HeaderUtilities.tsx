@@ -52,17 +52,87 @@ function UserIcon({ className = "h-4 w-4" }: { className?: string }) {
 
 /* ---------- Member's login ---------- */
 
-/* Wala pang member portal, kaya sa /members muna ito tumuturo — isang
-   placeholder na may paraan para makausap ang club. */
+type SignedInMember = { firstName: string; lastName: string; picture: string | null };
+
+/** Ipinapadala ng MemberAuth (pag-login) at MemberLogout para sumabay ang header. */
+export const MEMBER_CHANGE_EVENT = "cu:member-change";
+
+/**
+ * Ang naka-sign-in na member ng website, o `null`. Static ang header (nasa
+ * layout), kaya hindi nito nababasa ang session cookie sa server; dito ito
+ * kinukuha sa `/api/members/me` pagka-load, at muli kapag nag-login o
+ * nag-logout (MEMBER_CHANGE_EVENT) — walang pahinang nagiging dynamic.
+ */
+function useSignedInMember(): SignedInMember | null {
+  const [member, setMember] = useState<SignedInMember | null>(null);
+  useEffect(() => {
+    let alive = true;
+    const load = () =>
+      fetch("/api/members/me", { cache: "no-store" })
+        .then((response) => (response.ok ? response.json() : { member: null }))
+        .then((body: { member: SignedInMember | null }) => {
+          if (alive) setMember(body.member);
+        })
+        .catch(() => {});
+    load();
+    window.addEventListener(MEMBER_CHANGE_EVENT, load);
+    return () => {
+      alive = false;
+      window.removeEventListener(MEMBER_CHANGE_EVENT, load);
+    };
+  }, []);
+  return member;
+}
+
+/**
+ * Larawan ng member: ang litrato ng Google account kung mayroon, kung wala
+ * (o hindi ma-load) ay ang initials — sa bilog na may gintong guhit.
+ */
+function MemberAvatar({ member, size }: { member: SignedInMember; size: number }) {
+  const [broken, setBroken] = useState(false);
+  const initials = ((member.firstName[0] ?? "") + (member.lastName[0] ?? "")).toUpperCase() || "M";
+  return (
+    <span
+      aria-hidden="true"
+      style={{ width: size, height: size }}
+      className="flex shrink-0 items-center justify-center overflow-hidden rounded-full border-[1.5px] border-[#e2c77a] bg-[#03321b] font-navigation text-[11px] font-bold tracking-[0.04em] text-[#efd99b]"
+    >
+      {member.picture && !broken ? (
+        /* Plain <img>: litrato ng Google (googleusercontent.com), hindi kailangan
+           ng optimizer. `no-referrer`: kung minsan ay tinatanggihan ng Google
+           ang litrato kapag may referrer. */
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={member.picture} alt="" referrerPolicy="no-referrer" onError={() => setBroken(true)} className="h-full w-full object-cover" />
+      ) : (
+        initials
+      )}
+    </span>
+  );
+}
+
+/* Hindi naka-sign-in: "Member's Login". Naka-sign-in: ang avatar at pangalan,
+   papunta pa rin sa /members (ang pahina ng account). */
 function MemberLogin() {
   const { t } = useTranslation();
+  const member = useSignedInMember();
   return (
     <Link
       href="/members"
+      aria-label={member ? `My account, ${member.firstName}` : undefined}
       className="flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[11px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#efd99b] text-center"
     >
-      <UserIcon className="h-5 w-5" />
-      <span>{t("action.memberLogin")}</span>
+      {member ? (
+        <>
+          <MemberAvatar member={member} size={30} />
+          <span className="mt-0.5 max-w-full truncate">{member.firstName}</span>
+          <span className="text-[9px] tracking-[0.14em] opacity-70">{t("action.myAccount")}</span>
+        </>
+      ) : (
+        <>
+          <UserIcon className="h-5 w-5" />
+          <span>{t("action.memberLogin")}</span>
+        </>
+      )}
     </Link>
   );
 }
@@ -343,6 +413,7 @@ export default function HeaderUtilities() {
  */
 export function MobileUtilities({ onNavigate }: { onNavigate?: () => void }) {
   const { locale, setLocale, t } = useTranslation();
+  const member = useSignedInMember();
   const [weather, setWeather] = useState<Weather | null>(null);
 
   useEffect(() => {
@@ -391,8 +462,10 @@ export function MobileUtilities({ onNavigate }: { onNavigate?: () => void }) {
         </select>
       </label>
       <Link href="/members" onClick={onNavigate} className={`${tile} transition hover:border-[#efd99b]/50`}>
-        <UserIcon className="h-5 w-5" />
-        <span className="text-[11px] font-semibold uppercase leading-tight tracking-[0.06em]">{t("action.memberLogin")}</span>
+        {member ? <MemberAvatar member={member} size={26} /> : <UserIcon className="h-5 w-5" />}
+        <span className="max-w-full truncate text-[11px] font-semibold uppercase leading-tight tracking-[0.06em]">
+          {member ? member.firstName : t("action.memberLogin")}
+        </span>
       </Link>
     </div>
   );

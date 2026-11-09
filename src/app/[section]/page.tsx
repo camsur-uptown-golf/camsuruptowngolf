@@ -132,6 +132,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               fill
               priority
               sizes="100vw"
+              quality={isEvents ? 90 : undefined}
               data-parallax={usesHeroParallax ? "-0.06" : undefined}
               data-hero-media={usesStickyReveal ? "" : undefined}
               className={`-z-20 object-cover ${usesHeroParallax ? "parallax-media" : ""}`}

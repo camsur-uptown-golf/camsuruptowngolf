@@ -33,7 +33,14 @@ export default function EventsOccasions({ occasions }: { occasions: readonly Occ
           data-occasion-panel
           className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
         >
-          <Image src={occasion.image} alt={occasion.imageAlt} fill sizes="100vw" className="object-cover" />
+          <Image
+            src={occasion.image}
+            alt={occasion.imageAlt}
+            fill
+            quality={90}
+            sizes="(max-aspect-ratio: 16/9) 178svh, 100vw"
+            className="object-cover"
+          />
 
           <div
             aria-hidden="true"

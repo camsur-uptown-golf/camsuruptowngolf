@@ -12,8 +12,8 @@ import { CLUBHOUSE_DAY } from "@/lib/clubhouse";
  * rin; ang import sa `app/page.tsx` ang pumipili kung alin.
  *
  * Nakikita nang sabay ang buong araw (Umaga → Hapon → Gabi), walang pindot o
- * animation na kailangan. Pare-pareho ang basa ng bawat card: larawan → numero
- * at oras → title → isang linya → "View the space". Nasa ILALIM ng larawan ang
+ * animation na kailangan. Pare-pareho ang basa ng bawat card: larawan → oras
+ * → title → isang linya → "View the space". Nasa ILALIM ng larawan ang
  * teksto, hindi nakapatong, kaya malinis ang larawan at madaling basahin.
  *
  * Isang manipis na "sky line" sa itaas ng mga card — kulay ng madaling-araw
@@ -101,12 +101,7 @@ export default function HomeClubhouseDayCards() {
                 />
               </div>
 
-              <p className="mt-6 flex items-baseline gap-3">
-                <span aria-hidden="true" className="font-display text-[2.75rem] font-light leading-none tracking-[-0.04em] text-[#7d6224]/45">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-[#7d6224]">{part.time}</span>
-              </p>
+              <p className="mt-6 font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-[#7d6224]">{part.time}</p>
               <h3 className="mt-2 font-display text-[clamp(1.75rem,2.2vw,2.25rem)] font-medium leading-[1.02] tracking-[-0.04em] text-[#17251e]">
                 {/* Stretched link: ang `after` ang tumatakip sa buong card. */}
                 <Link

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { MEMBER_CHANGE_EVENT } from "@/components/HeaderUtilities";
 import Link from "next/link";
 import Tr from "@/components/Tr";
 
@@ -194,6 +195,7 @@ export default function MemberAuth({ initialMode = "login" }: { initialMode?: Mo
       });
       const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (response.ok && result.ok) {
+        window.dispatchEvent(new Event(MEMBER_CHANGE_EVENT));
         router.refresh();
         return;
       }

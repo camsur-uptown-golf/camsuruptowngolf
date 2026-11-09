@@ -26,7 +26,7 @@ const OCCASIONS = [
     kicker: "Connect beyond the office",
     description:
       "Bring teams and partners together in a course-side setting that moves naturally from focused sessions to the kind of conversation that only happens away from a meeting room.",
-    image: "/brand-2026/lounge-handshake.webp",
+    image: "/events/corporate-events-4k.webp",
     imageAlt: "Members’ Lounge concept: two guests greeting each other before a meeting",
     inclusions: ["Flexible gathering spaces", "Group dining possibilities", "Golf and leisure itineraries"],
   },
@@ -35,7 +35,7 @@ const OCCASIONS = [
     kicker: "Make it personal",
     description:
       "Birthdays, anniversaries, reunions, and milestones, held in a setting built for unhurried time rather than a fixed running order.",
-    image: "/brand-2026/sky-bar-couple.webp",
+    image: "/events/private-celebrations-4k.webp",
     imageAlt: "Sky bar concept: a couple celebrating at the rooftop bar at dusk",
     inclusions: ["Intimate table settings", "Sunset gathering options", "Personalised menus and flow"],
   },
