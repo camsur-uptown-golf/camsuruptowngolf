@@ -5,8 +5,15 @@ import Footer from "@/components/Footer";
 import ConceptCarousel from "@/components/ConceptCarousel";
 // import HomeClubhouseOverview from "@/components/HomeClubhouseOverview"; // temporarily hidden
 // import HomeExplore from "@/components/HomeExplore"; // temporarily hidden
-import HomeClubhouseDay from "@/components/HomeClubhouseDay";
-import HomeVillaDelRey from "@/components/HomeVillaDelRey";
+/* "Your day at the club": B (tatlong pantay na card) ang subok ngayon. Ang
+   scroll story (C) ay nasa `HomeClubhouseDay` pa rin — palitan lang ang import
+   path sa ibaba para bumalik doon. */
+import HomeClubhouseDay from "@/components/HomeClubhouseDayCards";
+/* Villa Del Rey: bento mosaic (`HomeVillaDelReyBento`) ang subok ngayon.
+   Mga kahalili: `HomeVillaDelReyCards`, `HomeVillaDelReyTabs`,
+   `HomeVillaDelReyShowcase`, at
+   `HomeVillaDelRey` (ang dating accordion) — palitan lang ang import path. */
+import HomeVillaDelRey from "@/components/HomeVillaDelReyBento";
 import PackagesCarousel from "@/components/PackagesCarousel";
 import HeroVideo from "@/components/HeroVideo";
 import ScrollMotion from "@/components/ScrollMotion";
@@ -29,7 +36,7 @@ const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties
 function ImgDesignerMark() {
   return (
     <span
-      className="block h-5 w-9 shrink-0 bg-[#f3dda0]"
+      className="block h-5 w-9 shrink-0 bg-[#efd99b]"
       style={{
         WebkitMaskImage: "url('/branding/mc-gold.png')",
         WebkitMaskPosition: "left center",
@@ -101,12 +108,12 @@ function CourseSnapshot() {
                   Para sa count-up na lang ang `count`, hindi na para sa
                   laki — dalawang magkaibang bagay ang pinagsasama niyon. */}
               {value ? (
-                <p className="font-navigation text-2xl font-semibold leading-none tabular-nums tracking-[-0.02em] text-[#f3dda0] sm:text-xl">
+                <p className="font-navigation text-2xl font-semibold leading-none tabular-nums tracking-[-0.02em] text-[#efd99b] sm:text-xl">
                   {count === null ? value : <span data-count={count}>{value}</span>}
                 </p>
               ) : null}
             </div>
-            <p className="mt-1 text-[10px] font-medium uppercase leading-tight tracking-[0.1em] text-white/70 sm:text-[10px] xl:text-[11px]"><T k={labelKey} /></p>
+            <p className="mt-1 text-[11px] font-medium uppercase leading-tight tracking-[0.1em] text-white/70 sm:text-[11px] xl:text-[11px]"><T k={labelKey} /></p>
           </div>
         ))}
       </div>
@@ -118,28 +125,28 @@ function Introduction() {
   return (
     <section
       id="story"
-      className="relative isolate z-10 flex min-h-[400px] items-center overflow-hidden bg-[#f7f5ee] text-[#14271d] shadow-[0_-28px_70px_rgba(2,14,9,0.45)]"
+      className="relative isolate z-10 flex min-h-[400px] items-center overflow-hidden bg-[#f3ede1] text-[#03321b] shadow-[0_-28px_70px_rgba(2,14,9,0.45)]"
     >
       {/* Maliit na gintong guhit sa itaas — ang "hawakan" ng card na umaangat. */}
-      <span className="pointer-events-none absolute left-1/2 top-4 h-[3px] w-12 -translate-x-1/2 rounded-full bg-[#d8b65b]/70 sm:top-5" aria-hidden="true" />
+      <span className="pointer-events-none absolute left-1/2 top-4 h-[3px] w-12 -translate-x-1/2 rounded-full bg-[#e2c77a]/70 sm:top-5" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center" aria-hidden="true">
         {/* Safe to parallax: a floating watermark has no container edge to expose. */}
         <div data-parallax="0.1" className="relative h-[290px] w-[340px] overflow-hidden opacity-[0.1] sm:h-[350px] sm:w-[420px]">
           <Image
-            src="/camsur-uptown-logo.png"
+            src="/branding/camsur-uptown-golf-shield.png"
             alt=""
-            width={720}
-            height={958}
-            className="absolute left-1/2 top-0 h-auto w-[340px] max-w-none -translate-x-1/2 grayscale sm:w-[420px]"
+            width={770}
+            height={1076}
+            className="mx-auto h-full w-auto grayscale"
           />
         </div>
       </div>
       <div className="mx-auto flex max-w-[1280px] flex-col items-center px-6 py-10 text-center sm:py-12 lg:px-10">
         <p
           data-reveal="up"
-          className="mb-5 font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#98782f] sm:text-xs"
+          className="mb-5 font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-xs"
         >
-          Est. 2026
+          Est. 2027
         </p>
         <h1
           data-reveal="up"
@@ -155,7 +162,7 @@ function Introduction() {
               href="https://www.img.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-[#8a681f] underline-offset-4 transition-colors hover:text-[#265136] hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136]"
+              className="font-semibold text-[#8a681f] underline-offset-4 transition-colors hover:text-[#2e5126] hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2e5126]"
             >
               IMG
             </a>{" "}
@@ -170,7 +177,7 @@ function Introduction() {
           href="/golf"
           data-reveal="up"
           style={delay(330)}
-          className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#e7d18d] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f3dfa0] xl:text-[12px]"
+          className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#e2c77a] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#efd99b] xl:text-[12px]"
         >
           <T k="action.planRound" />
         </Link>
@@ -201,7 +208,7 @@ export default function Home() {
             section sa loob, kaya kasama siya kapag pinalitan ang kulay. */}
         {/* `relative z-10`: tinatakpan nito ang anino ng Introduction na
             lumalampas pababa, kaya walang guhit sa pagitan ng dalawa. */}
-        <div className="relative z-10 bg-[#f7f5ee]">
+        <div className="relative z-10 bg-[#f3ede1]">
           {/* <HomeExplore /> */}
           <ConceptCarousel />
           <HomeClubhouseDay />

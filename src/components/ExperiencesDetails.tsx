@@ -99,13 +99,13 @@ const ACTIVITIES = [
     image: "/experiences/billiards-lounge.webp",
     href: "https://visitcamsur.com/facilities/billiards",
     description:
-      "Indoor tables for the gap between activities, or for an afternoon the rain has rearranged. An open-air lounge with garden views, cues on the wall, and space for the whole group to rack up, settle a friendly bet, and unwind after the day's round.",
+      "Tables for the gap between activities, or for an afternoon the rain has rearranged. A lounge with garden views, cues on the wall, and room for the whole group to rack up, settle a friendly bet, and unwind after the day’s round.",
   },
 ] as const;
 
 function ExperiencesCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
       <Shell>
         <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
           <div>
@@ -125,7 +125,7 @@ function ExperiencesCta() {
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
                 href="/plan-your-visit"
-                className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
               >
                 Plan your days
               </Link>
@@ -147,11 +147,11 @@ export default function ExperiencesDetails() {
           pagitan ng breadcrumb at ng heading. Lokal lang ito sa Experiences —
           hindi hinahawakan ang shared na constant para di maapektuhan ang
           ibang pahina. Pareho pa rin ang bottom padding. */}
-      <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] pb-14 pt-4 sm:pb-16 sm:pt-6">
+      <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-14 pt-4 sm:pb-16 sm:pt-6">
         <Shell>
           <EditorialHeading
-            title="Come find your adventure."
-            intro="Take on wakeboarding, pickle ball, basketball, and ATV trails, or unwind with a massage and the resort's quieter corners — there's something here for everyone."
+            title="More to do between rounds."
+            intro="Wakeboarding, pickle ball, basketball, and ATV trails at CamSur for the active days, and a massage or a quiet hour by the lake for the slower ones."
             size="lg"
           />
         </Shell>

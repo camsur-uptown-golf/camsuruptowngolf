@@ -75,15 +75,15 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
           </div>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
-        <section className="relative isolate bg-[#f7f5ee] pt-10 pb-6 sm:pt-12 sm:pb-8">
+        <section className="relative isolate bg-[#f3ede1] pt-10 pb-6 sm:pt-12 sm:pb-8">
           <Shell>
             <p
               data-reveal="up"
-              className="mx-auto max-w-3xl text-center text-base leading-8 text-[#14271d] sm:text-lg sm:leading-9"
+              className="mx-auto max-w-3xl text-center text-base leading-8 text-[#03321b] sm:text-lg sm:leading-9"
             >
               {space.description}
             </p>
@@ -99,7 +99,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             caption ay minsan lang nagre-reveal at nananatiling visible. */}
         {space.gallery.length > 0 ? (
           <>
-            <section className="relative isolate scroll-mt-24 bg-[#f7f5ee] pt-4 pb-10 sm:pt-6 sm:pb-14">
+            <section className="relative isolate scroll-mt-24 bg-[#f3ede1] pt-4 pb-10 sm:pt-6 sm:pb-14">
               <Shell>
                 <EditorialHeading size="lg" kicker="" title={`More of ${space.name.toLowerCase()}.`} />
               </Shell>
@@ -115,14 +115,14 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
               size="lg"
               kicker=""
               title="Come and see it."
-              intro="Opening hours, dress code, and visitor access are still being finalized. Plan your visit and we’ll help you prepare."
+              intro="Plan your visit and the team will send opening hours, dress code, and visitor access before your day."
             />
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
               <Link
                 href="/plan-your-visit"
                 data-reveal="up"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
               >
                 Plan your visit
               </Link>
@@ -131,7 +131,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
         </section>
 
         {/* Pabalik-balik sa anim na kuwarto, gaya ng sa mga butas ng golf. */}
-        <nav aria-label="Other rooms" className="grid border-t border-[#1f3f2e]/10 sm:grid-cols-2">
+        <nav aria-label="Other rooms" className="grid border-t border-[#03321b]/10 sm:grid-cols-2">
           {[
             { space: previous, label: "Previous" },
             { space: next, label: "Next" },
@@ -153,7 +153,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
                 aria-hidden="true"
               />
               <span className="absolute inset-x-0 bottom-0 p-8 text-white sm:p-10">
-                <span className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#e7d18d] xl:text-[11px]">
+                <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">
                   {label}
                 </span>
                 <span className="mt-3 block text-2xl font-medium tracking-[-0.04em] sm:text-3xl">{other.name}</span>

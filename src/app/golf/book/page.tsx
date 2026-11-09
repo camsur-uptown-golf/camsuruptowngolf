@@ -8,13 +8,13 @@ import { currentMember } from "@/lib/member-session";
 import { todayInManila } from "@/lib/weather";
 
 /**
- * Ang tee-time booking — ang "Reserve a tee time" mula sa /golf.
+ * Ang tee-time booking — ang "Reserve your round" mula sa /golf.
  *
  * Dynamic: kailangan ang "ngayon" sa Maynila (para sa min ng petsa) at ang
  * naka-login na miyembro (para mapunan agad ang contact).
  */
 export const metadata: Metadata = {
-  title: "Reserve a tee time | CamSur Uptown Golf",
+  title: "Reserve your round | CamSur Uptown Golf",
   description: "Choose your date, round, and tee time at CamSur Uptown Golf, add a caddie or a night at Villa Del Rey, and secure it with a downpayment.",
 };
 
@@ -33,25 +33,28 @@ export default async function BookTeeTimePage({ searchParams }: { searchParams: 
   return (
     <>
       <main>
-        <section id="top" className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#1f3f2e] px-6 pb-14 pt-40 text-white sm:min-h-[560px] sm:pb-16 sm:pt-44 lg:px-8">
-          <HeroBackdrop src="/hero-images/tee-time-v3-logo.webp" alt="Golf ball printed with the CamSur Uptown Golf logo beside a driver on the morning fairway" imageClassName="object-[60%_center] sm:object-center" />
+        {/* MABABANG HERO. Booking form ang pakay ng pahinang ito, kaya dapat
+            makita ang unang hakbang nang hindi nag-i-scroll. 560px dati sa
+            desktop — nasa ilalim na ng screen ang form. */}
+        <section id="top" className="relative isolate flex min-h-[300px] items-end overflow-hidden bg-[#03321b] px-6 pb-10 pt-32 text-white sm:min-h-[400px] sm:pb-12 sm:pt-36 lg:px-8">
+          <HeroBackdrop src="/hero-images/tee-time-2027-logo.webp" alt="Golf ball printed with the CamSur Uptown Golf logo beside a driver on the morning fairway" imageClassName="object-[60%_center] sm:object-center" />
           <div className="mx-auto max-w-3xl text-center">
-            <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">Golf</p>
-            <h1 className="mt-4 font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">
-              Reserve a tee time.
+            <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">Golf</p>
+            <h1 className="mt-3 font-display text-[clamp(2.25rem,4.4vw,3.75rem)] font-medium leading-[0.95] tracking-[-0.055em]">
+              Reserve your round.
             </h1>
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/85 sm:text-base sm:leading-8">
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/85 sm:text-base sm:leading-7">
               Pick your day and time on the course, add what you need, and secure it with a downpayment. The rest is
               settled at the club.
             </p>
           </div>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
-        <section className="bg-[#f7f5ee] pb-20 pt-6 text-[#14271d]">
+        <section className="bg-[#f3ede1] pb-20 pt-6 text-[#03321b]">
           <div className="mx-auto w-full max-w-6xl px-6 lg:px-8">
             <TeeTimeBooking
               today={todayInManila()}

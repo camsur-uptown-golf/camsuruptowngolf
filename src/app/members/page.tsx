@@ -54,8 +54,8 @@ function formatDate(iso: string | null) {
 function PlansHeading({ eyebrow, title, intro }: { eyebrow: string; title: string; intro: string }) {
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">{eyebrow}</p>
-      <h2 className="mt-4 font-display text-[clamp(2rem,4vw,3.25rem)] font-medium leading-[1] tracking-[-0.045em] text-[#14271d]">{title}</h2>
+      <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">{eyebrow}</p>
+      <h2 className="mt-4 font-display text-[clamp(2rem,4vw,3.25rem)] font-medium leading-[1] tracking-[-0.045em] text-[#03321b]">{title}</h2>
       <p className="mt-4 text-sm leading-7 text-[#5d685f] sm:text-base sm:leading-8">{intro}</p>
     </div>
   );
@@ -69,10 +69,10 @@ export default async function MembersPage() {
     return (
       <>
         <main>
-          <section id="top" className="relative isolate flex min-h-[520px] items-end overflow-hidden bg-[#1f3f2e] px-6 pb-14 pt-40 text-white sm:min-h-[560px] sm:pb-16 sm:pt-44 lg:px-8">
-            <HeroBackdrop src="/clubhouse/concept/members-lounge.jpg" alt="Members’ lounge concept overlooking the tropical golf course" />
+          <section id="top" className="relative isolate flex min-h-[520px] items-end overflow-hidden bg-[#03321b] px-6 pb-14 pt-40 text-white sm:min-h-[560px] sm:pb-16 sm:pt-44 lg:px-8">
+            <HeroBackdrop src="/brand-2026/rooftop-evening.webp" alt="Rooftop bar concept at dusk: two guests sharing an evening above the course" imageClassName="object-[40%_center] sm:object-center" />
             <div className="mx-auto max-w-3xl text-center">
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">
                 Member&apos;s area
               </p>
               <h1 className="mt-4 font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">
@@ -84,15 +84,15 @@ export default async function MembersPage() {
             </div>
           </section>
 
-          <div className="bg-[#f7f5ee]">
+          <div className="bg-[#f3ede1]">
             <Breadcrumbs />
           </div>
 
-          <section className="bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+          <section className="bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
             <Container>
               <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
-                <div className="border border-[#1f3f2e]/12 bg-white p-7 sm:p-8">
-                  <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f]">Your account</p>
+                <div className="border border-[#03321b]/12 bg-white p-7 sm:p-8">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">Your account</p>
                   <dl className="mt-5 space-y-4 text-sm">
                     {[
                       ["Name", `${member.firstName} ${member.lastName}`],
@@ -101,7 +101,7 @@ export default async function MembersPage() {
                       ["Member since", formatDate(member.createdAt)],
                       ["Plan", plan ? `${plan.name} · ${formatPeso(plan.pricePerMonth)}/mo` : "—"],
                     ].map(([label, value]) => (
-                      <div key={label} className="flex flex-col gap-1 border-b border-[#1f3f2e]/10 pb-4 last:border-0 last:pb-0 sm:flex-row sm:justify-between sm:gap-6">
+                      <div key={label} className="flex flex-col gap-1 border-b border-[#03321b]/10 pb-4 last:border-0 last:pb-0 sm:flex-row sm:justify-between sm:gap-6">
                         <dt className="text-[#667269]">{label}</dt>
                         <dd translate="no" className="font-semibold break-words sm:text-right">
                           {value}
@@ -114,23 +114,31 @@ export default async function MembersPage() {
                   </div>
                 </div>
 
-                <div className="border border-[#1f3f2e]/12 bg-white p-7 sm:p-8">
-                  <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f]">What&apos;s next</p>
+                <div className="border border-[#03321b]/12 bg-white p-7 sm:p-8">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">What&apos;s next</p>
                   <h2 className="mt-3 text-2xl font-medium tracking-[-0.035em]">Plan your first visit as a member.</h2>
                   <p className="mt-3 text-sm leading-7 text-[#5d685f]">
-                    Online tee-time booking for members is on its way. Until then, tell the club when you would like to
-                    play and the team will arrange it for you.
+                    Book your tee time online — your name, email, and mobile are already filled in. For a group or anything
+                    special, tell the club and the team will arrange it.
                   </p>
+                  {/* "On its way" ang booking dito dati, pero gumagana na ang
+                      /golf/book at pinupunan na nito ang detalye ng member. */}
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link
+                      href="/golf/book"
+                      className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:bg-[#efd99b] xl:text-[11px]"
+                    >
+                      Reserve your round
+                    </Link>
+                    <Link
                       href="/plan-your-visit"
-                      className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:bg-[#f3dfa0] xl:text-[11px]"
+                      className="inline-flex h-11 items-center rounded-full border border-[#2e5126]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#2e5126] transition hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white xl:text-[11px]"
                     >
                       Plan your visit
                     </Link>
                     <Link
                       href="/clubhouse/members-lounge"
-                      className="inline-flex h-11 items-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white xl:text-[11px]"
+                      className="inline-flex h-11 items-center rounded-full border border-[#2e5126]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#2e5126] transition hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white xl:text-[11px]"
                     >
                       Members’ lounge
                     </Link>
@@ -139,10 +147,10 @@ export default async function MembersPage() {
                     <Tr
                       t="Questions about your membership? Call {0} or email {1}."
                       v={[
-                        <a key="phone" href={CLUB_PHONE.href} className="font-semibold text-[#265136] underline underline-offset-4">
+                        <a key="phone" href={CLUB_PHONE.href} className="font-semibold text-[#2e5126] underline underline-offset-4">
                           {CLUB_PHONE.label}
                         </a>,
-                        <a key="email" href={CLUB_EMAIL.href} className="font-semibold break-words text-[#265136] underline underline-offset-4">
+                        <a key="email" href={CLUB_EMAIL.href} className="font-semibold break-words text-[#2e5126] underline underline-offset-4">
                           {CLUB_EMAIL.label}
                         </a>,
                       ]}
@@ -153,7 +161,7 @@ export default async function MembersPage() {
             </Container>
           </section>
 
-          <section id="plans" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-[#f7f5ee] pb-20 pt-16 text-[#14271d]">
+          <section id="plans" className="scroll-mt-24 border-t border-[#03321b]/10 bg-[#f3ede1] pb-20 pt-16 text-[#03321b]">
             {/* Mas malapad kaysa sa Container — tatlong card na may mahabang listahan. */}
             <div className="mx-auto w-full max-w-6xl px-6 lg:px-8">
               <PlansHeading
@@ -181,7 +189,7 @@ export default async function MembersPage() {
         {/* `min-h-svh`: sa Log in ay mas maikli ang card kaysa sa tanaw, kaya
             sumisilip sa ibaba ang cream na section ng mga plan — parang puting
             guhit. Laging puno na ng hero ang buong screen. */}
-        <section id="top" className="relative isolate min-h-svh overflow-hidden bg-[#14271d] px-6 pb-16 pt-36 text-white sm:pt-44 lg:px-12 lg:pb-24 lg:pt-64">
+        <section id="top" className="relative isolate min-h-svh overflow-hidden bg-[#03321b] px-6 pb-16 pt-36 text-white sm:pt-44 lg:px-12 lg:pb-24 lg:pt-64">
           {/* NAKAPIRMING TAAS ANG LARAWAN, hindi `inset-0`. Mas mahaba ang card
               ng Sign up kaysa sa Log in, kaya humahaba at umiikli ang section
               sa paglipat ng tab — at kung sinusundan ng larawan ang section,
@@ -200,9 +208,13 @@ export default async function MembersPage() {
           {/* Mas madilim sa kaliwa (para mabasa ang teksto), maliwanag sa kanan. */}
           <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#07170f]/78 via-[#07170f]/45 to-[#07170f]/10" aria-hidden="true" />
 
-          <div className="mx-auto grid w-full max-w-7xl items-start gap-12 lg:grid-cols-[1fr_minmax(0,460px)] lg:gap-16">
-            <div className="max-w-xl lg:pt-10">
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">
+          {/* FORM MUNA SA CELLPHONE. Isang hanay sa cellphone: heading, tapos ang
+              login card, tapos ang benepisyo — ang pumupunta rito ay kadalasang
+              gustong mag-log in agad. Sa desktop ay pareho pa rin: heading at
+              benepisyo sa kaliwa, card sa kanan (sumasaklaw sa dalawang hilera). */}
+          <div className="mx-auto grid w-full max-w-7xl items-start gap-y-10 lg:grid-cols-[1fr_minmax(0,460px)] lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-9">
+            <div className="order-1 max-w-xl lg:order-none lg:col-start-1 lg:row-start-1 lg:pt-10">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">
                 Member&apos;s login
               </p>
               <h1 className="mt-4 font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">
@@ -212,10 +224,12 @@ export default async function MembersPage() {
                 Log in to your member account, or create one in a minute. Members book first, play at member rates, and
                 hear about the club before anyone else.
               </p>
-              <ul className="mt-9 grid gap-5 sm:grid-cols-2">
+            </div>
+
+            <ul className="order-3 grid max-w-xl gap-5 sm:grid-cols-2 lg:order-none lg:col-start-1 lg:row-start-2">
                 {BENEFITS.map((benefit) => (
                   <li key={benefit.title} className="flex gap-3">
-                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#e7d18d]/45 text-[#e7d18d]">
+                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#e2c77a]/45 text-[#e2c77a]">
                       <CheckIcon />
                     </span>
                     <span>
@@ -224,10 +238,9 @@ export default async function MembersPage() {
                     </span>
                   </li>
                 ))}
-              </ul>
-            </div>
+            </ul>
 
-            <div id="member-access" className="scroll-mt-28">
+            <div id="member-access" className="order-2 scroll-mt-28 lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1">
               <MemberAuth />
               {/* Dati ay hiwalay na section ito sa ilalim, kasama ng breadcrumb.
                   Inalis ang section; dito na lang sa ilalim ng card ang tulong. */}
@@ -235,10 +248,10 @@ export default async function MembersPage() {
                 <Tr
                   t="Need help with your account? Call {0} or email {1}."
                   v={[
-                    <a key="phone" href={CLUB_PHONE.href} className="font-semibold text-[#f3dda0] underline underline-offset-4 hover:text-white">
+                    <a key="phone" href={CLUB_PHONE.href} className="font-semibold text-[#efd99b] underline underline-offset-4 hover:text-white">
                       {CLUB_PHONE.label}
                     </a>,
-                    <a key="email" href={CLUB_EMAIL.href} className="font-semibold break-words text-[#f3dda0] underline underline-offset-4 hover:text-white">
+                    <a key="email" href={CLUB_EMAIL.href} className="font-semibold break-words text-[#efd99b] underline underline-offset-4 hover:text-white">
                       {CLUB_EMAIL.label}
                     </a>,
                   ]}
@@ -248,7 +261,7 @@ export default async function MembersPage() {
           </div>
         </section>
 
-        <section id="plans" className="scroll-mt-24 bg-[#f7f5ee] pb-20 pt-16 text-[#14271d]">
+        <section id="plans" className="scroll-mt-24 bg-[#f3ede1] pb-20 pt-16 text-[#03321b]">
           {/* Mas malapad kaysa sa Container — tatlong card na may mahabang listahan. */}
           <div className="mx-auto w-full max-w-6xl px-6 lg:px-8">
             <PlansHeading

@@ -43,7 +43,7 @@ export default function StayInfoTabs({
       <div
         role="tablist"
         aria-label="Room information"
-        className="flex flex-wrap items-center gap-x-1.5 gap-y-2 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] sm:text-[11px] sm:tracking-[0.18em]"
+        className="flex flex-wrap items-center gap-x-1.5 gap-y-2 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] sm:text-[11px] sm:tracking-[0.18em]"
       >
         {TABS.map((tab, index) => (
           <Fragment key={tab.id}>
@@ -61,7 +61,7 @@ export default function StayInfoTabs({
               onClick={() => setActive(tab.id)}
               className={`cursor-pointer rounded-full border px-3 py-2 transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] ${
                 active === tab.id
-                  ? "border-[#98782f]/35 bg-[#98782f]/10 text-[#98782f] shadow-[inset_0_0_0_1px_rgba(152,120,47,0.05)]"
+                  ? "border-[#98782f]/35 bg-[#98782f]/10 text-[#7d6224] shadow-[inset_0_0_0_1px_rgba(152,120,47,0.05)]"
                   : "border-transparent text-[#5d685f]/55 hover:-translate-y-0.5 hover:border-[#98782f]/25 hover:bg-[#98782f]/[0.06] hover:text-[#7e6327]"
               }`}
             >

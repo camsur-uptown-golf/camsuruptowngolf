@@ -11,8 +11,8 @@ export const runtime = "nodejs";
 export async function POST(request: Request) {
   if (!simulatePayments()) return NextResponse.json({ ok: false }, { status: 404 });
   const body = (await request.json().catch(() => ({}))) as { code?: string };
-  const reservation = getReservation(String(body.code ?? ""));
+  const reservation = await getReservation(String(body.code ?? ""));
   if (!reservation || reservation.status !== "held") return NextResponse.json({ ok: false, error: "state" }, { status: 409 });
-  const ok = confirmReservation(reservation.id, "TEST-PAYMENT");
+  const ok = await confirmReservation(reservation.id, "TEST-PAYMENT");
   return NextResponse.json({ ok }, { status: ok ? 200 : 409 });
 }

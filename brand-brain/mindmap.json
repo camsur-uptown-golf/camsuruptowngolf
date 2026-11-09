@@ -1,0 +1,16 @@
+{
+  "title": "CamSur Uptown Golf Brand Brain",
+  "root_title": "CamSur Uptown Golf",
+  "tagline": "Golf beneath Mt. Isarog.",
+  "background": "#f7f5ee",
+  "root_color": "#071d13",
+  "root_text": "#f3dda0",
+  "branches": [
+    {"name": "1  Project", "color": "#265136", "leaves": ["Claude Project: CamSur Uptown Golf Brand Brain", "Custom instructions in 00-README", "Source register: the website code"]},
+    {"name": "System", "color": "#1f3f2e", "leaves": ["Course: 18 holes, par 72, 6,851 yds, design credited to IMG", "Clubhouse: VM·STUDIO concept, 2,695 m², not as-built", "Stays at Villa Del Rey; experiences are CWC facilities", "All ₱ figures are example prices (Estimates)"]},
+    {"name": "2  Brand kit", "color": "#98782f", "leaves": ["Paper #f7f5ee · ink #14271d · green #265136 · forest #1f3f2e", "Gold CTA #e7d18d · gold text #98782f / #f3dda0", "Cormorant SC titles · Manrope body · Montserrat labels", "Pill buttons, uppercase tracked labels"]},
+    {"name": "3  Voice rules", "color": "#5d685f", "leaves": ["Plain, practical, unhurried; the club as host", "Short headlines ending in a full stop", "Never: award-winning, now open, official IMG partner"]},
+    {"name": "4  Brand DNA", "color": "#14271d", "leaves": ["Who: golfers in and visiting Camarines Sur, groups, members", "Problem: a golf trip arranged piece by piece", "Solve: round, stay, packages, events, booked once", "Proof: 18 holes, par 72, 54.23 ha, 7 water features"]},
+    {"name": "5  Create", "color": "#071d13", "leaves": ["Mobile app screens", "Website pages", "Social captions", "Package emails", "Image briefs"]}
+  ]
+}

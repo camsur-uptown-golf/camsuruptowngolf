@@ -43,7 +43,7 @@ function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
 function ArrowDisc({ size = "h-11 w-11" }: { size?: string }) {
   return (
     <span
-      className={`${size} inline-flex shrink-0 items-center justify-center rounded-full border border-[#e7d18d]/70 text-[#f0d98f] transition duration-300 group-hover:border-[#e7d18d] group-hover:bg-[#e7d18d] group-hover:text-[#14271d]`}
+      className={`${size} inline-flex shrink-0 items-center justify-center rounded-full border border-[#e2c77a]/70 text-[#f0d98f] transition duration-300 group-hover:border-[#e2c77a] group-hover:bg-[#e2c77a] group-hover:text-[#03321b]`}
     >
       <ArrowIcon className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
     </span>
@@ -64,7 +64,7 @@ function ExploreCard({ section, index }: { section: SiteSection; index: number }
       href={`/${section.slug}`}
       data-reveal="up"
       style={delay(index * 90)}
-      className={`group relative isolate block h-[340px] overflow-hidden rounded-[1.6rem] bg-[#14271d] text-white shadow-[0_18px_44px_rgba(20,39,29,0.14)] outline-none ring-[#e7d18d] transition-shadow duration-500 hover:shadow-[0_26px_60px_rgba(20,39,29,0.26)] focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f5ee] lg:h-auto ${
+      className={`group relative isolate block h-[340px] overflow-hidden rounded-[1.6rem] bg-[#03321b] text-white shadow-[0_18px_44px_rgba(20,39,29,0.14)] outline-none ring-[#e2c77a] transition-shadow duration-500 hover:shadow-[0_26px_60px_rgba(20,39,29,0.26)] focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f3ede1] lg:h-auto ${
         isFeature ? "sm:h-[460px]" : ""
       } ${className}`}
     >
@@ -84,20 +84,20 @@ function ExploreCard({ section, index }: { section: SiteSection; index: number }
           />
           <div className="flex h-full max-w-[360px] flex-col justify-between p-6 sm:p-7">
             <div className="flex items-center gap-3">
-              <span className="font-navigation text-[11px] font-bold tracking-[0.18em] text-[#e7d18d]">{number}</span>
-              <span className="h-px w-8 bg-[#e7d18d]/60 transition-all duration-500 group-hover:w-14" />
-              <span className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-white/70 xl:text-[11px]">
+              <span className="font-navigation text-[11px] font-bold tracking-[0.18em] text-[#e2c77a]">{number}</span>
+              <span className="h-px w-8 bg-[#e2c77a]/60 transition-all duration-500 group-hover:w-14" />
+              <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-white/70 xl:text-[11px]">
                 {meta}
               </span>
             </div>
             <div>
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#f0d98f] xl:text-[11px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#f0d98f] xl:text-[11px]">
                 <Label slug={section.slug} />
               </p>
               <h3 className="mt-2 font-display text-2xl font-medium leading-tight tracking-[-0.03em] xl:text-3xl">
                 {section.title}
               </h3>
-              <span className="mt-5 inline-flex items-center gap-3 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#f0d98f] xl:text-[11px]">
+              <span className="mt-5 inline-flex items-center gap-3 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f0d98f] xl:text-[11px]">
                 <ArrowDisc size="h-10 w-10" />
                 <T k="home.explore.cta" />
               </span>
@@ -112,7 +112,7 @@ function ExploreCard({ section, index }: { section: SiteSection; index: number }
           />
           <div className="flex h-full flex-col justify-between p-6 sm:p-7 lg:p-8">
             <div className="flex items-start justify-between gap-4">
-              <span className="rounded-full border border-white/30 bg-black/20 px-3 py-1.5 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-white/90 backdrop-blur-sm xl:text-[11px]">
+              <span className="rounded-full border border-white/30 bg-black/20 px-3 py-1.5 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-white/90 backdrop-blur-sm xl:text-[11px]">
                 {meta}
               </span>
               <span
@@ -126,7 +126,7 @@ function ExploreCard({ section, index }: { section: SiteSection; index: number }
 
             <div className="flex items-end justify-between gap-5">
               <div className={isFeature ? "max-w-xl" : ""}>
-                <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#f0d98f] xl:text-[11px]">
+                <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#f0d98f] xl:text-[11px]">
                   {isFeature ? section.eyebrow : <Label slug={section.slug} />}
                 </p>
                 {isFeature ? (
@@ -151,7 +151,7 @@ function ExploreCard({ section, index }: { section: SiteSection; index: number }
       {/* Gold na linya sa ibaba na humahaba kapag hinover. */}
       <span
         aria-hidden="true"
-        className="absolute bottom-0 left-0 h-[3px] w-0 bg-[#e7d18d] transition-all duration-700 ease-out group-hover:w-full"
+        className="absolute bottom-0 left-0 h-[3px] w-0 bg-[#e2c77a] transition-all duration-700 ease-out group-hover:w-full"
       />
     </Link>
   );
@@ -159,12 +159,12 @@ function ExploreCard({ section, index }: { section: SiteSection; index: number }
 
 export default function HomeExplore() {
   return (
-    <section id="explore" className="bg-[#f7f5ee] text-[#14271d]">
+    <section id="explore" className="bg-[#f3ede1] text-[#03321b]">
       <div className="mx-auto max-w-[1280px] px-6 pb-16 pt-6 sm:pb-20 lg:px-10 lg:pb-24">
         <div className="mb-9 flex flex-col items-center text-center sm:mb-11">
           <p
             data-reveal="up"
-            className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#98782f] sm:text-xs"
+            className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-xs"
           >
             <T k="home.explore.eyebrow" />
           </p>

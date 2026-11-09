@@ -37,7 +37,7 @@ type TravelIconName = (typeof TRAVEL_ROUTES)[number]["icon"] | (typeof ARRIVAL_N
 function TravelIcon({ name }: { name: TravelIconName }) {
   return (
     <span
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#265136]"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#2e5126]"
       aria-hidden="true"
     >
       <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none">
@@ -82,9 +82,9 @@ export default function GettingHerePage() {
 
         <section
           id="top"
-          className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#14271d] px-6 pb-14 pt-48 text-white sm:min-h-[560px] sm:px-8 sm:pb-16 sm:pt-52 lg:px-12 lg:pt-56"
+          className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#03321b] px-6 pb-14 pt-48 text-white sm:min-h-[560px] sm:px-8 sm:pb-16 sm:pt-52 lg:px-12 lg:pt-56"
         >
-          <HeroBackdrop src="/hero-images/getting-here-v2.webp" alt="Clubhouse arrival concept with a clear paved driveway and guest transfer van at the drop-off" imageClassName="object-[60%_center] sm:object-center" />
+          <HeroBackdrop src="/brand-2026/camsur-rivers-fields.webp" alt="Winding river and rice fields below a mountain at sunrise" imageClassName="object-[45%_center] sm:object-center" />
 
           <div className="mx-auto w-full max-w-7xl">
             <div className="max-w-2xl">
@@ -97,7 +97,7 @@ export default function GettingHerePage() {
           </div>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
@@ -110,28 +110,28 @@ export default function GettingHerePage() {
               intro="Times are for an ordinary drive in daylight. Allow a little more on a weekend morning, when the road into Naga is busiest."
             />
 
-            <div className="mt-10 border-t border-[#1f3f2e]/12">
+            <div className="mt-10 border-t border-[#03321b]/12">
               {TRAVEL_ROUTES.map((route, index) => (
                 <div
                   key={route.from}
                   data-reveal="up"
                   style={delay(index * 90)}
                   className={`grid items-baseline gap-x-8 gap-y-4 py-8 sm:grid-cols-[auto_minmax(0,1fr)_auto] ${
-                    index ? "border-t border-[#1f3f2e]/12" : ""
+                    index ? "border-t border-[#03321b]/12" : ""
                   }`}
                 >
                   <div className="self-center">
                     <TravelIcon name={route.icon} />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-base font-semibold tracking-[-0.02em] text-[#14271d]">{route.from}</h3>
+                    <h3 className="text-base font-semibold tracking-[-0.02em] text-[#03321b]">{route.from}</h3>
                     <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{route.note}</p>
                   </div>
                   {/* Ang oras ang pinakamalaking bagay sa hilera — iyon ang
                       unang hinahanap ng bumibisita. */}
-                  <p className="flex items-baseline gap-2 text-[clamp(2.6rem,4vw,3.75rem)] font-normal leading-none tracking-[-0.04em] text-[#265136] sm:justify-self-end">
+                  <p className="flex items-baseline gap-2 text-[clamp(2.6rem,4vw,3.75rem)] font-normal leading-none tracking-[-0.04em] text-[#2e5126] sm:justify-self-end">
                     {route.time}
-                    <span className="font-navigation text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.16em] text-[#98782f]">
+                    <span className="font-navigation text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">
                       {route.unit}
                     </span>
                   </p>
@@ -144,7 +144,7 @@ export default function GettingHerePage() {
                 <div key={note.title} data-reveal="up" style={delay(index * 110)} className="flex gap-5">
                   <TravelIcon name={note.icon} />
                   <div>
-                    <h3 className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
+                    <h3 className="font-navigation text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224]">
                       {note.title}
                     </h3>
                     <p className="mt-2.5 max-w-sm text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">
@@ -157,15 +157,15 @@ export default function GettingHerePage() {
           </Shell>
         </section>
 
-        <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#1f3f2e] py-14 text-white sm:py-16">
+        <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#03321b] py-14 text-white sm:py-16">
           <div
             data-parallax="0.14"
-            className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"
+            className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c5a35c]/[0.07] blur-3xl"
             aria-hidden="true"
           />
           <Shell>
             <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-              <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">
+              <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a]">
                 The club
               </p>
               <h2
@@ -190,13 +190,13 @@ export default function GettingHerePage() {
                 <div className="mt-7 flex flex-wrap justify-center gap-3">
                   <a
                     href={CLUB_PHONE.href}
-                    className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                    className="inline-flex h-12 items-center rounded-full bg-[#e2c77a] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
                   >
                     <Tr t="Call {0}" v={[CLUB_PHONE.label]} />
                   </a>
                   <Link
                     href="/plan-your-visit"
-                    className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f]"
+                    className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e2c77a] hover:text-[#efd99b]"
                   >
                     Arrange a transfer
                   </Link>

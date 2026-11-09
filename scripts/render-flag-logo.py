@@ -39,7 +39,7 @@ TRACK = {
 
 
 def prepare_reference():
-    new = cv2.imread(str(ROOT / "public/branding/camsur-uptown-golf-header-v4.png"), cv2.IMREAD_UNCHANGED)
+    new = cv2.imread(str(ROOT / "public/branding/camsur-uptown-golf-header-2027.png"), cv2.IMREAD_UNCHANGED)
     artwork = []
     for crop in (new[1213:1312, 342:739], new[1353:1404, 276:810]):
         alpha = crop[:, :, 3:4].astype(np.float32) / 255

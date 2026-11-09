@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import FaqSearch from "@/components/FaqSearch";
 import Footer from "@/components/Footer";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import ScrollMotion from "@/components/ScrollMotion";
@@ -32,6 +33,11 @@ export const metadata: Metadata = {
     "Rates, booking, caddies, dress code, accommodation, and transfers — the questions the club is asked most often, answered before you enquire.",
 };
 
+/** "Booking & rates" → "booking-rates": anchor ng bawat pangkat para sa topic nav. */
+function topicId(title: string) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
 export default function FaqPage() {
   return (
     <>
@@ -40,9 +46,9 @@ export default function FaqPage() {
 
         <section
           id="top"
-          className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#14271d] px-6 pb-14 pt-48 text-white sm:min-h-[560px] sm:px-8 sm:pb-16 sm:pt-52 lg:px-12 lg:pt-56"
+          className="relative isolate flex min-h-[260px] items-end overflow-hidden bg-[#03321b] px-6 pb-10 pt-32 text-white sm:min-h-[560px] sm:px-8 sm:pb-16 sm:pt-52 lg:px-12 lg:pt-56"
         >
-          <HeroBackdrop src="/hero-images/faq-v2.webp" alt="Golf bag, shoes and glove prepared beside a clubhouse terrace bench" imageClassName="object-[70%_center] sm:object-center" />
+          <HeroBackdrop src="/brand-2026/first-tee-dew.webp" alt="A golf ball teed up in the morning dew" imageClassName="object-[50%_62%]" />
 
           <div className="mx-auto w-full max-w-7xl">
             <div className="max-w-2xl">
@@ -55,66 +61,110 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
+        {/* Ang crest ay `fixed`: nakadikit sa itaas at walang parallax. Dati
+            ay nakagitna ito sa section, kaya bumababa ito nang 75–113px
+            tuwing may binubuksang tanong. */}
         <section className={EDITORIAL_SECTION_ALT}>
-          <Watermark speed={0.1} offsetY="10%" />
-          <Shell>
-            {FAQ_GROUPS.map((group, groupIndex) => (
-              /* Ang unang pangkat ay walang puwang sa itaas — kasunod ito
-                 kaagad ng breadcrumb at ng padding ng section. */
-              <div key={group.title} className={groupIndex ? "mt-16" : ""}>
-                <h2
-                  data-reveal="up"
-                  className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]"
+          <Watermark speed={0} fixed />
+          <div className="relative mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-12">
+            <p data-reveal="up" className="max-w-2xl text-[17px] leading-[1.7] text-[#34423a] sm:text-lg">
+              The questions the club hears most, grouped by topic.
+            </p>
+
+            <FaqSearch />
+
+            {/* Sa cellphone: tatlong pindutan sa itaas para tumalon sa
+                pangkat. Sa desktop, ang nakadikit na listahan sa kaliwa. */}
+            <nav aria-label="FAQ topics" className="mt-2 flex flex-wrap gap-2 lg:hidden">
+              {FAQ_GROUPS.map((group) => (
+                <a
+                  key={group.title}
+                  href={`#${topicId(group.title)}`}
+                  className="inline-flex min-h-11 items-center rounded-full border border-[#2e5126]/25 bg-white/70 px-4 text-sm font-semibold text-[#03321b] transition-colors hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white"
                 >
                   {group.title}
-                </h2>
+                </a>
+              ))}
+            </nav>
 
-                <div className="mt-6">
-                  {group.faqs.map((faq, index) => (
-                    <details
-                      key={faq.question}
-                      data-reveal="up"
-                      style={delay(index * 70)}
-                      className="group border-b border-[#1f3f2e]/15 first:border-t first:border-[#1f3f2e]/15"
-                    >
-                      {/* Dalawang browser, dalawang default na tatsulok:
-                          kailangan ng `list-none` at ng webkit na marker
-                          para mawala silang dalawa. */}
-                      <summary className="flex cursor-pointer list-none items-center justify-between gap-8 py-6 text-lg font-medium tracking-[-0.015em] text-[#14271d] transition-colors hover:text-[#265136] sm:text-xl [&::-webkit-details-marker]:hidden">
-                        {faq.question}
-                        <span
-                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#265136]/25 text-[#265136] transition duration-300 group-open:rotate-45 group-open:border-[#265136] group-open:bg-[#265136] group-open:text-white"
-                          aria-hidden="true"
+            <div className="mt-10 lg:mt-12 lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
+              <aside className="hidden lg:block">
+                <nav aria-label="FAQ topics" className="sticky top-32">
+                  <p className="font-navigation text-[12px] font-bold uppercase tracking-[0.2em] text-[#7d6224]">Topics</p>
+                  <ul className="mt-5 space-y-1 border-l border-[#03321b]/15">
+                    {FAQ_GROUPS.map((group) => (
+                      <li key={group.title}>
+                        <a
+                          href={`#${topicId(group.title)}`}
+                          className="-ml-px block border-l-2 border-transparent py-2 pl-4 text-[15px] font-medium leading-snug text-[#34423a] transition-colors hover:border-[#2e5126] hover:text-[#03321b]"
                         >
-                          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
-                            <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                          </svg>
-                        </span>
-                      </summary>
-                      <p className="max-w-2xl pb-7 pr-14 text-sm leading-8 text-[#5d685f] sm:text-base">
-                        {faq.answer}
-                      </p>
-                    </details>
-                  ))}
-                </div>
+                          {group.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </aside>
+
+              <div>
+                {FAQ_GROUPS.map((group, groupIndex) => (
+                  <div key={group.title} id={topicId(group.title)} data-faq-group className={`scroll-mt-28 ${groupIndex ? "mt-16" : ""}`}>
+                    <h2 data-reveal="up" className="text-[30px] font-medium leading-none text-[#03321b] sm:text-[36px]">
+                      {group.title}
+                    </h2>
+
+                    {/* Nasa balot ang guhit sa pagitan, hindi sa <details>:
+                        rounded ang <details> kapag bukas, at kumukurba ang
+                        border sa mga dulo kapag doon nakalagay. */}
+                    <div className="mt-6 border-t border-[#03321b]/12">
+                      {group.faqs.map((faq, index) => (
+                        <div key={faq.question} data-faq-item className="border-b border-[#03321b]/12">
+                          <details
+                            data-reveal="up"
+                            style={delay(index * 70)}
+                            className="group -mx-4 rounded-2xl px-4 transition-colors duration-300 open:bg-white open:shadow-[0_12px_32px_-20px_rgba(20,39,29,0.45)] sm:-mx-6 sm:px-6"
+                          >
+                            {/* Dalawang browser, dalawang default na tatsulok:
+                                kailangan ng `list-none` at ng webkit na marker
+                                para mawala silang dalawa. */}
+                            <summary className="flex cursor-pointer list-none items-start justify-between gap-5 py-5 text-[19px] font-medium leading-snug tracking-[-0.015em] text-[#03321b] transition-colors hover:text-[#2e5126] group-open:text-[#2e5126] sm:gap-8 sm:py-6 sm:text-[21px] [&::-webkit-details-marker]:hidden">
+                              {faq.question}
+                              <span
+                                className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#2e5126]/30 text-[#2e5126] transition duration-300 group-open:rotate-45 group-open:border-[#2e5126] group-open:bg-[#2e5126] group-open:text-white"
+                                aria-hidden="true"
+                              >
+                                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
+                                  <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                </svg>
+                              </span>
+                            </summary>
+                            <p className="max-w-[62ch] pb-6 text-base leading-[1.75] text-[#34423a] sm:pb-7 sm:pr-14 sm:text-[17px]">
+                              {faq.answer}
+                            </p>
+                          </details>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </Shell>
+            </div>
+          </div>
         </section>
 
-        <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#1f3f2e] py-14 text-white sm:py-16">
+        <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#03321b] py-14 text-white sm:py-16">
           <div
             data-parallax="0.14"
-            className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c9a54e]/[0.07] blur-3xl"
+            className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c5a35c]/[0.07] blur-3xl"
             aria-hidden="true"
           />
           <Shell>
             <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-              <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#d8b65b]">
+              <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a]">
                 Still deciding
               </p>
               <h2
@@ -132,13 +182,13 @@ export default function FaqPage() {
                 <div className="mt-7 flex flex-wrap justify-center gap-3">
                   <Link
                     href="/plan-your-visit"
-                    className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                    className="inline-flex h-12 items-center rounded-full bg-[#e2c77a] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
                   >
                     Request a call back
                   </Link>
                   <a
                     href={CLUB_PHONE.href}
-                    className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f]"
+                    className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e2c77a] hover:text-[#efd99b]"
                   >
                     {CLUB_PHONE.label}
                   </a>

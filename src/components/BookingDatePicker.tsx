@@ -83,16 +83,16 @@ function Calendar({
     setFocusedDate(clamp(next));
   }
 
-  const navButton = "flex h-7 w-7 items-center justify-center rounded-sm border border-white/20 text-white transition hover:border-[#e7d18d] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e7d18d] disabled:cursor-not-allowed disabled:opacity-25";
+  const navButton = "flex h-7 w-7 items-center justify-center rounded-sm border border-white/20 text-white transition hover:border-[#e2c77a] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e2c77a] disabled:cursor-not-allowed disabled:opacity-25";
 
   return (
-    <div id={id} role="dialog" aria-label={tr("Choose a date")} className="absolute left-0 top-full z-30 mt-1.5 w-full max-w-[288px] overflow-hidden rounded-sm border border-[#265136]/15 bg-white shadow-[0_8px_24px_-8px_rgba(10,36,24,0.25)]">
-      <div className="flex items-center justify-between gap-2 bg-[#1f3f2e] px-3 py-2.5">
+    <div id={id} role="dialog" aria-label={tr("Choose a date")} className="absolute left-0 top-full z-30 mt-1.5 w-full max-w-[288px] overflow-hidden rounded-sm border border-[#2e5126]/15 bg-white shadow-[0_8px_24px_-8px_rgba(10,36,24,0.25)]">
+      <div className="flex items-center justify-between gap-2 bg-[#03321b] px-3 py-2.5">
         <p id={`${id}-month`} aria-live="polite" className="text-sm font-medium text-white">{format(first, { month: "long", year: "numeric" })}</p>
         <div className="flex items-center gap-1">
           <button type="button" aria-label={tr("Previous month")} disabled={month <= min.slice(0, 7)} onClick={() => setFocusedDate(clamp(offsetMonth(focusedDate, -1)))} className={navButton}><Chevron className="rotate-180" /></button>
           <button type="button" aria-label={tr("Next month")} disabled={month >= max.slice(0, 7)} onClick={() => setFocusedDate(clamp(offsetMonth(focusedDate, 1)))} className={navButton}><Chevron /></button>
-          <button type="button" aria-label={tr("Close calendar")} onClick={onClose} className="ml-1 flex h-7 w-5 items-center justify-center rounded-sm text-white/60 transition hover:text-white focus-visible:outline-2 focus-visible:outline-[#e7d18d]">
+          <button type="button" aria-label={tr("Close calendar")} onClick={onClose} className="ml-1 flex h-7 w-5 items-center justify-center rounded-sm text-white/60 transition hover:text-white focus-visible:outline-2 focus-visible:outline-[#e2c77a]">
             <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
           </button>
         </div>
@@ -103,7 +103,7 @@ function Calendar({
             <tr>
               {Array.from({ length: 7 }, (_, i) => {
                 const day = offsetDay(start, i);
-                return <th key={i} scope="col" aria-label={format(day, { weekday: "long" })} className="pb-1 text-[10px] font-semibold uppercase tracking-[0.06em] text-[#788279]">{format(day, { weekday: "narrow" })}</th>;
+                return <th key={i} scope="col" aria-label={format(day, { weekday: "long" })} className="pb-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#788279]">{format(day, { weekday: "narrow" })}</th>;
               })}
             </tr>
           </thead>
@@ -126,10 +126,10 @@ function Calendar({
                         aria-current={today ? "date" : undefined}
                         onKeyDown={(event) => navigate(event, day)}
                         onClick={() => onSelect(day)}
-                        className={`relative flex h-8 w-full items-center justify-center rounded-sm text-xs font-medium tabular-nums transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] disabled:cursor-not-allowed ${selected ? "bg-[#265136] font-bold text-white" : disabled ? "text-[#bdc3be]" : today ? "bg-[#f6f0df] text-[#265136] hover:bg-[#ece3c9]" : `hover:bg-[#265136]/[0.07] ${inMonth ? "text-[#14271d]" : "text-[#788279]"}`}`}
+                        className={`relative flex h-8 w-full items-center justify-center rounded-sm text-xs font-medium tabular-nums transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] disabled:cursor-not-allowed ${selected ? "bg-[#2e5126] font-bold text-white" : disabled ? "text-[#bdc3be]" : today ? "bg-[#f6f0df] text-[#2e5126] hover:bg-[#ece3c9]" : `hover:bg-[#2e5126]/[0.07] ${inMonth ? "text-[#03321b]" : "text-[#788279]"}`}`}
                       >
                         {asDate(day).getUTCDate()}
-                        {today ? <span aria-hidden="true" className={`absolute bottom-0.5 h-1 w-1 rounded-full ${selected ? "bg-[#e7d18d]" : "bg-[#98782f]"}`} /> : null}
+                        {today ? <span aria-hidden="true" className={`absolute bottom-0.5 h-1 w-1 rounded-full ${selected ? "bg-[#e2c77a]" : "bg-[#98782f]"}`} /> : null}
                       </button>
                     </td>
                   );
@@ -139,7 +139,7 @@ function Calendar({
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between gap-3 border-t border-[#1f3f2e]/10 bg-[#faf9f5] px-3 py-2 text-[10px] text-[#667269]">
+      <div className="flex items-center justify-between gap-3 border-t border-[#03321b]/10 bg-[#faf9f5] px-3 py-2 text-[11px] text-[#667269]">
         <span className="flex items-center gap-1.5"><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#98782f]" />{tr("Today")}</span>
         <span>{format(min, { month: "short", day: "numeric" })} – {format(max, { month: "short", day: "numeric" })}</span>
       </div>
@@ -218,15 +218,15 @@ export default function BookingDatePicker({ id, value, min, max, onChange, compa
           aria-expanded={open}
           aria-controls={open ? `${id}-calendar` : undefined}
           onClick={() => setOpen(!open)}
-          className={`flex w-full items-center gap-3 border bg-white px-4 py-3 text-left transition hover:border-[#265136]/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#265136] ${open ? "border-[#265136] ring-2 ring-[#265136]/20" : "border-[#1f3f2e]/25"}`}
+          className={`flex w-full items-center gap-3 border bg-white px-4 py-3 text-left transition hover:border-[#2e5126]/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2e5126] ${open ? "border-[#2e5126] ring-2 ring-[#2e5126]/20" : "border-[#03321b]/25"}`}
         >
-          <span aria-hidden="true" className="shrink-0 text-[#265136]">
+          <span aria-hidden="true" className="shrink-0 text-[#2e5126]">
             <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4"><rect x="3.5" y="5.5" width="17" height="15" rx="2" stroke="currentColor" strokeWidth="1.4" /><path d="M7.5 3v5M16.5 3v5M3.5 10.5h17" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /><path d="m8.5 15 2 2 4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </span>
-          <span id={`${id}-value`} aria-live="polite" className="min-w-0 flex-1 text-sm font-medium text-[#14271d]">
+          <span id={`${id}-value`} aria-live="polite" className="min-w-0 flex-1 text-sm font-medium text-[#03321b]">
             {format(value, { weekday: "short", day: "numeric", month: "short", year: "numeric" })}
           </span>
-          <Chevron className={`shrink-0 text-[#265136] transition-transform ${open ? "-rotate-90" : "rotate-90"}`} />
+          <Chevron className={`shrink-0 text-[#2e5126] transition-transform ${open ? "-rotate-90" : "rotate-90"}`} />
         </button>
         {open ? <Calendar id={`${id}-calendar`} value={value} min={min} max={max} lang={lang} tr={tr} onSelect={select} onClose={close} /> : null}
       </div>
@@ -237,7 +237,7 @@ export default function BookingDatePicker({ id, value, min, max, onChange, compa
             type="button"
             aria-pressed={value === shortcut.date}
             onClick={() => { if (shortcut.date !== value) onChange(shortcut.date); }}
-            className={`rounded-sm border px-2.5 py-1 text-[10px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#265136] ${value === shortcut.date ? "border-[#265136]/25 bg-[#265136]/[0.07] text-[#265136]" : "border-[#1f3f2e]/15 bg-transparent text-[#667269] hover:border-[#265136]/40 hover:bg-white hover:text-[#265136]"}`}
+            className={`rounded-sm border px-2.5 py-1 text-[11px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2e5126] ${value === shortcut.date ? "border-[#2e5126]/25 bg-[#2e5126]/[0.07] text-[#2e5126]" : "border-[#03321b]/15 bg-transparent text-[#667269] hover:border-[#2e5126]/40 hover:bg-white hover:text-[#2e5126]"}`}
           >
             {tr(shortcut.label)}
           </button>

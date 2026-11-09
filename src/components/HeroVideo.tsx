@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { TEASER_VIDEO } from "@/lib/site-content";
+import { TEASER_VIDEO_SOURCES } from "@/lib/site-content";
 
 /**
  * Hero background video.
@@ -22,7 +22,6 @@ export default function HeroVideo() {
           nasa likod habang naglo-load, sa halip na itim na parisukat. */}
       <video
         ref={ref}
-        src={TEASER_VIDEO}
         autoPlay
         muted
         loop
@@ -31,7 +30,18 @@ export default function HeroVideo() {
         aria-hidden="true"
         tabIndex={-1}
         className="absolute inset-0 h-full w-full object-cover"
-      />
+      >
+        {/* Ang unang tumugmang `<source>` ang pinipili: 1280 sa cellphone,
+            2560 sa retina o napakalapad na screen (kung hindi ay pinalalaki ang
+            1080p at lumalabo), 1920 sa iba. Tingnan ang TEASER_VIDEO_SOURCES. */}
+        <source src={TEASER_VIDEO_SOURCES.mobile} type="video/mp4" media="(max-width: 767px)" />
+        <source
+          src={TEASER_VIDEO_SOURCES.retina}
+          type="video/mp4"
+          media="(min-resolution: 2dppx), (-webkit-min-device-pixel-ratio: 2), (min-width: 1921px)"
+        />
+        <source src={TEASER_VIDEO_SOURCES.desktop} type="video/mp4" />
+      </video>
     </div>
   );
 }

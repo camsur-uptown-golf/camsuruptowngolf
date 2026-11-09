@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { revealConfirmation } from "@/lib/reveal-confirmation";
 import Link from "next/link";
 import { CALL_WINDOWS, CLUB_PHONE } from "@/lib/site-content";
 
@@ -16,8 +17,8 @@ import { CALL_WINDOWS, CLUB_PHONE } from "@/lib/site-content";
  */
 
 const FIELD =
-  "w-full border border-[#1f3f2e]/25 bg-white px-4 py-3 text-sm text-[#14271d] outline-none transition placeholder:text-[#9aa39d] focus:border-[#265136] focus:ring-2 focus:ring-[#265136]/20";
-const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d]";
+  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#9aa39d] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
+const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b]";
 
 export default function QuickQuestion({ context }: { context: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -53,9 +54,9 @@ export default function QuickQuestion({ context }: { context: string }) {
 
   if (status === "sent") {
     return (
-      <div className="mx-auto max-w-lg border border-[#1f3f2e]/15 bg-white p-8 text-center">
-        <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d1af58]">Thank you</p>
-        <h3 className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#14271d]">Your question is on its way.</h3>
+      <div ref={revealConfirmation} role="status" tabIndex={-1} className="mx-auto max-w-lg outline-none border border-[#03321b]/15 bg-white p-8 text-center">
+        <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#d1af58]">Thank you</p>
+        <h3 className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#03321b]">Your question is on its way.</h3>
         <p className="mt-3 text-sm leading-7 text-[#5d685f]">The club will get back to you within 48 hours.</p>
       </div>
     );
@@ -112,14 +113,14 @@ export default function QuickQuestion({ context }: { context: string }) {
         <div className="flex flex-wrap items-center justify-between gap-4 sm:col-span-2">
           <p className="text-sm text-[#5d685f]">
             Ready to play?{" "}
-            <Link href="/golf/book" className="font-semibold text-[#265136] underline underline-offset-4 hover:text-[#1f3f2e]">
-              Reserve a tee time
+            <Link href="/golf/book" className="font-semibold text-[#2e5126] underline underline-offset-4 hover:text-[#03321b]">
+              Reserve your round
             </Link>
           </p>
           <button
             type="submit"
             disabled={status === "sending"}
-            className="inline-flex h-12 min-w-[170px] items-center justify-center rounded-full bg-[#e7d18d] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-12 min-w-[170px] items-center justify-center rounded-full bg-[#e2c77a] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "sending" ? "Sending…" : "Send question"}
           </button>

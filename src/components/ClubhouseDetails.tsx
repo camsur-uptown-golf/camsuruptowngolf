@@ -30,7 +30,7 @@ export default function ClubhouseDetails() {
       {/* Ang mga area bilang full-screen visual tour — ito na ang unang malaking
           bahagi: nauuna ang nakikita (mga larawan ng espasyo) bago ang mas
           teknikal na breakdown kada palapag sa ibaba. */}
-      <section className="relative isolate scroll-mt-24 bg-[#f7f5ee] pb-10 pt-4 sm:pb-12 sm:pt-6">
+      <section className="relative isolate scroll-mt-24 bg-[#f3ede1] pb-10 pt-4 sm:pb-12 sm:pt-6">
         <div className="relative mx-auto w-full max-w-4xl px-6 sm:px-10 lg:px-12 xl:max-w-5xl">
           <EditorialHeading size="lg" title={`${roomCountWord()} ways to experience the clubhouse.`} />
         </div>
@@ -69,7 +69,7 @@ export default function ClubhouseDetails() {
                     nire-reset o binabaligtad kapag nag-scroll pataas. */}
                 <div
                   data-reveal={imageOnRight ? "right" : "left"}
-                  className={`${imageOnRight ? "lg:order-2" : ""} relative aspect-[3/2] overflow-hidden rounded-2xl bg-[#1f3f2e] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
+                  className={`${imageOnRight ? "lg:order-2" : ""} relative aspect-[3/2] overflow-hidden rounded-2xl bg-[#03321b] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
                 >
                   <Image
                     src={part.image}
@@ -81,10 +81,10 @@ export default function ClubhouseDetails() {
                 </div>
 
                 <div data-reveal="up" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
-                  <p className="relative font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+                  <p className="relative font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
                     {part.time}
                   </p>
-                  <h3 className="relative mt-3 font-display text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#14271d]">
+                  <h3 className="relative mt-3 font-display text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#03321b]">
                     {part.title}
                   </h3>
                   <p className="relative mt-4 text-[17px] leading-8 text-[#3f4c45]">{part.detail}</p>
@@ -98,19 +98,19 @@ export default function ClubhouseDetails() {
       {/* Bawal ang dobleng padding: kasunod ito ng cream na "experience"
           section, kaya makitid na top padding lang para hindi lumalawak ang
           puwang sa pagitan ng cards at ng pangwakas na CTA. */}
-      <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] pb-14 pt-2 sm:pb-16 sm:pt-4">
+      <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-14 pt-2 sm:pb-16 sm:pt-4">
         <Shell>
           <EditorialHeading
             kicker=""
             title="Come and see it."
-            intro="Opening hours, dress code, and visitor access are still being finalized. Plan your visit and we’ll help you prepare."
+            intro="Plan your visit and the team will send opening hours, dress code, and visitor access before your day."
           />
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
             <Link
               href="/plan-your-visit"
               data-reveal="up"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
             >
               Plan your visit
             </Link>

@@ -16,7 +16,7 @@ export default function MemberLogout() {
         await fetch("/api/members/logout", { method: "POST" }).catch(() => {});
         router.refresh();
       }}
-      className="inline-flex h-11 items-center justify-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white disabled:opacity-60 xl:text-[11px]"
+      className="inline-flex h-11 items-center justify-center rounded-full border border-[#2e5126]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#2e5126] transition hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white disabled:opacity-60 xl:text-[11px]"
     >
       {busy ? "Logging out…" : "Log out"}
     </button>

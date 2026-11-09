@@ -22,8 +22,8 @@ export async function POST(request: Request) {
   };
   const attributes = event.data?.attributes;
   if (attributes?.type === "checkout_session.payment.paid" && attributes.data?.id) {
-    const reservation = getReservationBySession(attributes.data.id);
-    if (reservation) confirmReservation(reservation.id, attributes.data.attributes?.payments?.[0]?.id ?? "webhook");
+    const reservation = await getReservationBySession(attributes.data.id);
+    if (reservation) await confirmReservation(reservation.id, attributes.data.attributes?.payments?.[0]?.id ?? "webhook");
   }
   /* Laging 200 kapag tunay ang pirma, para hindi paulit-ulit magpadala ang PayMongo. */
   return NextResponse.json({ ok: true });

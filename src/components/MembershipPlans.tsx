@@ -58,15 +58,15 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
             <article
               key={plan.id}
               className={`relative flex flex-col border p-7 sm:p-8 ${
-                dark ? "border-[#265136] bg-[#1f3f2e] text-white shadow-[0_24px_60px_rgba(20,39,29,0.22)]" : "border-[#1f3f2e]/12 bg-white text-[#14271d]"
-              } ${isCurrent ? "ring-2 ring-[#d8b65b] ring-offset-2 ring-offset-[#f7f5ee]" : ""}`}
+                dark ? "border-[#2e5126] bg-[#03321b] text-white shadow-[0_24px_60px_rgba(20,39,29,0.22)]" : "border-[#03321b]/12 bg-white text-[#03321b]"
+              } ${isCurrent ? "ring-2 ring-[#e2c77a] ring-offset-2 ring-offset-[#f3ede1]" : ""}`}
             >
               {dark ? (
-                <span className="absolute -top-3 left-7 rounded-full bg-[#e7d18d] px-3 py-1 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d]">
+                <span className="absolute -top-3 left-7 rounded-full bg-[#e2c77a] px-3 py-1 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b]">
                   Most popular
                 </span>
               ) : null}
-              <p className={`font-navigation text-[10px] font-bold uppercase tracking-[0.16em] ${dark ? "text-[#d8b65b]" : "text-[#98782f]"}`}>
+              <p className={`font-navigation text-[11px] font-bold uppercase tracking-[0.16em] ${dark ? "text-[#e2c77a]" : "text-[#7d6224]"}`}>
                 {plan.tier}
               </p>
               <h3 translate="no" className="mt-2 font-display text-[2.25rem] font-medium leading-none tracking-[-0.04em]">
@@ -81,13 +81,13 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
                 <span className={`text-sm ${dark ? "text-white/60" : "text-[#667269]"}`}>/ month</span>
               </p>
 
-              <p className={`mt-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] ${dark ? "text-white/55" : "text-[#8a938c]"}`}>
+              <p className={`mt-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] ${dark ? "text-white/55" : "text-[#5f6a62]"}`}>
                 Every month you get
               </p>
               <ul className="mt-3 flex-1 space-y-2.5">
                 {plan.benefits.map((benefit) => (
                   <li key={benefit} className={`flex gap-2.5 text-sm leading-6 ${dark ? "text-white/88" : "text-[#3f4c45]"}`}>
-                    <span className={dark ? "text-[#e7d18d]" : "text-[#265136]"}>
+                    <span className={dark ? "text-[#e2c77a]" : "text-[#2e5126]"}>
                       <CheckIcon />
                     </span>
                     {benefit}
@@ -100,7 +100,7 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
                   <a
                     href="#member-access"
                     className={`inline-flex h-12 w-full items-center justify-center rounded-full px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] transition ${
-                      dark ? "bg-[#e7d18d] text-[#14271d] hover:bg-[#f3dfa0]" : "border border-[#265136]/30 text-[#265136] hover:border-[#265136] hover:bg-[#265136] hover:text-white"
+                      dark ? "bg-[#e2c77a] text-[#03321b] hover:bg-[#efd99b]" : "border border-[#2e5126]/30 text-[#2e5126] hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white"
                     }`}
                   >
                     Sign up to join
@@ -109,7 +109,7 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
                   <div className="space-y-3 text-center">
                     <span
                       className={`inline-flex h-12 w-full items-center justify-center rounded-full border font-navigation text-[11px] font-bold uppercase tracking-[0.14em] ${
-                        dark ? "border-[#e7d18d]/50 text-[#e7d18d]" : "border-[#265136]/30 text-[#265136]"
+                        dark ? "border-[#e2c77a]/50 text-[#e2c77a]" : "border-[#2e5126]/30 text-[#2e5126]"
                       }`}
                     >
                       Your plan
@@ -118,7 +118,7 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
                       type="button"
                       disabled={busy !== null}
                       onClick={() => choose(null)}
-                      className={`text-xs underline underline-offset-4 disabled:opacity-60 ${dark ? "text-white/60 hover:text-white" : "text-[#667269] hover:text-[#14271d]"}`}
+                      className={`text-xs underline underline-offset-4 disabled:opacity-60 ${dark ? "text-white/60 hover:text-white" : "text-[#667269] hover:text-[#03321b]"}`}
                     >
                       {busy === "cancel" ? "Please wait…" : "Cancel plan"}
                     </button>
@@ -129,7 +129,7 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
                     disabled={busy !== null}
                     onClick={() => choose(plan.id)}
                     className={`inline-flex h-12 w-full items-center justify-center rounded-full px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] transition disabled:cursor-not-allowed disabled:opacity-60 ${
-                      dark ? "bg-[#e7d18d] text-[#14271d] hover:bg-[#f3dfa0]" : "bg-[#265136] text-[#f3dda0] hover:bg-[#1f3f2e]"
+                      dark ? "bg-[#e2c77a] text-[#03321b] hover:bg-[#efd99b]" : "bg-[#2e5126] text-[#efd99b] hover:bg-[#03321b]"
                     }`}
                   >
                     {busy === plan.id ? (
@@ -156,7 +156,7 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
           Something went wrong. Please try again.
         </p>
       ) : null}
-      <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-6 text-[#8a938c]">
+      <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-6 text-[#5f6a62]">
         Prices are in Philippine pesos, billed monthly. Choosing a plan sends your request to the club — the team will
         contact you to confirm and arrange payment. No charge is made online.
       </p>

@@ -10,7 +10,7 @@ import { searchSiteItems, type SiteSearchItem } from "@/lib/site-search";
 import { MobileUtilities } from "@/components/HeaderUtilities";
 import { useTranslation } from "@/i18n/LanguageProvider";
 import type { TranslationKey } from "@/i18n/dictionaries";
-import headerLogo from "../../public/branding/camsur-uptown-golf-header-v4.png";
+import headerLogo from "../../public/branding/camsur-uptown-golf-header-2027.png";
 
 /* Slug ng section → translation key. Nasa data (SITE_SECTIONS) ang English na
    label; dito isinasalin ang bawat isa sa piniling wika. Kapag may bagong
@@ -69,7 +69,7 @@ const MEGA_STYLES: Record<string, "cards" | "names" | "rules"> = {
  * kailangang pumuti ang teksto para mabasa ito bilang pamuno.
  */
 const MEGA_HEADING =
-  "mb-4 border-b border-white/10 pb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]";
+  "mb-4 border-b border-white/10 pb-3 text-[11px] font-bold uppercase tracking-[0.2em] text-[#efd99b]";
 
 /**
  * Ilang Golf hole lang ang ipinapakita sa mobile menu. Ang buong 18 ay
@@ -122,7 +122,7 @@ const SECTION_EXTRAS: Record<
         {
           label: "Tournaments",
           href: "/events",
-          image: "/events/golf-tournaments-full-logo-2026-clean-4k-v3.png",
+          image: "/events/golf-tournaments-full-logo-2027.png",
         },
       ],
     },
@@ -158,7 +158,7 @@ const SECTION_EXTRAS: Record<
 const UPCOMING_TOURNAMENT = {
   label: "CamSur Uptown Invitational",
   href: "/events#occasions",
-  image: "/events/golf-tournaments-full-logo-2026-clean-4k-v3.png",
+  image: "/events/golf-tournaments-full-logo-2027.png",
   date: "Sat · 28 Nov 2026",
   time: "7:00 AM shotgun start",
   format: "18-hole team scramble",
@@ -193,7 +193,7 @@ function CalendarIcon({ className = "h-4 w-4 shrink-0" }: { className?: string }
  * nagkaiba ang dalawang nav dito, iba ang sukat ng pill kapag naka-scroll.
  */
 const NAV_ITEM_CLASS =
-  "pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-2 py-2.5 transition-colors duration-200 hover:text-[#f8e9b7] xl:px-3";
+  "pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-2 py-2.5 transition-colors duration-200 hover:text-[#efd99b] xl:px-3";
 
 /* Pang-CTA sa mega menu. Hiwalay sa `ChevronIcon`: chevron iyon para sa
    mga listahan at drawer, at mahaba ang arrow na ito para sa pindutan. */
@@ -320,6 +320,18 @@ const SEARCH_ITEMS: readonly SiteSearchItem[] = [
     keywords: ["visit", "booking", "book a tee time", "plan a trip", "request a callback", "contact", "contact number", "phone number", "email address"],
   },
   {
+    label: "Pro Shop",
+    href: "/pro-shop",
+    category: "Discover",
+    keywords: ["shop", "pro shop", "golf shop", "merchandise", "merch", "apparel", "polo", "cap", "hat", "golf bag", "gifts", "umbrella"],
+  },
+  {
+    label: "The Uptown Life",
+    href: "/the-uptown-life",
+    category: "Discover",
+    keywords: ["instagram", "social", "campaign", "golf cart", "carts", "fleet", "club journal", "magazine", "journal", "uptown"],
+  },
+  {
     label: "Getting Here",
     href: "/getting-here",
     category: "Visitor information",
@@ -345,6 +357,9 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  /* Cellphone: nakatago ang lumulutang na pill habang nag-i-scroll pababa
+     (natatakpan nito ang mga headline), at bumabalik pag-scroll pataas. */
+  const [pillHidden, setPillHidden] = useState(false);
   /** Slug ng section na binuksan sa loob ng mobile drawer; null = ugat na listahan. */
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [hoveredPreviewIndex, setHoveredPreviewIndex] = useState<number | null>(null);
@@ -600,11 +615,14 @@ export default function Header() {
          kapag bumababa ang bisita. */
       if (!hasScrolled) {
         lastScrollY.current = 0;
+        setPillHidden(false);
       } else if (currentScrollY < lastScrollY.current - 10) {
         lastScrollY.current = currentScrollY;
+        setPillHidden(false);
       } else if (currentScrollY > lastScrollY.current + 10) {
         setOpenMenu(null);
         setSearchOpen(false);
+        if (currentScrollY > 120) setPillHidden(true);
         lastScrollY.current = currentScrollY;
       }
     };
@@ -709,10 +727,10 @@ export default function Header() {
 
            SURFACE GREEN ITO, HINDI ACTION. Ang bar na ito ay lalagyan lang —
            nakalatag sa likod ng marka at ng pindutan, at hindi ito
-           pinipindot. Ang compact nav pill na nakapatong dito ay `#265136`,
+           pinipindot. Ang compact nav pill na nakapatong dito ay `#2e5126`,
            kaya ang pagkakaiba ng dalawa ang naghihiwalay sa pill mula sa
            bar; kapag pareho sila, nawawala ang pill sa loob ng bar. */
-        className={`${isScrolled ? "translate-y-0" : "-translate-y-full"} pointer-events-none absolute inset-x-0 top-0 -z-10 hidden h-20 transform-gpu border-b border-[#d8b65b]/25 bg-[#1f3f2e] shadow-[0_10px_35px_rgba(0,0,0,0.18)] transition-transform duration-350 ease-out lg:block`}
+        className={`${isScrolled ? "translate-y-0" : "-translate-y-full"} pointer-events-none absolute inset-x-0 top-0 -z-10 hidden h-20 transform-gpu border-b border-[#e2c77a]/25 bg-[#03321b] shadow-[0_10px_35px_rgba(0,0,0,0.18)] transition-transform duration-350 ease-out lg:block`}
         aria-hidden="true"
       />
       <div
@@ -761,7 +779,7 @@ export default function Header() {
           aria-label="Camsur Uptown Golf — home"
         >
           {/* Keep the full image in the document flow so the header reserves
-              room for every text line, including Golf and Est. 2026. */}
+              room for every text line, including Golf and Est. 2027. */}
           <Image
             data-logo={isScrolled ? "mark" : "full"}
             src={isScrolled ? "/camsur-uptown-mark-transparent.png" : headerLogo}
@@ -811,7 +829,7 @@ export default function Header() {
           <nav
             data-nav="hero"
             aria-label="Primary navigation"
-            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : desktopPanelOpen ? "visible max-h-16 w-[min(820px,calc(100vw-34rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#265136] px-3 py-2 opacity-100 shadow-none 2xl:w-[900px]" : /* `w-auto`, HINDI NAKATAKDANG LAPAD. Nakapirmi ito sa 760px dati —
+            className={`${isScrolled ? "invisible pointer-events-none max-h-0 overflow-hidden border-transparent p-0 opacity-0" : desktopPanelOpen ? "visible max-h-16 w-[min(820px,calc(100vw-34rem))] rounded-t-[1.6rem] rounded-b-none border border-b-white/25 border-white/10 bg-[#2e5126] px-3 py-2 opacity-100 shadow-none 2xl:w-[900px]" : /* `w-auto`, HINDI NAKATAKDANG LAPAD. Nakapirmi ito sa 760px dati —
                    sukat para sa pitong item. Sa anim ay 625px na lang ang
                    laman, kaya 123px na bakante ang ipinapamahagi ng
                    `justify-evenly` bilang 17px na puwang sa pagitan ng bawat
@@ -822,7 +840,7 @@ export default function Header() {
                    hindi na kailangang sukatin muli kapag may idinagdag o
                    inalis sa SITE_SECTIONS. Ang `max-w` ang humahawak nito sa
                    loob ng screen kapag marami na ang item. */
-                "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-transparent p-1.5 opacity-100 [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]"} ${desktopPanelOpen ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[10px] font-semibold uppercase tracking-[0.07em] text-[#f3dda0] xl:text-[12px] xl:tracking-[0.09em] min-[1400px]:text-[13px]`}
+                "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-transparent p-1.5 opacity-100 [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]"} ${desktopPanelOpen ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#efd99b] xl:text-[12px] xl:tracking-[0.09em] min-[1400px]:text-[13px]`}
           >
             {isAwayFromHome ? (
               <Link href="/" onClick={closeDesktopMenu} className={NAV_ITEM_CLASS}>
@@ -837,19 +855,19 @@ export default function Header() {
                 aria-expanded={openMenu === item.slug}
                 aria-haspopup="true"
                 aria-controls="desktop-mega-menu"
-                className={`${openMenu === item.slug ? "text-[#f8e9b7]" : ""} ${NAV_ITEM_CLASS}`}
+                className={`${openMenu === item.slug ? "text-[#efd99b]" : ""} ${NAV_ITEM_CLASS}`}
               >
                 {sectionLabel(item.slug, item.label).toUpperCase()}
               </button>
             ))}
-            <span className="flex items-center border-l border-[#f3dda0]/20 pl-1">
+            <span className="flex items-center border-l border-[#efd99b]/20 pl-1">
               <button
                 type="button"
                 onClick={(event) => openSearch(event.currentTarget)}
                 aria-label="Search this site"
                 aria-expanded={searchOpen}
                 aria-controls="site-search-panel"
-                className={`${searchOpen ? "text-[#f8e9b7]" : "text-[#f3dda0]"} flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 hover:text-[#f8e9b7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]`}
+                className={`${searchOpen ? "text-[#efd99b]" : "text-[#efd99b]"} flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 hover:text-[#efd99b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#efd99b]`}
               >
                 <SearchIcon />
               </button>
@@ -874,7 +892,7 @@ export default function Header() {
             href="/plan-your-visit"
             /* GINTO NG MARKA, HINDI PUTI. Sinipsip ko ang kulay mula mismo sa
              `camsur-uptown-logo.png` — #e0c878 hanggang #e8d088 ang
-             pinakamaraming pixel doon, at ang #e7d18d na matagal nang nasa
+             pinakamaraming pixel doon, at ang #e2c77a na matagal nang nasa
              site (CTA ng packages, mga eyebrow) ay nasa gitna niyon. Kaya
              hindi bagong kulay ito kundi ang ginto na natin.
 
@@ -890,10 +908,10 @@ export default function Header() {
              sa maliwanag na langit ay parang malabo ang gilid nito. Ang
              malambot na itim ang natira: iyon lang naman ang kailangan para
              bumukod ito sa larawan sa likod. */
-          /* Ginto pa rin (#e7d18d), pero may mas madilim na gintong border
+          /* Ginto pa rin (#e2c77a), pero may mas madilim na gintong border
              (#b8963f) at mas malakas na anino ngayon — para humiwalay ito sa
              maliwanag na langit ng hero kung saan halos di-mahalata dati. */
-          className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[#b8963f] bg-[#e7d18d] px-7 py-3 text-[10px] font-bold uppercase tracking-[0.08em] text-[#265136] shadow-[0_10px_26px_rgba(0,0,0,0.34)] transition duration-200 hover:border-[#c9a54e] hover:bg-[#f3dfa0] hover:shadow-[0_12px_30px_rgba(0,0,0,0.4)] xl:px-8 xl:py-3.5 xl:text-[11px]"
+          className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[#b8963f] bg-[#e2c77a] px-7 py-3 text-[11px] font-bold uppercase tracking-[0.08em] text-[#2e5126] shadow-[0_10px_26px_rgba(0,0,0,0.34)] transition duration-200 hover:border-[#c5a35c] hover:bg-[#efd99b] hover:shadow-[0_12px_30px_rgba(0,0,0,0.4)] xl:px-8 xl:py-3.5 xl:text-[11px]"
         >
           {/* NAKATAGO ANG ICON SA IBABA NG `xl`. Nasa gitna ng screen ang
               nav at naka-angkla sa dalawang gilid ang marka at ito, kaya
@@ -916,7 +934,7 @@ export default function Header() {
             telepono at malayo sila sa MENU sa gitna. Ang `gap` na ito ang
             nagtatakda ng layo ngayon, at `justify-self-center` ang
             nagpapanatili nitong nakagitna sa grid ng header. */}
-        <div className="pointer-events-auto flex w-auto items-center justify-self-center gap-7 rounded-full border border-white/20 bg-[#265136]/95 px-4 py-2 shadow-[0_14px_36px_rgba(0,0,0,0.22)] backdrop-blur-xl lg:hidden">
+        <div className={`${pillHidden && !mobileMenuOpen ? "pointer-events-none -translate-y-[calc(100%+2rem)] opacity-0" : "pointer-events-auto translate-y-0 opacity-100"} flex w-auto items-center justify-self-center gap-7 rounded-full border border-white/20 bg-[#2e5126]/95 px-4 py-2 shadow-[0_14px_36px_rgba(0,0,0,0.22)] backdrop-blur-xl transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none lg:hidden`}>
           <Link
             href="/"
             aria-label="Camsur Uptown Golf — home"
@@ -944,7 +962,7 @@ export default function Header() {
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMobileMenuOpen((open) => !open)}
-            className={`${mobileMenuOpen ? "text-[#f8e9b7]" : "text-[#f3dda0]"} flex items-center gap-3 font-navigation text-xs font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#f8e9b7]`}
+            className={`${mobileMenuOpen ? "text-[#efd99b]" : "text-[#efd99b]"} flex h-10 items-center gap-3 font-navigation text-xs font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#efd99b]`}
           >
             {t("mobile.menu")}
             <span className="relative flex h-4 w-6 shrink-0 items-center justify-center" aria-hidden="true">
@@ -957,7 +975,7 @@ export default function Header() {
           <a
             href={PHONE_HREF}
             aria-label={`Call ${PHONE_LABEL}`}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#f3dda0]/40 text-[#f3dda0] transition hover:border-[#f3dda0] hover:text-[#f8e9b7]"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#efd99b]/40 text-[#efd99b] transition hover:border-[#efd99b] hover:text-[#efd99b]"
           >
             <PhoneIcon />
           </a>
@@ -981,7 +999,7 @@ export default function Header() {
            logo sa ibabaw ng pill sa cellphone, kaya bahagya lang ang
            pagkakaiba ng dalawang estado (80px na pill, 20px o 12px ang
            padding ng hilera). */
-        className={`${mobileMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"} fixed inset-x-4 top-[6.5rem] z-30 max-h-[calc(100svh-7.5rem)] overflow-y-auto rounded-[1.75rem] border border-white/12 bg-[#265136]/98 p-3 text-white shadow-[0_30px_80px_rgba(0,0,0,0.34)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out sm:left-auto sm:right-6 sm:w-[390px] lg:hidden`}
+        className={`${mobileMenuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-3 opacity-0"} fixed inset-x-4 top-[6.5rem] z-30 max-h-[calc(100svh-7.5rem)] overflow-y-auto rounded-[1.75rem] border border-white/12 bg-[#2e5126]/98 p-3 text-white shadow-[0_30px_80px_rgba(0,0,0,0.34)] backdrop-blur-2xl transition-[opacity,transform,visibility] duration-300 ease-out sm:left-auto sm:right-6 sm:w-[390px] lg:hidden`}
       >
         {mobileSubsection ? (
           <div key={mobileSubsection.slug} className="nav-panel-enter">
@@ -989,18 +1007,18 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setMobileSection(null)}
-                className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 transition-colors hover:text-[#f1d98f]"
+                className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 transition-colors hover:text-[#efd99b]"
               >
                 <ChevronIcon className="h-3.5 w-3.5 rotate-180" />
                 {t("mega.goBack")}
               </button>
-              <span className="border-b-2 border-[#d8b65b] pb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">
+              <span className="border-b-2 border-[#e2c77a] pb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">
                 {sectionLabel(mobileSubsection.slug, mobileSubsection.label)}
               </span>
             </div>
 
             <div className="border-t border-white/12 px-3.5 pb-1 pt-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#efd99b]">
                 {t("mega.highlights")}
               </p>
 
@@ -1021,7 +1039,7 @@ export default function Header() {
                         target={isExternal ? "_blank" : undefined}
                         rel={isExternal ? "noreferrer" : undefined}
                         onClick={closeMobileNav}
-                        className="block text-sm font-medium leading-snug text-white/82 transition-colors hover:text-[#f1d98f]"
+                        className="block text-sm font-medium leading-snug text-white/82 transition-colors hover:text-[#efd99b]"
                       >
                         {link.label}
                       </Link>
@@ -1036,7 +1054,7 @@ export default function Header() {
                 <Link
                   href="/golf"
                   onClick={closeMobileNav}
-                  className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition-colors hover:text-[#f1d98f]"
+                  className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition-colors hover:text-[#efd99b]"
                 >
                   View all {mobileSubsection.links.length} holes
                   <ChevronIcon className="h-3 w-3" />
@@ -1045,13 +1063,13 @@ export default function Header() {
 
               {mobileSubsection.slug === "golf" ? (
                 <div className="mt-5 border-t border-white/12 pt-5">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0]">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#efd99b]">
                     Upcoming tournament
                   </p>
                   <Link
                     href={UPCOMING_TOURNAMENT.href}
                     onClick={closeMobileNav}
-                    className="group mt-3 block overflow-hidden rounded-2xl border border-white/12 bg-white/[0.05] transition-colors hover:border-[#f3dda0]/35 hover:bg-white/[0.08]"
+                    className="group mt-3 block overflow-hidden rounded-2xl border border-white/12 bg-white/[0.05] transition-colors hover:border-[#efd99b]/35 hover:bg-white/[0.08]"
                     aria-label={`${UPCOMING_TOURNAMENT.label}, ${UPCOMING_TOURNAMENT.date}, ${UPCOMING_TOURNAMENT.status}`}
                   >
                     <span className="relative block aspect-[1.8] overflow-hidden bg-[#173b28]">
@@ -1063,12 +1081,12 @@ export default function Header() {
                         className="object-cover transition-transform duration-500 group-hover:scale-[1.035]"
                       />
                       <span className="absolute inset-0 bg-gradient-to-t from-[#071a12]/70 via-transparent to-transparent" aria-hidden="true" />
-                      <span className="absolute bottom-3 left-3 rounded-full bg-[#e7d18d] px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.12em] text-[#14271d]">
+                      <span className="absolute bottom-3 left-3 rounded-full bg-[#e2c77a] px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.12em] text-[#03321b]">
                         {UPCOMING_TOURNAMENT.status}
                       </span>
                     </span>
                     <span className="block p-4">
-                      <span className="block text-[9px] font-bold uppercase tracking-[0.15em] text-[#f3dda0]">
+                      <span className="block text-[11px] font-bold uppercase tracking-[0.15em] text-[#efd99b]">
                         {UPCOMING_TOURNAMENT.date}
                       </span>
                       <span className="mt-1.5 block text-base font-semibold leading-snug text-white">
@@ -1086,7 +1104,7 @@ export default function Header() {
                 <Link
                   href={`/${mobileSubsection.slug}`}
                   onClick={closeMobileNav}
-                  className="mt-5 flex min-h-11 items-center justify-center rounded-full border border-white/35 px-5 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#f1d98f] hover:bg-[#f1d98f] hover:text-[#0b281b]"
+                  className="mt-5 flex min-h-11 items-center justify-center rounded-full border border-white/35 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#efd99b] hover:bg-[#efd99b] hover:text-[#0b281b]"
                 >
                   {t("mega.viewAll")} {sectionLabel(mobileSubsection.slug, mobileSubsection.label)}
                 </Link>
@@ -1098,10 +1116,10 @@ export default function Header() {
             <div className="flex items-center justify-between px-3 pb-2 pt-2">
               <div>
                 {/* Buong pangalan ng club, gaya ng sa footer — hindi pinaikli. */}
-                <p className="text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]">CamSur Uptown Golf</p>
+                <p className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#efd99b]">CamSur Uptown Golf</p>
                 <p className="mt-1 text-sm font-semibold text-white/90">{t("mobile.explore")}</p>
               </div>
-              <span className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-white/45">{t("mobile.menu")}</span>
+              <span className="rounded-full border border-white/10 px-3 py-1.5 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">{t("mobile.menu")}</span>
             </div>
 
             <nav aria-label="Mobile primary navigation" className="mt-2 border-t border-white/12">
@@ -1118,7 +1136,7 @@ export default function Header() {
                       href={href}
                       onClick={closeMobileNav}
                       aria-current={isActive ? "page" : undefined}
-                      className={`${isActive ? "text-[#f1d98f]" : "text-white"} flex min-h-[52px] items-center justify-between gap-3 border-b border-white/12 px-3.5 transition-colors hover:text-[#f1d98f]`}
+                      className={`${isActive ? "text-[#efd99b]" : "text-white"} flex min-h-[52px] items-center justify-between gap-3 border-b border-white/12 px-3.5 transition-colors hover:text-[#efd99b]`}
                     >
                       <span className="text-sm font-bold uppercase tracking-[0.08em]">{sectionLabel(item.slug, item.label)}</span>
                       <ChevronIcon className="h-4 w-4 text-white/45" />
@@ -1132,7 +1150,7 @@ export default function Header() {
                     type="button"
                     onClick={() => setMobileSection(item.slug)}
                     aria-expanded={false}
-                    className={`${isActive ? "text-[#f1d98f]" : "text-white"} group flex min-h-[52px] w-full items-center justify-between gap-3 border-b border-white/12 px-3.5 text-left transition-colors hover:text-[#f1d98f]`}
+                    className={`${isActive ? "text-[#efd99b]" : "text-white"} group flex min-h-[52px] w-full items-center justify-between gap-3 border-b border-white/12 px-3.5 text-left transition-colors hover:text-[#efd99b]`}
                   >
                     <span className="text-sm font-bold uppercase tracking-[0.08em]">{sectionLabel(item.slug, item.label)}</span>
                     <ChevronIcon className="h-4 w-4 text-white/45 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -1153,7 +1171,7 @@ export default function Header() {
         <Link
           href="/plan-your-visit"
           onClick={closeMobileNav}
-          className="mt-3 flex min-h-12 items-center justify-center rounded-full bg-[#f1d98f] px-5 text-xs font-bold uppercase tracking-[0.08em] text-[#0b281b] transition hover:bg-[#f6e4a9]"
+          className="mt-3 flex min-h-12 items-center justify-center rounded-full bg-[#efd99b] px-5 text-xs font-bold uppercase tracking-[0.08em] text-[#0b281b] transition hover:bg-[#f6e4a9]"
         >
           {t("action.planVisit")}
         </Link>
@@ -1175,7 +1193,7 @@ export default function Header() {
 
            `xl:-ml-[34px]`: kaparehong offset ng hero nav at ng panel, para
            magkatapat pa rin ang gilid ng nav at ng panel. */
-        className={`${isScrolled ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} absolute left-1/2 top-[16px] z-50 hidden h-12 w-auto max-w-[calc(100vw-3rem)] -translate-x-1/2 grid-flow-col auto-cols-max items-center gap-1 xl:gap-1.5 text-[10px] font-semibold uppercase tracking-[0.07em] text-[#f3dda0] lg:grid xl:text-[11px] xl:tracking-[0.09em]`}
+        className={`${isScrolled ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} absolute left-1/2 top-[16px] z-50 hidden h-12 w-auto max-w-[calc(100vw-3rem)] -translate-x-1/2 grid-flow-col auto-cols-max items-center gap-1 xl:gap-1.5 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#efd99b] lg:grid xl:text-[11px] xl:tracking-[0.09em]`}
       >
         {isAwayFromHome ? (
           <Link href="/" onClick={closeDesktopMenu} className={NAV_ITEM_CLASS}>
@@ -1190,19 +1208,19 @@ export default function Header() {
             aria-expanded={openMenu === item.slug}
             aria-haspopup="true"
             aria-controls="desktop-mega-menu"
-            className={`${openMenu === item.slug ? "text-[#f8e9b7]" : ""} ${NAV_ITEM_CLASS}`}
+            className={`${openMenu === item.slug ? "text-[#efd99b]" : ""} ${NAV_ITEM_CLASS}`}
           >
             {sectionLabel(item.slug, item.label).toUpperCase()}
           </button>
         ))}
-        <span className="ml-0.5 flex items-center border-l border-[#f3dda0]/20 pl-1">
+        <span className="ml-0.5 flex items-center border-l border-[#efd99b]/20 pl-1">
           <button
             type="button"
             onClick={(event) => openSearch(event.currentTarget)}
             aria-label="Search this site"
             aria-expanded={searchOpen}
             aria-controls="site-search-panel"
-            className={`${searchOpen ? "text-[#f8e9b7]" : "text-[#f3dda0]"} flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 hover:text-[#f8e9b7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]`}
+            className={`${searchOpen ? "text-[#efd99b]" : "text-[#efd99b]"} flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-200 hover:text-[#efd99b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#efd99b]`}
           >
             <SearchIcon />
           </button>
@@ -1214,15 +1232,15 @@ export default function Header() {
           id="site-search-panel"
           role="search"
           aria-labelledby="site-search-title"
-          className={`${isScrolled ? "top-[80px]" : "top-[98px]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-b-[1.6rem] rounded-t-none border border-t-0 border-white/10 bg-[#265136] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block 2xl:w-[900px]`}
+          className={`${isScrolled ? "top-[80px]" : "top-[98px]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-b-[1.6rem] rounded-t-none border border-t-0 border-white/10 bg-[#2e5126] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block 2xl:w-[900px]`}
         >
           <div className={`${isScrolled ? "pt-4" : "pt-8"} px-5 pb-5`}>
             <div className="flex items-center gap-4 border-b border-white/10 pb-4">
               <label htmlFor="site-search-input" className="sr-only">
                 Search pages, golf holes, and experiences
               </label>
-              <div className="flex h-12 min-w-0 flex-1 items-center gap-3 rounded-full border border-[#f3dda0]/25 bg-white/[0.055] px-4 transition-colors focus-within:border-[#f3dda0]/65 focus-within:bg-white/[0.08]">
-                <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[#f3dda0]" />
+              <div className="flex h-12 min-w-0 flex-1 items-center gap-3 rounded-full border border-[#efd99b]/25 bg-white/[0.055] px-4 transition-colors focus-within:border-[#efd99b]/65 focus-within:bg-white/[0.08]">
+                <SearchIcon className="h-[18px] w-[18px] shrink-0 text-[#efd99b]" />
                 <input
                   ref={searchInputRef}
                   id="site-search-input"
@@ -1236,7 +1254,7 @@ export default function Header() {
               </div>
             </div>
 
-            <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#f3dda0]/60">
+            <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.2em] text-[#efd99b]/60">
               {normalizedSearchQuery ? `${searchResults.length} result${searchResults.length === 1 ? "" : "s"}` : ""}
             </p>
 
@@ -1251,17 +1269,17 @@ export default function Header() {
                   target={item.href.startsWith("http") ? "_blank" : undefined}
                   rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                   onClick={() => setSearchOpen(false)}
-                  className="group flex min-h-16 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 transition-colors hover:border-[#f3dda0]/30 hover:bg-white/[0.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]"
+                  className="group flex min-h-16 items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 transition-colors hover:border-[#efd99b]/30 hover:bg-white/[0.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#efd99b]"
                 >
                   <span className="min-w-0">
-                    <span className="block truncate text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0]/85">
+                    <span className="block truncate text-[11px] font-bold uppercase tracking-[0.16em] text-[#efd99b]/85">
                       {item.category}
                     </span>
                     <span className="mt-1 block text-sm font-medium text-white/85 transition-colors group-hover:text-white xl:text-base">
                       {item.label}
                     </span>
                   </span>
-                  <span className="scale-125 text-[#f3dda0]">
+                  <span className="scale-125 text-[#efd99b]">
                     <ArrowRightIcon />
                   </span>
                 </Link>
@@ -1282,7 +1300,7 @@ export default function Header() {
 
              HERO — sa nav mismo nakadugtong. Lumulutang doon ang pill, at
              ang panel ay nakapasok ng 18px sa ilalim nito (z-50, kaparehong
-             #265136) para walang tahi sa dugtungan. Ang ibaba ng nav ay
+             #2e5126) para walang tahi sa dugtungan. Ang ibaba ng nav ay
              116px (`top-[68px]` plus `h-12`), kaya 98px ang `top` ng panel
              para may 18px na overlap at walang siwang sa dugtungan.
 
@@ -1323,7 +1341,7 @@ export default function Header() {
 
              Nananatiling 820px mula 1376px pataas — doon lang naman ito
              nagiging mas makitid kaysa sa cap. */
-          className={`${isScrolled ? "top-[80px]" : "top-[98px]"} ${hidesHighlights ? "rounded-b-[2rem]" : "rounded-b-[1.6rem]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-t-none border border-t-0 border-white/10 bg-[#265136] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block 2xl:w-[900px]`}
+          className={`${isScrolled ? "top-[80px]" : "top-[98px]"} ${hidesHighlights ? "rounded-b-[2rem]" : "rounded-b-[1.6rem]"} absolute left-1/2 z-30 hidden w-[min(820px,calc(100vw-34rem))] -translate-x-1/2 overflow-hidden rounded-t-none border border-t-0 border-white/10 bg-[#2e5126] text-white shadow-[0_24px_60px_rgba(0,0,0,0.26)] lg:block 2xl:w-[900px]`}
         >
           {/* Walang fixed na taas: sumusukat ang panel sa laman ng section.
               Dati ay 360px ang lahat, kaya may 140px na walang laman sa ilalim
@@ -1372,7 +1390,7 @@ export default function Header() {
                    Kapag ibinalik ang pangalan ng section, itaas ulit. */
                 className={`${hidesHighlights ? "mega-item min-h-[360px]" : "min-h-[229px]"} group flex flex-1 flex-col`}
               >
-                <div className={`${hidesHighlights ? "min-h-[245px] rounded-xl" : "min-h-[129px] rounded-lg"} relative flex-1 overflow-hidden bg-[#265136]`}>
+                <div className={`${hidesHighlights ? "min-h-[245px] rounded-xl" : "min-h-[129px] rounded-lg"} relative flex-1 overflow-hidden bg-[#2e5126]`}>
                   <Image key={previewImage} src={previewImage ?? activeSection.image} alt="" fill sizes={hidesHighlights ? "600px" : "220px"} className="mega-preview-image object-cover opacity-85 transition-opacity duration-500 group-hover:opacity-100" />
                   {/* Experiences: ang hero video ng /experiences ang default na
                       preview (720px na kopya, ~1.3MB, walang audio). Kapag may
@@ -1401,7 +1419,7 @@ export default function Header() {
                           {VILLA_DEL_REY_STAYS.map((stay, index) => (
                             <span
                               key={stay.name}
-                              className={`${index === accommodationSlideIndex ? "w-4 bg-[#f3dda0]" : "w-1.5 bg-white/45"} h-1.5 rounded-full transition-all duration-300`}
+                              className={`${index === accommodationSlideIndex ? "w-4 bg-[#efd99b]" : "w-1.5 bg-white/45"} h-1.5 rounded-full transition-all duration-300`}
                             />
                           ))}
                         </span>
@@ -1483,7 +1501,7 @@ export default function Header() {
                     at ng pill sa mga image card sa gitnang haligi — iisang
                     anyo na ang lahat ng CTA sa mega menu. */}
                 <span
-                  className={`${previewLabel ? "hidden" : "inline-flex"} ${hidesHighlights ? "max-w-[280px]" : "w-full"} mt-3 shrink-0 items-center justify-center gap-2 rounded-full bg-[#e7d18d] px-4 py-2.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition duration-200 group-hover:bg-[#f3dfa0] xl:text-[10px]`}
+                  className={`${previewLabel ? "hidden" : "inline-flex"} ${hidesHighlights ? "max-w-[280px]" : "w-full"} mt-3 shrink-0 items-center justify-center gap-2 rounded-full bg-[#e2c77a] px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition duration-200 group-hover:bg-[#efd99b] xl:text-[11px]`}
                 >
                   Explore
                 </span>
@@ -1497,12 +1515,12 @@ export default function Header() {
                   <Link
                     href="/faq"
                     onClick={closeDesktopMenu}
-                    className="mega-item group/help border-b border-white/10 py-5 text-white/75 transition-colors hover:text-[#f1d98f]"
+                    className="mega-item group/help border-b border-white/10 py-5 text-white/75 transition-colors hover:text-[#efd99b]"
                     style={{ animationDelay: "90ms" }}
                   >
                     <span className="flex items-center justify-between gap-3">
                       <span className="text-[12px] font-semibold uppercase tracking-[0.06em]">FAQ</span>
-                      <span className="text-[#e7d18d] transition-transform group-hover/help:translate-x-1" aria-hidden="true">→</span>
+                      <span className="text-[#e2c77a] transition-transform group-hover/help:translate-x-1" aria-hidden="true">→</span>
                     </span>
                     <span className="mt-2 block text-[11px] leading-5 text-white/50">
                       Booking, rates, and what to expect.
@@ -1538,7 +1556,7 @@ export default function Header() {
                           style={{ animationDelay: `${index * 45}ms` }}
                         >
                           <div
-                            className="relative aspect-[1.25] overflow-hidden rounded-lg bg-[#265136]"
+                            className="relative aspect-[1.25] overflow-hidden rounded-lg bg-[#2e5126]"
                           >
                             {image && (
                               <Image
@@ -1566,7 +1584,7 @@ export default function Header() {
                               aria-hidden="true"
                               className="absolute inset-0 flex items-center justify-center bg-[#071a12]/25 opacity-0 backdrop-blur-[3px] transition-opacity duration-300 group-hover/card:opacity-100"
                             >
-                              <span className="inline-flex items-center gap-2 rounded-full bg-[#e7d18d] px-4 py-2 text-[9px] font-bold uppercase tracking-[0.16em] text-[#14271d] xl:text-[10px]">
+                              <span className="inline-flex items-center gap-2 rounded-full bg-[#e2c77a] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#03321b] xl:text-[11px]">
                                 Explore
                               </span>
                             </span>
@@ -1600,7 +1618,7 @@ export default function Header() {
                            dalawang-linyang "Playground & Outdoor Basketball
                            Court". Ang `min-h` at `items-center` ang nagpapantay
                            ng ritmo ng hilera kahit may pumutol na linya. */
-                        className={`mega-item ${hoveredPreviewIndex === index ? "text-[#f1d98f]" : "text-white/72"} flex min-h-[34px] items-center text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#f1d98f]`}
+                        className={`mega-item ${hoveredPreviewIndex === index ? "text-[#efd99b]" : "text-white/72"} flex min-h-[34px] items-center text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#efd99b]`}
                         style={{ animationDelay: `${index * 45}ms` }}
                       >
                         {link.label}
@@ -1623,11 +1641,11 @@ export default function Header() {
                         /* Walang `first:border-t`: ang hairline sa ilalim ng
                            heading na ang nagsasara ng itaas ng listahan.
                            Kapag mayroon, dalawang guhit na 16px ang pagitan. */
-                        className="mega-item group/rule flex items-center justify-between gap-3 border-b border-white/10 py-4 text-white/72 transition-colors duration-200 hover:text-[#f1d98f]"
+                        className="mega-item group/rule flex items-center justify-between gap-3 border-b border-white/10 py-4 text-white/72 transition-colors duration-200 hover:text-[#efd99b]"
                         style={{ animationDelay: `${index * 45}ms` }}
                       >
                         <span className="text-[12px] font-semibold uppercase tracking-[0.05em]">{link.label}</span>
-                        <span className="text-[#e7d18d] opacity-0 transition-opacity duration-300 group-hover/rule:opacity-100" aria-hidden="true">→</span>
+                        <span className="text-[#e2c77a] opacity-0 transition-opacity duration-300 group-hover/rule:opacity-100" aria-hidden="true">→</span>
                       </Link>
                     ))}
                   </div>
@@ -1666,7 +1684,7 @@ export default function Header() {
                             onClick={closeDesktopMenu}
                             onMouseEnter={() => setHoveredExtra(extra)}
                             onFocus={() => setHoveredExtra(extra)}
-                            className={`${hoveredExtra?.href === extra.href ? "text-[#f1d98f]" : "text-white/72"} inline-flex min-h-[34px] items-center gap-1.5 text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#f1d98f]`}
+                            className={`${hoveredExtra?.href === extra.href ? "text-[#efd99b]" : "text-white/72"} inline-flex min-h-[34px] items-center gap-1.5 text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#efd99b]`}
                           >
                             {extra.label}
                             {isExternal && <span aria-hidden="true">↗</span>}
@@ -1681,7 +1699,7 @@ export default function Header() {
                         onClick={closeDesktopMenu}
                         onMouseEnter={() => setHoveredExtra(UPCOMING_TOURNAMENT)}
                         onFocus={() => setHoveredExtra(UPCOMING_TOURNAMENT)}
-                        className="mega-item group/event mt-4 block overflow-hidden rounded-xl border border-white/12 bg-white/[0.045] transition duration-300 hover:-translate-y-0.5 hover:border-[#f3dda0]/35 hover:bg-white/[0.075] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f3dda0]"
+                        className="mega-item group/event mt-4 block overflow-hidden rounded-xl border border-white/12 bg-white/[0.045] transition duration-300 hover:-translate-y-0.5 hover:border-[#efd99b]/35 hover:bg-white/[0.075] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#efd99b]"
                         style={{ animationDelay: "90ms" }}
                         aria-label={`${UPCOMING_TOURNAMENT.label}, ${UPCOMING_TOURNAMENT.date}, ${UPCOMING_TOURNAMENT.status}`}
                       >
@@ -1694,18 +1712,18 @@ export default function Header() {
                             className="object-cover transition-transform duration-500 group-hover/event:scale-[1.04]"
                           />
                           <span className="absolute inset-0 bg-gradient-to-t from-[#071a12]/70 via-transparent to-transparent" aria-hidden="true" />
-                          <span className="absolute bottom-2 left-2 rounded-full bg-[#e7d18d] px-2 py-1 text-[7px] font-bold uppercase tracking-[0.12em] text-[#14271d]">
+                          <span className="absolute bottom-2 left-2 rounded-full bg-[#e2c77a] px-2 py-1 text-[7px] font-bold uppercase tracking-[0.12em] text-[#03321b]">
                             {UPCOMING_TOURNAMENT.status}
                           </span>
                         </span>
                         <span className="block p-3">
-                          <span className="block text-[8px] font-bold uppercase tracking-[0.14em] text-[#f3dda0]">
+                          <span className="block text-[8px] font-bold uppercase tracking-[0.14em] text-[#efd99b]">
                             {UPCOMING_TOURNAMENT.date}
                           </span>
                           <span className="mt-1.5 block text-[11px] font-semibold leading-[1.3] text-white">
                             {UPCOMING_TOURNAMENT.label}
                           </span>
-                          <span className="mt-2 block text-[9px] leading-4 text-white/55">
+                          <span className="mt-2 block text-[11px] leading-4 text-white/55">
                             {UPCOMING_TOURNAMENT.time}<br />{UPCOMING_TOURNAMENT.format}
                           </span>
                         </span>

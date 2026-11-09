@@ -61,9 +61,9 @@ export default function ShopExperience() {
         </div>
       </section>
 
-      <article id="shop-story" className="bg-white text-[#14271d]">
+      <article id="shop-story" className="bg-white text-[#03321b]">
         <section className="mx-auto max-w-4xl px-6 py-16 sm:px-10 sm:py-20 lg:px-12 lg:py-24">
-          <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">
+          <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#7d6224]">
             More than a stop before the first tee
           </p>
           <div className="mt-6 grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
@@ -94,7 +94,7 @@ export default function ShopExperience() {
         </section>
 
         <section className="mx-auto max-w-4xl px-6 py-16 sm:px-10 sm:py-20 lg:px-12 lg:py-24">
-          <blockquote data-reveal="up" className="border-l-2 border-[#c9a54e] pl-6 sm:pl-9">
+          <blockquote data-reveal="up" className="border-l-2 border-[#c5a35c] pl-6 sm:pl-9">
             <p className="font-serif text-[clamp(2rem,4.5vw,3.8rem)] leading-[1.04] tracking-[-0.04em] text-[#10281e]">
               “Everything you need for the course, selected with the same care as the course itself.”
             </p>
@@ -103,9 +103,9 @@ export default function ShopExperience() {
 
         <section className="bg-[#f5f3ec] py-16 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="grid gap-9 border-b border-[#1f3f2e]/15 pb-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+            <div className="grid gap-9 border-b border-[#03321b]/15 pb-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
               <div>
-                <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]">Inside the shop</p>
+                <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#7d6224]">Inside the shop</p>
                 <h2 data-reveal="up" className="mt-4 font-serif text-[clamp(2.8rem,5vw,5rem)] leading-[0.95] tracking-[-0.05em]">
                   Selected for every kind of player.
                 </h2>
@@ -116,7 +116,7 @@ export default function ShopExperience() {
             </div>
 
             <div className="mt-10 grid gap-x-10 lg:grid-cols-[1.05fr_0.95fr]">
-              <div data-reveal="left" className="relative min-h-[430px] overflow-hidden bg-[#1f3f2e] sm:min-h-[560px]">
+              <div data-reveal="left" className="relative min-h-[430px] overflow-hidden bg-[#03321b] sm:min-h-[560px]">
                 <Image
                   src="/clubhouse/pro-shop.jpg"
                   alt="Apparel displays and fitting area inside the pro shop"
@@ -126,10 +126,10 @@ export default function ShopExperience() {
                 />
               </div>
 
-              <div className="border-t border-[#1f3f2e]/15 lg:border-t-0">
+              <div className="border-t border-[#03321b]/15 lg:border-t-0">
                 {SHOP_FEATURES.map((feature) => (
-                  <div key={feature.id} id={feature.id} className="scroll-mt-32 grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#1f3f2e]/15 py-7 sm:grid-cols-[3rem_1fr] sm:py-8">
-                    <p className="pt-1 text-[10px] xl:text-[11px] font-bold tracking-[0.16em] text-[#a07d30]">{feature.number}</p>
+                  <div key={feature.id} id={feature.id} className="scroll-mt-32 grid grid-cols-[2.5rem_1fr] gap-4 border-b border-[#03321b]/15 py-7 sm:grid-cols-[3rem_1fr] sm:py-8">
+                    <p className="pt-1 text-[11px] xl:text-[11px] font-bold tracking-[0.16em] text-[#a07d30]">{feature.number}</p>
                     <div>
                       <h3 className="text-xl font-semibold tracking-[-0.035em] sm:text-2xl">{feature.title}</h3>
                       <p className="mt-3 text-sm leading-7 xl:text-base xl:leading-8 text-[#647068]">{feature.description}</p>
@@ -144,7 +144,7 @@ export default function ShopExperience() {
         <section className="bg-[#0b281b] px-6 py-16 text-white sm:px-10 sm:py-20 lg:px-12 lg:py-24">
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#e4c86f]">Visit the pro shop</p>
+              <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#e4c86f]">Visit the pro shop</p>
               <h2 data-reveal="up" className="mt-5 max-w-3xl font-serif text-[clamp(2.8rem,5.5vw,5.4rem)] leading-[0.94] tracking-[-0.05em]">
                 Begin your next round here.
               </h2>
@@ -154,7 +154,7 @@ export default function ShopExperience() {
             </div>
             <Link
               href="/plan-your-visit"
-              className="inline-flex min-h-12 items-center justify-between gap-8 rounded-full bg-[#e8d28e] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.14em] text-[#10281e] transition hover:bg-[#f3dfa0] sm:px-8"
+              className="inline-flex min-h-12 items-center justify-between gap-8 rounded-full bg-[#e8d28e] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.14em] text-[#10281e] transition hover:bg-[#efd99b] sm:px-8"
             >
               Contact the club
             </Link>

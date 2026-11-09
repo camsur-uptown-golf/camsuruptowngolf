@@ -1,8 +1,9 @@
-import { DatabaseSync } from "node:sqlite";
 import { randomBytes } from "node:crypto";
-import { mkdirSync } from "node:fs";
-import path from "node:path";
+import type { Client, InStatement, Row } from "@libsql/client";
+import { db, isUniqueViolation } from "@/lib/db";
 import { COURSE, VILLA_NIGHTS, occupiedSlots, type AddonId, type Holes, type Tee } from "@/lib/golf-booking";
+import { cancelledEmail, confirmedEmail, emailGuest } from "@/lib/booking-emails";
+import { notifyConfirmed } from "@/lib/push";
 
 /**
  * Mga tee-time reservation at ang kasamang gabi sa Villa Del Rey.
@@ -17,11 +18,12 @@ import { COURSE, VILLA_NIGHTS, occupiedSlots, type AddonId, type Holes, type Tee
  * nagbabayad ng downpayment. Kapag hindi nabayaran, nagiging `expired` ito at
  * binubura ang mga lock — bukas ulit ang slot. `confirmed` kapag bayad na.
  *
- * TODO bago i-deploy: lokal na SQLite ito. Sa Vercel ay kailangan ng hosted
- * database (Postgres) — lalo na rito, dahil may pera at may sabayang booking.
+ * DATABASE: Turso (libsql) kapag may TURSO_DATABASE_URL — iisa ang database
+ * ng website, mobile app at admin — kung wala, ang lokal na
+ * `data/reservations.sqlite` (tingnan ang `db.ts`). Hindi umaasa sa
+ * `PRAGMA foreign_keys` / ON DELETE CASCADE: hindi iyon nananatili sa Turso
+ * over HTTP, kaya laging tahasang binubura ang mga lock.
  */
-
-const DB_FILE = path.join(process.cwd(), "data", "reservations.sqlite");
 
 export type ReservationStatus = "held" | "confirmed" | "expired" | "cancelled";
 
@@ -55,114 +57,91 @@ export type NewReservation = Omit<
   "id" | "code" | "createdAt" | "status" | "holdExpiresAt" | "paymentSessionId" | "paymentRef" | "paidAt"
 >;
 
-const globalCache = globalThis as unknown as { __reservationsDb?: DatabaseSync };
-let schemaApplied = false;
+const SCHEMA = [
+  `CREATE TABLE IF NOT EXISTS tee_reservations (
+    id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+    code               TEXT    NOT NULL UNIQUE,
+    created_at         TEXT    NOT NULL,
+    date               TEXT    NOT NULL,
+    tee                INTEGER NOT NULL,
+    time               TEXT    NOT NULL,
+    holes              INTEGER NOT NULL,
+    players            INTEGER NOT NULL,
+    player_names       TEXT    NOT NULL,
+    contact_name       TEXT    NOT NULL,
+    contact_email      TEXT    NOT NULL,
+    contact_phone      TEXT    NOT NULL,
+    member_id          INTEGER,
+    addons             TEXT    NOT NULL,
+    villa_slug         TEXT,
+    amount_total       INTEGER NOT NULL,
+    amount_deposit     INTEGER NOT NULL,
+    status             TEXT    NOT NULL,
+    hold_expires_at    TEXT    NOT NULL,
+    payment_session_id TEXT,
+    payment_ref        TEXT,
+    paid_at            TEXT
+  )`,
+  "CREATE INDEX IF NOT EXISTS tee_reservations_date ON tee_reservations(date)",
+  `CREATE TABLE IF NOT EXISTS tee_locks (
+    date           TEXT    NOT NULL,
+    tee            INTEGER NOT NULL,
+    time           TEXT    NOT NULL,
+    reservation_id INTEGER NOT NULL REFERENCES tee_reservations(id) ON DELETE CASCADE,
+    PRIMARY KEY (date, tee, time)
+  )`,
+  `CREATE TABLE IF NOT EXISTS villa_locks (
+    night          TEXT    NOT NULL,
+    house_slug     TEXT    NOT NULL,
+    unit           INTEGER NOT NULL,
+    reservation_id INTEGER NOT NULL REFERENCES tee_reservations(id) ON DELETE CASCADE,
+    PRIMARY KEY (night, house_slug, unit)
+  )`,
+  "CREATE TABLE IF NOT EXISTS booking_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)",
+];
 
-function db() {
-  if (!globalCache.__reservationsDb) {
-    mkdirSync(path.dirname(DB_FILE), { recursive: true });
-    globalCache.__reservationsDb = new DatabaseSync(DB_FILE);
-    globalCache.__reservationsDb.exec("PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000;");
-  }
-  const connection = globalCache.__reservationsDb;
-  if (!schemaApplied) {
-    connection.exec(`
-      CREATE TABLE IF NOT EXISTS tee_reservations (
-        id                 INTEGER PRIMARY KEY AUTOINCREMENT,
-        code               TEXT    NOT NULL UNIQUE,
-        created_at         TEXT    NOT NULL,
-        date               TEXT    NOT NULL,
-        tee                INTEGER NOT NULL,
-        time               TEXT    NOT NULL,
-        holes              INTEGER NOT NULL,
-        players            INTEGER NOT NULL,
-        player_names       TEXT    NOT NULL,
-        contact_name       TEXT    NOT NULL,
-        contact_email      TEXT    NOT NULL,
-        contact_phone      TEXT    NOT NULL,
-        member_id          INTEGER,
-        addons             TEXT    NOT NULL,
-        villa_slug         TEXT,
-        amount_total       INTEGER NOT NULL,
-        amount_deposit     INTEGER NOT NULL,
-        status             TEXT    NOT NULL,
-        hold_expires_at    TEXT    NOT NULL,
-        payment_session_id TEXT,
-        payment_ref        TEXT,
-        paid_at            TEXT
-      );
-      CREATE INDEX IF NOT EXISTS tee_reservations_date ON tee_reservations(date);
-      CREATE TABLE IF NOT EXISTS tee_locks (
-        date           TEXT    NOT NULL,
-        tee            INTEGER NOT NULL,
-        time           TEXT    NOT NULL,
-        reservation_id INTEGER NOT NULL REFERENCES tee_reservations(id) ON DELETE CASCADE,
-        PRIMARY KEY (date, tee, time)
-      );
-      CREATE TABLE IF NOT EXISTS villa_locks (
-        night          TEXT    NOT NULL,
-        house_slug     TEXT    NOT NULL,
-        unit           INTEGER NOT NULL,
-        reservation_id INTEGER NOT NULL REFERENCES tee_reservations(id) ON DELETE CASCADE,
-        PRIMARY KEY (night, house_slug, unit)
-      );
-      CREATE TABLE IF NOT EXISTS booking_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
-    `);
-    rebuildLocksIfRuleChanged(connection);
-    schemaApplied = true;
-  }
-  return connection;
+/* Isang beses bawat process (at bawat hot reload, dahil module-level) ang
+   schema. Kapag pumalya, susubukan ulit sa susunod na tawag. */
+let ready: Promise<void> | null = null;
+
+async function connection(): Promise<Client> {
+  const client = db("reservations");
+  ready ??= (async () => {
+    await client.batch(SCHEMA, "write");
+    await rebuildLocksIfRuleChanged(client);
+  })().catch((error) => {
+    ready = null;
+    throw error;
+  });
+  await ready;
+  return client;
 }
 
-type Row = {
-  id: number;
-  code: string;
-  created_at: string;
-  date: string;
-  tee: number;
-  time: string;
-  holes: number;
-  players: number;
-  player_names: string;
-  contact_name: string;
-  contact_email: string;
-  contact_phone: string;
-  member_id: number | null;
-  addons: string;
-  villa_slug: string | null;
-  amount_total: number;
-  amount_deposit: number;
-  status: ReservationStatus;
-  hold_expires_at: string;
-  payment_session_id: string | null;
-  payment_ref: string | null;
-  paid_at: string | null;
-};
-
 function toReservation(row: Row): Reservation {
+  const text = (value: unknown) => (value == null ? null : String(value));
   return {
-    id: row.id,
-    code: row.code,
-    createdAt: row.created_at,
-    date: row.date,
-    tee: row.tee as Tee,
-    time: row.time,
-    holes: row.holes as Holes,
-    players: row.players,
-    playerNames: JSON.parse(row.player_names),
-    contactName: row.contact_name,
-    contactEmail: row.contact_email,
-    contactPhone: row.contact_phone,
-    memberId: row.member_id,
-    addons: JSON.parse(row.addons),
-    villaSlug: row.villa_slug,
-    amountTotal: row.amount_total,
-    amountDeposit: row.amount_deposit,
-    status: row.status,
-    holdExpiresAt: row.hold_expires_at,
-    paymentSessionId: row.payment_session_id,
-    paymentRef: row.payment_ref,
-    paidAt: row.paid_at,
+    id: Number(row.id),
+    code: String(row.code),
+    createdAt: String(row.created_at),
+    date: String(row.date),
+    tee: Number(row.tee) as Tee,
+    time: String(row.time),
+    holes: Number(row.holes) as Holes,
+    players: Number(row.players),
+    playerNames: JSON.parse(String(row.player_names)),
+    contactName: String(row.contact_name),
+    contactEmail: String(row.contact_email),
+    contactPhone: String(row.contact_phone),
+    memberId: row.member_id == null ? null : Number(row.member_id),
+    addons: JSON.parse(String(row.addons)),
+    villaSlug: text(row.villa_slug),
+    amountTotal: Number(row.amount_total),
+    amountDeposit: Number(row.amount_deposit),
+    status: String(row.status) as ReservationStatus,
+    holdExpiresAt: String(row.hold_expires_at),
+    paymentSessionId: text(row.payment_session_id),
+    paymentRef: text(row.payment_ref),
+    paidAt: text(row.paid_at),
   };
 }
 
@@ -172,7 +151,7 @@ function toReservation(row: Row): Reservation {
  * ang mga lumang booking ay may lumang hugis ng lock at may makakapasok sa
  * oras nila. Mas naunang booking ang nauuna kapag nagbanggaan.
  */
-function rebuildLocksIfRuleChanged(connection: DatabaseSync) {
+async function rebuildLocksIfRuleChanged(client: Client) {
   /* `version`: itaas kapag binago ang LOHIKA ng occupiedSlots (hindi lang ang
      mga setting), para mabuo ulit ang mga lock ng lumang booking. */
   const rule = JSON.stringify({
@@ -182,55 +161,70 @@ function rebuildLocksIfRuleChanged(connection: DatabaseSync) {
     duration: COURSE.durationMinutes,
     step: COURSE.lockIntervalMinutes,
   });
-  const saved = connection.prepare("SELECT value FROM booking_meta WHERE key = 'lock_rule'").get() as { value: string } | undefined;
-  if (saved?.value === rule) return;
-  connection.exec("BEGIN IMMEDIATE");
+  const ruleQuery = "SELECT value FROM booking_meta WHERE key = 'lock_rule'";
+  const saved = await client.execute(ruleQuery);
+  if (saved.rows[0]?.value === rule) return;
+  const tx = await client.transaction("write");
   try {
-    connection.exec("DELETE FROM tee_locks");
-    const active = connection
-      .prepare("SELECT id, date, tee, time, holes FROM tee_reservations WHERE status IN ('held','confirmed') ORDER BY id")
-      .all() as { id: number; date: string; tee: number; time: string; holes: number }[];
-    const lock = connection.prepare("INSERT OR IGNORE INTO tee_locks (date, tee, time, reservation_id) VALUES (?, ?, ?, ?)");
-    for (const row of active) {
-      for (const slot of occupiedSlots(row.tee as Tee, row.time, row.holes as Holes)) lock.run(row.date, slot.tee, slot.time, row.id);
+    /* Baka naunahan na ng ibang instance habang naghihintay. */
+    const again = await tx.execute(ruleQuery);
+    if (again.rows[0]?.value === rule) return;
+    const active = await tx.execute(
+      "SELECT id, date, tee, time, holes FROM tee_reservations WHERE status IN ('held','confirmed') ORDER BY id",
+    );
+    const statements: InStatement[] = ["DELETE FROM tee_locks"];
+    for (const row of active.rows) {
+      for (const slot of occupiedSlots(Number(row.tee) as Tee, String(row.time), Number(row.holes) as Holes)) {
+        statements.push({
+          sql: "INSERT OR IGNORE INTO tee_locks (date, tee, time, reservation_id) VALUES (?, ?, ?, ?)",
+          args: [String(row.date), slot.tee, slot.time, Number(row.id)],
+        });
+      }
     }
-    connection.prepare("INSERT INTO booking_meta (key, value) VALUES ('lock_rule', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").run(rule);
-    connection.exec("COMMIT");
-  } catch (error) {
-    connection.exec("ROLLBACK");
-    throw error;
+    statements.push({
+      sql: "INSERT INTO booking_meta (key, value) VALUES ('lock_rule', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+      args: [rule],
+    });
+    await tx.batch(statements);
+    await tx.commit();
+  } finally {
+    /* Walang epekto kapag na-commit na; kung hindi, rollback. */
+    tx.close();
   }
 }
 
 /** Lumipas na ang hold nang hindi nabayaran → `expired`, at buksan ulit ang slot. */
-function releaseExpired(connection: DatabaseSync) {
-  const now = new Date().toISOString();
-  connection
-    .prepare("UPDATE tee_reservations SET status = 'expired' WHERE status = 'held' AND hold_expires_at < ?")
-    .run(now);
-  connection.exec(`
-    DELETE FROM tee_locks WHERE reservation_id IN (SELECT id FROM tee_reservations WHERE status IN ('expired','cancelled'));
-    DELETE FROM villa_locks WHERE reservation_id IN (SELECT id FROM tee_reservations WHERE status IN ('expired','cancelled'));
-  `);
+function releaseExpired(): InStatement[] {
+  return [
+    {
+      sql: "UPDATE tee_reservations SET status = 'expired' WHERE status = 'held' AND hold_expires_at < ?",
+      args: [new Date().toISOString()],
+    },
+    "DELETE FROM tee_locks WHERE reservation_id IN (SELECT id FROM tee_reservations WHERE status IN ('expired','cancelled'))",
+    "DELETE FROM villa_locks WHERE reservation_id IN (SELECT id FROM tee_reservations WHERE status IN ('expired','cancelled'))",
+  ];
+}
+
+/** `releaseExpired` at saka ang `query`, sa iisang biyahe — ibinabalik ang mga hilera ng `query`. */
+async function afterRelease(query: InStatement): Promise<Row[]> {
+  const client = await connection();
+  const results = await client.batch([...releaseExpired(), query], "write");
+  return results[results.length - 1].rows;
 }
 
 /** Mga sinasakop na slot sa isang petsa (held o confirmed). */
-export function bookedSlots(date: string): { tee: Tee; time: string }[] {
-  const connection = db();
-  releaseExpired(connection);
-  return (connection.prepare("SELECT tee, time FROM tee_locks WHERE date = ?").all(date) as { tee: number; time: string }[]).map(
-    (row) => ({ tee: row.tee as Tee, time: row.time }),
-  );
+export async function bookedSlots(date: string): Promise<{ tee: Tee; time: string }[]> {
+  const rows = await afterRelease({ sql: "SELECT tee, time FROM tee_locks WHERE date = ?", args: [date] });
+  return rows.map((row) => ({ tee: Number(row.tee) as Tee, time: String(row.time) }));
 }
 
 /** Ilang unit pa ang bakante kada bahay para sa gabi ng `night`. */
-export function villaVacancies(night: string): Record<string, number> {
-  const connection = db();
-  releaseExpired(connection);
-  const taken = connection
-    .prepare("SELECT house_slug, COUNT(*) AS n FROM villa_locks WHERE night = ? GROUP BY house_slug")
-    .all(night) as { house_slug: string; n: number }[];
-  const used = new Map(taken.map((row) => [row.house_slug, row.n]));
+export async function villaVacancies(night: string): Promise<Record<string, number>> {
+  const rows = await afterRelease({
+    sql: "SELECT house_slug, COUNT(*) AS n FROM villa_locks WHERE night = ? GROUP BY house_slug",
+    args: [night],
+  });
+  const used = new Map(rows.map((row) => [String(row.house_slug), Number(row.n)]));
   return Object.fromEntries(VILLA_NIGHTS.map((v) => [v.slug, Math.max(0, v.units - (used.get(v.slug) ?? 0))]));
 }
 
@@ -245,26 +239,23 @@ export type CreateResult = { ok: true; reservation: Reservation } | { ok: false;
 
 /**
  * Bagong reservation na naka-hold, kasama ang mga lock — lahat o wala
- * (iisang transaction). Kapag naunahan na ang slot o puno ang villa,
+ * (iisang write transaction). Kapag naunahan na ang slot o puno ang villa,
  * walang naiiwang kalahating reservation.
  */
-export function createHeldReservation(input: NewReservation): CreateResult {
-  const connection = db();
+export async function createHeldReservation(input: NewReservation): Promise<CreateResult> {
+  const client = await connection();
   const now = new Date();
   const holdExpiresAt = new Date(now.getTime() + COURSE.holdMinutes * 60_000).toISOString();
-  connection.exec("BEGIN IMMEDIATE");
+  const tx = await client.transaction("write");
   try {
-    releaseExpired(connection);
-    const code = newCode();
-    const result = connection
-      .prepare(
-        `INSERT INTO tee_reservations
-          (code, created_at, date, tee, time, holes, players, player_names, contact_name, contact_email, contact_phone,
-           member_id, addons, villa_slug, amount_total, amount_deposit, status, hold_expires_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'held', ?)`,
-      )
-      .run(
-        code,
+    await tx.batch(releaseExpired());
+    const inserted = await tx.execute({
+      sql: `INSERT INTO tee_reservations
+              (code, created_at, date, tee, time, holes, players, player_names, contact_name, contact_email, contact_phone,
+               member_id, addons, villa_slug, amount_total, amount_deposit, status, hold_expires_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'held', ?)`,
+      args: [
+        newCode(),
         now.toISOString(),
         input.date,
         input.tee,
@@ -275,85 +266,169 @@ export function createHeldReservation(input: NewReservation): CreateResult {
         input.contactName,
         input.contactEmail,
         input.contactPhone,
-        input.memberId,
+        input.memberId ?? null,
         JSON.stringify(input.addons),
-        input.villaSlug,
+        input.villaSlug ?? null,
         input.amountTotal,
         input.amountDeposit,
         holdExpiresAt,
-      );
-    const id = Number(result.lastInsertRowid);
+      ],
+    });
+    const id = Number(inserted.lastInsertRowid);
 
-    const lock = connection.prepare("INSERT INTO tee_locks (date, tee, time, reservation_id) VALUES (?, ?, ?, ?)");
-    for (const slot of occupiedSlots(input.tee, input.time, input.holes)) {
-      try {
-        lock.run(input.date, slot.tee, slot.time, id);
-      } catch {
-        connection.exec("ROLLBACK");
-        return { ok: false, error: "taken" };
-      }
+    /* Ang PRIMARY KEY ng tee_locks ang tumatanggi kapag may nakauna na. */
+    try {
+      await tx.batch(
+        occupiedSlots(input.tee, input.time, input.holes).map((slot) => ({
+          sql: "INSERT INTO tee_locks (date, tee, time, reservation_id) VALUES (?, ?, ?, ?)",
+          args: [input.date, slot.tee, slot.time, id],
+        })),
+      );
+    } catch (error) {
+      if (!isUniqueViolation(error)) throw error;
+      await tx.rollback();
+      return { ok: false, error: "taken" };
     }
 
     if (input.villaSlug) {
       const house = VILLA_NIGHTS.find((v) => v.slug === input.villaSlug);
-      const used = new Set(
-        (connection.prepare("SELECT unit FROM villa_locks WHERE night = ? AND house_slug = ?").all(input.date, input.villaSlug) as {
-          unit: number;
-        }[]).map((row) => row.unit),
-      );
+      const taken = await tx.execute({
+        sql: "SELECT unit FROM villa_locks WHERE night = ? AND house_slug = ?",
+        args: [input.date, input.villaSlug],
+      });
+      const used = new Set(taken.rows.map((row) => Number(row.unit)));
       const unit = house ? Array.from({ length: house.units }, (_, i) => i + 1).find((u) => !used.has(u)) : undefined;
       if (!unit) {
-        connection.exec("ROLLBACK");
+        await tx.rollback();
         return { ok: false, error: "villa-full" };
       }
-      connection
-        .prepare("INSERT INTO villa_locks (night, house_slug, unit, reservation_id) VALUES (?, ?, ?, ?)")
-        .run(input.date, input.villaSlug, unit, id);
+      try {
+        await tx.execute({
+          sql: "INSERT INTO villa_locks (night, house_slug, unit, reservation_id) VALUES (?, ?, ?, ?)",
+          args: [input.date, input.villaSlug, unit, id],
+        });
+      } catch (error) {
+        if (!isUniqueViolation(error)) throw error;
+        await tx.rollback();
+        return { ok: false, error: "villa-full" };
+      }
     }
 
-    connection.exec("COMMIT");
-    const row = connection.prepare("SELECT * FROM tee_reservations WHERE id = ?").get(id) as Row;
-    return { ok: true, reservation: toReservation(row) };
-  } catch (error) {
-    try {
-      connection.exec("ROLLBACK");
-    } catch {
-      /* naibalik na */
-    }
-    throw error;
+    const row = await tx.execute({ sql: "SELECT * FROM tee_reservations WHERE id = ?", args: [id] });
+    await tx.commit();
+    return { ok: true, reservation: toReservation(row.rows[0]) };
+  } finally {
+    /* Kapag may error bago ang commit: rollback, walang naiiwang kalahati. */
+    tx.close();
   }
 }
 
-export function getReservation(code: string): Reservation | null {
-  const connection = db();
-  releaseExpired(connection);
-  const row = connection.prepare("SELECT * FROM tee_reservations WHERE code = ?").get(code) as Row | undefined;
-  return row ? toReservation(row) : null;
+/**
+ * Ang ipinapakita ng app (at ng /golf/book/[code]) — walang email, telepono
+ * o payment id ng guest.
+ */
+export function publicReservation(reservation: Reservation) {
+  return {
+    code: reservation.code,
+    status: reservation.status,
+    date: reservation.date,
+    tee: reservation.tee,
+    time: reservation.time,
+    holes: reservation.holes,
+    playerNames: reservation.playerNames,
+    addons: reservation.addons,
+    villaSlug: reservation.villaSlug,
+    amountTotal: reservation.amountTotal,
+    amountDeposit: reservation.amountDeposit,
+    holdExpiresAt: reservation.holdExpiresAt,
+  };
 }
 
-export function getReservationBySession(sessionId: string): Reservation | null {
-  const row = db().prepare("SELECT * FROM tee_reservations WHERE payment_session_id = ?").get(sessionId) as Row | undefined;
-  return row ? toReservation(row) : null;
+export async function getReservation(code: string): Promise<Reservation | null> {
+  const rows = await afterRelease({ sql: "SELECT * FROM tee_reservations WHERE code = ?", args: [code] });
+  return rows[0] ? toReservation(rows[0]) : null;
 }
 
-export function attachPaymentSession(id: number, sessionId: string) {
-  db().prepare("UPDATE tee_reservations SET payment_session_id = ? WHERE id = ?").run(sessionId, id);
+/**
+ * Mga booking ng isang member, pinakabago ang petsa muna. Kasama ang mga
+ * booking na ginawa bago nag-sign-in (walang `member_id`) basta pareho ang
+ * email — iisang tao iyon, at ang email ang nakasulat sa resibo.
+ */
+export async function memberReservations(memberId: number, email: string): Promise<Reservation[]> {
+  const rows = await afterRelease({
+    sql: `SELECT * FROM tee_reservations
+          WHERE member_id = ? OR (member_id IS NULL AND contact_email = ? COLLATE NOCASE)
+          ORDER BY date DESC, time DESC LIMIT 100`,
+    args: [memberId, email],
+  });
+  return rows.map(toReservation);
+}
+
+/**
+ * Kinakansela ng member ang sarili niyang hold (hindi pa bayad) at binubuksan
+ * ulit ang slot. Ang confirmed na may downpayment ay hindi dito — ang club
+ * ang bahala sa refund, kaya request ang ipinapadala ng app.
+ */
+export async function cancelHeldReservation(code: string, memberId: number, email: string): Promise<boolean> {
+  const client = await connection();
+  const results = await client.batch(
+    [
+      {
+        sql: `UPDATE tee_reservations SET status = 'cancelled'
+              WHERE code = ? AND status = 'held'
+                AND (member_id = ? OR (member_id IS NULL AND contact_email = ? COLLATE NOCASE))`,
+        args: [code, memberId, email],
+      },
+      ...releaseExpired(),
+      { sql: "SELECT * FROM tee_reservations WHERE code = ?", args: [code] },
+    ],
+    "write",
+  );
+  const cancelled = results[0].rowsAffected > 0;
+  const row = results[results.length - 1].rows[0];
+  if (cancelled && row) emailGuest(cancelledEmail(toReservation(row)));
+  return cancelled;
+}
+
+export async function getReservationBySession(sessionId: string): Promise<Reservation | null> {
+  const client = await connection();
+  const result = await client.execute({ sql: "SELECT * FROM tee_reservations WHERE payment_session_id = ?", args: [sessionId] });
+  return result.rows[0] ? toReservation(result.rows[0]) : null;
+}
+
+export async function attachPaymentSession(id: number, sessionId: string): Promise<void> {
+  const client = await connection();
+  await client.execute({ sql: "UPDATE tee_reservations SET payment_session_id = ? WHERE id = ?", args: [sessionId, id] });
 }
 
 /**
  * Bayad na ang downpayment → `confirmed`. Tinatanggap pa rin kahit lumipas na
  * ang hold, basta buo pa ang mga lock (walang ibang kumuha). Kapag nakuha na
  * ng iba ang slot habang late ang bayad, `false` — ire-refund iyon ng club.
+ *
+ * Iisang UPDATE na may kondisyon (sa iisang write batch), para walang
+ * `releaseExpired` na makakasingit sa pagitan ng pagsusuri at pag-confirm.
  */
-export function confirmReservation(id: number, paymentRef: string): boolean {
-  const connection = db();
-  const row = connection.prepare("SELECT * FROM tee_reservations WHERE id = ?").get(id) as Row | undefined;
-  if (!row) return false;
-  if (row.status === "confirmed") return true;
-  const locks = (connection.prepare("SELECT COUNT(*) AS n FROM tee_locks WHERE reservation_id = ?").get(id) as { n: number }).n;
-  if (locks === 0) return false;
-  connection
-    .prepare("UPDATE tee_reservations SET status = 'confirmed', payment_ref = ?, paid_at = ? WHERE id = ?")
-    .run(paymentRef, new Date().toISOString(), id);
-  return true;
+export async function confirmReservation(id: number, paymentRef: string): Promise<boolean> {
+  const client = await connection();
+  const [updated, after] = await client.batch(
+    [
+      {
+        sql: `UPDATE tee_reservations SET status = 'confirmed', payment_ref = ?, paid_at = ?
+              WHERE id = ? AND status <> 'confirmed' AND EXISTS (SELECT 1 FROM tee_locks WHERE reservation_id = ?)`,
+        args: [paymentRef, new Date().toISOString(), id, id],
+      },
+      { sql: "SELECT * FROM tee_reservations WHERE id = ?", args: [id] },
+    ],
+    "write",
+  );
+  const row = after.rows[0];
+  /* Ngayon lang na-confirm (hindi ang pangalawang tawag ng webhook/return):
+     abisuhan ang phone ng member (pagkatapos ng sagot — tingnan ang push.ts). */
+  if (updated.rowsAffected > 0 && row) {
+    const reservation = toReservation(row);
+    notifyConfirmed(reservation);
+    emailGuest(confirmedEmail(reservation));
+  }
+  return row?.status === "confirmed";
 }

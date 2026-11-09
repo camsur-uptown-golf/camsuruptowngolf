@@ -33,6 +33,8 @@ const LINK_GROUPS: { title: string; links: { label: string; href: string }[] }[]
       { label: "Clubhouse", href: "/clubhouse" },
       { label: "Experiences", href: "/experiences" },
       { label: "Events", href: "/events" },
+      { label: "Pro Shop", href: "/pro-shop" },
+      { label: "The Uptown Life", href: "/the-uptown-life" },
     ],
   },
   {
@@ -77,8 +79,11 @@ const SOCIALS: { label: string; href: string | null; path: string }[] = [
 const SECTION_HEADING = "font-navigation text-[11px] font-semibold uppercase tracking-[0.16em] text-[#dcc578]";
 
 /* Mga link: malalaking titik, makapal, may luwag — gaya ng reference. */
+/* `min-h-[34px]` at walang `space-y` sa listahan: 34px pa rin ang pagitan ng
+   mga link gaya ng dati (20px na linya + 14px na puwang), pero ang buong 34px
+   na iyon ay napipindot na — 16px lang ang taas ng link dati sa cellphone. */
 const NAV_LINK =
-  "font-navigation text-[13px] font-semibold leading-5 tracking-[0.02em] text-white transition-colors hover:text-[#e7d18d] focus-visible:text-[#e7d18d] focus-visible:outline-none";
+  "inline-flex min-h-[34px] items-center font-navigation text-[13px] font-semibold leading-5 tracking-[0.02em] text-white transition-colors hover:text-[#e2c77a] focus-visible:rounded-sm focus-visible:text-[#e2c77a] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a]";
 
 /**
  * Layout ng footer (hango sa Pinehurst): logo at contact sa kaliwa; sa kanan
@@ -88,8 +93,8 @@ const NAV_LINK =
  */
 export default function Footer() {
   return (
-    <footer id="contact" className="relative overflow-hidden bg-[#1f3f2e] text-white">
-      <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-[#c9a54e]/[0.035] blur-3xl" aria-hidden="true" />
+    <footer id="contact" className="relative overflow-hidden bg-[#03321b] text-white">
+      <div className="pointer-events-none absolute -right-32 top-0 h-80 w-80 rounded-full bg-[#c5a35c]/[0.035] blur-3xl" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-7xl px-6 pb-8 pt-12 sm:pt-14 lg:px-8 lg:pt-16">
         <div className="grid gap-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
@@ -99,10 +104,10 @@ export default function Footer() {
           <div className="flex items-center justify-between gap-6 sm:justify-start sm:gap-12 lg:block">
             <Link href="/" aria-label="CamSur Uptown Golf, home" className="inline-block shrink-0">
               <Image
-                src="/camsur-uptown-logo.png"
+                src="/branding/camsur-uptown-golf-master-2027.png"
                 alt="CamSur Uptown Golf"
-                width={132}
-                height={176}
+                width={618}
+                height={1162}
                 className="h-40 w-auto sm:h-36 lg:h-44"
               />
             </Link>
@@ -123,7 +128,7 @@ export default function Footer() {
                   <p className={`mb-5 ${SECTION_HEADING}`}>
                     {group.title}
                   </p>
-                  <ul className="space-y-3.5">
+                  <ul>
                     {group.links.map((link) => (
                       <li key={link.href}>
                         <Link href={link.href} className={NAV_LINK}>
@@ -152,7 +157,7 @@ export default function Footer() {
                         target="_blank"
                         rel="noreferrer"
                         aria-label={social.label}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/70 text-white transition hover:border-[#e7d18d] hover:bg-[#c9a54e]/15 hover:text-[#e7d18d]"
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/70 text-white transition hover:border-[#e2c77a] hover:bg-[#c5a35c]/15 hover:text-[#e2c77a]"
                       >
                         <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor">
                           <path d={social.path} />
@@ -185,14 +190,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-[#c9a54e]/35 pt-6 text-[11px] text-white/55 sm:flex-row sm:items-center sm:justify-between lg:mt-14">
+        <div className="mt-12 flex flex-col gap-3 border-t border-[#c5a35c]/35 pt-6 text-[11px] text-white/55 sm:flex-row sm:items-center sm:justify-between lg:mt-14">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <p>© 2026 CamSur Uptown Golf. All rights reserved.</p>
-            <Link href="/terms-of-use" className="font-medium text-white/80 transition-colors hover:text-[#e7d18d]">
+            <Link href="/terms-of-use" className="font-medium text-white/80 transition-colors hover:text-[#e2c77a]">
               Terms of Use
             </Link>
           </div>
-          <p>Championship golf and world-class experiences.</p>
+          <p>Where the fairway meets the mountain.</p>
         </div>
       </div>
     </footer>

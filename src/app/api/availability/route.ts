@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { saveAvailabilityRequest, type AvailabilityInput } from "@/lib/inquiries-db";
 
-/* Kailangan ng `node:sqlite` ang Node runtime — hindi ito tumatakbo sa edge. */
+/* Kailangan ng `@libsql/client` ang Node runtime — hindi ito tumatakbo sa edge. */
 export const runtime = "nodejs";
 
 /**
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
   if (!result.ok) return NextResponse.json({ error: result.error }, { status: 400 });
 
   try {
-    const id = saveAvailabilityRequest(result.data);
+    const id = await saveAvailabilityRequest(result.data);
     return NextResponse.json({ id }, { status: 201 });
   } catch (error) {
     console.error("Failed to save availability request:", error);

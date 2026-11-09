@@ -113,11 +113,11 @@ export default function PageCurtain() {
   return (
     <div
       aria-hidden="true"
-      /* `#1f3f2e` ang pangunahing green ng site — ito ang laman ng mga dark
+      /* `#03321b` ang pangunahing green ng site — ito ang laman ng mga dark
          green na section block at ang pinakamadalas na kulay sa buong
          codebase. Dating `#071d13` ito: halos itim na, at halatang hindi
          kapareho ng kulay na iniiwan at binubuksan ng kurtina. */
-      className={`${phase === "idle" ? "invisible" : "visible"} pointer-events-none fixed inset-0 z-[200] flex items-center justify-center bg-[#1f3f2e]`}
+      className={`${phase === "idle" ? "invisible" : "visible"} pointer-events-none fixed inset-0 z-[200] flex items-center justify-center bg-[#03321b]`}
       style={{
         transform,
         transition: `transform ${phase === "leaving" ? SLIDE_OUT_MS : SLIDE_IN_MS}ms cubic-bezier(0.76, 0, 0.24, 1)`,
@@ -128,10 +128,10 @@ export default function PageCurtain() {
           may 800px na entry sa srcset na binubuo ng Next — iyon ang
           kailangan ng mga screen na 2x, kung hindi ay lumalabo ito. */}
       <Image
-        src="/camsur-uptown-logo.png"
+        src="/branding/camsur-uptown-golf-master-2027.png"
         alt=""
-        width={400}
-        height={532}
+        width={618}
+        height={1162}
         priority
         className="h-48 w-auto sm:h-64 lg:h-[22rem] xl:h-[26rem]"
         /* Nakabatay sa SLIDE_IN_MS ang mga oras dito sa halip na naka-hardcode:

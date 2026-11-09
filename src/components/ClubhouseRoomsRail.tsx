@@ -89,7 +89,7 @@ export default function ClubhouseRoomsRail({
                   aria-hidden="true"
                   className={`block rounded-full transition-all duration-300 ${
                     active
-                      ? "h-2.5 w-2.5 bg-[#e7d18d] shadow-[0_0_0_4px_rgba(20,39,29,0.35),0_0_0_5.5px_#e7d18d]"
+                      ? "h-2.5 w-2.5 bg-[#e2c77a] shadow-[0_0_0_4px_rgba(20,39,29,0.35),0_0_0_5.5px_#e2c77a]"
                       : "h-[7px] w-[7px] bg-white/85 shadow-[0_0_6px_rgba(0,0,0,0.55)] group-hover:h-2.5 group-hover:w-2.5 group-hover:bg-white group-focus-visible:h-2.5 group-focus-visible:w-2.5 group-focus-visible:bg-white"
                   }`}
                 />

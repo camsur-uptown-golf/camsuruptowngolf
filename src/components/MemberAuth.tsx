@@ -65,7 +65,7 @@ function SocialButtons() {
   return (
     <div className="grid gap-3">
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- route handler na nagre-redirect sa Google, hindi pahina */}
-      <a href="/api/auth/google" className={`${base} border-[#1f3f2e]/20 bg-white text-[#14271d] hover:border-[#1f3f2e]/45 hover:bg-[#fbf8ef]`}>
+      <a href="/api/auth/google" className={`${base} border-[#03321b]/20 bg-white text-[#03321b] hover:border-[#03321b]/45 hover:bg-[#fbf8ef]`}>
         <GoogleIcon />
         Continue with Google
       </a>
@@ -79,8 +79,8 @@ function SocialButtons() {
 }
 
 const FIELD =
-  "w-full border border-[#1f3f2e]/25 bg-white px-4 py-3 text-sm text-[#14271d] outline-none transition placeholder:text-[#9aa39d] focus:border-[#265136] focus:ring-2 focus:ring-[#265136]/20";
-const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d]";
+  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#9aa39d] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
+const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b]";
 
 function EyeIcon({ open }: { open: boolean }) {
   return (
@@ -126,12 +126,12 @@ function PasswordField({
           onClick={() => setVisible((v) => !v)}
           aria-label={visible ? "Hide password" : "Show password"}
           aria-pressed={visible}
-          className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-[#667269] transition hover:text-[#265136]"
+          className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-[#667269] transition hover:text-[#2e5126]"
         >
           <EyeIcon open={visible} />
         </button>
       </div>
-      {hint ? <p className="mt-2 text-xs leading-5 text-[#8a938c]">{hint}</p> : null}
+      {hint ? <p className="mt-2 text-xs leading-5 text-[#5f6a62]">{hint}</p> : null}
     </div>
   );
 }
@@ -212,21 +212,21 @@ export default function MemberAuth({ initialMode = "login" }: { initialMode?: Mo
       aria-selected={mode === value}
       aria-controls="member-auth-panel"
       onClick={() => switchTo(value)}
-      className={`${mode === value ? "bg-[#265136] text-[#f3dda0]" : "text-[#3f4c45] hover:text-[#14271d]"} flex-1 rounded-full px-4 py-2.5 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] transition-colors`}
+      className={`${mode === value ? "bg-[#2e5126] text-[#efd99b]" : "text-[#3f4c45] hover:text-[#03321b]"} flex-1 rounded-full px-4 py-2.5 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] transition-colors`}
     >
       {label}
     </button>
   );
 
   return (
-    <div className="w-full border border-[#1f3f2e]/12 bg-white p-6 shadow-[0_24px_60px_rgba(20,39,29,0.12)] sm:p-9">
-      <div role="tablist" aria-label="Member access" className="flex gap-1 rounded-full border border-[#1f3f2e]/15 bg-[#f7f5ee] p-1">
+    <div className="w-full border border-[#03321b]/12 bg-white p-6 shadow-[0_24px_60px_rgba(20,39,29,0.12)] sm:p-9">
+      <div role="tablist" aria-label="Member access" className="flex gap-1 rounded-full border border-[#03321b]/15 bg-[#f3ede1] p-1">
         {tab("login", "Log in")}
         {tab("signup", "Sign up")}
       </div>
 
       <div id="member-auth-panel" role="tabpanel" aria-labelledby={`tab-${mode}`} className="mt-8">
-        <h2 className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium leading-[1] tracking-[-0.04em] text-[#14271d]">
+        <h2 className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-medium leading-[1] tracking-[-0.04em] text-[#03321b]">
           {mode === "login" ? "Welcome back." : "Become a member."}
         </h2>
         <p className="mt-3 text-sm leading-6 text-[#5d685f]">
@@ -239,10 +239,10 @@ export default function MemberAuth({ initialMode = "login" }: { initialMode?: Mo
         <div className="mt-7">
           <SocialButtons />
         </div>
-        <div className="my-6 flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a938c]" aria-hidden="true">
-          <span className="h-px flex-1 bg-[#1f3f2e]/12" />
+        <div className="my-6 flex items-center gap-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#5f6a62]" aria-hidden="true">
+          <span className="h-px flex-1 bg-[#03321b]/12" />
           or with email
-          <span className="h-px flex-1 bg-[#1f3f2e]/12" />
+          <span className="h-px flex-1 bg-[#03321b]/12" />
         </div>
 
         <form key={mode} onSubmit={handleSubmit} className="space-y-5" noValidate={false}>
@@ -274,7 +274,7 @@ export default function MemberAuth({ initialMode = "login" }: { initialMode?: Mo
             <div>
               <label className={LABEL} htmlFor="ma-mobile">
                 Mobile number
-                <span className="ml-1.5 font-normal normal-case italic tracking-normal text-[#8a938c]">(optional)</span>
+                <span className="ml-1.5 font-normal normal-case italic tracking-normal text-[#5f6a62]">(optional)</span>
               </label>
               <input
                 id="ma-mobile"
@@ -299,12 +299,12 @@ export default function MemberAuth({ initialMode = "login" }: { initialMode?: Mo
             <>
               <PasswordField id="ma-confirm" name="confirm" label="Confirm password" autoComplete="new-password" />
               <label className="flex cursor-pointer gap-3 text-xs leading-5 text-[#5d685f]">
-                <input type="checkbox" name="terms" required className="mt-0.5 h-4 w-4 shrink-0 accent-[#265136]" />
+                <input type="checkbox" name="terms" required className="mt-0.5 h-4 w-4 shrink-0 accent-[#2e5126]" />
                 <span>
                   <Tr
                     t="I agree to the {0}."
                     v={[
-                      <Link key="terms" href="/terms-of-use" className="font-semibold text-[#265136] underline underline-offset-4">
+                      <Link key="terms" href="/terms-of-use" className="font-semibold text-[#2e5126] underline underline-offset-4">
                         Terms of Use
                       </Link>,
                     ]}
@@ -323,7 +323,7 @@ export default function MemberAuth({ initialMode = "login" }: { initialMode?: Mo
           <button
             type="submit"
             disabled={status === "sending"}
-            className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e7d18d] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e2c77a] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "sending" ? "Please wait…" : mode === "login" ? "Log in" : "Create account"}
           </button>
@@ -334,7 +334,7 @@ export default function MemberAuth({ initialMode = "login" }: { initialMode?: Mo
           <button
             type="button"
             onClick={() => switchTo(mode === "login" ? "signup" : "login")}
-            className="font-semibold text-[#265136] underline underline-offset-4 hover:text-[#1f3f2e]"
+            className="font-semibold text-[#2e5126] underline underline-offset-4 hover:text-[#03321b]"
           >
             {mode === "login" ? "Create an account" : "Log in"}
           </button>

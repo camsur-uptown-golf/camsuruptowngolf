@@ -35,6 +35,6 @@ export async function startDownpayment(request: Request, reservation: Reservatio
     successUrl: `${origin}/api/tee-times/return?code=${reservation.code}`,
     cancelUrl: `${origin}/golf/book/${reservation.code}`,
   });
-  attachPaymentSession(reservation.id, checkout.id);
+  await attachPaymentSession(reservation.id, checkout.id);
   return checkout.url;
 }

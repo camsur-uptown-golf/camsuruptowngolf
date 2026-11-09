@@ -11,7 +11,7 @@ import { SESSION_COOKIE, SESSION_DAYS, createSession, memberFromSession, type Me
  * lang, dahil HTTP ang localhost.
  */
 export async function startMemberSession(memberId: number) {
-  const { token, expiresAt } = createSession(memberId);
+  const { token, expiresAt } = await createSession(memberId);
   (await cookies()).set(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",

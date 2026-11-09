@@ -22,9 +22,12 @@ import { useTranslation } from "@/i18n/LanguageProvider";
  */
 const BANNER = {
   href: "/packages",
-  image: "/packages-main-hero-v2.png",
-  alt: "Golfers walking back to the clubhouse at sunset, CamSur Uptown Golf",
-  title: "Plan Your Golf Getaway",
+  /* Dati ay ang golfers-sa-sunset, na hero rin ng /packages — iisang larawan
+     sa home, golf, at packages. Ang clubhouse aerial na ito ang dating hero ng
+     /golf (napalitan ng course aerial doon), kaya hindi na ito umuulit. */
+  image: "/golf-clubhouse-aerial-hero-v2.png",
+  alt: "The clubhouse, pool, and lakes at the heart of the course, CamSur Uptown Golf",
+  title: "Plan your golf getaway",
   blurbKey: "packages.blurbMain",
 } as const;
 
@@ -34,7 +37,7 @@ export default function PackagesCarousel() {
   return (
     /* WALANG PADDING SA ITAAS AT IBABA: ang `pb` ng section sa itaas at ang
        `pt` ng susunod na section ang nagbibigay ng espasyo. */
-    <section id="home-packages" className="bg-[#f7f5ee] text-[#1b2730]">
+    <section id="home-packages" className="bg-[#f3ede1] text-[#1b2730]">
       {/* Takdang taas sa cellphone (`h-[600px]`), `aspect` mula `sm`. Kailangang
           TAKDA ang taas, hindi `min-h` lang: `fill` ang larawan, at gumuguho ito
           kapag `min-height` lang ang magulang. Ang `max-h` sa `lg` ang
@@ -50,7 +53,7 @@ export default function PackagesCarousel() {
         {/* Mula sa ibaba sa cellphone, mula sa kaliwa mula `sm`: doon nakalagay
             ang teksto. */}
         <div
-          className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(4,20,13,0.72)_0%,rgba(4,20,13,0.3)_45%,rgba(4,20,13,0.04)_100%)] sm:bg-[linear-gradient(90deg,rgba(4,20,13,0.62)_0%,rgba(4,20,13,0.32)_38%,rgba(4,20,13,0.04)_68%,transparent_100%)]"
+          className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(4,20,13,0.72)_0%,rgba(4,20,13,0.3)_45%,rgba(4,20,13,0.04)_100%)] sm:bg-[linear-gradient(90deg,rgba(4,20,13,0.72)_0%,rgba(4,20,13,0.42)_40%,rgba(4,20,13,0.04)_68%,transparent_100%)]"
           aria-hidden="true"
         />
 
@@ -67,7 +70,7 @@ export default function PackagesCarousel() {
             </p>
             <Link
               href={BANNER.href}
-              className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e7d18d] [text-shadow:none] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d]"
+              className="mt-7 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e2c77a] [text-shadow:none] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#03321b] transition-colors hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a]"
             >
               See packages
             </Link>

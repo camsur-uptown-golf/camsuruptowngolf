@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { saveCallbackRequest, type CallbackInput } from "@/lib/inquiries-db";
 import { CALL_WINDOWS } from "@/lib/site-content";
 
-/* Kailangan ng `node:sqlite` ang Node runtime — hindi ito tumatakbo sa edge. */
+/* Kailangan ng `@libsql/client` ang Node runtime — hindi ito tumatakbo sa edge. */
 export const runtime = "nodejs";
 
 /**
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
   if (!result.ok) return NextResponse.json({ error: result.error }, { status: 400 });
 
   try {
-    const id = saveCallbackRequest(result.data);
+    const id = await saveCallbackRequest(result.data);
     return NextResponse.json({ id }, { status: 201 });
   } catch (error) {
     console.error("Failed to save callback request:", error);

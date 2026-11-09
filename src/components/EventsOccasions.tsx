@@ -26,12 +26,12 @@ function CheckIcon() {
  */
 export default function EventsOccasions({ occasions }: { occasions: readonly Occasion[] }) {
   return (
-    <div className="relative w-full bg-[#f7f5ee]">
+    <div className="relative w-full bg-[#f3ede1]">
       {occasions.map((occasion) => (
         <article
           key={occasion.title}
           data-occasion-panel
-          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]"
+          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
         >
           <Image src={occasion.image} alt={occasion.imageAlt} fill sizes="100vw" className="object-cover" />
 
@@ -46,7 +46,7 @@ export default function EventsOccasions({ occasions }: { occasions: readonly Occ
 
           <div className="absolute inset-x-0 bottom-0 px-6 pb-6 pt-40 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_10px_rgba(0,0,0,0.62)] sm:px-9 sm:pb-9 sm:pt-48 lg:px-12 lg:pb-12 lg:pt-56">
             <div data-reveal="left" className="max-w-2xl">
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#f0d98f] xl:text-[11px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#f0d98f] xl:text-[11px]">
                 {occasion.kicker}
               </p>
               <h3 className="mt-3 font-display text-2xl font-medium tracking-[-0.04em] text-white sm:text-3xl xl:text-4xl">

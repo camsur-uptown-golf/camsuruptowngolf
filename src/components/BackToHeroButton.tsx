@@ -90,7 +90,7 @@ export default function BackToHeroButton() {
       aria-hidden={!show}
       className={`${
         show ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
-      } fixed bottom-6 right-6 z-[90] flex h-12 w-12 items-center justify-center rounded-full border border-[#b8963f] bg-[#e7d18d] text-[#265136] shadow-[0_10px_26px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#265136] sm:bottom-8 sm:right-8`}
+      } fixed bottom-6 right-6 z-[90] flex h-12 w-12 items-center justify-center rounded-full border border-[#b8963f] bg-[#e2c77a] text-[#2e5126] shadow-[0_10px_26px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2e5126] sm:bottom-8 sm:right-8`}
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0" fill="none" aria-hidden="true">
         <path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />

@@ -17,7 +17,7 @@ const OCCASIONS = [
     kicker: "Play together",
     description:
       "From friendly invitationals to full-field club events, the day is shaped around the course, the clubhouse, and an awards finish that does not feel rushed.",
-    image: "/events/golf-tournaments-full-logo-2026-clean-4k-v3.png",
+    image: "/events/golf-tournaments-full-logo-2027.png",
     imageAlt: "CamSur Uptown Golf ball and driver on the first tee at sunset",
     inclusions: ["Tournament-day coordination", "Food and beverage options", "Awards-ready clubhouse spaces"],
   },
@@ -26,8 +26,8 @@ const OCCASIONS = [
     kicker: "Connect beyond the office",
     description:
       "Bring teams and partners together in a course-side setting that moves naturally from focused sessions to the kind of conversation that only happens away from a meeting room.",
-    image: "/clubhouse/welcome-hall.jpg",
-    imageAlt: "Light-filled clubhouse lounge overlooking the golf course",
+    image: "/brand-2026/lounge-handshake.webp",
+    imageAlt: "Members’ Lounge concept: two guests greeting each other before a meeting",
     inclusions: ["Flexible gathering spaces", "Group dining possibilities", "Golf and leisure itineraries"],
   },
   {
@@ -35,9 +35,9 @@ const OCCASIONS = [
     kicker: "Make it personal",
     description:
       "Birthdays, anniversaries, reunions, and milestones, held in a setting built for unhurried time rather than a fixed running order.",
-    image: "/clubhouse/concept/rooftop-bar.jpg",
-    imageAlt: "The clubhouse rooftop sky bar and gardens overlooking the course",
-    inclusions: ["Intimate table settings", "Sunset gathering options", "Personalized menus and flow"],
+    image: "/brand-2026/sky-bar-couple.webp",
+    imageAlt: "Sky bar concept: a couple celebrating at the rooftop bar at dusk",
+    inclusions: ["Intimate table settings", "Sunset gathering options", "Personalised menus and flow"],
   },
 ] as const;
 
@@ -75,7 +75,7 @@ function Occasions() {
   return (
     /* Normal-flow full-screen panels ang mga occasion. Walang sticky stage o
        scroll-scrub; minsan lang pumapasok ang caption at nananatiling visible. */
-    <section id="occasions" className="relative isolate scroll-mt-24 bg-[#f7f5ee] pt-8 sm:pt-10">
+    <section id="occasions" className="relative isolate scroll-mt-24 bg-[#f3ede1] pt-8 sm:pt-10">
       {/* Nakasentrong ulo — contained pa rin sa 1100px na hanay. */}
       <div className="relative mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-12">
         <EditorialHeading
@@ -102,7 +102,7 @@ function HowPlanningWorks() {
     >
       <div
         data-parallax="-0.1"
-        className="pointer-events-none absolute -left-24 top-8 -z-10 h-72 w-72 rounded-full bg-[#c9a54e]/[0.09] blur-3xl"
+        className="pointer-events-none absolute -left-24 top-8 -z-10 h-72 w-72 rounded-full bg-[#c5a35c]/[0.09] blur-3xl"
         aria-hidden="true"
       />
       <Shell>
@@ -112,19 +112,19 @@ function HowPlanningWorks() {
           intro="The club handles the running order so the day belongs to your group rather than to a schedule someone else wrote."
         />
 
-        <div className="mt-10 border-t border-[#1f3f2e]/12">
+        <div className="mt-10 border-t border-[#03321b]/12">
           {PLANNING_STEPS.map(([title, description], index) => (
             <div
               key={title}
               data-reveal="up"
               style={delay(index * 90)}
-              className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#1f3f2e]/12" : ""}`}
+              className={`grid gap-4 py-5 sm:grid-cols-[44px_minmax(0,1fr)] sm:gap-7 ${index ? "border-t border-[#03321b]/12" : ""}`}
             >
-              <p className="text-[10px] xl:text-[11px] font-bold tracking-[0.14em] text-[#98782f]">
+              <p className="text-[11px] xl:text-[11px] font-bold tracking-[0.14em] text-[#7d6224]">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <div className="min-w-0">
-                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#14271d]">{title}</h3>
+                <h3 className="text-base font-semibold tracking-[-0.02em] text-[#03321b]">{title}</h3>
                 <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
               </div>
             </div>
@@ -137,7 +137,7 @@ function HowPlanningWorks() {
 
 function EventsCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
       <Shell>
         <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
           <div>
@@ -157,9 +157,9 @@ function EventsCta() {
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
                 href="/plan-your-visit"
-                className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
               >
-                Inquire about events
+                Enquire about events
               </Link>
             </div>
           </div>

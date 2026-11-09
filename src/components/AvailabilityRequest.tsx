@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { revealConfirmation } from "@/lib/reveal-confirmation";
 import ForecastDays from "@/components/ForecastDays";
 import { CLUB_PHONE } from "@/lib/site-content";
 import Tr from "@/components/Tr";
@@ -16,8 +17,8 @@ import Tr from "@/components/Tr";
 const FORM_ENDPOINT = "/api/availability";
 
 const FIELD =
-  "w-full border border-[#1f3f2e]/25 bg-white px-4 py-3 text-sm text-[#14271d] outline-none transition placeholder:text-[#9aa39d] focus:border-[#265136] focus:ring-2 focus:ring-[#265136]/20";
-const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d]";
+  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#9aa39d] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
+const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b]";
 
 function Required() {
   return <span className="ml-1.5 font-normal normal-case italic tracking-normal text-[#d1af58]">(required)</span>;
@@ -74,9 +75,9 @@ export default function AvailabilityRequest({
 
   if (status === "sent") {
     return (
-      <div className="mx-auto max-w-lg border border-[#1f3f2e]/15 bg-white p-8 text-center sm:p-10">
-        <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d1af58]">Thank you</p>
-        <h3 className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#14271d]">
+      <div ref={revealConfirmation} role="status" tabIndex={-1} className="mx-auto max-w-lg outline-none border border-[#03321b]/15 bg-white p-8 text-center sm:p-10">
+        <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#d1af58]">Thank you</p>
+        <h3 className="mt-3 text-2xl font-medium tracking-[-0.035em] text-[#03321b]">
           Your availability request is on its way.
         </h3>
         <p className="mt-4 text-sm leading-7 text-[#5d685f]">
@@ -84,7 +85,7 @@ export default function AvailabilityRequest({
         </p>
         <a
           href={CLUB_PHONE.href}
-          className="mt-6 inline-flex h-11 items-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
+          className="mt-6 inline-flex h-11 items-center rounded-full border border-[#2e5126]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#2e5126] transition hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white"
         >
           {CLUB_PHONE.label}
         </a>
@@ -97,9 +98,9 @@ export default function AvailabilityRequest({
         setGuestError(false);
         setPreferredDate("");
       }} className="mx-auto max-w-3xl">
-      <div className="mb-6 border border-[#1f3f2e]/15 bg-white/60 px-4 py-3">
-        <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f]">Stay</p>
-        <p className="mt-1 text-sm font-medium text-[#14271d]">{accommodationTitle}</p>
+      <div className="mb-6 border border-[#03321b]/15 bg-white/60 px-4 py-3">
+        <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#7d6224]">Stay</p>
+        <p className="mt-1 text-sm font-medium text-[#03321b]">{accommodationTitle}</p>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 sm:gap-x-8">
@@ -220,7 +221,7 @@ export default function AvailabilityRequest({
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#e7d18d] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-12 min-w-[190px] items-center justify-center rounded-full bg-[#e2c77a] px-8 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "sending" ? "Sending…" : "Ask about availability"}
         </button>

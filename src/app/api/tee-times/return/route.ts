@@ -12,13 +12,13 @@ export const runtime = "nodejs";
  */
 export async function GET(request: Request) {
   const code = new URL(request.url).searchParams.get("code") ?? "";
-  const reservation = getReservation(code);
+  const reservation = await getReservation(code);
   const origin = siteOrigin(request);
   if (!reservation) return NextResponse.redirect(`${origin}/golf/book`, { status: 303 });
 
   if (reservation.status !== "confirmed" && reservation.paymentSessionId) {
     const paymentRef = await checkoutPaid(reservation.paymentSessionId).catch(() => null);
-    if (paymentRef) confirmReservation(reservation.id, paymentRef);
+    if (paymentRef) await confirmReservation(reservation.id, paymentRef);
   }
   return NextResponse.redirect(`${origin}/golf/book/${reservation.code}`, { status: 303 });
 }

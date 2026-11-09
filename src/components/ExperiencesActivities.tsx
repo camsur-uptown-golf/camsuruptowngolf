@@ -16,7 +16,7 @@ type Activity = {
 
 export default function ExperiencesActivities({ kicker, items }: { kicker: string; items: readonly Activity[] }) {
   return (
-    <div id="experiences-activities" className="relative w-full bg-[#f7f5ee]">
+    <div id="experiences-activities" className="relative w-full bg-[#f3ede1]">
       {/* Parehong vertical rail ng Clubhouse: isang linya bawat activity,
           naka-highlight ang kasalukuyan, pangalan kapag hinover. */}
       <ClubhouseRoomsRail
@@ -29,7 +29,7 @@ export default function ExperiencesActivities({ kicker, items }: { kicker: strin
           key={item.id}
           id={item.id}
           data-activity-panel
-          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]"
+          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
         >
           {/* Larawan: nasa likod bilang poster/fallback. Kapag may video ang
               activity, tumutugtog ito sa ibabaw; kung mabigo (404 o hindi
@@ -61,7 +61,7 @@ export default function ExperiencesActivities({ kicker, items }: { kicker: strin
 
           <div className="absolute inset-x-0 bottom-0 px-6 pb-6 pt-32 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_10px_rgba(0,0,0,0.62)] sm:px-9 sm:pb-9 sm:pt-40 lg:px-12 lg:pb-12 lg:pt-48">
             <div data-reveal="left" className="max-w-2xl">
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#f0d98f] xl:text-[11px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#f0d98f] xl:text-[11px]">
                 {kicker}
               </p>
               <h3 className="mt-3 font-display text-3xl font-medium tracking-[-0.04em] text-white sm:text-4xl xl:text-5xl">
@@ -74,7 +74,7 @@ export default function ExperiencesActivities({ kicker, items }: { kicker: strin
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-6 inline-flex h-11 items-center gap-3 rounded-full border border-[#e7d18d]/70 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#f0d98f] transition-colors hover:border-[#e7d18d] hover:bg-[#e7d18d] hover:text-[#14271d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d] xl:text-[11px]"
+                className="mt-6 inline-flex h-11 items-center gap-3 rounded-full border border-[#e2c77a]/70 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#f0d98f] transition-colors hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a] xl:text-[11px]"
               >
                 View facility
               </a>

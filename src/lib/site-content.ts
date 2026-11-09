@@ -29,8 +29,8 @@ export const CLUB_PHONE = { label: "+63 916 300 7914", href: "tel:+639163007914"
 export const CLUB_EMAIL = { label: "camsuruptowngolf@gmail.com", href: "mailto:camsuruptowngolf@gmail.com" } as const;
 
 /* Tunay na lokasyon ng club: San Jose, Pili, Camarines Sur (kumpirmado sa
-   mapa — 13.584308, 123.253267). PAKITINGNAN: 4418 ang karaniwang ZIP ng
-   Pili — kumpirmahin ang eksaktong barangay/ZIP ng club bago i-publish. */
+   mapa — 13.584308, 123.253267). Kinumpirma ng Brand Guidelines 2026 ang
+   ZIP 4418 ("San Jose, Pili · Camarines Sur 4418 · Philippines"). */
 export const CLUB_ADDRESS = {
   lines: ["CamSur Uptown Golf", "San Jose, Pili", "Camarines Sur 4418, Philippines"],
 } as const;
@@ -57,7 +57,7 @@ export const TRAVEL_ROUTES = [
     icon: "pin",
     time: 20,
     unit: "min",
-    from: "Naga City center",
+    from: "Naga City centre",
     note: "Follow the road toward Mt. Isarog and watch for the club gate on your right.",
   },
   {
@@ -180,6 +180,7 @@ export const FAQ_GROUPS = [
  * CamSur Uptown Golf hero — direktang 4K MP4 (3840x2160, 60fps, ~20s).
  * Updated ang flag sa unang shot at ang closing logo: walang "Club", at
  * katamtaman ang "Golf", kapareho ng header logo at original brand colors.
+ * Ang establishment mark sa flag at closing logo ay Est. 2027.
  * Render: scripts/render-flag-logo.py, tapos scripts/render-hero-ending.mjs.
  * Naka-backup pa rin ang dating video sa /hero-golf-club.mp4.
  *
@@ -190,11 +191,29 @@ export const FAQ_GROUPS = [
  * Isang bagay lang: walang adaptive streaming ang isang MP4 — pareho ang
  * 4K na natatanggap ng nasa cellphone at ng nasa desktop.
  */
-export const TEASER_VIDEO = "/hero-golf-v3.mp4";
+export const TEASER_VIDEO = "/hero-golf-2027.mp4";
+
+/* ANG TALAGANG INIHAHAIN: mga compressed na kopya ng TEASER_VIDEO. 60MB ang 4K
+   na master; ito ang tatlong sukat (lahat 60fps, walang audio, H.264,
+   faststart):
+     retina  — 2560, CRF 24, ~21MB (retina at malalaking screen)
+     desktop — 1920, CRF 23, ~15MB
+     mobile  — 1280, CRF 25, ~5.6MB
+   60FPS, HINDI 30. Sinubukan ang 30fps/CRF 28 (~7MB) pero mukhang malabo at
+   pumipitik ang tuloy-tuloy na aerial na galaw — napansin agad sa home.
+   Naka-mute ang hero, kaya walang nawawala sa pag-alis ng audio.
+   KAPAG NIRE-RENDER ULIT ANG MASTER, gawin ulit ang tatlo, hal.:
+     ffmpeg -i hero-golf-2027.mp4 -an -vf "scale=2560:-2" -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -movflags +faststart hero-golf-2027-2560.mp4
+     (1920 → `-crf 23`, 1280 → `-crf 25`) */
+export const TEASER_VIDEO_SOURCES = {
+  retina: "/hero-golf-2027-2560.mp4",
+  desktop: "/hero-golf-2027-1920.mp4",
+  mobile: "/hero-golf-2027-1280.mp4",
+} as const;
 
 /** Poster frame ng teaser, para may makita habang naglo-load ang video. */
 export const TEASER_POSTER =
-  "https://embed-ssl.wistia.com/deliveries/155a533771b5ffe1629b18a44bd44046.jpg?image_crop_resized=1920x1080";
+  "/hero-golf-2027-poster.jpg";
 
 export const CONCEPTS = [
   {
@@ -380,7 +399,8 @@ export const SITE_SECTIONS = [
     eyebrow: "Opening fairway to home green",
     title: "A landmark clubhouse at the heart of the course",
     description: "A championship golf experience shaped around play, arrival, dining, recovery, and the landscape of Camarines Sur.",
-    image: "/golf-clubhouse-aerial-hero-v2.png",
+    /* Course at bundok, walang clubhouse — tugma sa "An IMG-designed championship course". Ang dating clubhouse aerial ay nasa `/golf-clubhouse-aerial-hero-v2.png` pa rin. */
+    image: "/course-concepts/concept-10-mountain-stretch.png",
     links: COURSE_PAGES.map((course, index) => ({ label: `Hole No. ${index + 1}`, href: `/golf/courses/${course.slug}` })),
   },
   /* Kasunod ng Golf: dito natatapos ang round, at ang mga espasyong ito ang
@@ -463,8 +483,8 @@ export const SITE_SECTIONS = [
     slug: "experiences",
     label: "Experiences",
     eyebrow: "Experience",
-    title: "World-class experiences beyond the course",
-    description: "Wakeboarding, pickle ball, basketball, ATV trails, and the quieter corners of the resort — there's something here for everyone.",
+    title: "More to enjoy beyond the course",
+    description: "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur, plus a massage or a quiet hour by the lake.",
     image: "/experiences/banner11-dehazed.jpg",
     /* Isa-isa ang bawat pasilidad dito, hindi ang apat na pangkat: ito ang
        aktwal na hinahanap ng bisita sa menu. Ang bawat anchor ay tumuturo sa

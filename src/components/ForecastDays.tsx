@@ -83,9 +83,9 @@ export default function ForecastDays({ dates, tone = "light" }: { dates: string[
 
   const dark = tone === "dark";
   const muted = dark ? "text-white/60" : "text-[#667269]";
-  const card = dark ? "border-white/12 bg-white/[0.06]" : "border-[#1f3f2e]/12 bg-white";
-  const strong = dark ? "text-white" : "text-[#14271d]";
-  const accent = dark ? "text-[#f3dda0]" : "text-[#265136]";
+  const card = dark ? "border-white/12 bg-white/[0.06]" : "border-[#03321b]/12 bg-white";
+  const strong = dark ? "text-white" : "text-[#03321b]";
+  const accent = dark ? "text-[#efd99b]" : "text-[#2e5126]";
 
   const byDate = new Map(forecast?.map((day) => [day.date, day]) ?? []);
   const forecastDays = upcoming.map((date) => byDate.get(date)).filter((day): day is DayForecast => Boolean(day));
@@ -119,7 +119,7 @@ export default function ForecastDays({ dates, tone = "light" }: { dates: string[
                 title={`${p.sky[label as keyof typeof p.sky] ?? label}, ${Math.round(day.minC)}–${Math.round(day.maxC)}°C, ${Math.round(day.rainMm)} mm rain, wind up to ${Math.round(day.windKmh)} km/h`}
               >
                 <span className={`${row ? "w-14 shrink-0" : ""} leading-tight`}>
-                  <span className={`block text-[10px] font-bold uppercase tracking-[0.12em] ${muted}`}>{weekday}</span>
+                  <span className={`block text-[11px] font-bold uppercase tracking-[0.12em] ${muted}`}>{weekday}</span>
                   <span className={`block text-xs font-semibold ${strong}`}>{dayLabel}</span>
                 </span>
                 <WeatherIcon kind={kind} className={`h-6 w-6 shrink-0 ${rainy ? (dark ? "text-[#9cc7e6]" : "text-[#3f7aa8]") : accent}`} />
@@ -127,7 +127,7 @@ export default function ForecastDays({ dates, tone = "light" }: { dates: string[
                   <span className={`block text-xs font-semibold ${strong}`}>
                     {day.rainChance !== null ? p.rain(day.rainChance) : (p.sky[label as keyof typeof p.sky] ?? label)}
                   </span>
-                  <span className={`block text-[10px] ${muted}`}>{p.verdict[rainVerdict(day.rainChance, day.rainMm)]}</span>
+                  <span className={`block text-[11px] ${muted}`}>{p.verdict[rainVerdict(day.rainChance, day.rainMm)]}</span>
                 </span>
                 <span className={`text-[11px] tabular-nums ${muted}`}>
                   {Math.round(day.maxC)}° / {Math.round(day.minC)}°
@@ -155,7 +155,7 @@ export default function ForecastDays({ dates, tone = "light" }: { dates: string[
         </div>
       ) : null}
 
-      <p className={`text-[10px] leading-4 ${muted}`}>{p.footnote}</p>
+      <p className={`text-[11px] leading-4 ${muted}`}>{p.footnote}</p>
     </div>
   );
 }

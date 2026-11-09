@@ -8,7 +8,7 @@ import type { Locale } from "./config";
  * ng key sa `en` (siyang pinagbabatayan ng uri) saka isalin sa bawat wika.
  *
  * PROPER NOUNS (hindi isinasalin): "CamSur Uptown Golf", "IMG",
- * "Villa Del Rey", "Est. 2026", "Mt. Isarog" — mananatili sa orihinal sa lahat
+ * "Villa Del Rey", "Est. 2027", "Mt. Isarog" — mananatili sa orihinal sa lahat
  * ng wika.
  *
  * PAALALA SA QUALITY: AI-drafted ang mga salin (lalo ang Bikol) — kailangang
@@ -34,8 +34,8 @@ export const en = {
   "mega.goBack": "Go back",
   "mega.viewAll": "View all",
   "lang.select": "Select language",
-  "home.designedBy": "Designed by",
-  "home.imgTagline": "The Global Leader in Golf Course Design",
+  "home.designedBy": "Course design by",
+  "home.imgTagline": "Where the fairway meets the mountain.",
   "home.explore.eyebrow": "Explore the club",
   "home.day.eyebrow": "The Clubhouse",
   "home.stay.eyebrow": "Accommodations",
@@ -43,8 +43,8 @@ export const en = {
   "home.stay.intro": "Wake slowly, spend the day on the course, and come back to a quiet room, a pool, and an evening that is yours.",
   "home.stay.cta": "Find your stay",
   "home.day.title": "Your day at the club.",
-  "home.day.intro": "Play in the morning, relax in the afternoon, and enjoy the evening on the rooftop.",
-  "home.day.cta": "Explore",
+  "home.day.intro": "Practice at dawn, lounge at noon, rooftop at dusk.",
+  "home.day.cta": "Explore the clubhouse",
   "home.explore.title": "Everything beyond the first tee",
   "home.explore.cta": "Explore",
   "facts.holes": "Championship holes",
@@ -60,7 +60,7 @@ export const en = {
   "packages.ctaView": "View package",
   "carousel.next": "Next",
   "packages.blurbMain":
-    "Choose a quick round, an overnight stay, or a golf trip with friends. Our packages make your visit easy to plan.",
+    "Choose a quick round, an overnight stay, or a golf trip with friends, and the club will arrange it around your dates.",
   "packages.blurbStayPlay":
     "Enjoy two relaxing days at CamSur Uptown with one overnight stay and one full round of golf.",
   "packages.blurbGroup":
@@ -89,8 +89,8 @@ const fil: Dictionary = {
   "mega.goBack": "Bumalik",
   "mega.viewAll": "Lahat",
   "lang.select": "Pumili ng wika",
-  "home.designedBy": "Dinisenyo ng",
-  "home.imgTagline": "Ang Pandaigdigang Lider sa Disenyo ng Golf Course",
+  "home.designedBy": "Disenyo ng course ng",
+  "home.imgTagline": "Kung saan nagtatagpo ang fairway at ang bundok.",
   "home.explore.eyebrow": "Tuklasin ang club",
   "home.day.eyebrow": "Mula umaga hanggang gabi",
   "home.stay.eyebrow": "Manatili sa Villa Del Rey",
@@ -98,7 +98,7 @@ const fil: Dictionary = {
   "home.stay.intro": "Gumising nang dahan-dahan, ilaan ang araw sa course, at bumalik sa tahimik na kuwarto, sa pool, at sa gabing iyo lang.",
   "home.stay.cta": "Hanapin ang iyong tuluyan",
   "home.day.title": "Ang araw mo sa club.",
-  "home.day.intro": "Maglaro sa umaga, magpahinga sa hapon, at mag-enjoy sa gabi sa rooftop.",
+  "home.day.intro": "Mag-practice sa madaling-araw, mag-lounge sa tanghali, rooftop sa takipsilim.",
   "home.day.cta": "Tuklasin ang clubhouse",
   "home.explore.title": "Lahat ng naghihintay lampas sa unang tee",
   "home.explore.cta": "Tuklasin",
@@ -115,7 +115,7 @@ const fil: Dictionary = {
   "packages.ctaView": "Tingnan ang package",
   "carousel.next": "Susunod",
   "packages.blurbMain":
-    "Pumili ng mabilisang laro, overnight stay, o golf trip kasama ang mga kaibigan. Ginagawang madaling planuhin ng aming mga package ang iyong pagbisita.",
+    "Pumili ng mabilisang laro, overnight stay, o golf trip kasama ang mga kaibigan, at aayusin ito ng club ayon sa inyong mga petsa.",
   "packages.blurbStayPlay":
     "Mag-enjoy ng dalawang araw ng relaks sa CamSur Uptown na may isang overnight stay at isang buong round ng golf.",
   "packages.blurbGroup":
@@ -139,8 +139,8 @@ const bcl: Dictionary = {
   "mega.goBack": "Magbalik",
   "mega.viewAll": "Hilingon gabos",
   "lang.select": "Pumili nin lengguwahe",
-  "home.designedBy": "Dinisenyo ni",
-  "home.imgTagline": "An Pankinaban na Lider sa Disenyo nin Golf Course",
+  "home.designedBy": "Disenyo kan course ni",
+  "home.imgTagline": "Kun sain nagtatabo an fairway asin an bukid.",
   "home.explore.eyebrow": "Tuklasa an club",
   "home.day.eyebrow": "Poon aga sagkod banggi",
   "home.stay.eyebrow": "Mag-istar sa Villa Del Rey",
@@ -148,7 +148,7 @@ const bcl: Dictionary = {
   "home.stay.intro": "Magmata nin hinay-hinay, gugulon an aldaw sa course, dangan magbalik sa matoninong na kuwarto, sa pool, asin sa banggi na saimo sana.",
   "home.stay.cta": "Tuklasa an Villa Del Rey",
   "home.day.title": "An aldaw mo sa club.",
-  "home.day.intro": "Magkawat sa aga, magpahingalo sa hapon, asin mag-enjoy sa banggi sa rooftop.",
+  "home.day.intro": "Mag-practice sa pagkaaga, mag-lounge sa udto, rooftop sa banggi-banggi.",
   "home.day.cta": "Tuklasa an clubhouse",
   "home.explore.title": "Gabos na naghahalat lampas sa enot na tee",
   "home.explore.cta": "Tuklasa",
@@ -165,7 +165,7 @@ const bcl: Dictionary = {
   "packages.ctaView": "Hilingon an package",
   "carousel.next": "Sunod",
   "packages.blurbMain":
-    "Pumili nin madaling laro, sarong banggi na pagdagos, o golf trip kaiba an mga amigo. Ginigibong pasil planuhon kan samong mga package an saimong pagbisita.",
+    "Pumili nin madaling laro, sarong banggi na pagdagos, o golf trip kaiba an mga amigo, asin aaregluhon ini kan club segun sa saindong mga petsa.",
   "packages.blurbStayPlay":
     "Mag-enjoy nin duwang aldaw na relaks sa CamSur Uptown na may sarong banggi na pagdagos asin sarong bilog na round nin golf.",
   "packages.blurbGroup":
@@ -189,8 +189,8 @@ const ko: Dictionary = {
   "mega.goBack": "뒤로",
   "mega.viewAll": "모두 보기",
   "lang.select": "언어 선택",
-  "home.designedBy": "설계",
-  "home.imgTagline": "골프 코스 디자인의 글로벌 리더",
+  "home.designedBy": "코스 설계",
+  "home.imgTagline": "페어웨이가 산과 만나는 곳.",
   "home.explore.eyebrow": "클럽 둘러보기",
   "home.day.eyebrow": "아침부터 저녁까지",
   "home.stay.eyebrow": "Villa Del Rey에서 머물기",
@@ -198,7 +198,7 @@ const ko: Dictionary = {
   "home.stay.intro": "느긋하게 일어나 코스에서 하루를 보내고, 조용한 객실과 수영장, 오롯이 당신만의 저녁으로 돌아오세요.",
   "home.stay.cta": "Villa Del Rey 둘러보기",
   "home.day.title": "클럽에서 보내는 당신의 하루.",
-  "home.day.intro": "아침에는 골프, 오후에는 휴식, 저녁에는 루프탑에서 즐기세요.",
+  "home.day.intro": "새벽엔 연습, 정오엔 라운지, 해 질 녘엔 루프탑.",
   "home.day.cta": "클럽하우스 둘러보기",
   "home.explore.title": "첫 티 너머의 모든 것",
   "home.explore.cta": "둘러보기",
@@ -215,7 +215,7 @@ const ko: Dictionary = {
   "packages.ctaView": "패키지 보기",
   "carousel.next": "다음",
   "packages.blurbMain":
-    "간단한 라운드, 1박 숙박, 또는 친구들과의 골프 여행 중에서 선택하세요. 저희 패키지로 방문 계획이 쉬워집니다.",
+    "간단한 라운드, 1박 숙박, 또는 친구들과의 골프 여행 중에서 선택하세요. 클럽이 원하시는 날짜에 맞춰 준비해 드립니다.",
   "packages.blurbStayPlay":
     "1박 숙박과 골프 한 라운드로 CamSur Uptown에서 여유로운 이틀을 즐기세요.",
   "packages.blurbGroup":
@@ -239,8 +239,8 @@ const vi: Dictionary = {
   "mega.goBack": "Quay lại",
   "mega.viewAll": "Xem tất cả",
   "lang.select": "Chọn ngôn ngữ",
-  "home.designedBy": "Thiết kế bởi",
-  "home.imgTagline": "Người dẫn đầu toàn cầu về thiết kế sân golf",
+  "home.designedBy": "Thiết kế sân bởi",
+  "home.imgTagline": "Nơi fairway gặp núi.",
   "home.explore.eyebrow": "Khám phá câu lạc bộ",
   "home.day.eyebrow": "Từ sáng đến tối",
   "home.stay.eyebrow": "Lưu trú tại Villa Del Rey",
@@ -248,7 +248,7 @@ const vi: Dictionary = {
   "home.stay.intro": "Thức dậy thong thả, dành cả ngày trên sân, rồi trở về với căn phòng yên tĩnh, hồ bơi và một buổi tối của riêng bạn.",
   "home.stay.cta": "Khám phá Villa Del Rey",
   "home.day.title": "Một ngày của bạn tại câu lạc bộ.",
-  "home.day.intro": "Chơi golf buổi sáng, thư giãn buổi chiều và tận hưởng buổi tối trên sân thượng.",
+  "home.day.intro": "Tập luyện lúc bình minh, nghỉ ngơi buổi trưa, sân thượng lúc hoàng hôn.",
   "home.day.cta": "Khám phá nhà câu lạc bộ",
   "home.explore.title": "Mọi điều chờ đón sau điểm phát bóng đầu tiên",
   "home.explore.cta": "Khám phá",
@@ -265,7 +265,7 @@ const vi: Dictionary = {
   "packages.ctaView": "Xem gói",
   "carousel.next": "Tiếp theo",
   "packages.blurbMain":
-    "Chọn một vòng chơi nhanh, một đêm nghỉ, hoặc một chuyến golf cùng bạn bè. Các gói của chúng tôi giúp bạn dễ dàng lên kế hoạch cho chuyến thăm.",
+    "Chọn một vòng chơi nhanh, một đêm nghỉ, hoặc một chuyến golf cùng bạn bè, và câu lạc bộ sẽ sắp xếp theo ngày bạn chọn.",
   "packages.blurbStayPlay":
     "Tận hưởng hai ngày thư giãn tại CamSur Uptown với một đêm nghỉ và một vòng golf đầy đủ.",
   "packages.blurbGroup":
@@ -289,8 +289,8 @@ const zh: Dictionary = {
   "mega.goBack": "返回",
   "mega.viewAll": "查看全部",
   "lang.select": "选择语言",
-  "home.designedBy": "设计",
-  "home.imgTagline": "全球高尔夫球场设计的领导者",
+  "home.designedBy": "球场设计",
+  "home.imgTagline": "球道与山峦交汇之处。",
   "home.explore.eyebrow": "探索俱乐部",
   "home.day.eyebrow": "从清晨到夜晚",
   "home.stay.eyebrow": "入住 Villa Del Rey",
@@ -298,7 +298,7 @@ const zh: Dictionary = {
   "home.stay.intro": "慢慢醒来，在球场度过一天，再回到安静的房间、泳池，以及只属于你的夜晚。",
   "home.stay.cta": "探索 Villa Del Rey",
   "home.day.title": "你在球会的一天。",
-  "home.day.intro": "上午打球，下午放松，晚上在屋顶露台尽享时光。",
+  "home.day.intro": "黎明练球，正午小憩，黄昏登上屋顶。",
   "home.day.cta": "探索会所",
   "home.explore.title": "第一个发球台之外的一切",
   "home.explore.cta": "探索",
@@ -314,7 +314,7 @@ const zh: Dictionary = {
   "packages.ctaExplore": "探索套餐",
   "packages.ctaView": "查看套餐",
   "carousel.next": "下一项",
-  "packages.blurbMain": "选择快速一局、过夜住宿，或与朋友的高尔夫之旅。我们的套餐让您的行程轻松规划。",
+  "packages.blurbMain": "选择快速一局、过夜住宿，或与朋友的高尔夫之旅，球会将根据您的日期为您安排。",
   "packages.blurbStayPlay": "在 CamSur Uptown 享受轻松的两天，包含一晚住宿和一整场高尔夫。",
   "packages.blurbGroup": "与朋友共度三天高尔夫时光。套餐包含两晚住宿、两整场高尔夫，以及一起放松的自由时间。",
 };
@@ -336,8 +336,8 @@ const ja: Dictionary = {
   "mega.goBack": "戻る",
   "mega.viewAll": "すべて見る",
   "lang.select": "言語を選択",
-  "home.designedBy": "設計",
-  "home.imgTagline": "ゴルフコース設計のグローバルリーダー",
+  "home.designedBy": "コース設計",
+  "home.imgTagline": "フェアウェイが山と出会う場所。",
   "home.explore.eyebrow": "クラブを巡る",
   "home.day.eyebrow": "朝から夜まで",
   "home.stay.eyebrow": "Villa Del Rey に泊まる",
@@ -345,7 +345,7 @@ const ja: Dictionary = {
   "home.stay.intro": "ゆっくり目覚め、コースで一日を過ごし、静かな客室とプール、そしてあなただけの夜へ戻る。",
   "home.stay.cta": "Villa Del Rey を見る",
   "home.day.title": "クラブで過ごす、あなたの一日。",
-  "home.day.intro": "朝はゴルフ、午後はリラックス、夜はルーフトップで楽しむ。",
+  "home.day.intro": "夜明けに練習、昼はラウンジ、夕暮れはルーフトップ。",
   "home.day.cta": "クラブハウスを見る",
   "home.explore.title": "最初のティーの先にあるすべて",
   "home.explore.cta": "見る",
@@ -362,7 +362,7 @@ const ja: Dictionary = {
   "packages.ctaView": "パッケージを見る",
   "carousel.next": "次へ",
   "packages.blurbMain":
-    "気軽な1ラウンド、1泊のご宿泊、または友人とのゴルフ旅行からお選びください。当パッケージでご訪問の計画が簡単になります。",
+    "気軽な1ラウンド、1泊のご宿泊、または友人とのゴルフ旅行からお選びください。クラブがご希望の日程に合わせて手配いたします。",
   "packages.blurbStayPlay":
     "1泊のご宿泊とゴルフ1ラウンドで、CamSur Uptown での寛ぎの2日間をお楽しみください。",
   "packages.blurbGroup":

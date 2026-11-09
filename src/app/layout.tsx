@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Cormorant_SC, Geist_Mono, Manrope, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
 import HeaderUtilities from "@/components/HeaderUtilities";
+import { siteUrl } from "@/lib/site-url";
 import RouteScrollReset from "@/components/RouteScrollReset";
 import DomTranslator from "@/i18n/DomTranslator";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
@@ -39,15 +40,24 @@ const cormorantSC = Cormorant_SC({
 /** Mixed-case serif used where titles should not appear in small caps. */
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin", "vietnamese"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
+  /* Kailangan para maging absolute URL ang share image (`app/opengraph-image.jpg`)
+     at ang mga link sa preview ng Messenger/Facebook. Tingnan ang `lib/site-url.ts`. */
+  metadataBase: new URL(siteUrl()),
   title: "CamSur Uptown Golf",
   description:
     "A new championship golf destination beneath Mt. Isarog in Camarines Sur, Philippines — with course-side stays, clubhouse dining, and event spaces.",
+  openGraph: {
+    siteName: "CamSur Uptown Golf",
+    type: "website",
+    locale: "en_PH",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

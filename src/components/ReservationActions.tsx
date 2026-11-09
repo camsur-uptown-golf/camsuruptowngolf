@@ -46,11 +46,11 @@ export default function ReservationActions({ code, simulate }: { code: string; s
             type="button"
             disabled={busy}
             onClick={() => go("/api/tee-times/simulate")}
-            className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:bg-[#f3dfa0] disabled:opacity-60"
+            className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e2c77a] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:bg-[#efd99b] disabled:opacity-60"
           >
             {busy ? "Please wait…" : "Test payment (no charge)"}
           </button>
-          <p className="text-center text-[11px] leading-5 text-[#8a938c]">
+          <p className="text-center text-[11px] leading-5 text-[#5f6a62]">
             Test mode: PayMongo is not connected yet, so this button confirms the booking without a real payment. It
             only appears on localhost.
           </p>
@@ -60,7 +60,7 @@ export default function ReservationActions({ code, simulate }: { code: string; s
           type="button"
           disabled={busy}
           onClick={() => go("/api/tee-times/pay")}
-          className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:bg-[#f3dfa0] disabled:opacity-60"
+          className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e2c77a] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:bg-[#efd99b] disabled:opacity-60"
         >
           {busy ? "Please wait…" : "Complete downpayment"}
         </button>

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createMember } from "@/lib/members-db";
 import { startMemberSession } from "@/lib/member-session";
 
-/* Kailangan ng `node:sqlite` ang Node runtime — hindi ito tumatakbo sa edge. */
+/* Kailangan ng `@libsql/client` ang Node runtime — hindi ito tumatakbo sa edge. */
 export const runtime = "nodejs";
 
 /**
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   }
   if (body.terms !== true) return NextResponse.json({ ok: false, error: "terms" }, { status: 400 });
 
-  const member = createMember({ firstName, lastName, email, mobile: mobile || undefined, password });
+  const member = await createMember({ firstName, lastName, email, mobile: mobile || undefined, password });
   if (!member) return NextResponse.json({ ok: false, error: "exists" }, { status: 409 });
 
   await startMemberSession(member.id);

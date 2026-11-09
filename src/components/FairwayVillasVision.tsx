@@ -44,12 +44,12 @@ const STATS = [
 
 export default function FairwayVillasVision() {
   return (
-    <section id="villa-details" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+    <section id="villa-details" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
       <ScrollMotion />
       <Container>
         <div className="grid gap-7 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
           <div>
-            <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
+            <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224]">
               Fairway Villas
             </p>
             <h2 data-reveal="up" style={delay(90)} className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl">
@@ -63,7 +63,7 @@ export default function FairwayVillasVision() {
           </p>
         </div>
 
-        <div data-reveal="scale" className="relative mt-10 aspect-[16/9] overflow-hidden bg-[#1f3f2e]">
+        <div data-reveal="scale" className="relative mt-10 aspect-[16/9] overflow-hidden bg-[#03321b]">
           <Image
             src="/fairway-villas/overview-mt-isarog.png"
             alt="Overview of private Fairway Villas beside the golf course with Mt. Isarog in the distance"
@@ -73,16 +73,16 @@ export default function FairwayVillasVision() {
           />
         </div>
 
-        <div className="grid grid-cols-2 border-b border-[#1f3f2e]/15 sm:grid-cols-4">
+        <div className="grid grid-cols-2 border-b border-[#03321b]/15 sm:grid-cols-4">
           {STATS.map(([value, label], index) => (
             <div
               key={label}
               data-reveal="up"
               style={delay(index * 70)}
-              className={`py-5 text-center ${index % 2 ? "border-l border-[#1f3f2e]/15" : ""} ${index > 1 ? "border-t border-[#1f3f2e]/15 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-[#1f3f2e]/15" : ""}`}
+              className={`py-5 text-center ${index % 2 ? "border-l border-[#03321b]/15" : ""} ${index > 1 ? "border-t border-[#03321b]/15 sm:border-t-0" : ""} ${index > 0 ? "sm:border-l sm:border-[#03321b]/15" : ""}`}
             >
-              <p className="text-lg font-semibold tracking-[-0.03em] text-[#265136]">{value}</p>
-              <p className="mt-1.5 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.14em] text-[#98782f]">{label}</p>
+              <p className="text-lg font-semibold tracking-[-0.03em] text-[#2e5126]">{value}</p>
+              <p className="mt-1.5 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.14em] text-[#7d6224]">{label}</p>
             </div>
           ))}
         </div>
@@ -95,7 +95,7 @@ export default function FairwayVillasVision() {
               style={delay((index % 2) * 80)}
               className={index === FEATURES.length - 1 ? "sm:col-span-2" : undefined}
             >
-              <div className={`relative overflow-hidden bg-[#1f3f2e] ${index === FEATURES.length - 1 ? "aspect-[16/8]" : "aspect-[16/10]"}`}>
+              <div className={`relative overflow-hidden bg-[#03321b] ${index === FEATURES.length - 1 ? "aspect-[16/8]" : "aspect-[16/10]"}`}>
                 <Image
                   src={feature.image}
                   alt={feature.alt}
@@ -104,13 +104,13 @@ export default function FairwayVillasVision() {
                   className="object-cover"
                 />
               </div>
-              <h3 className="mt-4 text-base font-semibold tracking-[-0.02em] text-[#265136]">{feature.title}</h3>
+              <h3 className="mt-4 text-base font-semibold tracking-[-0.02em] text-[#2e5126]">{feature.title}</h3>
               <p className="mt-1.5 max-w-2xl text-sm leading-6 text-[#5d685f]">{feature.description}</p>
             </article>
           ))}
         </div>
 
-        <p className="mt-9 border-t border-[#1f3f2e]/15 pt-5 text-[10px] xl:text-[11px] leading-5 text-[#7b847e]">
+        <p className="mt-9 border-t border-[#03321b]/15 pt-5 text-[11px] xl:text-[11px] leading-5 text-[#7b847e]">
           Fairway Villas imagery, occupancy, and amenities are part of the current accommodation concept and may be
           refined as planning continues.
         </p>

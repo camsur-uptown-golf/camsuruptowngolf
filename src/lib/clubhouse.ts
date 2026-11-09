@@ -249,7 +249,7 @@ export const CLUBHOUSE_SPACES = [
     imageAlt: "The pool deck and its pavilion, looking out across the lake to the fairways",
     gallery: [],
     description:
-      "A sweeping pool deck beside the lake, centered on a curved pool pavilion, with shaded cabanas, sun loungers, and open views across the fairways.",
+      "A sweeping pool deck beside the lake, centred on a curved pool pavilion, with shaded cabanas, sun loungers, and open views across the fairways.",
     features: ["Pool pavilion", "Cabanas", "Lake views"],
   },
   {
@@ -288,10 +288,13 @@ export const CLUBHOUSE_SPACES = [
     id: "vip",
     name: "VIP wing",
     floor: "Lower",
-    image: "/clubhouse/concept/vip-lounge.jpg",
-    imageAlt: "The VIP lounge, with the course in view through a timber screen",
+    /* Ang pribadong pasukan ang pangunahing larawan: halos kapareho ng
+       `day-afternoon.jpg` (lounge card sa home at sa "How a day here runs")
+       ang `vip-lounge.jpg`, kaya nasa gallery na ito. */
+    image: "/clubhouse/concept/vip-entrance.jpg",
+    imageAlt: "The private drum of timber and travertine — a second, quieter door",
     gallery: [
-      { src: "/clubhouse/concept/vip-entrance.jpg", alt: "The private drum of timber and travertine — a second, quieter door" },
+      { src: "/clubhouse/concept/vip-lounge.jpg", alt: "The VIP lounge, with the course in view through a timber screen" },
       { src: "/clubhouse/concept/vip-dining.jpg", alt: "Fresh dishes plated in the directly connected kitchen" },
       { src: "/clubhouse/concept/vip-bar.jpg", alt: "Cocktails and fine pours at the VIP bar" },
       { src: "/clubhouse/concept/vip-suites.jpg", alt: "The suite of lounges, connected to the rooftop and a dedicated cart bay" },
@@ -405,13 +408,13 @@ export const CLUBHOUSE_DAY = [
     time: "Morning",
     image: "/clubhouse/concept/day-morning.jpg",
     title: "Practice & play",
-    detail: "Warm up in the practice bays, collect your cart, and step straight onto the first tee.",
+    detail: "Wake slowly, warm up with the lake in view, then head to the first tee.",
   },
   {
     time: "Afternoon",
     image: "/clubhouse/concept/day-afternoon.jpg",
     title: "Members’ Lounge",
-    detail: "Unwind after your round in the members’ lounge, visit the spa, or walk the trophy corridor, all on the upper floor.",
+    detail: "Facing a full sweep of glass across the lake and fairways, a calm room for coffee, papers and post-round conversation.",
   },
   {
     time: "Evening",

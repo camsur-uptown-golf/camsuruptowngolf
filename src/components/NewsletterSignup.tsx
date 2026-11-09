@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { revealConfirmation } from "@/lib/reveal-confirmation";
 import Tr from "@/components/Tr";
 
 /**
@@ -46,7 +47,7 @@ export default function NewsletterSignup() {
 
   if (status === "done") {
     return (
-      <p className="mt-6 max-w-md rounded-2xl border border-[#c9a54e]/35 bg-[#c9a54e]/10 px-5 py-4 text-sm leading-6 text-[#f0dca0]">
+      <p ref={revealConfirmation} role="status" tabIndex={-1} className="mt-6 max-w-md outline-none rounded-2xl border border-[#c5a35c]/35 bg-[#c5a35c]/10 px-5 py-4 text-sm leading-6 text-[#f0dca0]">
         Thank you — you are on the list. Look out for course updates and club news.
       </p>
     );
@@ -62,12 +63,12 @@ export default function NewsletterSignup() {
           autoComplete="email"
           placeholder="Email address"
           aria-label="Email address"
-          className="min-w-0 flex-1 rounded-full border border-white/15 bg-white/[0.035] px-5 py-3.5 text-sm text-white placeholder-white/45 outline-none transition focus:border-[#c9a54e]/65 focus:bg-white/[0.055]"
+          className="min-w-0 flex-1 rounded-full border border-white/15 bg-white/[0.035] px-5 py-3.5 text-sm text-white placeholder-white/45 outline-none transition focus:border-[#c5a35c]/65 focus:bg-white/[0.055]"
         />
         <button
           type="submit"
           disabled={status === "sending"}
-          className="shrink-0 rounded-full bg-[#e7d18d] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#0a2619] transition hover:bg-[#f3dfa0] disabled:cursor-not-allowed disabled:opacity-60"
+          className="shrink-0 rounded-full bg-[#e2c77a] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#0a2619] transition hover:bg-[#efd99b] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "sending" ? "Sending…" : "Subscribe"}
         </button>
@@ -76,7 +77,7 @@ export default function NewsletterSignup() {
       <label className="mt-4 flex max-w-2xl gap-3 text-[11px] leading-5 text-white/65">
         {/* Kailangan ng `required`: ang pagsang-ayon ang batayan ng pag-iimbak
             ng email sa ilalim ng RA 10173, kaya hindi ito opsyonal. */}
-        <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#c9a54e]" />
+        <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#c5a35c]" />
         <span>
           {/* TODO: ikabit sa totoong Privacy Policy kapag mayroon na. Hindi ito
               link ngayon dahil walang pahinang matuturo. */}

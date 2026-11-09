@@ -16,7 +16,7 @@ import { useState } from "react";
  * loob, walang data-reveal para laging kita ang napiling listahan.
  */
 
-const LABEL = "font-navigation text-[10px] font-bold uppercase tracking-[0.18em] transition-colors";
+const LABEL = "font-navigation text-[11px] font-bold uppercase tracking-[0.18em] transition-colors";
 
 export default function StayFeatures({
   highlights,
@@ -41,8 +41,8 @@ export default function StayFeatures({
               aria-pressed={active === "highlights"}
               className={`${LABEL} cursor-pointer border-b-2 pb-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] ${
                 active === "highlights"
-                  ? "border-current text-[#98782f]"
-                  : "border-transparent text-[#5d685f]/45 hover:text-[#98782f]/80"
+                  ? "border-current text-[#7d6224]"
+                  : "border-transparent text-[#5d685f]/45 hover:text-[#7d6224]/80"
               }`}
             >
               Highlights
@@ -56,15 +56,15 @@ export default function StayFeatures({
               aria-pressed={active === "amenities"}
               className={`${LABEL} cursor-pointer border-b-2 pb-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] ${
                 active === "amenities"
-                  ? "border-current text-[#98782f]"
-                  : "border-transparent text-[#5d685f]/45 hover:text-[#98782f]/80"
+                  ? "border-current text-[#7d6224]"
+                  : "border-transparent text-[#5d685f]/45 hover:text-[#7d6224]/80"
               }`}
             >
               Amenities
             </button>
           </>
         ) : (
-          <p className={`${LABEL} text-[#98782f]`}>Highlights</p>
+          <p className={`${LABEL} text-[#7d6224]`}>Highlights</p>
         )}
       </div>
 

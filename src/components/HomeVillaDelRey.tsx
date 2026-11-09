@@ -69,7 +69,7 @@ export default function HomeVillaDelRey() {
   }, [active, slides.length]);
 
   return (
-    <section id="villa-del-rey" className="bg-[#f7f5ee] pb-16 pt-6 text-[#14271d] sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
+    <section id="villa-del-rey" className="bg-[#f3ede1] pb-16 pt-6 text-[#03321b] sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
       <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-6 lg:grid-cols-[1fr_1.12fr] lg:gap-16 lg:px-10">
         {/* Larawan: lahat ng kuha ng bawat tuluyan ay nakapatong at
             nagka-crossfade, kaya walang kurap kapag nagpalit. */}
@@ -88,7 +88,7 @@ export default function HomeVillaDelRey() {
                 event.currentTarget.click();
               }
             }}
-            className="group/photo relative aspect-[4/5] cursor-zoom-in overflow-hidden rounded-[1.8rem] bg-[#1f3f2e] shadow-[0_26px_60px_rgba(20,50,35,0.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:aspect-[5/5.4]"
+            className="group/photo relative aspect-[4/5] cursor-zoom-in overflow-hidden rounded-[1.8rem] bg-[#03321b] shadow-[0_26px_60px_rgba(20,50,35,0.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:aspect-[5/5.4]"
           >
             {VILLA_DEL_REY_STAYS.flatMap((stay, stayIndex) =>
               slidesFor(stay).map((photo, index) => {
@@ -128,7 +128,7 @@ export default function HomeVillaDelRey() {
               className="absolute left-6 top-6 z-20 h-auto w-[120px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] sm:left-8 sm:top-8 sm:w-[150px]"
             />
             <div className="absolute bottom-6 left-6 z-20 sm:bottom-8 sm:left-8">
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#f0d98f] xl:text-[11px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#f0d98f] xl:text-[11px]">
                 {current.setting}
               </p>
               <p className="mt-1 font-display text-3xl font-medium tracking-[-0.03em] text-white sm:text-4xl">{current.name}</p>
@@ -170,7 +170,7 @@ export default function HomeVillaDelRey() {
         <div>
           <p
             data-reveal="up"
-            className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#98782f] sm:text-xs"
+            className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-xs"
           >
             {t("home.stay.eyebrow")}
           </p>
@@ -188,11 +188,11 @@ export default function HomeVillaDelRey() {
             {t("home.stay.intro")}
           </p>
 
-          <ul data-reveal="up" className="mt-8 border-t border-[#14271d]/12">
+          <ul data-reveal="up" className="mt-8 border-t border-[#03321b]/12">
             {VILLA_DEL_REY_STAYS.map((stay, index) => {
               const isActive = index === active;
               return (
-                <li key={stay.name} className="border-b border-[#14271d]/12">
+                <li key={stay.name} className="border-b border-[#03321b]/12">
                   <button
                     type="button"
                     aria-expanded={isActive}
@@ -203,21 +203,21 @@ export default function HomeVillaDelRey() {
                   >
                     <span
                       className={`flex-1 font-display text-2xl tracking-[-0.03em] transition-all duration-300 group-focus-visible:underline sm:text-[1.7rem] ${
-                        isActive ? "translate-x-1 text-[#14271d]" : "text-[#14271d]/55 group-hover:text-[#14271d]"
+                        isActive ? "translate-x-1 text-[#03321b]" : "text-[#03321b]/55 group-hover:text-[#03321b]"
                       }`}
                     >
                       {stay.name}
                     </span>
                     <span
-                      className={`hidden font-navigation text-[10px] font-bold uppercase tracking-[0.16em] sm:block ${
-                        isActive ? "text-[#98782f]" : "text-[#14271d]/40"
+                      className={`hidden font-navigation text-[11px] font-bold uppercase tracking-[0.16em] sm:block ${
+                        isActive ? "text-[#7d6224]" : "text-[#03321b]/40"
                       }`}
                     >
                       {stay.setting}
                     </span>
                     <span
                       aria-hidden="true"
-                      className={`h-px transition-all duration-500 ${isActive ? "w-10 bg-[#98782f]" : "w-4 bg-[#14271d]/25"}`}
+                      className={`h-px transition-all duration-500 ${isActive ? "w-10 bg-[#98782f]" : "w-4 bg-[#03321b]/25"}`}
                     />
                   </button>
 
@@ -244,7 +244,7 @@ export default function HomeVillaDelRey() {
                       <Link
                         href={villaHouseHref(stay.slug)}
                         tabIndex={isActive ? undefined : -1}
-                        className="mb-5 inline-flex h-10 items-center gap-2 rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#8a681f] transition hover:border-[#e7d18d] hover:bg-[#e7d18d] hover:text-[#14271d] xl:text-[11px]"
+                        className="mb-5 inline-flex h-10 items-center gap-2 rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#8a681f] transition hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] xl:text-[11px]"
                       >
                         Ask about availability
                       </Link>
@@ -258,7 +258,7 @@ export default function HomeVillaDelRey() {
           <div data-reveal="up" className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
             <Link
               href={VILLA_HREF}
-              className="group inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
+              className="group inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
             >
               {t("home.stay.cta")}
             </Link>

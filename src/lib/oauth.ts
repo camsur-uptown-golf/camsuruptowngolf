@@ -93,8 +93,30 @@ export function callbackUrl(request: Request, provider: Provider) {
   return `${siteOrigin(request)}/api/auth/${provider}/callback`;
 }
 
+/**
+ * Login mula sa member app: saan ibabalik (deep link ng app) at ang PKCE
+ * challenge ng app. `camsurgolf://` lang sa production; sa development ay
+ * pati ang `exp://` ng Expo Go.
+ */
+export type AppReturn = { redirect: string; challenge: string };
+
+export function appReturn(params: URLSearchParams): AppReturn | null {
+  const redirect = params.get("app") ?? "";
+  const challenge = params.get("challenge") ?? "";
+  const allowed = redirect.startsWith("camsurgolf://") || (process.env.NODE_ENV !== "production" && redirect.startsWith("exp://"));
+  if (!allowed || redirect.length > 300 || !/^[A-Za-z0-9_-]{43}$/.test(challenge)) return null;
+  return { redirect, challenge };
+}
+
+/** Ang deep link pabalik sa app, may dagdag na `?code=` o `?error=`. */
+export function appRedirect(app: AppReturn, params: Record<string, string>) {
+  const url = new URL(app.redirect);
+  for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
+  return url.toString();
+}
+
 /** Simula ng login: ang URL ng Google/Apple, at ang ilalagay sa cookie. */
-export function startAuthorization(request: Request, provider: Provider) {
+export function startAuthorization(request: Request, provider: Provider, app: AppReturn | null = null) {
   const config = CONFIG[provider]();
   const state = randomBytes(24).toString("base64url");
   const verifier = randomBytes(32).toString("base64url");
@@ -113,7 +135,7 @@ export function startAuthorization(request: Request, provider: Provider) {
     /* Hinihingi ng Apple ang form_post kapag may hiniling na `name`/`email`. */
     url.searchParams.set("response_mode", "form_post");
   }
-  return { url: url.toString(), cookie: JSON.stringify({ provider, state, verifier }) };
+  return { url: url.toString(), cookie: JSON.stringify({ provider, state, verifier, app }) };
 }
 
 export type OAuthProfile = {

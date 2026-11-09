@@ -21,14 +21,14 @@ import { VILLA_DEL_REY_STAYS, villaHouseHref } from "@/lib/villa-del-rey";
 
 export default function VillaDelReyStays() {
   return (
-    <section id="villa-stays" className="bg-[#f7f5ee] text-[#14271d]">
+    <section id="villa-stays" className="bg-[#f3ede1] text-[#03321b]">
       <ScrollMotion />
       <ScrollReveal />
 
       <div className="mx-auto max-w-[1600px] px-4 pb-3 pt-12 text-center sm:px-8 sm:pt-14 lg:pt-16">
         <p
           data-reveal="up"
-          className="font-navigation text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#98782f]"
+          className="font-navigation text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.24em] text-[#7d6224]"
         >
           Ways to stay
         </p>
@@ -37,14 +37,15 @@ export default function VillaDelReyStays() {
           style={delay(90)}
           className="mx-auto mt-4 max-w-4xl text-[clamp(2.25rem,4vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]"
         >
-          Your Home for Rest and Adventure
+          Your home for rest and adventure
         </h2>
         <p
           data-reveal="up"
           style={delay(180)}
           className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#5d685f] sm:text-lg"
         >
-          A convenient resort option for golf groups, families, and guests exploring Camarines Sur.
+          {/* Ang "Stay" line ng Brand Guidelines 2026 (p.9), salita sa salita. */}
+          After the round, come home to Villa Del Rey: villas, cabins, cabanas and Dwell suites.
         </p>
         {/* Maikling gintong guhit: hudyat na nagsisimula na ang listahan. */}
         <div data-reveal="up" style={delay(270)} className="mx-auto mt-9 h-px w-20 bg-[#98782f]/50" />
@@ -90,17 +91,17 @@ export default function VillaDelReyStays() {
                 <div
                   data-reveal="up"
                   style={delay(190)}
-                  className="mt-8 border-y border-[#1f3f2e]/12 py-5"
+                  className="mt-8 border-y border-[#03321b]/12 py-5"
                 >
                   <div className="grid grid-cols-2 gap-5">
                     <div>
-                      <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                      <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#7d6224]">
                         Setting
                       </p>
                       <p className="mt-2 text-sm font-medium text-[#26362e]">{stayType.setting}</p>
                     </div>
-                    <div className="border-l border-[#1f3f2e]/12 pl-5">
-                      <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                    <div className="border-l border-[#03321b]/12 pl-5">
+                      <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#7d6224]">
                         Gallery
                       </p>
                       <p className="mt-2 text-sm font-medium text-[#26362e]">Exterior &amp; room</p>
@@ -125,7 +126,7 @@ export default function VillaDelReyStays() {
                   href={villaHouseHref(stayType.slug)}
                   data-reveal="up"
                   style={delay(270)}
-                  className="mt-8 inline-flex h-12 max-w-full items-center justify-center gap-3 whitespace-nowrap rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#8a681f] transition hover:-translate-y-0.5 hover:border-[#e7d18d] hover:bg-[#e7d18d] hover:text-[#14271d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:px-7 sm:text-[11px] sm:tracking-[0.12em] xl:text-[12px]"
+                  className="mt-8 inline-flex h-12 max-w-full items-center justify-center gap-3 whitespace-nowrap rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#8a681f] transition hover:-translate-y-0.5 hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:px-7 sm:text-[11px] sm:tracking-[0.12em] xl:text-[12px]"
                 >
                   Ask about availability
                 </Link>

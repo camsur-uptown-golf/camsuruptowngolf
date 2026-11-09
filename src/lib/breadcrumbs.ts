@@ -21,6 +21,8 @@ const STANDALONE: Record<string, string> = {
   faq: "FAQs",
   "getting-here": "How to get here",
   "terms-of-use": "Terms of use",
+  "pro-shop": "Pro Shop",
+  "the-uptown-life": "The Uptown Life",
 };
 
 /**
@@ -78,7 +80,7 @@ export function trailFor(pathname: string): Crumb[] {
   }
   /* Booking ng tee time (wala sa mga link ng section). */
   if (path === "/golf/book") {
-    crumbs.push({ label: "Reserve a tee time", href: path });
+    crumbs.push({ label: "Reserve your round", href: path });
     return crumbs;
   }
 

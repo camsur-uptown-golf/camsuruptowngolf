@@ -27,7 +27,7 @@ export const EDITORIAL_SECTION =
 
 /** Ang salitan ng EDITORIAL_SECTION. */
 export const EDITORIAL_SECTION_ALT =
-  "relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] py-14 sm:py-16";
+  "relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-14 sm:py-16";
 
 export const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
@@ -44,8 +44,26 @@ export function Shell({ children }: { children: ReactNode }) {
  * isolate overflow-hidden` (nasa EDITORIAL_SECTION na), at <ScrollMotion />
  * sa pahina — kung wala iyon ay hindi gumagalaw ang parallax, bagaman
  * nakikita pa rin ang crest.
+ *
+ * `fixed`: para sa section na nagbabago ang taas habang binabasa (hal. ang
+ * accordion ng /faq). Sa default, nakagitna ang crest sa section, kaya
+ * kapag humaba ang section ay bumababa rin ito — mukhang tumatalon ang logo
+ * tuwing may binubuksan. Ang `fixed` ay nakadikit sa itaas ng section at
+ * walang parallax, kaya hindi ito gumagalaw kahit ano pa ang buksan. Ang
+ * shield (walang "Club" sa wordmark) ang gamit nito, ayon sa Brand
+ * Guidelines 2026.
  */
-export function Watermark({ speed, offsetY = "0px" }: { speed: number; offsetY?: string }) {
+export function Watermark({ speed, offsetY = "0px", fixed = false }: { speed: number; offsetY?: string; fixed?: boolean }) {
+  if (fixed) {
+    return (
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center pt-24 sm:pt-32" aria-hidden="true">
+        <div className="relative w-[300px] opacity-[0.05] sm:w-[440px]">
+          <Image src="/branding/camsur-uptown-golf-shield.png" alt="" width={770} height={1076} className="h-auto w-full grayscale" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     /* Ang offset ay nasa labas na balot, hindi sa loob: ang panloob na div ang
        may data-parallax, at ang transform doon ay isinusulat ng ScrollMotion
@@ -56,7 +74,7 @@ export function Watermark({ speed, offsetY = "0px" }: { speed: number; offsetY?:
       aria-hidden="true"
     >
       <div data-parallax={speed} className="relative w-[420px] opacity-[0.04] sm:w-[560px]">
-        <Image src="/camsur-uptown-logo.png" alt="" width={720} height={958} className="h-auto w-full grayscale" />
+        <Image src="/branding/camsur-uptown-golf-shield.png" alt="" width={770} height={1076} className="h-auto w-full grayscale" />
       </div>
     </div>
   );
@@ -65,7 +83,7 @@ export function Watermark({ speed, offsetY = "0px" }: { speed: number; offsetY?:
 /** Maliit na uppercase na label sa itaas ng bawat pamagat. */
 export function Kicker({ children }: { children: ReactNode }) {
   return (
-    <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#98782f]">
+    <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224]">
       {children}
     </p>
   );
@@ -96,7 +114,7 @@ export function EditorialHeading({
       <h2
         data-reveal="up"
         style={delay(90)}
-        className={`${kicker ? "mt-3 " : ""}font-medium tracking-[-0.035em] text-[#14271d] ${
+        className={`${kicker ? "mt-3 " : ""}font-medium tracking-[-0.035em] text-[#03321b] ${
           isLg
             ? "text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.02]"
             : "text-2xl sm:text-3xl xl:text-4xl"

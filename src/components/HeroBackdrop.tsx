@@ -21,10 +21,10 @@ export default function HeroBackdrop({
   return (
     <>
       <div
-        className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(120%_80%_at_80%_0%,#2f5a40_0%,#1f3f2e_45%,#122a1d_100%)] sm:hidden"
+        className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(120%_80%_at_80%_0%,#2f5a40_0%,#03321b_45%,#122a1d_100%)] sm:hidden"
         aria-hidden="true"
       >
-        <span className="absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-[#d8b65b]/50 to-transparent" />
+        <span className="absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-[#e2c77a]/50 to-transparent" />
       </div>
       <Image
         src={src}

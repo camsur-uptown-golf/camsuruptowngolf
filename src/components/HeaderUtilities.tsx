@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { LOCALE_LABELS, SWITCHER_LOCALES } from "@/i18n/config";
 import { useTranslation } from "@/i18n/LanguageProvider";
 import ForecastDays from "@/components/ForecastDays";
@@ -58,7 +59,7 @@ function MemberLogin() {
   return (
     <Link
       href="/members"
-      className="flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[9px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#f8e9b7] text-center"
+      className="flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[11px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#efd99b] text-center"
     >
       <UserIcon className="h-5 w-5" />
       <span>{t("action.memberLogin")}</span>
@@ -93,7 +94,7 @@ function LanguageSelector() {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("lang.select")}
-        className={`${open ? "text-[#f8e9b7]" : ""} flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[9px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#f8e9b7]`}
+        className={`${open ? "text-[#efd99b]" : ""} flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[11px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#efd99b]`}
       >
         <GlobeIcon className="h-5 w-5" />
         <span className="flex items-center gap-0.5">
@@ -116,10 +117,10 @@ function LanguageSelector() {
                   setLocale(code);
                   setOpen(false);
                 }}
-                className={`${locale === code ? "text-[#f3dda0]" : "text-white/80"} flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-xs font-medium transition-colors hover:bg-white/10`}
+                className={`${locale === code ? "text-[#efd99b]" : "text-white/80"} flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-xs font-medium transition-colors hover:bg-white/10`}
               >
                 {LOCALE_LABELS[code]}
-                <span className="text-[10px] font-semibold tracking-wide text-white/45">{code}</span>
+                <span className="text-[11px] font-semibold tracking-wide text-white/45">{code}</span>
               </button>
             </li>
           ))}
@@ -198,12 +199,12 @@ function WeatherNow() {
         onClick={toggle}
         aria-expanded={open}
         aria-controls="weather-forecast"
-        className={`${open ? "text-[#f8e9b7]" : ""} flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[10px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#f8e9b7]`}
+        className={`${open ? "text-[#efd99b]" : ""} flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[11px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#efd99b]`}
         title={weather ? `Pili — ${w?.label}, ${Math.round(weather.tempC)}°C` : "Pili weather"}
       >
         <WeatherIcon kind={w?.kind ?? "cloud"} className="h-5 w-5" />
         <span className="tabular-nums">{weather ? `${Math.round(weather.tempC)}°C` : "—°"}</span>
-        <span translate="no" className="min-h-[10px] text-[8px] leading-tight tracking-[0.1em] opacity-75">{sky}</span>
+        <span translate="no" className="min-h-[10px] text-[11px] leading-tight tracking-[0.1em] opacity-75">{sky}</span>
         <span className="sr-only">
           {weather ? `Pili weather, ${w?.label}, ${Math.round(weather.tempC)} degrees. ` : "Loading Pili weather. "}
           Show the 7-day forecast.
@@ -214,7 +215,7 @@ function WeatherNow() {
           id="weather-forecast"
           className="absolute right-[calc(100%+10px)] top-1/2 z-[60] w-[300px] -translate-y-1/2 rounded-xl border border-white/15 bg-black/75 p-3 normal-case tracking-normal text-white shadow-[0_18px_42px_rgba(0,0,0,0.4)] backdrop-blur-md [text-shadow:none]"
         >
-          <p className="mb-2 px-1 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0]">Next 7 days at the club</p>
+          <p className="mb-2 px-1 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#efd99b]">Next 7 days at the club</p>
           {week.length > 0 ? <ForecastDays dates={week} tone="dark" /> : null}
         </div>
       ) : null}
@@ -248,8 +249,40 @@ function WeatherNow() {
    mawala ang huling temperatura. */
 const UTILITIES_KEY = "cu-utilities";
 
+/* KUSANG LUMILIIT PAGKALAMPAS NG HERO. Bukas pa rin ito pagka-load, pero
+   kapag nag-scroll na pababa (lampas ~60% ng screen) ay nagiging maliit na
+   tab na lang ito — tinatakpan kasi ng bukas na rail ang kanang gilid ng mga
+   card at form sa mga cream na section. Kapag binuksan ito ng bisita habang
+   naka-scroll (`pinned`), nananatili itong bukas hanggang isara niya. */
+const COLLAPSE_AFTER = 0.6;
+
+/* Mga pahinang nasa hero mismo ang form (login, quick-book, booking): doon ay
+   tab na agad ang rail kahit nasa itaas pa — tinatakpan nito ang kanang gilid
+   ng form. Nabubuksan pa rin ito sa pagpindot. */
+const FORM_HERO_PATHS = ["/members", "/plan-your-visit", "/golf/book"];
+
 export default function HeaderUtilities() {
   const [open, setOpen] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  /* Ang pahina kung saan binuksan ng bisita ang rail habang dapat ay
+     nakatiklop ito — kaya kusang nawawala ang `pinned` paglipat ng pahina. */
+  const [pinnedPath, setPinnedPath] = useState<string | null>(null);
+  const pathname = usePathname();
+  const formHero = FORM_HERO_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+  const pinned = pinnedPath === pathname;
+
+  useEffect(() => {
+    const onScroll = () => {
+      const past = window.scrollY > window.innerHeight * COLLAPSE_AFTER;
+      setScrolled(past);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const collapsed = scrolled || formHero;
+  const shown = open && (!collapsed || pinned);
 
   useEffect(() => {
     let saved: string | null = null;
@@ -265,33 +298,34 @@ export default function HeaderUtilities() {
   }, []);
 
   function toggle() {
-    setOpen((current) => {
-      const next = !current;
-      try {
-        localStorage.setItem(UTILITIES_KEY, next ? "open" : "closed");
-      } catch {
-        /* walang storage — sa pahinang ito lang ang pili. */
-      }
-      return next;
-    });
+    const next = !shown;
+    setOpen(next);
+    setPinnedPath(next && collapsed ? pathname : null);
+    try {
+      localStorage.setItem(UTILITIES_KEY, next ? "open" : "closed");
+    } catch {
+      /* walang storage — sa pahinang ito lang ang pili. */
+    }
   }
 
+  /* `bg-black/60` (dating `/30`): sa cream na section ay malabong gray ang
+     `/30` at halos hindi mabasa ang ginto. Itim pa rin, hindi berde. */
   return (
     <aside
       aria-label="Club utilities"
-      className={`${open ? "w-[112px]" : "w-11"} fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-stretch rounded-l-2xl border border-r-0 border-white/15 bg-black/30 text-[#f3dda0] shadow-[0_12px_35px_rgba(0,0,0,0.2)] backdrop-blur-md transition-[width] duration-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.45)] lg:flex`}
+      className={`${shown ? "w-[112px]" : "w-11"} fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-stretch rounded-l-2xl border border-r-0 border-white/15 bg-black/60 text-[#efd99b] shadow-[0_12px_35px_rgba(0,0,0,0.2)] backdrop-blur-md transition-[width] duration-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.45)] lg:flex`}
     >
       <button
         type="button"
         onClick={toggle}
-        aria-expanded={open}
+        aria-expanded={shown}
         aria-controls="club-utilities"
-        aria-label={open ? "Hide club utilities" : "Show club utilities"}
-        className="flex w-full items-center justify-center py-3.5 transition-colors hover:text-[#f8e9b7]"
+        aria-label={shown ? "Hide club utilities" : "Show club utilities"}
+        className="flex w-full items-center justify-center py-3.5 transition-colors hover:text-[#efd99b]"
       >
-        <ChevronIcon className={`${open ? "-rotate-90" : "rotate-90"} h-4 w-4 transition-transform`} />
+        <ChevronIcon className={`${shown ? "-rotate-90" : "rotate-90"} h-4 w-4 transition-transform`} />
       </button>
-      <div id="club-utilities" className={`${open ? "flex" : "hidden"} flex-col items-stretch divide-y divide-[#f3dda0]/15 border-t border-[#f3dda0]/15`}>
+      <div id="club-utilities" className={`${shown ? "flex" : "hidden"} flex-col items-stretch divide-y divide-[#efd99b]/15 border-t border-[#efd99b]/15`}>
         <WeatherNow />
         <LanguageSelector />
         <MemberLogin />
@@ -329,7 +363,7 @@ export function MobileUtilities({ onNavigate }: { onNavigate?: () => void }) {
 
   const w = weather ? describeWeather(weather.code) : null;
   const sky = w ? (weatherPhrases(locale).sky[w.label as keyof ReturnType<typeof weatherPhrases>["sky"]] ?? w.label) : "";
-  const tile = "flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-2xl border border-white/12 bg-white/[0.06] px-2 py-2 text-center text-[#f3dda0]";
+  const tile = "flex min-h-[64px] flex-col items-center justify-center gap-1 rounded-2xl border border-white/12 bg-white/[0.06] px-2 py-2 text-center text-[#efd99b]";
 
   return (
     <div className="mt-3 grid grid-cols-3 gap-2">
@@ -337,7 +371,7 @@ export function MobileUtilities({ onNavigate }: { onNavigate?: () => void }) {
         <WeatherIcon kind={w?.kind ?? "cloud"} className="h-5 w-5" />
         <span translate="no" className="text-[11px] font-semibold leading-tight tabular-nums">
           {weather ? `${Math.round(weather.tempC)}°C` : "—°"}
-          {sky ? <span className="block text-[10px] font-medium uppercase tracking-[0.08em] text-white/60">{sky}</span> : null}
+          {sky ? <span className="block text-[11px] font-medium uppercase tracking-[0.08em] text-white/60">{sky}</span> : null}
         </span>
       </div>
       <label className={`${tile} relative cursor-pointer`}>
@@ -356,9 +390,9 @@ export function MobileUtilities({ onNavigate }: { onNavigate?: () => void }) {
           ))}
         </select>
       </label>
-      <Link href="/members" onClick={onNavigate} className={`${tile} transition hover:border-[#f3dda0]/50`}>
+      <Link href="/members" onClick={onNavigate} className={`${tile} transition hover:border-[#efd99b]/50`}>
         <UserIcon className="h-5 w-5" />
-        <span className="text-[10px] font-semibold uppercase leading-tight tracking-[0.06em]">{t("action.memberLogin")}</span>
+        <span className="text-[11px] font-semibold uppercase leading-tight tracking-[0.06em]">{t("action.memberLogin")}</span>
       </Link>
     </div>
   );

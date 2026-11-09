@@ -5,7 +5,7 @@ export const VILLA_DEL_REY_STAYS = [
     slug: "villas",
     name: "Villas",
     description:
-      "Spacious villa accommodation with a refined bedroom and a private poolside setting.",
+      "A spacious villa with a refined bedroom and a private poolside of its own.",
     setting: "Private poolside",
     highlights: ["Private villa setting", "Refined bedroom", "Pool-facing outdoor space"],
     /* Tunay na amenities ng Villa (ibinigay ng club). Ang stay na may
@@ -69,7 +69,7 @@ export const VILLA_DEL_REY_STAYS = [
     slug: "cabana",
     name: "Cabana",
     description:
-      "Compact resort cabanas arranged along garden paths, with simple interiors designed for an easy stay.",
+      "Compact cabanas set along the garden paths, with simple interiors made for an easy stay.",
     setting: "Resort garden paths",
     highlights: ["Compact resort stay", "Easy garden access", "Simple, calm interior"],
     exterior: "/villa-del-rey/stays/cabana-exterior-v2.jpg",
@@ -80,7 +80,7 @@ export const VILLA_DEL_REY_STAYS = [
     slug: "dwell",
     name: "Dwell",
     description:
-      "A clean modern retreat pairing a private garden-facing exterior with a warm timber-lined bedroom.",
+      "A clean, modern retreat with a private garden outlook and a warm, timber-lined bedroom.",
     setting: "Garden-facing retreat",
     highlights: ["Modern private retreat", "Garden outlook", "Warm timber-lined room"],
     exterior: "/villa-del-rey/stays/dwell-exterior-v3.jpg",

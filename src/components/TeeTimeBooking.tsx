@@ -57,16 +57,16 @@ function RoundCoverage({ round }: { round: Round }) {
         return (
           <div
             key={nine.id}
-            className={`border p-3.5 transition-colors sm:p-4 ${included ? "border-[#265136] bg-[#265136] text-[#f7f5ee]" : "border-[#1f3f2e]/10 bg-[#1f3f2e]/[0.03] text-[#788279]"}`}
+            className={`border p-3.5 transition-colors sm:p-4 ${included ? "border-[#2e5126] bg-[#2e5126] text-[#f3ede1]" : "border-[#03321b]/10 bg-[#03321b]/[0.03] text-[#788279]"}`}
           >
             <div className="flex items-center gap-2">
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={`h-4 w-4 shrink-0 ${included ? "text-[#e7d18d]" : "text-[#9aa39d]"}`}>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={`h-4 w-4 shrink-0 ${included ? "text-[#e2c77a]" : "text-[#9aa39d]"}`}>
                 <path d="M6 21V3m0 0c4-3 8 3 12 0v10c-4 3-8-3-12 0M3 21h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.12em] sm:text-[11px]">{nine.label}</p>
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.12em] sm:text-[11px]">{nine.label}</p>
             </div>
             <p className="mt-3 text-base font-medium tracking-[-0.02em] sm:text-lg">{nine.holes}</p>
-            <p className={`mt-1.5 flex items-center gap-1.5 text-[11px] ${included ? "text-[#e7d18d]" : "text-[#8a938c]"}`}>
+            <p className={`mt-1.5 flex items-center gap-1.5 text-[11px] ${included ? "text-[#e2c77a]" : "text-[#5f6a62]"}`}>
               {included ? <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5"><path d="m3 8 3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg> : null}
               {included ? "Included in your round" : "Not included"}
             </p>
@@ -90,9 +90,9 @@ const ERRORS: Record<string, string> = {
 };
 
 const FIELD =
-  "w-full border border-[#1f3f2e]/25 bg-white px-4 py-3 text-sm text-[#14271d] outline-none transition placeholder:text-[#9aa39d] focus:border-[#265136] focus:ring-2 focus:ring-[#265136]/20";
-const STEP = "font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f]";
-const TITLE = "mt-2 text-xl font-medium tracking-[-0.03em] text-[#14271d]";
+  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#9aa39d] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
+const STEP = "font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]";
+const TITLE = "mt-2 text-xl font-medium tracking-[-0.03em] text-[#03321b]";
 
 function addDays(date: string, days: number) {
   return new Date(Date.parse(`${date}T00:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
@@ -116,7 +116,7 @@ function Toggle<T extends string | number>({
           aria-pressed={value === option.value}
           onClick={() => onChange(option.value)}
           className={`border px-4 py-3 text-left transition ${
-            value === option.value ? "border-[#265136] bg-[#265136] text-white" : "border-[#1f3f2e]/20 bg-white text-[#14271d] hover:border-[#265136]"
+            value === option.value ? "border-[#2e5126] bg-[#2e5126] text-white" : "border-[#03321b]/20 bg-white text-[#03321b] hover:border-[#2e5126]"
           }`}
         >
           <span className="block text-sm font-semibold">{option.label}</span>
@@ -130,7 +130,7 @@ function Toggle<T extends string | number>({
 }
 
 function Stepper({ value, min, max, onChange, label }: { value: number; min: number; max: number; onChange: (v: number) => void; label: string }) {
-  const button = "flex h-9 w-9 items-center justify-center border border-[#1f3f2e]/20 text-lg text-[#265136] transition hover:border-[#265136] disabled:opacity-30";
+  const button = "flex h-9 w-9 items-center justify-center border border-[#03321b]/20 text-lg text-[#2e5126] transition hover:border-[#2e5126] disabled:opacity-30";
   return (
     <div className="flex items-center gap-2" role="group" aria-label={label}>
       <button type="button" className={button} disabled={value <= min} onClick={() => onChange(value - 1)} aria-label="Less">
@@ -178,32 +178,32 @@ function StepCard({
     <section
       id={`booking-step-${n}`}
       className={`scroll-mt-28 border bg-white transition ${
-        state === "open" ? "border-[#265136]/40 shadow-[0_18px_44px_rgba(20,39,29,0.08)]" : "border-[#1f3f2e]/12"
+        state === "open" ? "border-[#2e5126]/40 shadow-[0_18px_44px_rgba(20,39,29,0.08)]" : "border-[#03321b]/12"
       } ${state === "todo" ? "bg-white/50" : ""}`}
     >
       <header className="flex items-center gap-4 px-5 py-4 sm:px-6">
         <span
           className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-            state === "done" ? "bg-[#265136] text-[#f3dda0]" : state === "open" ? "border-2 border-[#265136] text-[#265136]" : "border border-[#1f3f2e]/20 text-[#9aa39d]"
+            state === "done" ? "bg-[#2e5126] text-[#efd99b]" : state === "open" ? "border-2 border-[#2e5126] text-[#2e5126]" : "border border-[#03321b]/20 text-[#9aa39d]"
           }`}
         >
           {state === "done" ? <CheckIcon /> : n}
         </span>
         <div className="min-w-0 flex-1">
-          <h2 className={`text-base font-semibold tracking-[-0.01em] ${state === "todo" ? "text-[#9aa39d]" : "text-[#14271d]"}`}>{title}</h2>
+          <h2 className={`text-base font-semibold tracking-[-0.01em] ${state === "todo" ? "text-[#9aa39d]" : "text-[#03321b]"}`}>{title}</h2>
           {state === "done" && summary ? <p className="mt-0.5 truncate text-sm text-[#667269]">{summary}</p> : null}
         </div>
         {state === "done" && onChange ? (
           <button
             type="button"
             onClick={onChange}
-            className="shrink-0 rounded-full border border-[#265136]/25 px-4 py-1.5 text-xs font-semibold text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
+            className="shrink-0 rounded-full border border-[#2e5126]/25 px-4 py-1.5 text-xs font-semibold text-[#2e5126] transition hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white"
           >
             Change
           </button>
         ) : null}
       </header>
-      {state === "open" ? <div className="border-t border-[#1f3f2e]/10 px-5 pb-6 pt-5 sm:px-6">{children}</div> : null}
+      {state === "open" ? <div className="border-t border-[#03321b]/10 px-5 pb-6 pt-5 sm:px-6">{children}</div> : null}
     </section>
   );
 }
@@ -405,7 +405,7 @@ export default function TeeTimeBooking({
           <div className="mt-4">
             <ForecastDays dates={[date]} />
           </div>
-          <div className="mt-8 border-t border-[#1f3f2e]/10 pt-6">
+          <div className="mt-8 border-t border-[#03321b]/10 pt-6">
           <h3 className={TITLE}>How much would you like to play?</h3>
           <div className="mt-4">
             <Toggle
@@ -418,18 +418,18 @@ export default function TeeTimeBooking({
               ]}
             />
             <RoundCoverage round={round} />
-            <p className="mt-4 border-l-2 border-[#d8b65b] bg-white/60 px-3 py-2 text-xs leading-5 text-[#5d685f]">
+            <p className="mt-4 border-l-2 border-[#e2c77a] bg-white/60 px-3 py-2 text-xs leading-5 text-[#5d685f]">
               Only want a few holes, like Holes 1 to 5? Choose the Front nine — you can stop whenever you like. The
               9-hole rate applies.
             </p>
           </div>
           </div>
-          <div className="mt-8 border-t border-[#1f3f2e]/10 pt-6">
+          <div className="mt-8 border-t border-[#03321b]/10 pt-6">
           <h3 className={TITLE}>Choose a tee time</h3>
           <p className="mt-2 text-xs leading-5 text-[#667269]">
             Each tee time is private to your group. Only available tee times are shown below.
           </p>
-          <div role="status" aria-live="polite" className="mt-4 border border-[#1f3f2e]/15 bg-white px-4 py-3 text-sm">
+          <div role="status" aria-live="polite" className="mt-4 border border-[#03321b]/15 bg-white px-4 py-3 text-sm">
             {!validDate ? (
               <p className="text-[#a8492f]">Please choose a date within the next 30 days.</p>
             ) : loading ? (
@@ -437,12 +437,12 @@ export default function TeeTimeBooking({
             ) : !availability ? (
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-[#a8492f]">Availability could not be loaded.</p>
-                <button type="button" onClick={() => setRefresh((value) => value + 1)} className="font-semibold text-[#265136] underline">Try again</button>
+                <button type="button" onClick={() => setRefresh((value) => value + 1)} className="font-semibold text-[#2e5126] underline">Try again</button>
               </div>
             ) : openCount === 0 ? (
               <p className="text-[#a8492f]">No tee times available for this date and round. Choose another date or try a different round above.</p>
             ) : (
-              <p className="font-semibold text-[#265136]">{openCount} tee times available for your selected round.</p>
+              <p className="font-semibold text-[#2e5126]">{openCount} tee times available for your selected round.</p>
             )}
           </div>
           {validDate && !loading && availability && openCount > 0 ? (
@@ -454,15 +454,15 @@ export default function TeeTimeBooking({
                     type="button"
                     aria-pressed={time === slot.time}
                     onClick={() => { setTime(slot.time); setError(null); }}
-                    className={`border px-3 py-3 text-center text-sm font-semibold transition ${time === slot.time ? "border-[#265136] bg-[#265136] text-white" : "border-[#1f3f2e]/20 bg-white text-[#265136] hover:border-[#265136]"}`}
+                    className={`border px-3 py-3 text-center text-sm font-semibold transition ${time === slot.time ? "border-[#2e5126] bg-[#2e5126] text-white" : "border-[#03321b]/20 bg-white text-[#2e5126] hover:border-[#2e5126]"}`}
                   >
                     <span translate="no">{formatTime(slot.time)}</span>
-                    {round === "full" && slot.tee === 10 ? <span className="mt-1 block text-[10px] font-normal">Hole 10 start</span> : null}
+                    {round === "full" && slot.tee === 10 ? <span className="mt-1 block text-[11px] font-normal">Hole 10 start</span> : null}
                   </button>
                 ))}
               </div>
               {selected ? (
-                <p className="mt-3 border-l-2 border-[#265136] bg-white px-3 py-2 text-sm text-[#14271d]">
+                <p className="mt-3 border-l-2 border-[#2e5126] bg-white px-3 py-2 text-sm text-[#03321b]">
                   <Tr
                     t="Tee off at {0} from Hole {1}, finishing around {2}."
                     v={[
@@ -479,12 +479,12 @@ export default function TeeTimeBooking({
           ) : null}
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
-            {!stepReady(1) ? <p className="text-xs text-[#8a938c]">Choose a tee time to continue.</p> : null}
+            {!stepReady(1) ? <p className="text-xs text-[#5f6a62]">Choose a tee time to continue.</p> : null}
             <button
               type="button"
               disabled={!stepReady(1)}
               onClick={() => proceed(1)}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#2e5126] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition hover:bg-[#03321b] disabled:cursor-not-allowed disabled:opacity-40"
             >
               {1 < furthest ? "Done" : "Continue"}
             </button>
@@ -498,7 +498,7 @@ export default function TeeTimeBooking({
           onChange={() => goTo(2)}
           summary={<Tr t="{0} players" v={[String(players)]} />}
         >
-          <div className="mt-4 flex items-center justify-between gap-4 border border-[#1f3f2e]/12 bg-white px-4 py-3">
+          <div className="mt-4 flex items-center justify-between gap-4 border border-[#03321b]/12 bg-white px-4 py-3">
             <span className="text-sm text-[#3f4c45]">{`Up to ${COURSE.maxPlayers} players per tee time`}</span>
             <Stepper value={players} min={1} max={COURSE.maxPlayers} onChange={changePlayers} label="Players" />
           </div>
@@ -515,12 +515,12 @@ export default function TeeTimeBooking({
             ))}
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
-            {!stepReady(2) ? <p className="text-xs text-[#8a938c]"></p> : null}
+            {!stepReady(2) ? <p className="text-xs text-[#5f6a62]"></p> : null}
             <button
               type="button"
               disabled={!stepReady(2)}
               onClick={() => proceed(2)}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#2e5126] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition hover:bg-[#03321b] disabled:cursor-not-allowed disabled:opacity-40"
             >
               {2 < furthest ? "Done" : "Continue"}
             </button>
@@ -540,11 +540,11 @@ export default function TeeTimeBooking({
               : tr("No add-ons")
           }
         >
-          <div className="mt-4 divide-y divide-[#1f3f2e]/10 border border-[#1f3f2e]/12 bg-white">
+          <div className="mt-4 divide-y divide-[#03321b]/10 border border-[#03321b]/12 bg-white">
             {ADDONS.map((addon) => (
               <div key={addon.id} className="flex items-center justify-between gap-4 px-4 py-3">
                 <span>
-                  <span className="block text-sm font-semibold text-[#14271d]">{addon.name}</span>
+                  <span className="block text-sm font-semibold text-[#03321b]">{addon.name}</span>
                   <span className="block text-xs text-[#667269]">
                     <span translate="no">{formatPeso(addon.price)}</span> {addon.unit}
                   </span>
@@ -560,12 +560,12 @@ export default function TeeTimeBooking({
             ))}
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
-            {!stepReady(3) ? <p className="text-xs text-[#8a938c]"></p> : null}
+            {!stepReady(3) ? <p className="text-xs text-[#5f6a62]"></p> : null}
             <button
               type="button"
               disabled={!stepReady(3)}
               onClick={() => proceed(3)}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#2e5126] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition hover:bg-[#03321b] disabled:cursor-not-allowed disabled:opacity-40"
             >
               {3 < furthest ? "Done" : "Continue"}
             </button>
@@ -596,8 +596,8 @@ export default function TeeTimeBooking({
                   aria-pressed={selected}
                   onClick={() => setVilla(selected ? null : house.slug)}
                   className={`border px-4 py-3 text-left transition disabled:cursor-not-allowed disabled:opacity-50 ${
-                    selected ? "border-[#265136] bg-[#265136] text-white" : "border-[#1f3f2e]/20 bg-white text-[#14271d] hover:border-[#265136]"
-                  } ${late && !selected && left > 0 ? "ring-1 ring-[#d8b65b]/60" : ""}`}
+                    selected ? "border-[#2e5126] bg-[#2e5126] text-white" : "border-[#03321b]/20 bg-white text-[#03321b] hover:border-[#2e5126]"
+                  } ${late && !selected && left > 0 ? "ring-1 ring-[#e2c77a]/60" : ""}`}
                 >
                   <span className="flex items-baseline justify-between gap-3">
                     <span translate="no" className="text-sm font-semibold">
@@ -611,7 +611,7 @@ export default function TeeTimeBooking({
                     {left === 0 ? (
                       "Fully booked tonight"
                     ) : (
-                      <Tr t="Sleeps {0} · {1} left tonight" v={[String(house.sleeps), String(left)]} />
+                      <Tr t="Up to {0} guests · {1} left tonight" v={[String(house.sleeps), String(left)]} />
                     )}
                   </span>
                 </button>
@@ -619,12 +619,12 @@ export default function TeeTimeBooking({
             })}
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
-            {!stepReady(4) ? <p className="text-xs text-[#8a938c]"></p> : null}
+            {!stepReady(4) ? <p className="text-xs text-[#5f6a62]"></p> : null}
             <button
               type="button"
               disabled={!stepReady(4)}
               onClick={() => proceed(4)}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#2e5126] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition hover:bg-[#03321b] disabled:cursor-not-allowed disabled:opacity-40"
             >
               {4 < furthest ? "Done" : "Continue"}
             </button>
@@ -644,12 +644,12 @@ export default function TeeTimeBooking({
             <input className={FIELD} placeholder="Mobile number" type="tel" autoComplete="tel" value={contact.phone} onChange={(e) => setContact({ ...contact, phone: e.target.value })} />
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
-            {!stepReady(5) ? <p className="text-xs text-[#8a938c]">Enter your name, email, and mobile number.</p> : null}
+            {!stepReady(5) ? <p className="text-xs text-[#5f6a62]">Enter your name, email, and mobile number.</p> : null}
             <button
               type="button"
               disabled={!stepReady(5)}
               onClick={() => proceed(5)}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#265136] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f3dda0] transition hover:bg-[#1f3f2e] disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#2e5126] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition hover:bg-[#03321b] disabled:cursor-not-allowed disabled:opacity-40"
             >
               {5 < furthest ? "Done" : "Continue"}
             </button>
@@ -658,25 +658,25 @@ export default function TeeTimeBooking({
       </div>
 
       {/* Buod — dumidikit sa gilid sa desktop. */}
-      <aside className="border border-[#1f3f2e]/12 bg-white p-6 lg:sticky lg:top-28">
+      <aside className="border border-[#03321b]/12 bg-white p-6 lg:sticky lg:top-28">
         <div className="flex items-center justify-between gap-3">
           <p className={STEP}>Summary</p>
         </div>
         <dl className="mt-4 space-y-1.5 text-sm text-[#3f4c45]">
           <div className="flex justify-between gap-3">
             <dt>Date</dt>
-            <dd translate="no" className="font-semibold text-[#14271d]">
+            <dd translate="no" className="font-semibold text-[#03321b]">
               {new Date(`${date}T00:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })}
             </dd>
           </div>
           <div className="flex justify-between gap-3">
             <dt>Tee time</dt>
-            <dd translate="no" className="font-semibold text-[#14271d]">
+            <dd translate="no" className="font-semibold text-[#03321b]">
               {selectedOpen && time ? `${formatTime(time)} · Hole ${tee}` : "—"}
             </dd>
           </div>
         </dl>
-        <ul className="mt-4 space-y-1.5 border-t border-[#1f3f2e]/10 pt-4 text-sm">
+        <ul className="mt-4 space-y-1.5 border-t border-[#03321b]/10 pt-4 text-sm">
           {price.lines.map((line) => (
             <li key={line.label} className="flex justify-between gap-3 text-[#3f4c45]">
               <span>{line.label}</span>
@@ -686,12 +686,12 @@ export default function TeeTimeBooking({
             </li>
           ))}
         </ul>
-        <div className="mt-4 space-y-1.5 border-t border-[#1f3f2e]/10 pt-4 text-sm">
-          <div className="flex justify-between gap-3 font-semibold text-[#14271d]">
+        <div className="mt-4 space-y-1.5 border-t border-[#03321b]/10 pt-4 text-sm">
+          <div className="flex justify-between gap-3 font-semibold text-[#03321b]">
             <span>Total</span>
             <span translate="no" className="tabular-nums">{formatPeso(price.total)}</span>
           </div>
-          <div className="flex justify-between gap-3 text-[#265136]">
+          <div className="flex justify-between gap-3 text-[#2e5126]">
             <span>
               <Tr t="Downpayment today ({0}%)" v={[String(Math.round(COURSE.depositRate * 100))]} />
             </span>
@@ -713,7 +713,7 @@ export default function TeeTimeBooking({
           type="button"
           onClick={submit}
           disabled={!canSubmit}
-          className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:bg-[#f3dfa0] disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-[#e2c77a] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:bg-[#efd99b] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {status === "sending" ? "Please wait…" : time && testMode ? (
             "Reserve tee time"
@@ -728,11 +728,11 @@ export default function TeeTimeBooking({
           )}
         </button>
         {!canSubmit && status === "idle" ? (
-          <p className="mt-2 text-center text-xs text-[#8a938c]">
+          <p className="mt-2 text-center text-xs text-[#5f6a62]">
             {!selectedOpen ? "Choose your date and tee time first." : "Add your details to finish."}
           </p>
         ) : null}
-        <p className="mt-3 text-[11px] leading-5 text-[#8a938c]">
+        <p className="mt-3 text-[11px] leading-5 text-[#5f6a62]">
           {testMode ? null : `Pay by GCash, Maya, GrabPay, or card. Your tee time is held for ${COURSE.holdMinutes} minutes while you pay.`}{" "}
           Free cancellation up to 48 hours before your tee time; the downpayment is kept for later cancellations or no-shows.
           Heavy rain? Your downpayment moves to a new date.

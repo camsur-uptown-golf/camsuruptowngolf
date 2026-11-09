@@ -48,7 +48,7 @@ const SECTIONS = [
     title: "Responsible website use",
     paragraphs: [
       "You may use this website for lawful personal, informational, and booking-related purposes. You must not attempt to disrupt the website, bypass its security, introduce malicious code, impersonate another person, submit false information, or use automated systems in a way that places an unreasonable load on the service.",
-      "You are responsible for ensuring that the information you submit is accurate and that you are authorized to provide it. Do not send confidential, financial, or highly sensitive information through a general enquiry form.",
+      "You are responsible for ensuring that the information you submit is accurate and that you are authorised to provide it. Do not send confidential, financial, or highly sensitive information through a general enquiry form.",
     ],
   },
   {
@@ -56,7 +56,7 @@ const SECTIONS = [
     title: "Golf, facilities, and guest responsibilities",
     paragraphs: [
       "Guests must follow applicable club rules, safety guidance, dress requirements, course etiquette, caddie and cart instructions, age restrictions, and facility-specific policies. The Club may refuse or discontinue access where conduct creates a safety risk, disrupts other guests, damages property, or breaches applicable rules.",
-      "Outdoor activities, golf, water recreation, motorsports, and other experiences involve inherent risks. Guests should assess their own fitness and ability, use required safety equipment, supervise children, and follow instructions from authorized personnel.",
+      "Outdoor activities, golf, water recreation, motorsports, and other experiences involve inherent risks. Guests should assess their own fitness and ability, use required safety equipment, supervise children, and follow instructions from authorised personnel.",
     ],
   },
   {
@@ -104,13 +104,13 @@ const SECTIONS = [
 export default function TermsOfUsePage() {
   return (
     <>
-      <main className="bg-[#f7f5ee] text-[#14271d]">
+      <main className="bg-[#f3ede1] text-[#03321b]">
         <ScrollMotion />
 
-        <section id="top" className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#1f3f2e] px-6 pb-16 pt-40 text-white sm:min-h-[560px] sm:pb-20 sm:pt-44 lg:px-8">
+        <section id="top" className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#03321b] px-6 pb-16 pt-40 text-white sm:min-h-[560px] sm:pb-20 sm:pt-44 lg:px-8">
           <HeroBackdrop src="/hero-images/terms-v2.webp" alt="Guest information folio and brass pen on a table inside the clubhouse" imageClassName="object-[65%_center] sm:object-center" />
           <div className="mx-auto max-w-4xl text-center">
-            <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">
+            <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">
               Legal information
             </p>
             <h1 className="mt-4 font-display text-[clamp(2.8rem,6vw,5.5rem)] font-medium leading-[0.92] tracking-[-0.06em]">
@@ -120,13 +120,13 @@ export default function TermsOfUsePage() {
               These terms explain how you may use the CamSur Uptown Golf website and how to understand the
               concept, booking, and facility information presented here.
             </p>
-            <p className="mt-5 font-navigation text-[10px] font-semibold uppercase tracking-[0.16em] text-[#d8b65b]/85">
+            <p className="mt-5 font-navigation text-[11px] font-semibold uppercase tracking-[0.16em] text-[#e2c77a]/85">
               <Tr t="Effective {0}" v={[EFFECTIVE_DATE]} />
             </p>
           </div>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
@@ -134,8 +134,8 @@ export default function TermsOfUsePage() {
           <Container>
             <div className="grid gap-10 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-16">
               <aside className="lg:sticky lg:top-28 lg:self-start">
-                <div className="border border-[#1f3f2e]/12 bg-white p-6">
-                  <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                <div className="border border-[#03321b]/12 bg-white p-6">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#7d6224]">
                     On this page
                   </p>
                   <nav aria-label="Terms of Use sections" className="mt-5">
@@ -144,9 +144,9 @@ export default function TermsOfUsePage() {
                         <li key={section.id}>
                           <a
                             href={`#${section.id}`}
-                            className="group flex gap-3 text-sm leading-6 text-[#59665e] transition-colors hover:text-[#265136]"
+                            className="group flex gap-3 text-sm leading-6 text-[#59665e] transition-colors hover:text-[#2e5126]"
                           >
-                            <span className="font-navigation text-[10px] font-bold text-[#b49343]">
+                            <span className="font-navigation text-[11px] font-bold text-[#b49343]">
                               {String(index + 1).padStart(2, "0")}
                             </span>
                             <span>{section.title}</span>
@@ -164,7 +164,7 @@ export default function TermsOfUsePage() {
                   provided when you make a reservation.
                 </div>
 
-                <div className="mt-10 divide-y divide-[#1f3f2e]/12">
+                <div className="mt-10 divide-y divide-[#03321b]/12">
                   {SECTIONS.map((section, index) => (
                     <section key={section.id} id={section.id} className="scroll-mt-28 py-9 first:pt-0 sm:py-11">
                       <div className="grid gap-4 sm:grid-cols-[52px_minmax(0,1fr)] sm:gap-6">
@@ -186,8 +186,8 @@ export default function TermsOfUsePage() {
                   ))}
                 </div>
 
-                <div className="mt-6 border border-[#1f3f2e]/12 bg-white p-7 sm:p-9">
-                  <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                <div className="mt-6 border border-[#03321b]/12 bg-white p-7 sm:p-9">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#7d6224]">
                     Questions about these terms
                   </p>
                   <h2 className="mt-3 font-serif text-3xl font-medium tracking-[-0.04em]">Contact the Club.</h2>
@@ -198,19 +198,19 @@ export default function TermsOfUsePage() {
                   <div className="mt-6 flex flex-wrap gap-3">
                     <a
                       href={CLUB_EMAIL.href}
-                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:bg-[#f3dfa0]"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#e2c77a] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:bg-[#efd99b]"
                     >
                       {CLUB_EMAIL.label}
                     </a>
                     <a
                       href={CLUB_PHONE.href}
-                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:border-[#265136]"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#2e5126]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#2e5126] transition hover:border-[#2e5126]"
                     >
                       {CLUB_PHONE.label}
                     </a>
                     <Link
                       href="/plan-your-visit"
-                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#265136]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:border-[#265136]"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#2e5126]/30 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#2e5126] transition hover:border-[#2e5126]"
                     >
                       Plan your visit
                     </Link>

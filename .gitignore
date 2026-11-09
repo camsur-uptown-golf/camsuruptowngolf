@@ -47,3 +47,11 @@ next-env.d.ts
 # Lokal na SQLite: may personal na datos (pangalan, email, cellphone).
 # Huwag itong i-commit.
 /data/
+
+# Mga pansamantalang render at review (may Python venv sa tmp/hero-flag-update na
+# sumisira sa `next build`). Hindi para sa repo o sa deploy.
+/tmp/
+
+# Mga lumang hero video na hindi na inihahain (wala sa public/, kaya wala sa
+# deploy). Naiwan dito sakaling kailanganin ulit.
+/media-archive/

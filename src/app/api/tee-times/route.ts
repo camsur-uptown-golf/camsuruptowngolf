@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { COURSE, LATE_START, occupiedSlots, startTimes, type Holes } from "@/lib/golf-booking";
-import { nowInManila } from "@/lib/booking-server";
+import { nowInManila, simulatePayments } from "@/lib/booking-server";
 import { bookedSlots, villaVacancies } from "@/lib/reservations-db";
 import { daysBetween, todayInManila } from "@/lib/weather";
 
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
   const ahead = daysBetween(today, date);
   if (ahead < 0 || ahead > COURSE.bookAheadDays) return NextResponse.json({ error: "range" }, { status: 400 });
 
-  const taken = new Set(bookedSlots(date).map((slot) => `${slot.tee}-${slot.time}`));
+  const taken = new Set((await bookedSlots(date)).map((slot) => `${slot.tee}-${slot.time}`));
   const now = date === today ? nowInManila() : null;
   const times = startTimes(holes);
 
@@ -41,6 +41,8 @@ export async function GET(request: Request) {
       1: times.map((time) => ({ time, status: status(1, time) })),
       10: times.map((time) => ({ time, status: status(10, time) })),
     },
-    villas: villaVacancies(date),
+    villas: await villaVacancies(date),
+    /* Para sa mobile app: sa test mode ay "Reserve tee time" ang pindutan, gaya ng /golf/book. */
+    testMode: simulatePayments(),
   });
 }

@@ -48,7 +48,7 @@ function ArrowIcon() {
 
 export default function OffCourseSection() {
   return (
-    <section className="bg-[#f7f5ee] py-20 text-[#1b2730] sm:py-24 lg:py-28">
+    <section className="bg-[#f3ede1] py-20 text-[#1b2730] sm:py-24 lg:py-28">
       {/* ANG HEADING ANG PANGATLONG HANAY. Nang maging dalawa ang card,
           hindi na nila kayang punan ang 1056px nang hindi lumalaki nang
           518×691 — mga tore na, at halatang may nawalang pangatlo. Dito
@@ -73,7 +73,7 @@ export default function OffCourseSection() {
           noong tatlo pa sila. */}
       <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[260px_1fr] lg:gap-12 lg:px-8 xl:grid-cols-[320px_1fr]">
         <header className="max-w-[760px] lg:max-w-none">
-          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f] sm:text-[11px]">
+          <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224] sm:text-[11px]">
             More at CamSur
           </p>
           {/* Maliit ang heading sa `lg` dahil 320px lang ang hanay doon —
@@ -92,7 +92,7 @@ export default function OffCourseSection() {
             <Link
               key={item.href}
               href={item.href}
-              className="group relative isolate flex aspect-[3/4] min-h-[380px] flex-col justify-end overflow-hidden bg-[#1f3f2e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b38c34] sm:min-h-0"
+              className="group relative isolate flex aspect-[3/4] min-h-[380px] flex-col justify-end overflow-hidden bg-[#03321b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b38c34] sm:min-h-0"
             >
               <Image
                 src={item.image}
@@ -111,7 +111,7 @@ export default function OffCourseSection() {
               <div className="p-6 text-white sm:p-7">
                 <div className="flex items-center justify-between gap-4">
                   <h3 className="font-navigation text-xl font-bold tracking-[-0.01em] sm:text-2xl">{item.title}</h3>
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/22 backdrop-blur-sm transition-colors group-hover:bg-[#e7d18d] group-hover:text-[#18251f]">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/22 backdrop-blur-sm transition-colors group-hover:bg-[#e2c77a] group-hover:text-[#18251f]">
                     <ArrowIcon />
                   </span>
                 </div>

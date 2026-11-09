@@ -38,21 +38,21 @@ const LODGE_SPACES = [
 
 export default function ClubhouseVision() {
   return (
-    <section id="clubhouse-stays" className="bg-[#f7f5ee] text-[#14271d]">
+    <section id="clubhouse-stays" className="bg-[#f3ede1] text-[#03321b]">
       <ScrollMotion />
 
       <div className="mx-auto max-w-7xl px-6 pb-4 pt-10 text-center sm:px-10 sm:pt-12 lg:px-8 lg:pt-14">
         <div data-reveal="up" className="relative mx-auto mb-8 h-48 w-60 overflow-hidden sm:mb-10">
           <Image
-            src="/camsur-uptown-logo.png"
-            alt="CamSur Uptown Golf emblem"
-            width={720}
-            height={958}
-            sizes="230px"
-            className="absolute left-1/2 top-0 h-auto w-[230px] max-w-none -translate-x-1/2"
+            src="/branding/camsur-uptown-golf-shield.png"
+            alt="CamSur Uptown Golf shield"
+            width={770}
+            height={1076}
+            sizes="140px"
+            className="mx-auto h-full w-auto"
           />
         </div>
-        <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f] xl:text-[11px]">
+        <p data-reveal="up" className="font-navigation text-[11px] font-bold uppercase tracking-[0.24em] text-[#7d6224] xl:text-[11px]">
           At the heart of the club
         </p>
         <h2 data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-4xl text-[clamp(2.25rem,4vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]">
@@ -68,14 +68,14 @@ export default function ClubhouseVision() {
         const flip = index % 2 === 1;
 
         return (
-          <article key={space.name} className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#1f3f2e]/10" : ""}`}>
+          <article key={space.name} className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#03321b]/10" : ""}`}>
             <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-16 lg:px-8">
               <div className={`relative ${flip ? "lg:order-2" : ""}`}>
                 <span aria-hidden="true" className="pointer-events-none absolute -top-10 left-0 select-none font-display text-[clamp(5rem,9vw,8.5rem)] font-medium leading-none tracking-[-0.06em] text-[#0b2419]/[0.06] sm:-top-14">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div className="relative">
-                  <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f] xl:text-[11px]">
+                  <p data-reveal="up" className="font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-[#7d6224] xl:text-[11px]">
                     {space.eyebrow}
                   </p>
                   <h3 data-reveal="up" style={delay(90)} className="mt-4 font-display text-[clamp(2.6rem,5vw,4.8rem)] font-medium leading-[0.92] tracking-[-0.055em]">
@@ -92,7 +92,7 @@ export default function ClubhouseVision() {
                 <div data-reveal={flip ? "left" : "right"} className={`relative overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_22px_55px_rgba(20,39,29,0.12)] sm:rounded-[2rem] ${flip ? "ml-auto aspect-[5/4] w-[86%]" : "aspect-[4/5] w-[82%]"}`}>
                   <Image src={space.primary} alt={space.primaryAlt} fill sizes="(max-width: 1023px) 82vw, 480px" className="object-cover" />
                 </div>
-                <div data-reveal="scale" style={delay(200)} className={`absolute bottom-6 overflow-hidden rounded-[1.25rem] bg-[#d9ded8] shadow-[0_18px_45px_rgba(20,39,29,0.16)] ring-4 ring-[#f7f5ee] sm:bottom-8 sm:rounded-[1.5rem] ${flip ? "left-0 aspect-[3/4] w-[38%]" : "right-0 aspect-square w-[42%]"}`}>
+                <div data-reveal="scale" style={delay(200)} className={`absolute bottom-6 overflow-hidden rounded-[1.25rem] bg-[#d9ded8] shadow-[0_18px_45px_rgba(20,39,29,0.16)] ring-4 ring-[#f3ede1] sm:bottom-8 sm:rounded-[1.5rem] ${flip ? "left-0 aspect-[3/4] w-[38%]" : "right-0 aspect-square w-[42%]"}`}>
                   <Image src={space.secondary} alt={space.secondaryAlt} fill sizes="(max-width: 1023px) 40vw, 240px" className="object-cover" />
                 </div>
               </div>
@@ -101,14 +101,14 @@ export default function ClubhouseVision() {
         );
       })}
 
-      <div className="border-t border-white/10 bg-[#1f3f2e] text-white">
+      <div className="border-t border-white/10 bg-[#03321b] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-8">
-          <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#d8b65b] xl:text-[11px]">Plan your stay</p>
+          <p data-reveal="up" className="font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-[#e2c77a] xl:text-[11px]">Plan your stay</p>
           <h2 data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-2xl text-[clamp(2.2rem,3.6vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.05em]">Reserve your room at Clubhouse Lodge.</h2>
           <p data-reveal="up" style={delay(180)} className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 xl:text-base xl:leading-8">Tell the team your dates and group size, and they will help arrange a stay close to the course and club facilities.</p>
           <div data-reveal="up" style={delay(270)} className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] xl:text-[12px]">Inquire about your stay</Link>
-            <Link href="/accommodations/villa-del-rey" className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f] xl:text-[12px]">Explore Villa Del Rey</Link>
+            <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#e2c77a] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] xl:text-[12px]">Inquire about your stay</Link>
+            <Link href="/accommodations/villa-del-rey" className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e2c77a] hover:text-[#efd99b] xl:text-[12px]">Explore Villa Del Rey</Link>
           </div>
         </div>
       </div>

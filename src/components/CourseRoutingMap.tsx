@@ -107,22 +107,22 @@ function SpotPreview({ data }: { data: PreviewData }) {
   return (
     <div
       aria-hidden="true"
-      className="map-preview pointer-events-none absolute left-0 top-0 hidden w-60 overflow-hidden rounded-2xl border border-[#d8c783]/60 bg-[#f8f5ea] text-left shadow-[0_22px_48px_rgba(8,27,18,0.28)] sm:block lg:w-64"
+      className="map-preview pointer-events-none absolute left-0 top-0 hidden w-60 overflow-hidden rounded-2xl border border-[#d8c783]/60 bg-[#f3ede1] text-left shadow-[0_22px_48px_rgba(8,27,18,0.28)] sm:block lg:w-64"
       style={{ transform: `translate(${toLeft ? "calc(-100% - 22px)" : "22px"}, ${translateY})` }}
     >
-      <div className="relative aspect-[16/10] bg-[#1f3f2e]">
+      <div className="relative aspect-[16/10] bg-[#03321b]">
         <Image src={data.image} alt="" fill sizes="256px" className="object-cover" />
       </div>
       <div className="p-4">
-        <p className="font-navigation text-[9px] font-bold uppercase tracking-[0.16em] text-[#98782f]">{data.eyebrow}</p>
-        <p className="mt-1.5 font-display text-lg font-medium leading-tight tracking-[-0.02em] text-[#14271d]">{data.title}</p>
+        <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">{data.eyebrow}</p>
+        <p className="mt-1.5 font-display text-lg font-medium leading-tight tracking-[-0.02em] text-[#03321b]">{data.title}</p>
       </div>
     </div>
   );
 }
 
 const CONTROL_BUTTON =
-  "grid h-11 w-11 place-items-center rounded-full border border-[#d8c783] bg-[#1f3f2e]/90 text-[#f8e9b7] transition-colors hover:bg-[#1f3f2e] disabled:cursor-default disabled:opacity-40 disabled:hover:bg-[#1f3f2e]/90";
+  "grid h-11 w-11 place-items-center rounded-full border border-[#d8c783] bg-[#03321b]/90 text-[#efd99b] transition-colors hover:bg-[#03321b] disabled:cursor-default disabled:opacity-40 disabled:hover:bg-[#03321b]/90";
 
 export default function CourseRoutingMap() {
   const [hoveredSpot, setHoveredSpot] = useState<Spot | null>(null);
@@ -331,7 +331,7 @@ export default function CourseRoutingMap() {
     <section
       id="course-map"
       aria-label="Interactive CamSur Uptown golf course map"
-      className="relative isolate overflow-hidden bg-[#f8f5ea] py-6 sm:py-8 lg:py-10"
+      className="relative isolate overflow-hidden bg-[#f3ede1] py-6 sm:py-8 lg:py-10"
     >
       <div className="mx-auto w-full max-w-[1500px] px-4 sm:px-8 lg:px-12">
         {/* Nasa hiwalay na balot ang data-reveal: nagbabago ang className ng
@@ -357,7 +357,7 @@ export default function CourseRoutingMap() {
           /* Naka-zoom: ang isang daliri ay pang-galaw ng mapa. Hindi naka-zoom:
              normal na scroll ng pahina, pero ang pinch ay para sa mapa. */
           style={{ touchAction: isZoomedIn ? "none" : "pan-y" }}
-          className={`${isFullscreen ? "h-screen w-screen" : "aspect-square min-h-[340px] w-full sm:aspect-[16/10] sm:min-h-[520px]"} relative select-none overflow-hidden bg-[#f8f5ea] ${
+          className={`${isFullscreen ? "h-screen w-screen" : "aspect-square min-h-[340px] w-full sm:aspect-[16/10] sm:min-h-[520px]"} relative select-none overflow-hidden bg-[#f3ede1] ${
             isZoomedIn ? (isGesturing ? "cursor-grabbing" : "cursor-grab") : ""
           }`}
         >
@@ -400,12 +400,12 @@ export default function CourseRoutingMap() {
                     {...spotHandlers(hole.number)}
                     className={`absolute left-0 top-0 grid h-6 w-6 place-content-center rounded-[50%_50%_50%_10%] border font-display shadow-[0_6px_12px_rgba(8,27,18,0.3)] transition-[background-color,color,transform] duration-200 sm:h-8 sm:w-8 ${
                       selected
-                        ? "border-[#ead99e] bg-[#1f3f2e] text-[#f8e9b7]"
-                        : "border-[#b99742] bg-[#f8f1da] text-[#1f3f2e]"
+                        ? "border-[#ead99e] bg-[#03321b] text-[#efd99b]"
+                        : "border-[#b99742] bg-[#f8f1da] text-[#03321b]"
                     }`}
                     style={{ transform: `translate(-50%, -100%) rotate(-45deg)${selected ? " scale(1.15)" : ""}` }}
                   >
-                    <span className="rotate-45 text-center text-[9px] font-semibold leading-none sm:text-[12px]">
+                    <span className="rotate-45 text-center text-[11px] font-semibold leading-none sm:text-[12px]">
                       {hole.number}
                     </span>
                   </Link>
@@ -430,7 +430,7 @@ export default function CourseRoutingMap() {
                 {...spotHandlers("clubhouse")}
                 className={`absolute left-0 top-0 grid h-7 w-7 place-content-center rounded-[50%_50%_50%_10%] border-2 transition-[background-color,border-color,color,transform] duration-200 sm:h-9 sm:w-9 ${
                   clubhouseSelected
-                    ? "border-[#ead99e] bg-[#1f3f2e] text-[#f8e9b7] shadow-[0_6px_12px_rgba(8,27,18,0.3)]"
+                    ? "border-[#ead99e] bg-[#03321b] text-[#efd99b] shadow-[0_6px_12px_rgba(8,27,18,0.3)]"
                     : "border-[#f8f1da] bg-transparent text-[#f8f1da] [filter:drop-shadow(0_2px_4px_rgba(8,27,18,0.65))]"
                 }`}
                 style={{ transform: `translate(-50%, -100%) rotate(-45deg)${clubhouseSelected ? " scale(1.15)" : ""}` }}

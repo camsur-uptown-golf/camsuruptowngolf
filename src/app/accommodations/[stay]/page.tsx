@@ -83,21 +83,28 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
                   navy na logo sa ibabaw ng litrato, gaya ng ibang hero title.
                   Naka-angat sa itaas (items-start + pt) at mas maliit kaysa
                   dati (440 → 360px) — hiniling na liitan at itaas. */}
-              <Image
-                src="/villa-del-rey/logo.png"
-                alt="Villa Del Rey, CamSur Philippines"
-                width={528}
-                height={291}
-                sizes="(max-width: 639px) 66vw, 360px"
-                data-hero-logo=""
-                className="h-auto w-[min(66vw,360px)] drop-shadow-[0_6px_22px_rgba(0,0,0,0.45)]"
-              />
+              {/* PUTING LOGO, NASA LOOB NG <h1>. Royal blue ang `logo.png`, na
+                  kontra sa emerald at gold ng site at mahirap basahin sa
+                  litrato; ang puting bersyon (gamit na rin sa home card) ang
+                  co-brand dito. Ang alt ng logo ang pangalan ng `<h1>` — wala
+                  dating heading ang pahinang ito. */}
+              <h1>
+                <Image
+                  src="/villa-del-rey/logo-white.png"
+                  alt="Villa Del Rey, CamSur Philippines"
+                  width={528}
+                  height={291}
+                  sizes="(max-width: 639px) 66vw, 360px"
+                  data-hero-logo=""
+                  className="h-auto w-[min(66vw,360px)] drop-shadow-[0_6px_22px_rgba(0,0,0,0.45)]"
+                />
+              </h1>
             </div>
           ) : null}
-          {/* #f7f5ee ang unang section sa ilalim ng stay, kaya
+          {/* #f3ede1 ang unang section sa ilalim ng stay, kaya
               ganoon din ang harapang burol — kung hindi magkatugma ay may
               lumalabas na tahi sa dugtungan. */}
-          {!hasEditorialStayLayout ? <FairwayDivider fill="#f7f5ee" /> : null}
+          {!hasEditorialStayLayout ? <FairwayDivider fill="#f3ede1" /> : null}
           {!hasEditorialStayLayout ? (
             <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-28 pt-64 sm:pb-36 lg:px-8 lg:pb-44">
               {/* Word-by-word na pagpasok sa pag-load (HeroWords). Para sa
@@ -114,8 +121,8 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
             nilalaman kaya ito ang umaangat pataas at tumatabon sa naka-pin
             (sticky) na hero habang nagsi-scroll — ito ang reveal effect.
             Sa hindi-editorial na stay ay walang sticky, kaya walang wrapper. */}
-        <div className={hasEditorialStayLayout ? "relative z-10 bg-[#f7f5ee]" : ""}>
-          <div className="bg-[#f7f5ee]">
+        <div className={hasEditorialStayLayout ? "relative z-10 bg-[#f3ede1]" : ""}>
+          <div className="bg-[#f3ede1]">
             <Breadcrumbs />
           </div>
 

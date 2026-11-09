@@ -40,7 +40,7 @@ const GOTA_SPACES = [
 
 export default function GotaVillageStays() {
   return (
-    <section id="gota-stays" className="bg-[#f7f5ee] text-[#14271d]">
+    <section id="gota-stays" className="bg-[#f3ede1] text-[#03321b]">
       <ScrollMotion />
 
       <div className="mx-auto max-w-7xl px-6 pb-4 pt-10 text-center sm:px-10 sm:pt-12 lg:px-8 lg:pt-14">
@@ -54,7 +54,7 @@ export default function GotaVillageStays() {
           style={{ filter: "brightness(0) saturate(100%) invert(27%) sepia(63%) saturate(1475%) hue-rotate(178deg) brightness(79%) contrast(91%)" }}
           className="mx-auto mb-8 h-auto max-h-48 w-[min(52vw,280px)] object-contain sm:mb-10"
         />
-        <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#98782f] xl:text-[11px]">Ways to stay</p>
+        <p data-reveal="up" className="font-navigation text-[11px] font-bold uppercase tracking-[0.24em] text-[#7d6224] xl:text-[11px]">Ways to stay</p>
         <h2 data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-4xl text-[clamp(2.25rem,4vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]">A village retreat shaped by nature</h2>
         <p data-reveal="up" style={delay(180)} className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#5d685f] sm:text-lg">A nature-oriented resort option for guests looking to extend their CamSur journey beyond the course.</p>
         <div data-reveal="up" style={delay(270)} className="mx-auto mt-9 h-px w-20 bg-[#98782f]/50" />
@@ -63,7 +63,7 @@ export default function GotaVillageStays() {
       {GOTA_SPACES.map((space, index) => {
         const flip = index % 2 === 1;
         return (
-          <article key={space.name} className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#1f3f2e]/10" : ""}`}>
+          <article key={space.name} className={`py-16 sm:py-20 lg:py-24 ${index ? "border-t border-[#03321b]/10" : ""}`}>
             <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-10 lg:grid-cols-2 lg:gap-16 lg:px-8">
               <div className={`relative ${flip ? "lg:order-2" : ""}`}>
                 <div className="relative">
@@ -77,7 +77,7 @@ export default function GotaVillageStays() {
                 <div data-lightbox data-src={space.primary} data-alt={space.primaryAlt} data-reveal={flip ? "left" : "right"} className={`relative overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_22px_55px_rgba(20,39,29,0.12)] sm:rounded-[2rem] ${flip ? "ml-auto aspect-[5/4] w-[86%]" : "aspect-[4/5] w-[82%]"}`}>
                   <Image src={space.primary} alt={space.primaryAlt} fill sizes="(max-width: 1023px) 82vw, 480px" className="object-cover" />
                 </div>
-                <div data-lightbox data-src={space.secondary} data-alt={space.secondaryAlt} data-reveal="scale" style={delay(200)} className={`absolute bottom-6 overflow-hidden rounded-[1.25rem] bg-[#d9ded8] shadow-[0_18px_45px_rgba(20,39,29,0.16)] ring-4 ring-[#f7f5ee] sm:bottom-8 sm:rounded-[1.5rem] ${flip ? "left-0 aspect-[3/4] w-[38%]" : "right-0 aspect-square w-[42%]"}`}>
+                <div data-lightbox data-src={space.secondary} data-alt={space.secondaryAlt} data-reveal="scale" style={delay(200)} className={`absolute bottom-6 overflow-hidden rounded-[1.25rem] bg-[#d9ded8] shadow-[0_18px_45px_rgba(20,39,29,0.16)] ring-4 ring-[#f3ede1] sm:bottom-8 sm:rounded-[1.5rem] ${flip ? "left-0 aspect-[3/4] w-[38%]" : "right-0 aspect-square w-[42%]"}`}>
                   <Image src={space.secondary} alt={space.secondaryAlt} fill sizes="(max-width: 1023px) 40vw, 240px" className="object-cover" />
                 </div>
               </div>
@@ -86,14 +86,14 @@ export default function GotaVillageStays() {
         );
       })}
 
-      <div className="border-t border-white/10 bg-[#1f3f2e] text-white">
+      <div className="border-t border-white/10 bg-[#03321b] text-white">
         <div className="mx-auto max-w-7xl px-6 py-16 text-center sm:px-10 sm:py-20 lg:px-8">
-          <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#d8b65b] xl:text-[11px]">Plan your stay</p>
+          <p data-reveal="up" className="font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-[#e2c77a] xl:text-[11px]">Plan your stay</p>
           <h2 data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-2xl text-[clamp(2.2rem,3.6vw,3.4rem)] font-medium leading-[1.02] tracking-[-0.05em]">Stay at Gota Village Resort.</h2>
           <p data-reveal="up" style={delay(180)} className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 xl:text-base xl:leading-8">Share your preferred dates and group size with the team to ask about current room availability.</p>
           <div data-reveal="up" style={delay(270)} className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#e7d18d] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] xl:text-[12px]">Inquire about your stay</Link>
-            <Link href="/accommodations/villa-del-rey" className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f] xl:text-[12px]">Explore Villa Del Rey</Link>
+            <Link href="/plan-your-visit" className="inline-flex h-12 items-center rounded-full bg-[#e2c77a] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] xl:text-[12px]">Inquire about your stay</Link>
+            <Link href="/accommodations/villa-del-rey" className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e2c77a] hover:text-[#efd99b] xl:text-[12px]">Explore Villa Del Rey</Link>
           </div>
         </div>
       </div>

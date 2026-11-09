@@ -30,7 +30,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ section: string }> }): Promise<Metadata> {
   const { section: slug } = await params;
   const section = SITE_SECTIONS.find((item) => item.slug === slug);
-  return section ? { title: `${section.label} | CamSur Uptown Golf`, description: section.description } : {};
+  if (!section) return {};
+  /* Golf: ang "Course" line ng Brand Guidelines 2026 (p.9). Dito lang ito
+     pinapalitan at hindi sa SITE_SECTIONS, dahil binabasa rin ng app iyon. */
+  const description = section.slug === "golf" ? "Eighteen championship holes, par 72, shaped around the views of Mt. Isarog." : section.description;
+  return { title: `${section.label} | CamSur Uptown Golf`, description };
 }
 
 /** Stagger helper — nababasa sa CSS bilang `transition-delay`. */
@@ -87,7 +91,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
 
   /* Ang harapang burol ay dapat eksaktong katumbas ng background ng unang
      section sa ilalim — kahit bahagyang pagkakaiba ay lumilitaw bilang tahi. */
-  const dividerFill = "#f7f5ee";
+  const dividerFill = "#f3ede1";
 
   return (
     <>
@@ -186,6 +190,8 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {!isGolf && !isClubhouse ? (
             <div
               className={`mx-auto w-full max-w-7xl px-6 text-center lg:px-8 ${
+                isPackages ? "packages-hero-shift " : ""
+              }${
                 usesStickyReveal
                   ? "py-16"
                   : `pt-64 ${isExperiences ? "pb-24 sm:pb-28 lg:pb-32" : usesFairwayDivider ? "pb-28 sm:pb-36 lg:pb-44" : "pb-16 lg:pb-20"}`
@@ -198,7 +204,12 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                     // pataas dahil nasa center-bottom ang mga tao; Events ay
                     // tunay na centered. Hindi ito humahawak sa
                     // h1 na may sariling scroll transform.
-                    { transform: `translateY(${isPackages ? "-14vh" : isExperiences ? "-10vh" : "0"})` }
+                    /* Packages: nasa `.packages-hero-shift` (globals.css) na ang galaw —
+                    mas mataas sa cellphone, kung saan tumatama sa mukha ng mga
+                    tao ang -14vh. */
+                    isPackages
+                    ? undefined
+                    : { transform: `translateY(${isExperiences ? "-10vh" : "0"})` }
                   : undefined
               }
             >
@@ -237,7 +248,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                   data-hero-logo=""
                   className="mx-auto max-w-3xl text-balance text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)]"
                 >
-                  <HeroWords text="A world-class course, shaped by IMG" />
+                  <HeroWords text="An IMG-designed championship course" />
                 </h1>
               </div>
             </div>
@@ -259,35 +270,35 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
         <div
           className={
             isClubhouse
-              ? "relative z-10 -mt-[60svh] bg-[#f7f5ee] shadow-[0_-28px_70px_rgba(2,14,9,0.45)]"
+              ? "relative z-10 -mt-[60svh] bg-[#f3ede1] shadow-[0_-28px_70px_rgba(2,14,9,0.45)]"
               : usesStickyReveal
-                ? "relative z-10 bg-[#f7f5ee]"
+                ? "relative z-10 bg-[#f3ede1]"
                 : ""
           }
         >
         {isClubhouse ? (
-          <span className="pointer-events-none absolute left-1/2 top-4 z-10 h-[3px] w-12 -translate-x-1/2 rounded-full bg-[#d8b65b]/70 sm:top-5" aria-hidden="true" />
+          <span className="pointer-events-none absolute left-1/2 top-4 z-10 h-[3px] w-12 -translate-x-1/2 rounded-full bg-[#e2c77a]/70 sm:top-5" aria-hidden="true" />
         ) : null}
-        <div className={`bg-[#f7f5ee] ${isClubhouse ? "pt-4" : ""}`}>
+        <div className={`bg-[#f3ede1] ${isClubhouse ? "pt-4" : ""}`}>
           <Breadcrumbs />
         </div>
 
         {/* Lahat ng landas dito — ang limang detail component at ang
-            fallback — ay nagsisimula sa EDITORIAL_SECTION_ALT (#f7f5ee),
+            fallback — ay nagsisimula sa EDITORIAL_SECTION_ALT (#f3ede1),
             kaya iyon ang ibinibigay sa balot na ito. Hindi ito pwedeng
             ilagay sa loob ng susunod na section: iba-iba ang component
             kada section, at ang fallback lang ang may <section> dito. */}
 
         {isGolf ? <GolfDetails /> : isEvents ? <EventsDetails /> : isPackages ? <PackagesDetails /> : isExperiences ? <ExperiencesDetails /> : isClubhouse ? <ClubhouseDetails /> : (
         <>
-        <section className="bg-[#f7f5ee] py-20 text-[#14271d] sm:py-24 lg:py-28">
+        <section className="bg-[#f3ede1] py-20 text-[#03321b] sm:py-24 lg:py-28">
           {/* Ang ScrollMotion ang naglalagay ng .is-in. Kung wala siya ay
               mananatiling opacity: 0 ang lahat ng data-reveal dito. */}
           <ScrollMotion />
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="grid gap-8 border-b border-[#1f3f2e]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div className="grid gap-8 border-b border-[#03321b]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
               <div>
-                <p data-reveal="up" className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#98782f]"><Tr t="Explore {0}" v={[section.label]} /></p>
+                <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.22em] text-[#7d6224]"><Tr t="Explore {0}" v={[section.label]} /></p>
                 <h2
                   data-reveal="up"
                   style={revealDelay(110)}
@@ -338,7 +349,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                       <Link
                         id={`option-${index + 1}`}
                         href={`/accommodations/${stay.slug}`}
-                        className="group relative isolate block aspect-[5/4] overflow-hidden bg-[#1f3f2e] shadow-[0_18px_44px_rgba(20,50,35,0.14)]"
+                        className="group relative isolate block aspect-[5/4] overflow-hidden bg-[#03321b] shadow-[0_18px_44px_rgba(20,50,35,0.14)]"
                       >
                         <Image
                           src={stay.image}
@@ -356,15 +367,15 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                           wika ng dalawang pahina. */}
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute -top-10 left-0 select-none font-display text-[clamp(4.5rem,7vw,7rem)] font-medium leading-none tracking-[-0.05em] text-[#1f3f2e]/[0.07]"
+                        className="pointer-events-none absolute -top-10 left-0 select-none font-display text-[clamp(4.5rem,7vw,7rem)] font-medium leading-none tracking-[-0.05em] text-[#03321b]/[0.07]"
                       >
                         {String(index + 1).padStart(2, "0")}
                       </span>
 
-                      <p className="relative text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+                      <p className="relative text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
                         {stay.eyebrow}
                       </p>
-                      <h3 className="relative mt-3 text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#14271d]">
+                      <h3 className="relative mt-3 text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#03321b]">
                         {stay.title}
                       </h3>
                       <p className="relative mt-4 text-[17px] leading-8 text-[#3f4c45]">{stay.tagline}</p>
@@ -374,11 +385,11 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                           Nasa datos na sila at ipinapakita na ng sariling
                           pahina ng bawat tuluyan; dito ay sapat na ang
                           pangalan para may masilip bago pumindot. */}
-                      <ul className="relative mt-7 border-t border-[#1f3f2e]/12">
+                      <ul className="relative mt-7 border-t border-[#03321b]/12">
                         {stay.features.map((feature) => (
                           <li
                             key={feature.title}
-                            className="border-b border-[#1f3f2e]/12 py-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-[#3f4c45]"
+                            className="border-b border-[#03321b]/12 py-3 text-[13px] font-semibold uppercase tracking-[0.08em] text-[#3f4c45]"
                           >
                             {feature.title}
                           </li>
@@ -388,7 +399,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                       {/* Kaparehong gintong pill ng mega menu at ng header. */}
                       <Link
                         href={`/accommodations/${stay.slug}`}
-                        className="relative mt-8 inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] xl:text-[11px]"
+                        className="relative mt-8 inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition-colors hover:bg-[#efd99b] xl:text-[11px]"
                       >
                         Explore this stay
                       </Link>
@@ -416,7 +427,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               <Link
                 href="/plan-your-visit"
                 data-reveal="up"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#265136] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#03321b] transition-colors hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2e5126] xl:text-[11px]"
               >
                 Plan your visit
               </Link>
@@ -424,7 +435,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                 href={CLUB_PHONE.href}
                 data-reveal="up"
                 style={delay(90)}
-                className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3f2e]/20 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.1em] text-[#14271d] transition-colors hover:border-[#265136] hover:text-[#265136] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-[#03321b]/20 px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#03321b] transition-colors hover:border-[#2e5126] hover:text-[#2e5126] xl:text-[11px]"
               >
                 {CLUB_PHONE.label}
               </a>

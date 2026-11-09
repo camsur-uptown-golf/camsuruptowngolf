@@ -1,0 +1,117 @@
+{
+  "brand": "CamSur Uptown Golf",
+  "slug": "camsur-uptown-golf",
+  "project_root": "..",
+  "built": "2026-10-21",
+  "updated": "2026-10-21",
+  "read_order": [
+    "04-the-camsur-uptown-golf-system.md",
+    "01-brand-kit.md",
+    "02-voice-rules.md",
+    "03-brand-dna.md"
+  ],
+  "authorities": {
+    "identity": "src/app/globals.css",
+    "claims": "src/lib/site-content.ts",
+    "plan": "src/lib/golf-booking.ts",
+    "calendar": null
+  },
+  "sources": {
+    "current": [
+      {
+        "path": "src/app/globals.css",
+        "what": "Colour tokens and per-locale type overrides (identity)",
+        "status": "current"
+      },
+      {
+        "path": "src/app/layout.tsx",
+        "what": "Brand fonts and site description (identity)",
+        "status": "current"
+      },
+      {
+        "path": "public/branding",
+        "what": "Logo lockups (header v4, full lockup v3, IMG gold mark)",
+        "status": "current"
+      },
+      {
+        "path": "src/lib/site-content.ts",
+        "what": "Sections, address, travel, FAQ, accommodations (claims)",
+        "status": "current; travel times, gate hours and ZIP flagged to confirm"
+      },
+      {
+        "path": "src/lib/clubhouse.ts",
+        "what": "VM·STUDIO clubhouse concept (claims)",
+        "status": "current; concept, not as-built"
+      },
+      {
+        "path": "src/lib/course-holes.ts",
+        "what": "Hole names, pars, yardages, descriptions (claims)",
+        "status": "current; hole positions estimated"
+      },
+      {
+        "path": "src/lib/villa-del-rey.ts",
+        "what": "Villa Del Rey stays",
+        "status": "current"
+      },
+      {
+        "path": "src/lib/golf-booking.ts",
+        "what": "Course hours, green fees, add-ons, villa nights (plan)",
+        "status": "current; example prices, not approved by the club"
+      },
+      {
+        "path": "src/lib/membership-plans.ts",
+        "what": "Birdie / Eagle / Albatross plans (plan)",
+        "status": "current; example prices, not approved by the club"
+      },
+      {
+        "path": "src/components",
+        "what": "Live website copy and UI patterns",
+        "status": "current"
+      },
+      {
+        "path": "src/i18n",
+        "what": "Translations and never-translate rules",
+        "status": "current; non-English strings partly out of date"
+      },
+      {
+        "path": "mobile/src",
+        "what": "Expo app (consumer of this brain)",
+        "status": "current"
+      }
+    ],
+    "superseded": [],
+    "not_sources": [
+      "README.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "mobile/AGENTS.md"
+    ]
+  },
+  "never_print": [
+    "6,697 yards"
+  ],
+  "banned_phrases": [
+    "official IMG partner",
+    "endorsed by IMG",
+    "in partnership with IMG",
+    "award-winning",
+    "grand opening",
+    "now open",
+    "world's best",
+    "top-ranked",
+    "our wakepark"
+  ],
+  "locked_lines": [
+    "A world-class course, shaped by IMG",
+    "Not a building beside the course, but a continuation of the landscape",
+    "A relaxed base for your CamSur visit.",
+    "Your club, a step ahead.",
+    "Est. 2027"
+  ],
+  "public_paths": [
+    "mobile/src/app",
+    "mobile/src/content"
+  ],
+  "corrections": [],
+  "agents": []
+}

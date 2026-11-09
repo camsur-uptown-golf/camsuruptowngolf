@@ -11,7 +11,7 @@ import type { CSSProperties, ReactNode } from "react";
 /* Iisa ang kulay ng lahat ng section dito, kaya hairline rule ang naghahati
    sa kanila. Ang mga concept page lang ang gumagamit ng SECTION. */
 export const SECTION =
-  "relative isolate scroll-mt-24 overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 sm:py-16";
+  "relative isolate scroll-mt-24 overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 sm:py-16";
 
 /** Stagger helper — nababasa sa CSS bilang `transition-delay`. */
 export const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
@@ -43,13 +43,13 @@ export function SectionHeading({
   const isLg = size === "lg";
   return (
     <div className={`mx-auto text-center ${isLg ? "max-w-2xl xl:max-w-3xl" : "max-w-xl xl:max-w-2xl"}`}>
-      <p data-reveal="up" style={delay(0)} className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#d1af58]">
+      <p data-reveal="up" style={delay(0)} className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#d1af58]">
         {eyebrow}
       </p>
       <h2
         data-reveal="up"
         style={delay(90)}
-        className={`mt-3 font-medium tracking-[-0.035em] text-[#14271d] ${
+        className={`mt-3 font-medium tracking-[-0.035em] text-[#03321b] ${
           isLg
             ? "text-balance text-[clamp(1.85rem,3.2vw,3rem)] leading-[1.02] tracking-[-0.045em]"
             : "text-2xl sm:text-3xl xl:text-4xl"

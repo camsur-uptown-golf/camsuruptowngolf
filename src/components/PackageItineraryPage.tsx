@@ -33,11 +33,11 @@ type Props = {
 };
 
 const GOLD_BUTTON =
-  "inline-flex h-12 items-center justify-center rounded-full bg-[#e7d18d] px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0] xl:text-[11px]";
+  "inline-flex h-12 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] xl:text-[11px]";
 
 function CheckIcon() {
   return (
-    <svg viewBox="0 0 20 20" className="mt-1 h-4 w-4 shrink-0 text-[#e7d18d]" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 20 20" className="mt-1 h-4 w-4 shrink-0 text-[#e2c77a]" fill="none" aria-hidden="true">
       <circle cx="10" cy="10" r="9" stroke="currentColor" strokeOpacity="0.45" />
       <path d="m6.2 10.3 2.5 2.4 5.1-5.3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -56,7 +56,7 @@ export default function PackageItineraryPage({
 }: Props) {
   return (
     <>
-      <main className="bg-[#f7f5ee] text-[#14271d]">
+      <main className="bg-[#f3ede1] text-[#03321b]">
         {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
         <ScrollMotion replay />
 
@@ -72,9 +72,9 @@ export default function PackageItineraryPage({
             style={{ objectPosition: "right center" }}
           />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,19,13,0.66)_0%,rgba(5,19,13,0.28)_45%,rgba(5,19,13,0.8)_100%)]" />
-          <FairwayDivider fill="#f7f5ee" />
+          <FairwayDivider fill="#f3ede1" />
           <div className="mx-auto w-full max-w-7xl px-6 pb-28 pt-44 text-center sm:pb-36 lg:px-8">
-            <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e7d18d] xl:text-[11px]">
+            <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.24em] text-[#e2c77a] xl:text-[11px]">
               Golf package
             </p>
             <h1 className="mx-auto mt-4 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">
@@ -89,7 +89,7 @@ export default function PackageItineraryPage({
               </Link>
               <a
                 href="#itinerary"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-white/60 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#e7d18d] hover:text-[#f1d98f] xl:text-[11px]"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/60 px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#e2c77a] hover:text-[#efd99b] xl:text-[11px]"
               >
                 View itinerary
               </a>
@@ -97,26 +97,26 @@ export default function PackageItineraryPage({
           </div>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
         {/* AT A GLANCE */}
-        <section aria-label="Package at a glance" className="bg-[#f7f5ee] pt-8 sm:pt-10">
+        <section aria-label="Package at a glance" className="bg-[#f3ede1] pt-8 sm:pt-10">
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
             <dl
               data-reveal="up"
-              className="grid grid-cols-2 border-y border-[#1f3f2e]/15 lg:grid-cols-4"
+              className="grid grid-cols-2 border-y border-[#03321b]/15 lg:grid-cols-4"
             >
               {facts.map(([label, value], index) => (
                 <div
                   key={label}
-                  className={`px-2 py-6 sm:px-6 ${index % 2 === 1 ? "border-l border-[#1f3f2e]/15" : ""} ${
-                    index > 0 ? "lg:border-l lg:border-[#1f3f2e]/15" : ""
-                  } ${index > 1 ? "border-t border-[#1f3f2e]/15 lg:border-t-0" : ""}`}
+                  className={`px-2 py-6 sm:px-6 ${index % 2 === 1 ? "border-l border-[#03321b]/15" : ""} ${
+                    index > 0 ? "lg:border-l lg:border-[#03321b]/15" : ""
+                  } ${index > 1 ? "border-t border-[#03321b]/15 lg:border-t-0" : ""}`}
                 >
-                  <dt className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">{label}</dt>
-                  <dd className="mt-2 text-lg font-medium leading-snug tracking-[-0.02em] text-[#14271d] sm:text-xl">{value}</dd>
+                  <dt className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#7d6224]">{label}</dt>
+                  <dd className="mt-2 text-lg font-medium leading-snug tracking-[-0.02em] text-[#03321b] sm:text-xl">{value}</dd>
                 </div>
               ))}
             </dl>
@@ -124,7 +124,7 @@ export default function PackageItineraryPage({
         </section>
 
         {/* OVERVIEW + INCLUSIONS */}
-        <section className="bg-[#f7f5ee] py-16 sm:py-20">
+        <section className="bg-[#f3ede1] py-16 sm:py-20">
           <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16 lg:px-8">
             <div className="lg:pt-4">
               <Kicker>Overview</Kicker>
@@ -147,9 +147,9 @@ export default function PackageItineraryPage({
             <aside
               data-reveal="up"
               style={delay(120)}
-              className="rounded-[28px] bg-[#1f3f2e] p-8 text-white shadow-[0_28px_60px_rgba(8,27,18,0.18)] sm:p-10"
+              className="rounded-[28px] bg-[#03321b] p-8 text-white shadow-[0_28px_60px_rgba(8,27,18,0.18)] sm:p-10"
             >
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#e7d18d] xl:text-[11px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">
                 What’s included
               </p>
               <ul className="mt-6 space-y-4">
@@ -191,13 +191,13 @@ export default function PackageItineraryPage({
                   key={day.label}
                   data-reveal="up"
                   style={delay(index * 80)}
-                  className="grid gap-6 border-t border-[#1f3f2e]/15 py-10 md:grid-cols-[180px_minmax(0,1fr)] md:gap-12 sm:py-12"
+                  className="grid gap-6 border-t border-[#03321b]/15 py-10 md:grid-cols-[180px_minmax(0,1fr)] md:gap-12 sm:py-12"
                 >
                   <div>
-                    <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+                    <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
                       Day
                     </p>
-                    <p className="mt-1 text-6xl font-medium leading-none tracking-[-0.05em] text-[#1f3f2e] tabular-nums">
+                    <p className="mt-1 text-6xl font-medium leading-none tracking-[-0.05em] text-[#03321b] tabular-nums">
                       {String(index + 1).padStart(2, "0")}
                     </p>
                     <p className="mt-3 font-navigation text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46554c]">
@@ -208,11 +208,11 @@ export default function PackageItineraryPage({
                   <div className="min-w-0">
                     <h3 className="text-xl font-medium leading-snug tracking-[-0.03em] sm:text-2xl">{day.title}</h3>
                     <p className="mt-3 max-w-2xl text-[15px] leading-7 text-[#5d685f]">{day.intro}</p>
-                    <ol className="mt-7 border-l border-[#c9a54e]/45">
+                    <ol className="mt-7 border-l border-[#c5a35c]/45">
                       {day.moments.map(([time, copy]) => (
                         <li key={time} className="relative pb-6 pl-6 last:pb-0">
-                          <span className="absolute -left-[5px] top-[7px] h-[9px] w-[9px] rounded-full border border-[#c9a54e] bg-white" aria-hidden="true" />
-                          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#265136]">{time}</p>
+                          <span className="absolute -left-[5px] top-[7px] h-[9px] w-[9px] rounded-full border border-[#c5a35c] bg-white" aria-hidden="true" />
+                          <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#2e5126]">{time}</p>
                           <p className="mt-1 text-[15px] leading-7 text-[#46554c]">{copy}</p>
                         </li>
                       ))}
@@ -227,7 +227,7 @@ export default function PackageItineraryPage({
         {/* CTA */}
         {/* Cream (kapareho ng Overview) — hindi green (kapareho ng footer sa
             ilalim) at hindi puti (kapareho ng itinerary sa itaas). */}
-        <section className="bg-[#f7f5ee] px-6 py-16 text-center text-[#14271d] sm:py-20">
+        <section className="bg-[#f3ede1] px-6 py-16 text-center text-[#03321b] sm:py-20">
           <h2 data-reveal="up" className="mx-auto max-w-2xl text-3xl font-medium tracking-[-0.045em] sm:text-4xl">
             Choose your dates. We’ll arrange the rest.
           </h2>
@@ -240,7 +240,7 @@ export default function PackageItineraryPage({
             </Link>
             <Link
               href="/packages"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-[#1f3f2e]/25 px-7 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition hover:border-[#265136] hover:text-[#265136] xl:text-[11px]"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-[#03321b]/25 px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:border-[#2e5126] hover:text-[#2e5126] xl:text-[11px]"
             >
               Compare packages
             </Link>

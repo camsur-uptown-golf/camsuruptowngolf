@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { ADDONS, COURSE, VILLA_NIGHTS, addonMax, quote, startTimes, type AddonId, type Holes, type Tee } from "@/lib/golf-booking";
 import { nowInManila, simulatePayments, startDownpayment } from "@/lib/booking-server";
-import { currentMember } from "@/lib/member-session";
+import { requestMember } from "@/lib/app-auth";
+import { emailGuest, heldEmail } from "@/lib/booking-emails";
 import { paymongoConfigured } from "@/lib/paymongo";
 import { confirmReservation, createHeldReservation } from "@/lib/reservations-db";
 import { daysBetween, todayInManila } from "@/lib/weather";
@@ -65,8 +66,9 @@ export async function POST(request: Request) {
   }
 
   const price = quote({ holes, players, addons, villa: villaSlug });
-  const member = await currentMember();
-  const result = createHeldReservation({
+  /* Website: cookie. App: Bearer — para lumabas ang booking sa "My bookings". */
+  const member = await requestMember(request);
+  const result = await createHeldReservation({
     date,
     tee,
     time,
@@ -86,9 +88,11 @@ export async function POST(request: Request) {
 
   /* TEST MODE (walang PayMongo key, hindi production): confirmed agad, walang bayad. */
   if (simulatePayments()) {
-    confirmReservation(result.reservation.id, "TEST-PAYMENT");
+    await confirmReservation(result.reservation.id, "TEST-PAYMENT");
     return NextResponse.json({ ok: true, code: result.reservation.code });
   }
+  /* Email sa nagpareserve: link para magbayad, kung sakaling maisara niya ang checkout. */
+  emailGuest(heldEmail(result.reservation));
   try {
     const checkoutUrl = await startDownpayment(request, result.reservation);
     return NextResponse.json({ ok: true, code: result.reservation.code, checkoutUrl });

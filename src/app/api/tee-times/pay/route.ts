@@ -11,7 +11,7 @@ export const runtime = "nodejs";
  */
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as { code?: string };
-  const reservation = getReservation(String(body.code ?? ""));
+  const reservation = await getReservation(String(body.code ?? ""));
   if (!reservation || reservation.status !== "held") return NextResponse.json({ ok: false, error: "state" }, { status: 409 });
   if (simulatePayments()) return NextResponse.json({ ok: true, simulate: true });
   if (!paymongoConfigured()) return NextResponse.json({ ok: false, error: "payments" }, { status: 503 });

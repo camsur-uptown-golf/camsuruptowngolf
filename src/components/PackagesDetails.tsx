@@ -68,12 +68,12 @@ function ThePackages() {
   return (
     <section id="packages" className={EDITORIAL_SECTION_ALT}>
       <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-12">
-        <div className="grid gap-8 border-b border-[#1f3f2e]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div className="grid gap-8 border-b border-[#03321b]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
             <h2
               data-reveal="up"
               style={delay(110)}
-              className="mt-4 text-[clamp(2.25rem,4vw,4rem)] font-medium leading-none tracking-[-0.055em] text-[#14271d]"
+              className="mt-4 text-[clamp(2.25rem,4vw,4rem)] font-medium leading-none tracking-[-0.055em] text-[#03321b]"
             >
               Two ways to put a trip together.
             </h2>
@@ -102,7 +102,7 @@ function ThePackages() {
                 <Link
                   href={pack.href}
                   data-scroll-anim={imageOnRight ? "slide-right" : "slide-left"}
-                  className={`${imageOnRight ? "lg:order-2" : ""} group relative isolate block aspect-[3/2] overflow-hidden bg-[#1f3f2e] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
+                  className={`${imageOnRight ? "lg:order-2" : ""} group relative isolate block aspect-[3/2] overflow-hidden bg-[#03321b] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
                 >
                   {/* Napakalapad na panorama ang getaway hero (2.36:1), at nasa
                       kanang bahagi nakatipon ang apat na manlalaro. Sa 3/2 na
@@ -128,18 +128,18 @@ function ThePackages() {
                 {/* Umaangat na teksto (data-scroll-anim="rise"), kasabay ng
                     side-slide ng larawan; nag-a-animate ulit sa bawat pasok. */}
                 <div data-scroll-anim="rise" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
-                  <p className="relative text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+                  <p className="relative text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
                     {pack.who}
                   </p>
-                  <h3 className="relative mt-3 font-display text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#14271d]">
+                  <h3 className="relative mt-3 font-display text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#03321b]">
                     {pack.name}
                   </h3>
                   <p className="relative mt-4 text-[17px] leading-8 text-[#3f4c45]">{pack.summary}</p>
 
-                  <ul className="relative mt-7 border-t border-[#1f3f2e]/12">
+                  <ul className="relative mt-7 border-t border-[#03321b]/12">
                     {pack.inclusions.map((item) => (
-                      <li key={item} className="flex gap-3 border-b border-[#1f3f2e]/12 py-3 text-[13px] font-semibold uppercase leading-6 tracking-[0.06em] text-[#3f4c45]">
-                        <span className="text-[#265136]">
+                      <li key={item} className="flex gap-3 border-b border-[#03321b]/12 py-3 text-[13px] font-semibold uppercase leading-6 tracking-[0.06em] text-[#3f4c45]">
+                        <span className="text-[#2e5126]">
                           <CheckIcon />
                         </span>
                         {item}
@@ -147,12 +147,12 @@ function ThePackages() {
                     ))}
                   </ul>
 
-                  <p className="relative mt-6 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#98782f] xl:text-[11px]">
+                  <p className="relative mt-6 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224] xl:text-[11px]">
                     Rate on request
                   </p>
                   <Link
                     href={pack.href}
-                    className="relative mt-5 inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#14271d] transition-colors hover:bg-[#f3dfa0] xl:text-[11px]"
+                    className="relative mt-5 inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition-colors hover:bg-[#efd99b] xl:text-[11px]"
                   >
                     View itinerary
                   </Link>
@@ -168,7 +168,7 @@ function ThePackages() {
 
 function PackagesCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
       <Shell>
         <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
           <div>
@@ -188,7 +188,7 @@ function PackagesCta() {
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link
                 href="/plan-your-visit"
-                className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+                className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
               >
                 Request a quote
               </Link>

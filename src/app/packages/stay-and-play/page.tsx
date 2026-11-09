@@ -41,7 +41,7 @@ const days = [
     label: "Round day",
     title: "Eighteen holes on the championship course.",
     intro:
-      "Your round is the centerpiece of the stay, and the morning is planned so you reach the first tee relaxed and ready.",
+      "Your round is the centrepiece of the stay, and the morning is planned so you reach the first tee relaxed and ready.",
     moments: [
       ["Early morning", "Breakfast, followed by range balls and a warm-up before you meet your caddie at the first tee."],
       ["Morning", "A full 18-hole round on our championship course, played at a comfortable pace."],

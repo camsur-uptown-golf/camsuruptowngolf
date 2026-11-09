@@ -3,7 +3,7 @@ import { setMemberPlan } from "@/lib/members-db";
 import { currentMember } from "@/lib/member-session";
 import { findPlan } from "@/lib/membership-plans";
 
-/* Kailangan ng `node:sqlite` ang Node runtime — hindi ito tumatakbo sa edge. */
+/* Kailangan ng `@libsql/client` ang Node runtime — hindi ito tumatakbo sa edge. */
 export const runtime = "nodejs";
 
 /**
@@ -25,12 +25,12 @@ export async function POST(request: Request) {
   }
 
   if (body.plan === null) {
-    setMemberPlan(member.id, null);
+    await setMemberPlan(member.id, null);
     return NextResponse.json({ ok: true });
   }
   const plan = findPlan(typeof body.plan === "string" ? body.plan : null);
   if (!plan) return NextResponse.json({ ok: false, error: "plan" }, { status: 400 });
 
-  setMemberPlan(member.id, plan.id);
+  await setMemberPlan(member.id, plan.id);
   return NextResponse.json({ ok: true });
 }

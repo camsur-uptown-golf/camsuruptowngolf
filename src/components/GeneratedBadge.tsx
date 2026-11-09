@@ -9,7 +9,7 @@
 export default function GeneratedBadge({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`pointer-events-none absolute z-20 inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-black/45 px-2.5 py-1 font-navigation text-[8px] font-bold uppercase tracking-[0.14em] text-[#e7d18d] backdrop-blur-sm sm:text-[9px] ${
+      className={`pointer-events-none absolute z-20 inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-black/45 px-2.5 py-1 font-navigation text-[8px] font-bold uppercase tracking-[0.14em] text-[#e2c77a] backdrop-blur-sm sm:text-[11px] ${
         className || "left-3 top-3"
       }`}
     >

@@ -18,7 +18,7 @@ export default function HoleProgressEyebrow({ current, total }: HoleProgressEyeb
   const accessibleLabel = formatProgressLabel(t("course.holeProgressLabel"), current, total);
 
   return (
-    <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d1af58] xl:text-[11px]">
+    <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#d1af58] xl:text-[11px]">
       <span className="sr-only">{accessibleLabel}</span>
       <span aria-hidden="true">
         {t("course.hole")} {currentDisplay}

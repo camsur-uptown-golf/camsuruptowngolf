@@ -51,10 +51,10 @@ export default async function VillaHousePage({ params }: { params: Params }) {
 
   return (
     <>
-      <main className="bg-[#f7f5ee] text-[#14271d]">
-        <section id="top" className="relative isolate min-h-[380px] overflow-hidden bg-[#1f3f2e] px-6 pb-14 pt-64 text-center text-white sm:min-h-[560px] sm:pb-16 sm:pt-72 lg:px-8">
+      <main className="bg-[#f3ede1] text-[#03321b]">
+        <section id="top" className="relative isolate min-h-[380px] overflow-hidden bg-[#03321b] px-6 pb-14 pt-64 text-center text-white sm:min-h-[560px] sm:pb-16 sm:pt-72 lg:px-8">
           <HeroBackdrop src={house.exterior} alt={`${house.name} at Villa Del Rey — ${house.setting}`} />
-          <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e7d18d] xl:text-[11px]">
+          <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.24em] text-[#e2c77a] xl:text-[11px]">
             Villa Del Rey · Availability
           </p>
           <h1 className="mx-auto mt-4 max-w-3xl text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium leading-[1] tracking-[-0.05em]">
@@ -65,7 +65,7 @@ export default async function VillaHousePage({ params }: { params: Params }) {
           </p>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
@@ -82,11 +82,11 @@ export default async function VillaHousePage({ params }: { params: Params }) {
 
             {/* NAPILING BAHAY — sticky sa desktop habang pinupunan ang form. */}
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
                 Your selected stay
               </p>
               <div className="mt-4 overflow-hidden rounded-[24px] bg-white shadow-[0_22px_50px_rgba(8,27,18,0.1)]">
-                <div className="relative aspect-[4/3] bg-[#1f3f2e]">
+                <div className="relative aspect-[4/3] bg-[#03321b]">
                   <Image
                     src={house.exterior}
                     alt={`${house.name} at Villa Del Rey`}
@@ -96,7 +96,7 @@ export default async function VillaHousePage({ params }: { params: Params }) {
                   />
                 </div>
                 <div className="p-6 sm:p-7">
-                  <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#98782f]">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#7d6224]">
                     {house.setting}
                   </p>
                   <h2 className="mt-2 font-display text-3xl font-medium tracking-[-0.03em]">{house.name}</h2>
@@ -115,7 +115,7 @@ export default async function VillaHousePage({ params }: { params: Params }) {
               </div>
 
               {/* Lumipat ng bahay — bawat button ay sariling ruta. */}
-              <p className="mt-8 font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+              <p className="mt-8 font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
                 Choose a different stay
               </p>
               <nav aria-label="Villa Del Rey stays" className="mt-3 grid grid-cols-2 gap-2">
@@ -127,10 +127,10 @@ export default async function VillaHousePage({ params }: { params: Params }) {
                       href={villaHouseHref(item.slug)}
                       aria-current={isCurrent ? "page" : undefined}
                       scroll={false}
-                      className={`inline-flex h-11 items-center justify-center rounded-full border px-4 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] transition xl:text-[11px] ${
+                      className={`inline-flex h-11 items-center justify-center rounded-full border px-4 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] transition xl:text-[11px] ${
                         isCurrent
-                          ? "border-[#1f3f2e] bg-[#1f3f2e] text-[#f3dda0]"
-                          : "border-[#1f3f2e]/20 text-[#14271d] hover:border-[#265136] hover:text-[#265136]"
+                          ? "border-[#03321b] bg-[#03321b] text-[#efd99b]"
+                          : "border-[#03321b]/20 text-[#03321b] hover:border-[#2e5126] hover:text-[#2e5126]"
                       }`}
                     >
                       {item.name}

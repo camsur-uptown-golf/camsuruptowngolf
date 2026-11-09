@@ -6,6 +6,11 @@ import ClubhouseRoomsRail from "./ClubhouseRoomsRail";
 /**
  * Ang mga kuwarto bilang sunod-sunod na full-screen panels.
  *
+ * ~80% NG SCREEN, HINDI BUO (`min-h-[80svh]`). Sampung buong-screen na panel
+ * ang pahina dati, ~14,000px — nakakapagod i-scroll. Mas magaan din ang
+ * scrim kaysa dati para lumitaw ang arkitektura; ang text-shadow ng caption
+ * ang nagpapanatiling mabasa ito.
+ *
  * Normal document flow ang bawat panel: walang sticky stage, scroll listener,
  * progress variable, o reversible scrub. Gumagalaw pataas at pababa ang buong
  * panel kasama ng pahina, habang laging buo at mababasa ang caption.
@@ -13,7 +18,7 @@ import ClubhouseRoomsRail from "./ClubhouseRoomsRail";
 
 export default function ClubhouseRooms() {
   return (
-    <div id="clubhouse-rooms" className="relative w-full bg-[#f7f5ee]">
+    <div id="clubhouse-rooms" className="relative w-full bg-[#f3ede1]">
       <ClubhouseRoomsRail
         containerId="clubhouse-rooms"
         items={CLUBHOUSE_SPACES.map(({ id, name }) => ({ id, name }))}
@@ -22,9 +27,9 @@ export default function ClubhouseRooms() {
         <article
           key={space.id}
           id={space.id}
-          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]"
+          className="relative min-h-[80svh] scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
         >
-          <div className="relative min-h-svh overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]">
+          <div className="relative min-h-[80svh] overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]">
             <Image src={space.image} alt={space.imageAlt} fill sizes="100vw" className="object-cover" />
 
             {/* Palaging nakikita ang scrim at caption. Hindi na binabago ng
@@ -34,7 +39,7 @@ export default function ClubhouseRooms() {
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "radial-gradient(ellipse 78% 82% at 0% 100%, rgba(0,0,0,0.64) 0%, rgba(0,0,0,0.46) 38%, rgba(0,0,0,0.20) 66%, transparent 92%), linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.28) 60%, rgba(0,0,0,0.58) 100%)",
+                  "radial-gradient(ellipse 78% 82% at 0% 100%, rgba(0,0,0,0.56) 0%, rgba(0,0,0,0.38) 38%, rgba(0,0,0,0.14) 66%, transparent 92%), linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.03) 30%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0.50) 100%)",
               }}
             />
 
@@ -44,7 +49,7 @@ export default function ClubhouseRooms() {
                     Minsan lang itong papasok mula kaliwa; hindi ito nire-reset
                     o binabaligtad kapag nag-scroll pataas. */}
                 <div data-reveal="left" className="max-w-2xl">
-                  <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#f0d98f] xl:text-[11px]">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#f0d98f] xl:text-[11px]">
                     {space.floor}
                   </p>
                   <h3 className="mt-3 font-display text-2xl font-medium tracking-[-0.04em] text-white sm:text-3xl xl:text-4xl">
@@ -57,7 +62,7 @@ export default function ClubhouseRooms() {
                     <ul className="mt-4 flex max-w-2xl flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-white/85 sm:text-sm">
                       {space.features.map((feature) => (
                         <li key={feature} className="flex items-center gap-2">
-                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#e7d18d]" aria-hidden="true" />
+                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#e2c77a]" aria-hidden="true" />
                           {feature}
                         </li>
                       ))}
@@ -67,9 +72,9 @@ export default function ClubhouseRooms() {
                       CLUBHOUSE_SPACES. Nananatili rin itong anchor dito. */}
                   <Link
                     href={`/clubhouse/${space.id}`}
-                    className="mt-6 inline-flex h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-[#e7d18d]/70 bg-black/20 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.12em] text-[#f0d98f] backdrop-blur-[2px] transition-colors hover:border-[#e7d18d] hover:bg-[#e7d18d] hover:text-[#14271d] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e7d18d] xl:text-[11px]"
+                    className="mt-6 inline-flex h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-[#e2c77a]/70 bg-black/20 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#f0d98f] backdrop-blur-[2px] transition-colors hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a] xl:text-[11px]"
                   >
-                    Explore
+                    View the space
                   </Link>
                 </div>
               </div>

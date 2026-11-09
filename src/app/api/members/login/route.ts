@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { authenticate } from "@/lib/members-db";
 import { clearFailures, isLockedOut, recordFailure, startMemberSession } from "@/lib/member-session";
 
-/* Kailangan ng `node:sqlite` ang Node runtime — hindi ito tumatakbo sa edge. */
+/* Kailangan ng `@libsql/client` ang Node runtime — hindi ito tumatakbo sa edge. */
 export const runtime = "nodejs";
 
 /**
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
   const key = `email:${email}`;
   if (isLockedOut(key)) return NextResponse.json({ ok: false, error: "locked" }, { status: 429 });
 
-  const member = authenticate(email, password);
+  const member = await authenticate(email, password);
   if (!member) {
     recordFailure(key);
     return NextResponse.json({ ok: false, error: "credentials" }, { status: 401 });

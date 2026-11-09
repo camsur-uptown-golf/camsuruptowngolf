@@ -98,7 +98,7 @@ export default function ClubhouseHeroOverlay() {
             scroll-driven na kupas (--clubhouse-title-opacity/shift). */}
         {/* Cormorant SC (`font-display`), -40 na kerning = -0.04em. */}
         <h1 className="max-w-4xl text-balance font-display text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.04em] text-white [text-shadow:0_3px_28px_rgba(0,0,0,0.5)]">
-          <HeroWords text="The Heart of the Course" />
+          <HeroWords text="The heart of the course" />
         </h1>
       </div>
 
@@ -121,7 +121,7 @@ export default function ClubhouseHeroOverlay() {
               <dt className="font-display text-3xl font-medium leading-none tracking-[-0.04em] text-[#f2d98d] sm:text-4xl lg:text-5xl">
                 {fact.value}
               </dt>
-              <dd className="mt-2 font-navigation text-[10px] font-bold uppercase leading-4 tracking-[0.14em] text-white/75 sm:text-xs lg:text-[13px]">
+              <dd className="mt-2 font-navigation text-[11px] font-bold uppercase leading-4 tracking-[0.14em] text-white/75 sm:text-xs lg:text-[13px]">
                 {fact.label}
               </dd>
             </div>

@@ -3,7 +3,6 @@ import Image from "next/image";
 import ScrollMotion from "@/components/ScrollMotion";
 import ConceptCarousel from "@/components/ConceptCarousel";
 import CourseRoutingMap from "@/components/CourseRoutingMap";
-import PackagesCarousel from "@/components/PackagesCarousel";
 import { EditorialHeading, Shell } from "@/components/EditorialKit";
 import { Container, delay } from "@/components/SectionKit";
 
@@ -16,10 +15,10 @@ import { Container, delay } from "@/components/SectionKit";
  */
 
 /**
- * Sariling background ng Golf: `#f8f5ea`, ang kulay ng `#the-course` sa
+ * Sariling background ng Golf: `#f3ede1`, ang kulay ng `#the-course` sa
  * itaas, kaya iisa ang tono ng buong pahina.
  *
- * Lokal ito at hindi galing sa EditorialKit dahil `#f7f5ee` ang gamit ng
+ * Lokal ito at hindi galing sa EditorialKit dahil `#f3ede1` ang gamit ng
  * `/visit`, `/events`, `/packages`, at `/accommodations` — kung sa
  * EDITORIAL_SECTION_ALT ito ilalagay ay madadamay silang apat.
  *
@@ -28,7 +27,7 @@ import { Container, delay } from "@/components/SectionKit";
  * hindi ay may lalabas na tahi sa ilalim ng hero.
  */
 const GOLF_SECTION =
-  "relative isolate scroll-mt-24 overflow-hidden bg-[#f8f5ea] py-14 sm:py-16";
+  "relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-14 sm:py-16";
 
 const PRINCIPLES = [
   [
@@ -58,57 +57,56 @@ const TEES = [
 
 function Overview() {
   return (
-    <section id="the-course" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f8f5ea] pb-16 pt-6 sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
+    <section id="the-course" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-16 pt-6 sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
       <div className="relative z-10 mx-auto w-full max-w-[1500px] px-6 sm:px-10 lg:px-12">
         <div className="mx-auto max-w-4xl text-center">
           <div data-reveal="up" className="relative mx-auto mb-8 h-48 w-60 overflow-hidden sm:mb-10">
             <Image
-              src="/camsur-uptown-logo.png"
-              alt="CamSur Uptown Golf emblem"
-              width={720}
-              height={958}
-              sizes="230px"
-              className="absolute left-1/2 top-0 h-auto w-[230px] max-w-none -translate-x-1/2"
+              src="/branding/camsur-uptown-golf-shield.png"
+              alt="CamSur Uptown Golf shield"
+              width={770}
+              height={1076}
+              sizes="140px"
+              className="mx-auto h-full w-auto"
             />
           </div>
-          <p data-reveal="up" className="font-navigation text-[10px] font-bold uppercase tracking-[0.26em] text-[#98782f] sm:text-[11px]">
+          <p data-reveal="up" className="font-navigation text-[11px] font-bold uppercase tracking-[0.26em] text-[#7d6224] sm:text-[11px]">
             The landscape plan
           </p>
           <h2
             data-reveal="up"
             style={delay(90)}
-            className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#14271d]"
+            className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#03321b]"
           >
             Eighteen broad holes. One revised footprint.
           </h2>
 
           <div className="mx-auto mt-6 max-w-3xl space-y-4 text-sm leading-7 text-[#5d685f] sm:text-base sm:leading-8 xl:text-base xl:leading-8">
             <p data-reveal="up" style={delay(180)}>
-              The course follows the centre parcel shown in the latest planning revision. Its 18 broad fairway corridors
-              move through water and tropical fairways, forming one continuous journey from the opening tee to the home
-              green with open views of the mountain.
+              Its 18 broad fairway corridors follow the centre parcel of the site, forming one continuous journey from
+              the opening tee to the home green, with open views of Mt. Isarog.
             </p>
             <p data-reveal="up" style={delay(270)}>
-              Seven water features shape the course strategy while preserving the openness of the landscape.
+              Seven water features shape the strategy while keeping the landscape open.
             </p>
           </div>
 
           <dl
             data-reveal="up"
             style={delay(360)}
-            className="mx-auto mt-8 grid max-w-3xl grid-cols-3 border-y border-[#1f3f2e]/12 py-5 font-navigation"
+            className="mx-auto mt-8 grid max-w-3xl grid-cols-3 border-y border-[#03321b]/12 py-5 font-navigation"
           >
             <div>
-              <dt className="font-display text-xl font-semibold text-[#265136]">18</dt>
-              <dd className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#98782f] xl:text-[11px]">Holes</dd>
+              <dt className="font-display text-xl font-semibold text-[#2e5126]">18</dt>
+              <dd className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Holes</dd>
             </div>
-            <div className="border-l border-[#1f3f2e]/12 pl-5">
-              <dt className="font-display text-xl font-semibold text-[#265136]">54.23</dt>
-              <dd className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#98782f] xl:text-[11px]">Hectares</dd>
+            <div className="border-l border-[#03321b]/12 pl-5">
+              <dt className="font-display text-xl font-semibold text-[#2e5126]">54.23</dt>
+              <dd className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Hectares</dd>
             </div>
-            <div className="border-l border-[#1f3f2e]/12 pl-5">
-              <dt className="font-display text-xl font-semibold text-[#265136]">7</dt>
-              <dd className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#98782f] xl:text-[11px]">Water features</dd>
+            <div className="border-l border-[#03321b]/12 pl-5">
+              <dt className="font-display text-xl font-semibold text-[#2e5126]">7</dt>
+              <dd className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Water features</dd>
             </div>
           </dl>
         </div>
@@ -127,7 +125,7 @@ function DesignPrinciples() {
 
 function GolfCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+    <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
       <Container>
         <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
           <h2 data-reveal="up" style={delay(90)} className="text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl">
@@ -143,13 +141,13 @@ function GolfCta() {
                 Plan your visit para sa mga grupo at event na kailangang kausapin. */}
             <Link
               href="/golf/book"
-              className="inline-flex h-11 items-center rounded-full bg-[#e7d18d] px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#f3dfa0]"
+              className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
             >
-              Reserve a tee time
+              Reserve your round
             </Link>
             <Link
               href="/plan-your-visit"
-              className="inline-flex h-11 items-center rounded-full border border-[#265136]/30 px-6 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#265136] transition hover:border-[#265136] hover:bg-[#265136] hover:text-white"
+              className="inline-flex h-11 items-center rounded-full border border-[#2e5126]/30 px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#2e5126] transition hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white"
             >
               Plan your visit
             </Link>
@@ -168,7 +166,9 @@ export default function GolfDetails() {
       <Overview />
       <CourseRoutingMap />
       <ConceptCarousel />
-      <PackagesCarousel />
+      {/* Wala na rito ang PackagesCarousel ("Plan your golf getaway"): dalawang
+          magkasunod na CTA ang dulo ng pahina noon. Booking ang pangunahing
+          aksyon sa /golf; nasa home at /plan-your-visit pa rin ang packages. */}
       <GolfCta />
     </>
   );

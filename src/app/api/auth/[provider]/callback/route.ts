@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { findOrCreateOAuthMember } from "@/lib/members-db";
+import { createAppLoginCode, findOrCreateOAuthMember } from "@/lib/members-db";
 import { startMemberSession } from "@/lib/member-session";
-import { OAUTH_COOKIE, exchangeCode, isProvider, siteOrigin, type Provider } from "@/lib/oauth";
+import { OAUTH_COOKIE, appRedirect, exchangeCode, isProvider, siteOrigin, type AppReturn, type Provider } from "@/lib/oauth";
 
 export const runtime = "nodejs";
 
@@ -15,30 +15,39 @@ export const runtime = "nodejs";
  *   state     — luma o pekeng pagbalik (walang tugmang cookie)
  *   failed    — hindi naipalit ang code / walang email
  *   link      — may account na ang email pero hindi beripikado ng provider
+ *
+ * Kapag galing sa member app (`app` sa cookie), sa deep link ng app bumabalik
+ * — `?code=` (ipapalit ng app sa /api/app/session/oauth) o `?error=`.
  */
 async function handle(request: Request, provider: string, params: URLSearchParams) {
-  const back = (path: string) => NextResponse.redirect(`${siteOrigin(request)}${path}`, { status: 303 });
-  const fail = (error: string) => back(`/members?auth_error=${error}#member-access`);
-  if (!isProvider(provider)) return fail("invalid");
-
   const store = await cookies();
   const raw = store.get(OAUTH_COOKIE)?.value;
   store.delete(OAUTH_COOKIE);
 
-  if (params.get("error")) return fail("cancelled");
-  let saved: { provider: Provider; state: string; verifier: string } | null = null;
+  let saved: { provider: Provider; state: string; verifier: string; app?: AppReturn | null } | null = null;
   try {
     saved = raw ? JSON.parse(raw) : null;
   } catch {
     saved = null;
   }
+  const app = saved?.app ?? null;
+  const back = (path: string) => NextResponse.redirect(`${siteOrigin(request)}${path}`, { status: 303 });
+  const fail = (error: string) =>
+    app ? NextResponse.redirect(appRedirect(app, { error }), { status: 303 }) : back(`/members?auth_error=${error}#member-access`);
+  if (!isProvider(provider)) return fail("invalid");
+
+  if (params.get("error")) return fail("cancelled");
   const code = params.get("code");
   if (!saved || saved.provider !== provider || !code || params.get("state") !== saved.state) return fail("state");
 
   try {
     const profile = await exchangeCode(request, provider, code, saved.verifier, params.get("user"));
-    const member = findOrCreateOAuthMember({ provider, ...profile });
+    const member = await findOrCreateOAuthMember({ provider, ...profile });
     if (!member) return fail("link");
+    if (app) {
+      const appCode = await createAppLoginCode(member.id, app.challenge);
+      return NextResponse.redirect(appRedirect(app, { code: appCode }), { status: 303 });
+    }
     await startMemberSession(member.id);
     return back("/members");
   } catch {

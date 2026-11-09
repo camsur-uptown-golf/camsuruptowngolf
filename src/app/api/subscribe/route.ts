@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { addSubscriber } from "@/lib/inquiries-db";
 
-/* Kailangan ng `node:sqlite` ang Node runtime — hindi ito tumatakbo sa edge. */
+/* Kailangan ng `@libsql/client` ang Node runtime — hindi ito tumatakbo sa edge. */
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    addSubscriber(email);
+    await addSubscriber(email);
     /* Pareho ang sagot sa bago at sa dati nang naka-subscribe: sa gayon ay
        hindi masusubukan ng iba kung naka-subscribe ang isang address. */
     return NextResponse.json({ ok: true }, { status: 201 });

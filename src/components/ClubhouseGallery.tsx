@@ -15,12 +15,12 @@ export default function ClubhouseGallery({
   shots: readonly { readonly src: string; readonly alt: string }[];
 }) {
   return (
-    <div className="relative w-full bg-[#f7f5ee]">
+    <div className="relative w-full bg-[#f3ede1]">
       {shots.map((shot) => (
         <figure
           key={shot.src}
           data-shot-panel
-          className="relative min-h-svh overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#1f3f2e_50%,#102419_100%)]"
+          className="relative min-h-svh overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
         >
           <Image src={shot.src} alt={shot.alt} fill sizes="100vw" className="object-cover" />
 
@@ -35,7 +35,7 @@ export default function ClubhouseGallery({
 
           <figcaption className="absolute inset-x-0 bottom-0 px-6 pb-6 pt-20 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_10px_rgba(0,0,0,0.6)] sm:px-9 sm:pb-9 sm:pt-24 lg:px-12 lg:pb-12 lg:pt-28">
             <div data-reveal="left" className="max-w-xl">
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.18em] text-[#e7d18d] xl:text-[11px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#e2c77a] xl:text-[11px]">
                 {label}
               </p>
               <p className="mt-3 text-lg leading-8 text-white sm:text-xl xl:text-2xl xl:leading-9">

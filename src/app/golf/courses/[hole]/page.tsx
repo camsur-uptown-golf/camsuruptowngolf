@@ -89,7 +89,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_58%_46%_at_50%_46%,rgba(3,17,11,0.58)_0%,transparent_72%),linear-gradient(180deg,rgba(3,17,11,0.78)_0%,rgba(3,17,11,0.20)_32%,rgba(3,17,11,0.30)_62%,rgba(3,17,11,0.88)_100%)]" />
           {/* Dapat eksaktong katumbas ng #aerial-study sa ibaba — kahit
               bahagyang pagkakaiba ay lumilitaw bilang tahi sa dugtungan. */}
-          <FairwayDivider fill="#f7f5ee" />
+          <FairwayDivider fill="#f3ede1" />
           <div className="mx-auto flex min-h-[660px] max-w-7xl items-center justify-center px-6 py-24 lg:px-8">
             <div className="w-full text-center">
               {/* Word-by-word na pagpasok sa pag-load (HeroWords). Inalis ang
@@ -101,27 +101,27 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               <span
                 data-reveal="line"
                 style={delay(140)}
-                className="mx-auto mt-5 block h-px w-20 bg-[#f1d98f]/60"
+                className="mx-auto mt-5 block h-px w-20 bg-[#efd99b]/60"
                 aria-hidden="true"
               />
             </div>
           </div>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
-        <section id="aerial-study" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] pb-14 pt-0 text-[#14271d] sm:pb-16 sm:pt-0">
+        <section id="aerial-study" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-14 pt-0 text-[#03321b] sm:pb-16 sm:pt-0">
           <Container>
             <div className="relative mx-auto mb-5 h-[150px] w-28 overflow-hidden sm:mb-7 sm:h-[185px] sm:w-36" aria-hidden="true">
               <Image
-                src="/camsur-uptown-logo.png"
+                src="/branding/camsur-uptown-golf-shield.png"
                 alt=""
-                width={1536}
-                height={2048}
-                sizes="(max-width: 639px) 190px, 225px"
-                className="absolute left-1/2 top-0 h-auto w-[190px] max-w-none -translate-x-1/2 sm:w-[225px]"
+                width={770}
+                height={1076}
+                sizes="(max-width: 639px) 112px, 144px"
+                className="mx-auto h-full w-auto"
               />
             </div>
             <div className="mx-auto max-w-4xl text-center">
@@ -134,7 +134,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                   mga section heading sa ibaba (galing sa SectionHeading). Sa
                   dating clamp ay umaabot ito ng 60px — halos kapantay ng h1 at
                   doble ng ibang h2, kaya walang malinaw na pagkakasunod. */}
-              <h2 className="mx-auto mt-4 max-w-4xl text-balance text-[clamp(1.85rem,3.2vw,3rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#14271d]">
+              <h2 className="mx-auto mt-4 max-w-4xl text-balance text-[clamp(1.85rem,3.2vw,3rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#03321b]">
                 {scorecard.name}
               </h2>
               <p className="mx-auto mt-6 max-w-3xl text-sm font-medium leading-7 text-[#536058] sm:text-base sm:leading-8 lg:text-lg lg:leading-9">
@@ -151,7 +151,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               overflow-hidden ng section). Walang vw dito, walang pagkaputol. */}
           {/* Walang sariling background: minamana nito ang cream ng section,
               kaya tiyak na magkatugma. Ang border-y na lang ang naghihiwalay. */}
-          <div className="mt-14 border-y border-[#1f3f2e]/10 px-6 py-6 text-[#14271d] sm:mt-16 sm:px-10 sm:py-8">
+          <div className="mt-14 border-y border-[#03321b]/10 px-6 py-6 text-[#03321b] sm:mt-16 sm:px-10 sm:py-8">
             <dl className="mx-auto grid max-w-6xl grid-cols-3 text-center">
               {[
                 { label: "Yards", value: scorecard.yards.toLocaleString() },
@@ -162,13 +162,13 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                   key={label}
                   data-reveal="up"
                   style={delay(statIndex * 90)}
-                  className={`flex min-h-16 flex-col items-center justify-start px-3 sm:min-h-20 sm:px-8 ${statIndex ? "border-l border-[#1f3f2e]/15" : ""}`}
+                  className={`flex min-h-16 flex-col items-center justify-start px-3 sm:min-h-20 sm:px-8 ${statIndex ? "border-l border-[#03321b]/15" : ""}`}
                 >
-                  <dt className="font-navigation text-[10px] font-semibold uppercase tracking-[0.13em] text-[#4f5d55] sm:text-xs">
+                  <dt className="font-navigation text-[11px] font-semibold uppercase tracking-[0.13em] text-[#4f5d55] sm:text-xs">
                     {label}
                   </dt>
                   {value ? (
-                    <dd className="mt-3 font-display text-3xl font-medium leading-none tracking-[-0.04em] text-[#14271d] sm:text-4xl">
+                    <dd className="mt-3 font-display text-3xl font-medium leading-none tracking-[-0.04em] text-[#03321b] sm:text-4xl">
                       {value}
                     </dd>
                   ) : (
@@ -191,7 +191,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             ang nabubuo na may 56px na walang laman sa pagitan. Ang ibabang
             guhit ng stat bar at ang mga naka-border na table ang naghihiwalay
             nito. Kapag inalis ang stat bar, ibalik ang `border-t` dito. */}
-        <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f7f5ee] py-14 sm:py-16">
+        <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-14 sm:py-16">
           <Container>
             {/* Dating inuulit lang nito ang parehong description na nasa
                 itaas, kasama ang "Hole 1" na chip na hindi na kailangan sa
@@ -201,7 +201,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               size="lg"
               eyebrow="Scorecard"
               title="The full eighteen."
-              intro="All tee colors are shown, with confirmed yardages displayed for the Black tees only. This hole is highlighted across the card."
+              intro="All tee colours are shown, with confirmed yardages displayed for the Black tees only. This hole is highlighted across the card."
             />
           </Container>
 
@@ -222,7 +222,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
 
 
         {slug === "no-6" && (
-          <section className="relative isolate overflow-hidden border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+          <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
             <Container>
               <SectionHeading eyebrow="Lakeside course views" title="See the lakeside course from every angle." />
 
@@ -240,7 +240,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#071d13]/55 to-transparent" />
                       <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white sm:p-6">
                         <span className="text-sm font-semibold tracking-[-0.02em]">{angle.label}</span>
-                        <span className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#f1d98f]">
+                        <span className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#efd99b]">
                           {String(angleIndex + 1).padStart(2, "0")} / 04
                         </span>
                       </figcaption>
@@ -259,7 +259,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             <div className="absolute inset-0 flex flex-col justify-end p-8 text-white sm:p-10">
               {/* Dating `previous.title` — iisang editorial headline iyon para
                   sa lahat, kaya magkapareho ang teksto ng dalawang card. */}
-              <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">← Previous hole</p>
+              <p className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">← Previous hole</p>
               <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{holeLabel(previous)}</p>
             </div>
           </Link>
@@ -267,13 +267,13 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             <Image src={next.image} alt="" fill sizes="50vw" className="object-cover" />
             <div className="absolute inset-0 bg-[#071d13]/65 transition group-hover:bg-[#071d13]/48" />
             <div className="absolute inset-0 flex flex-col items-end justify-end p-8 text-right text-white sm:p-10">
-              <p className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">Next hole →</p>
+              <p className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">Next hole →</p>
               <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{holeLabel(next)}</p>
             </div>
           </Link>
         </nav>
 
-        <section id="request-call-back" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d] sm:py-16">
+        <section id="request-call-back" className="scroll-mt-24 border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
           <Container>
             {/* Tanong lang ang dala ng bisita rito, kaya maikling form (QuickQuestion)
                 — hindi ang buong RequestCallback ng /plan-your-visit. */}

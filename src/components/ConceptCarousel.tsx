@@ -146,7 +146,7 @@ export default function ConceptCarousel() {
   return (
     <section
       id="concepts"
-      className="overflow-hidden bg-[#f7f5ee] pb-6 pt-5 text-[#14271d] sm:pb-8 sm:pt-6 lg:pb-10 lg:pt-8"
+      className="overflow-hidden bg-[#f3ede1] pb-6 pt-5 text-[#03321b] sm:pb-8 sm:pt-6 lg:pb-10 lg:pt-8"
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") goPrevious();
         if (event.key === "ArrowRight") goNext();
@@ -165,7 +165,7 @@ export default function ConceptCarousel() {
           <div
             ref={stageRef}
             style={{ perspective: "1600px", transformStyle: "preserve-3d" }}
-            className="relative mx-auto aspect-[1.94] w-[calc(100vw-3rem)] max-w-[1040px] sm:w-[52vw]"
+            className="relative mx-auto aspect-[1.94] w-[calc(100vw-3rem)] max-w-[1360px] sm:w-[66vw]"
           >
             {SLIDES.map((slide, index) => {
               const d = wrappedDelta(index, pos);
@@ -192,7 +192,7 @@ export default function ConceptCarousel() {
                     }
                   }}
                   style={cardTransform(d)}
-                  className={`group absolute inset-0 block overflow-hidden bg-[#1f3f2e] outline-none [backface-visibility:hidden] focus-visible:ring-2 focus-visible:ring-[#b38c34] ${
+                  className={`group absolute inset-0 block overflow-hidden bg-[#03321b] outline-none [backface-visibility:hidden] focus-visible:ring-2 focus-visible:ring-[#b38c34] ${
                     isActive ? "shadow-[0_26px_60px_rgba(17,44,31,0.22)]" : ""
                   } ${isDragging ? "" : "transition-[transform,opacity] duration-[560ms] ease-[cubic-bezier(0.22,1,0.36,1)]"}`}
                 >
@@ -201,7 +201,7 @@ export default function ConceptCarousel() {
                     alt={`${slide.title} — CamSur Uptown Golf hole`}
                     fill
                     priority={index === 0}
-                    sizes="(min-width: 640px) 52vw, calc(100vw - 3rem)"
+                    sizes="(min-width: 2060px) 1360px, (min-width: 640px) 66vw, calc(100vw - 3rem)"
                     className="pointer-events-none object-cover"
                   />
                   {/* Bahagyang dumidilim ang mga gilid para umurong ang tingin. */}
@@ -216,7 +216,7 @@ export default function ConceptCarousel() {
                     aria-hidden="true"
                   />
                   {isActive && (
-                    <p className="pointer-events-none absolute bottom-4 right-5 text-[10px] font-bold tracking-[0.18em] text-white/85 sm:bottom-6 sm:right-7 xl:text-[11px]">
+                    <p className="pointer-events-none absolute bottom-4 right-5 text-[11px] font-bold tracking-[0.18em] text-white/85 sm:bottom-6 sm:right-7 xl:text-[11px]">
                       {String(active + 1).padStart(2, "0")} / {N}
                     </p>
                   )}
@@ -230,18 +230,18 @@ export default function ConceptCarousel() {
       <div
         data-reveal="up"
         style={{ "--reveal-delay": "150ms" } as CSSProperties}
-        className="mx-auto w-full max-w-[1040px] px-6 pt-7 sm:w-[52vw] sm:min-w-[720px] sm:px-0 sm:pt-8"
+        className="mx-auto w-full max-w-[1360px] px-6 pt-7 sm:w-[66vw] sm:min-w-[720px] sm:px-0 sm:pt-8"
       >
         <div className="grid min-w-0 gap-7 lg:grid-cols-2 lg:gap-10" aria-live="polite">
-          <div className="min-w-0 lg:border-r lg:border-[#1f3f2e]/35 lg:pr-10">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">
+          <div className="min-w-0 lg:border-r lg:border-[#03321b]/35 lg:pr-10">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
               {t("course.eyebrow")}
             </p>
             <h3 className="mt-2 max-w-full font-serif text-[clamp(2rem,2.5vw,3rem)] font-medium leading-[0.92] tracking-[-0.05em]">
               {t("course.holeNo")} {active + 1}
             </h3>
-            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-10 min-w-[112px] items-center justify-center rounded-full bg-[#e7d18d] px-6 text-[10px] font-bold uppercase tracking-[0.12em] text-[#14271d] transition hover:bg-[#f3dfa0]">
-              {t("action.explore")}
+            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-10 min-w-[112px] items-center justify-center rounded-full bg-[#e2c77a] px-6 text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:bg-[#efd99b]">
+              View the hole
             </Link>
           </div>
           <div className="hidden lg:block lg:pt-6">
@@ -253,7 +253,7 @@ export default function ConceptCarousel() {
       <div
         data-reveal="up"
         style={{ "--reveal-delay": "260ms" } as CSSProperties}
-        className="mx-auto mt-6 flex max-w-[1040px] justify-center gap-2 px-6 sm:w-[52vw]"
+        className="mx-auto mt-3 flex max-w-[1360px] justify-center px-6 sm:w-[66vw]"
         aria-label="Choose hole image"
       >
         {SLIDES.map((slide, index) => (
@@ -263,8 +263,18 @@ export default function ConceptCarousel() {
             onClick={() => setActive(index)}
             aria-label={`Show ${slide.title}`}
             aria-current={active === index ? "true" : undefined}
-            className={`h-1.5 rounded-full transition-all ${active === index ? "w-8 bg-[#b38c34]" : "w-1.5 bg-[#1f3f2e]/20 hover:bg-[#1f3f2e]/45"}`}
-          />
+            /* MAS MALAKING TAP AREA, PAREHONG ITSURA. 6px na tuldok pa rin ang
+               nakikita (ang `span`), pero 32px na ang taas ng pinipindot at ang
+               dating `gap-2` ay padding na ng pindutan — kaya walang puwang na
+               hindi napipindot. Hindi kasya ang 44px na lapad sa 18 tuldok sa
+               cellphone; ang swipe ang pangunahing paraan doon. */
+            className="group flex h-8 items-center px-1"
+          >
+            <span
+              aria-hidden="true"
+              className={`block h-1.5 rounded-full transition-all ${active === index ? "w-8 bg-[#b38c34]" : "w-1.5 bg-[#03321b]/20 group-hover:bg-[#03321b]/45"}`}
+            />
+          </button>
         ))}
       </div>
     </section>

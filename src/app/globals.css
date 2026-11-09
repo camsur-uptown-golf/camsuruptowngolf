@@ -4,12 +4,23 @@
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Camsur Uptown Golf brand */
-  --brand-green: #265136;
-  --brand-green-deep: #0a2418;
-  --brand-gold: #c9a54e;
-  --brand-gold-light: #f0dca0;
-  --brand-cream: #faf7ef;
+  /* CamSur Uptown Golf — official palette, Brand Guidelines 2026 (p.28–30).
+     60 % emerald, 25 % ivory, 10 % gold. Gold is for rules, flags, small caps
+     and foil — never long text or large fills. */
+  --brand-emerald: #03321b;
+  --brand-moss: #2e5126;
+  --brand-gold: #e2c77a;
+  --brand-gold-light: #efd99b;
+  --brand-gold-antique: #c5a35c;
+  --brand-ivory: #f3ede1;
+  --brand-sand: #d6c6a8;
+  --brand-onyx: #151513;
+  --brand-ember: #a4502f;
+
+  /* Older names, kept so existing classes keep working. */
+  --brand-green: var(--brand-moss);
+  --brand-green-deep: var(--brand-emerald);
+  --brand-cream: var(--brand-ivory);
 }
 
 @theme inline {
@@ -22,9 +33,18 @@
   --color-gold-light: var(--brand-gold-light);
   --color-cream: var(--brand-cream);
 
-  --font-sans: var(--font-manrope);
+  --color-emerald: var(--brand-emerald);
+  --color-moss: var(--brand-moss);
+  --color-ivory: var(--brand-ivory);
+  --color-sand: var(--brand-sand);
+  --color-onyx: var(--brand-onyx);
+  --color-ember: var(--brand-ember);
+
+  /* Brand Guidelines 2026 (p.32): Cormorant Garamond for display, Montserrat
+     for text and UI. */
+  --font-sans: var(--font-montserrat);
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-cormorant-sc);
+  --font-display: var(--font-cormorant-garamond);
   --font-navigation: var(--font-montserrat);
 }
 
@@ -44,7 +64,7 @@ body {
   overflow-x: clip;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
 }
 
 /* ── Font-switching kada wika (i18n) ─────────────────────────────────────────
@@ -131,15 +151,15 @@ button.rounded-full {
   text-shadow: none;
 }
 
-/* All prose uses Manrope site-wide. Display figures and compact navigation
-   labels retain their dedicated brand faces. */
+/* All prose uses Montserrat site-wide (Brand Guidelines 2026, p.32). Display
+   figures and compact navigation labels retain their dedicated brand faces. */
 main p:not(.font-display):not(.font-navigation) {
-  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
   letter-spacing: -0.01em;
 }
 
-/* Cormorant SC is the shared editorial face for hero, image, and section
-   titles. Navigation, labels, body copy, and compact cards stay sans-serif.
+/* Cormorant Garamond (sentence case) is the shared editorial face for hero,
+   image, and section titles — Brand Guidelines 2026, p.32–33. Navigation, labels, body copy, and compact cards stay sans-serif.
 
    Dumaraan ito sa --font-display, hindi sa pangalan ng font mismo: iisang
    linya lang sa @theme sa itaas ang kailangang baguhin para mapalitan ang
@@ -413,7 +433,7 @@ html {
 
 /* Gintong X (clear) ng site search. `type="search"` ang input, kaya ang
    browser mismo ang naglalagay ng cancel button — default na kulay ito (asul
-   sa ilang browser). Pinapalitan ng gintong (#f3dda0, kapareho ng search icon
+   sa ilang browser). Pinapalitan ng gintong (#efd99b, kapareho ng search icon
    sa tabi) na X gamit ang mask: ang background-color ang kulay, ang SVG ang
    hugis. Naka-scope sa search input lang. Webkit/Chromium ito; sa Firefox ay
    walang native cancel button, kaya walang naaapektuhan. */
@@ -423,7 +443,7 @@ html {
   height: 16px;
   width: 16px;
   cursor: pointer;
-  background-color: #f3dda0;
+  background-color: #efd99b;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 18 18M18 6 6 18' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 18 18M18 6 6 18' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
   transition: opacity 150ms ease;
@@ -502,4 +522,56 @@ html {
 @keyframes day-progress {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
+}
+
+/* Packages hero: itinataas ang naka-gitnang title dahil nasa center-bottom ng
+   larawan ang mga tao. Mas mataas sa cellphone — sa portrait na crop ay
+   lumalaki ang mga tao at tumatama sa kanilang mukha ang -14vh. Dating inline
+   style sa `[section]/page.tsx`; dito na para may breakpoint. */
+.packages-hero-shift {
+  transform: translateY(-14vh);
+}
+
+@media (max-width: 639px) {
+  .packages-hero-shift {
+    transform: translateY(-24vh);
+  }
+}
+
+/* HomeClubhouseDay: ang sticky na larawan ay umaabot hanggang kanang gilid ng
+   screen. Ang layo sa gilid ay `px-10` (2.5rem) ng container, at sa lampas ng
+   1280px ay dagdag ang kalahati ng natitirang lapad — `min()` ang pumipili ng
+   mas malaki (mas negatibo) sa dalawa. Dito at hindi bilang Tailwind arbitrary
+   class: hindi ito ginagawa ng dev server nang maaasahan. */
+@media (min-width: 1024px) {
+  .day-image-bleed {
+    margin-right: min(-2.5rem, calc((1280px - 100vw) / 2 - 2.5rem));
+  }
+}
+
+/* HomeClubhouseDay: kulay ng oras ng araw. Naka-rehistro ang `--day-bg` bilang
+   kulay (`@property`) para ma-transition ito — kung hindi, biglang tumatalon ang
+   kulay at ang gradient ng fade. Desktop lang; sa cellphone ay cream pa rin
+   (ang `bg-[#f3ede1]` ng section). */
+@property --day-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f3ede1;
+}
+
+@media (min-width: 1024px) {
+  .day-story {
+    background-color: var(--day-bg);
+    transition: --day-bg 900ms ease-out;
+  }
+
+  .day-story-fade {
+    background: linear-gradient(180deg, var(--day-bg) 0%, #f3ede1 100%);
+  }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .day-story {
+    transition: none;
+  }
 }

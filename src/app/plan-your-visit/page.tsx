@@ -32,9 +32,9 @@ const CHOICES = [
   {
     title: "Play a round",
     text: "Choose your date and tee time, add a caddie or a cart, and book online.",
-    cta: "Reserve a tee time",
+    cta: "Reserve your round",
     href: "/golf/book",
-    image: "/hero-images/tee-time-v3-logo.webp",
+    image: "/hero-images/tee-time-2027-logo.webp",
     alt: "Golf ball with the CamSur Uptown Golf logo beside a driver on the fairway",
   },
   {
@@ -69,11 +69,19 @@ export default function PlanYourVisitPage() {
       <main>
         <ScrollMotion />
 
-        <section id="top" className="relative isolate z-20 flex min-h-[520px] items-end bg-[#14271d] px-6 pb-14 pt-40 text-white sm:min-h-[660px] sm:pb-16 lg:px-12">
+        <section id="top" className="relative isolate z-20 flex min-h-[520px] items-end bg-[#03321b] px-6 pb-14 pt-40 text-white sm:min-h-[660px] sm:pb-16 lg:px-12">
           <HeroBackdrop
-            src="/plan-your-visit-hero-v1.png"
-            alt="Guests arriving with golf bags at the clubhouse drop-off entrance"
+            src="/brand-2026/arrival-bronze-canopy.webp"
+            alt="Clubhouse arrival concept: guests met beneath the bronze canopy as their golf cart and bags are brought round"
             imageClassName="object-[58%_center] sm:object-center"
+          />
+          {/* Dagdag na dilim sa kaliwa, sa pahinang ito lang: maliwanag at
+              abala ang kaliwa ng larawan (canopy at mga tao), kaya halos hindi
+              mabasa ang eyebrow at nakapatong ang quick-book sa gulo. Mula `sm`
+              lang — sa cellphone ay gradient na ang HeroBackdrop, walang larawan. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 hidden bg-[linear-gradient(90deg,rgba(7,23,15,0.8)_0%,rgba(7,23,15,0.5)_42%,rgba(7,23,15,0.08)_75%,transparent_100%)] sm:block"
           />
 
           {/* Walang `overflow-hidden` ang hero: kailangang lumabas sa ibaba ang
@@ -84,7 +92,7 @@ export default function PlanYourVisitPage() {
               papunta sa mga bakanteng oras. */}
           <div className="mx-auto w-full max-w-6xl">
             <div className="max-w-2xl">
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#d8b65b] xl:text-[11px]">Plan your visit</p>
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">Plan your visit</p>
               <h1 className="mt-4 font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em]">
                 Book your round.
               </h1>
@@ -98,14 +106,14 @@ export default function PlanYourVisitPage() {
           </div>
         </section>
 
-        <div className="bg-[#f7f5ee]">
+        <div className="bg-[#f3ede1]">
           <Breadcrumbs />
         </div>
 
         {/* 1. Iba pang puwedeng i-book */}
-        <section className="bg-[#f7f5ee] pb-16 pt-4 text-[#14271d]">
-          <p className="mx-auto mb-6 w-full max-w-[1400px] px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] lg:px-8 xl:text-[11px]">
-            Or book your visit
+        <section className="bg-[#f3ede1] pb-16 pt-4 text-[#03321b]">
+          <p className="mx-auto mb-6 w-full max-w-[1400px] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] lg:px-8 xl:text-[11px]">
+            Or plan the whole trip
           </p>
           <div className="mx-auto grid w-full max-w-[1400px] gap-5 px-6 md:grid-cols-3 lg:gap-6 lg:px-8">
             {CHOICES.map((choice, index) => (
@@ -117,7 +125,7 @@ export default function PlanYourVisitPage() {
                 /* BUONG CARD AY LARAWAN — gaya ng Clubhouse at Experiences.
                    Madilim na gradient sa ibaba para mabasa ang puting teksto;
                    lumalapit ang larawan at umaangat ang gintong linya sa hover. */
-                className="group relative isolate flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-2xl bg-[#14271d] text-white shadow-[0_18px_44px_rgba(20,39,29,0.14)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(20,39,29,0.22)] md:aspect-[3/4.4]"
+                className="group relative isolate flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-2xl bg-[#03321b] text-white shadow-[0_18px_44px_rgba(20,39,29,0.14)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(20,39,29,0.22)] md:aspect-[3/4.4]"
               >
                 <Image
                   src={choice.image}
@@ -133,9 +141,9 @@ export default function PlanYourVisitPage() {
                 <span className="block p-6 sm:p-8">
                   <span className="text-2xl font-semibold lg:text-3xl tracking-[-0.02em] [text-shadow:0_2px_12px_rgba(0,0,0,0.4)]">{choice.title}</span>
                   <span className="mt-2 block text-sm leading-6 text-white/80">{choice.text}</span>
-                  <span className="mt-5 flex items-center gap-3 font-navigation text-[10px] font-bold uppercase tracking-[0.16em] text-[#f3dda0] xl:text-[11px]">
+                  <span className="mt-5 flex items-center gap-3 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#efd99b] xl:text-[11px]">
                     {choice.cta}
-                    <span className="h-px w-8 bg-[#e7d18d] transition-all duration-500 group-hover:w-16" aria-hidden="true" />
+                    <span className="h-px w-8 bg-[#e2c77a] transition-all duration-500 group-hover:w-16" aria-hidden="true" />
                   </span>
                 </span>
               </Link>
@@ -145,18 +153,18 @@ export default function PlanYourVisitPage() {
 
         {/* 2. Grupo at event — nakatiklop, para hindi makasagabal sa pagbook.
             Bumubukas lang ang form kapag pinindot. */}
-        <section id="groups" className="scroll-mt-24 border-t border-[#1f3f2e]/10 bg-white py-12 text-[#14271d] sm:py-14">
+        <section id="groups" className="scroll-mt-24 border-t border-[#03321b]/10 bg-white py-12 text-[#03321b] sm:py-14">
           <details className="group/groups mx-auto w-full max-w-4xl px-6 sm:px-10">
-            <summary className="flex cursor-pointer list-none flex-col gap-4 rounded-2xl border border-[#1f3f2e]/12 bg-[#f7f5ee] p-6 transition hover:border-[#265136]/35 sm:flex-row sm:items-center sm:justify-between sm:p-7 [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none flex-col gap-4 rounded-2xl border border-[#03321b]/12 bg-[#f3ede1] p-6 transition hover:border-[#2e5126]/35 sm:flex-row sm:items-center sm:justify-between sm:p-7 [&::-webkit-details-marker]:hidden">
               <span>
-                <span className="block font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">Groups &amp; events</span>
+                <span className="block font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">Groups &amp; events</span>
                 <span className="mt-2 block text-xl font-semibold tracking-[-0.02em]">Bringing a group or planning an event?</span>
                 <span className="mt-1 block text-sm leading-6 text-[#5d685f]">
                   Company golf days, tournaments, weddings, and group trips — the events team replies within 48 hours.
                 </span>
               </span>
-              <span className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-[#b8963f]/55 px-6 font-navigation text-[10px] font-bold uppercase tracking-[0.14em] text-[#8a681f] transition group-open/groups:hidden xl:text-[11px]">
-                Send an inquiry
+              <span className="inline-flex h-11 shrink-0 items-center justify-center rounded-full border border-[#b8963f]/55 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#8a681f] transition group-open/groups:hidden xl:text-[11px]">
+                Send an enquiry
               </span>
             </summary>
             <div className="mt-8">
@@ -166,9 +174,9 @@ export default function PlanYourVisitPage() {
         </section>
 
         {/* 3. Good to know */}
-        <section className="border-t border-[#1f3f2e]/10 bg-[#f7f5ee] py-14 text-[#14271d]">
+        <section className="border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b]">
           <div className="mx-auto w-full max-w-6xl px-6 lg:px-8">
-            <p className="text-center font-navigation text-[10px] font-bold uppercase tracking-[0.2em] text-[#98782f] xl:text-[11px]">Good to know</p>
+            <p className="text-center font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">Good to know</p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 { label: "Getting here", text: "Driving times from Naga Airport, Naga City, and Legazpi.", href: "/getting-here", icon: "M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z M12 12.3a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6Z" },
@@ -179,7 +187,7 @@ export default function PlanYourVisitPage() {
                 const external = item.href.startsWith("tel:") || item.href.startsWith("mailto:");
                 const inner = (
                   <>
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#265136]">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#b49343]/30 bg-[#fbf8ef] text-[#2e5126]">
                       <InfoIcon d={item.icon} />
                     </span>
                     <span className="min-w-0">
@@ -193,7 +201,7 @@ export default function PlanYourVisitPage() {
                     </span>
                   </>
                 );
-                const className = "flex gap-4 border border-[#1f3f2e]/12 bg-white p-5 transition hover:border-[#265136]/40";
+                const className = "flex gap-4 border border-[#03321b]/12 bg-white p-5 transition hover:border-[#2e5126]/40";
                 return external ? (
                   <a key={item.label} href={item.href} className={className}>
                     {inner}

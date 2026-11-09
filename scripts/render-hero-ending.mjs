@@ -9,7 +9,7 @@ import sharp from "sharp";
 // Render the tracked flag first with scripts/render-flag-logo.py.
 const root = fileURLToPath(new URL("../", import.meta.url));
 const source = path.join(root, "public/hero-golf-club.mp4");
-const output = path.join(root, "public/hero-golf-v3.mp4");
+const output = path.join(root, "public/hero-golf-2027.mp4");
 const work = path.join(root, "tmp/hero-logo-update");
 const flagOpening = path.join(root, "tmp/hero-flag-update/flag-opening.mp4");
 const fps = 60;
@@ -30,7 +30,7 @@ function run(args) {
 
 await mkdir(work, { recursive: true });
 await access(flagOpening);
-const svg = await readFile(path.join(root, "public/branding/camsur-uptown-golf-header-v4.svg"), "utf8");
+const svg = await readFile(path.join(root, "public/branding/camsur-uptown-golf-header-2027.svg"), "utf8");
 // Render the complete SVG so the header's smaller GOLF and colors stay identical.
 await sharp(Buffer.from(svg)).png().toFile(path.join(work, "logo-source.png"));
 

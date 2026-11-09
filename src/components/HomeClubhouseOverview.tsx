@@ -26,14 +26,14 @@ function ArrowIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
 
 export default function HomeClubhouseOverview() {
   return (
-    <section id="home-clubhouse" className="overflow-hidden bg-[#f7f5ee] py-16 text-[#14271d] sm:py-20 lg:py-24">
+    <section id="home-clubhouse" className="overflow-hidden bg-[#f3ede1] py-16 text-[#03321b] sm:py-20 lg:py-24">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         {/* ── Header ─────────────────────────────────────────────────── */}
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-16">
           <div data-reveal="up">
             <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-[#c9a54e]" aria-hidden="true" />
-              <p className="font-navigation text-[10px] font-bold uppercase tracking-[0.22em] text-[#98782f] xl:text-[11px]">
+              <span className="h-px w-8 bg-[#c5a35c]" aria-hidden="true" />
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-[#7d6224] xl:text-[11px]">
                 The estate
               </p>
             </div>
@@ -52,14 +52,14 @@ export default function HomeClubhouseOverview() {
           </div>
         </div>
 
-        <div data-reveal="up" style={delay(140)} className="mt-9 h-px w-full bg-gradient-to-r from-[#1f3f2e]/18 via-[#c9a54e]/45 to-transparent sm:mt-11" aria-hidden="true" />
+        <div data-reveal="up" style={delay(140)} className="mt-9 h-px w-full bg-gradient-to-r from-[#03321b]/18 via-[#c5a35c]/45 to-transparent sm:mt-11" aria-hidden="true" />
 
         {/* ── Bento: cinematic aerial + the estate in numbers ─────────── */}
         <div className="mt-8 grid gap-4 lg:grid-cols-12">
           <Link
             href="/clubhouse"
             data-reveal="up"
-            className="group relative block aspect-[16/10] overflow-hidden rounded-[1.5rem] bg-[#1f3f2e] text-white sm:aspect-[16/9] lg:col-span-8 lg:aspect-auto lg:min-h-[560px]"
+            className="group relative block aspect-[16/10] overflow-hidden rounded-[1.5rem] bg-[#03321b] text-white sm:aspect-[16/9] lg:col-span-8 lg:aspect-auto lg:min-h-[560px]"
           >
             <Image
               src="/clubhouse/concept/aerial-heart-of-the-course.jpg"
@@ -71,7 +71,7 @@ export default function HomeClubhouseOverview() {
             <span className="absolute inset-0 bg-gradient-to-t from-[#06170f]/80 via-[#06170f]/10 to-black/10" aria-hidden="true" />
             <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-5 p-5 sm:p-7 lg:p-8">
               <span>
-                <span className="block font-navigation text-[9px] font-bold uppercase tracking-[0.2em] text-[#e7d18d] sm:text-[10px]">
+                <span className="block font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] sm:text-[11px]">
                   Clubhouse concept
                 </span>
                 <span
@@ -81,7 +81,7 @@ export default function HomeClubhouseOverview() {
                   Designed around arrival, play, and time together.
                 </span>
               </span>
-              <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/35 transition-colors duration-300 group-hover:border-[#e7d18d] group-hover:bg-[#e7d18d] group-hover:text-[#14271d] sm:flex">
+              <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/35 transition-colors duration-300 group-hover:border-[#e2c77a] group-hover:bg-[#e2c77a] group-hover:text-[#03321b] sm:flex">
                 <ArrowIcon className="h-4 w-4" />
               </span>
             </span>
@@ -92,14 +92,14 @@ export default function HomeClubhouseOverview() {
           <div
             data-reveal="up"
             style={delay(120)}
-            className="relative flex flex-col justify-between overflow-hidden rounded-[1.5rem] bg-[#1f3f2e] p-6 text-white sm:p-7 lg:col-span-4 lg:p-8"
+            className="relative flex flex-col justify-between overflow-hidden rounded-[1.5rem] bg-[#03321b] p-6 text-white sm:p-7 lg:col-span-4 lg:p-8"
           >
-            <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9a54e]/55 to-transparent" aria-hidden="true" />
+            <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c5a35c]/55 to-transparent" aria-hidden="true" />
             <div className="flex items-center justify-between">
-              <p className="font-navigation text-[9px] font-bold uppercase tracking-[0.22em] text-[#e7d18d] sm:text-[10px]">
+              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.22em] text-[#e2c77a] sm:text-[11px]">
                 In numbers
               </p>
-              <p className="font-navigation text-[9px] font-medium uppercase tracking-[0.18em] text-white/45">
+              <p className="font-navigation text-[11px] font-medium uppercase tracking-[0.18em] text-white/45">
                 Concept
               </p>
             </div>
@@ -115,12 +115,12 @@ export default function HomeClubhouseOverview() {
                   }`}
                 >
                   <dt
-                    className="text-3xl font-medium leading-none text-[#e7d18d] sm:text-4xl lg:text-[2.6rem]"
+                    className="text-3xl font-medium leading-none text-[#e2c77a] sm:text-4xl lg:text-[2.6rem]"
                     style={{ fontFamily: "var(--font-cormorant-garamond), Georgia, serif" }}
                   >
                     {fact.value}
                   </dt>
-                  <dd className="mt-2 font-navigation text-[8px] font-semibold uppercase leading-4 tracking-[0.12em] text-white/55 sm:text-[9px] lg:mt-0 lg:text-right lg:text-[10px]">
+                  <dd className="mt-2 font-navigation text-[8px] font-semibold uppercase leading-4 tracking-[0.12em] text-white/55 sm:text-[11px] lg:mt-0 lg:text-right lg:text-[11px]">
                     {fact.label}
                   </dd>
                 </div>
@@ -128,7 +128,7 @@ export default function HomeClubhouseOverview() {
             </dl>
 
             {AREA_FACT ? (
-              <p className="mt-7 border-t border-white/12 pt-4 font-navigation text-[9px] font-medium uppercase tracking-[0.14em] text-white/50 sm:text-[10px] lg:mt-0">
+              <p className="mt-7 border-t border-white/12 pt-4 font-navigation text-[11px] font-medium uppercase tracking-[0.14em] text-white/50 sm:text-[11px] lg:mt-0">
                 {AREA_FACT.value} m² across three floors and a roof garden
               </p>
             ) : null}
@@ -143,7 +143,7 @@ export default function HomeClubhouseOverview() {
               href={`/clubhouse/${space.id}`}
               data-reveal="up"
               style={delay(index * 90)}
-              className="group relative aspect-[16/11] overflow-hidden rounded-[1.25rem] bg-[#1f3f2e] text-white sm:aspect-[4/5]"
+              className="group relative aspect-[16/11] overflow-hidden rounded-[1.25rem] bg-[#03321b] text-white sm:aspect-[4/5]"
             >
               <Image
                 src={space.image}
@@ -155,7 +155,7 @@ export default function HomeClubhouseOverview() {
               <span className="absolute inset-0 bg-gradient-to-t from-[#06170f]/90 via-[#06170f]/20 to-transparent" aria-hidden="true" />
               <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 sm:p-5">
                 <span>
-                  <span className="block font-navigation text-[8px] font-bold uppercase tracking-[0.18em] text-[#e7d18d] sm:text-[9px]">
+                  <span className="block font-navigation text-[8px] font-bold uppercase tracking-[0.18em] text-[#e2c77a] sm:text-[11px]">
                     {space.floor}
                   </span>
                   <span
@@ -165,7 +165,7 @@ export default function HomeClubhouseOverview() {
                     {space.name}
                   </span>
                 </span>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 text-[#e7d18d] transition-all duration-300 group-hover:border-[#e7d18d] group-hover:bg-[#e7d18d] group-hover:text-[#14271d]" aria-hidden="true">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 text-[#e2c77a] transition-all duration-300 group-hover:border-[#e2c77a] group-hover:bg-[#e2c77a] group-hover:text-[#03321b]" aria-hidden="true">
                   <ArrowIcon className="h-3.5 w-3.5" />
                 </span>
               </span>
