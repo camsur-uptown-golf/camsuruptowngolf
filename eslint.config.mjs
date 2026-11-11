@@ -15,8 +15,6 @@ const eslintConfig = defineConfig([
     // Mga scratch script na hindi kasama sa app at hindi rin naka-commit.
     "tmp/**",
     "output/**",
-    // Ang Expo app — may sariling tsconfig at lint (`cd mobile && npx expo lint`).
-    "mobile/**",
   ]),
 ]);
 

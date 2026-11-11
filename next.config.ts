@@ -11,7 +11,6 @@ const nextConfig: NextConfig = {
       "exports/**/*",
       "output/**/*",
       "tmp/**/*",
-      "mobile/**/*",
       "media-archive/**/*",
       "brand-brain/**/*",
       "reports/**/*",
@@ -34,7 +33,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [{ source: "/accommodations", destination: "/accommodations/villa-del-rey", permanent: false }];
   },
-  /* Ang web preview ng Expo app (`mobile/`, port 8081) ay ibang origin, kaya
+  /* Ang web preview ng Expo app (repo `app-camsuruptowngolf`, port 8081) ay ibang origin, kaya
      hinaharang ng browser ang fetch nito sa /api. Sa dev lang — walang CORS
      ang totoong iOS/Android app, at hindi nagbabago ang production. */
   async headers() {
