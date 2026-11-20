@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import CtaPanel from "@/components/CtaPanel";
 import Footer from "@/components/Footer";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import ScrollMotion from "@/components/ScrollMotion";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell, Watermark, delay } from "@/components/EditorialKit";
-import { ARRIVAL_NOTES, CLUB_ADDRESS, CLUB_PHONE, TRAVEL_ROUTES } from "@/lib/site-content";
-import Tr from "@/components/Tr";
+import { ARRIVAL_NOTES, CLUB_PHONE, TRAVEL_ROUTES } from "@/lib/site-content";
 
 /**
  * Paano makakarating sa club.
@@ -157,53 +156,17 @@ export default function GettingHerePage() {
           </Shell>
         </section>
 
-        <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#03321b] py-14 text-white sm:py-16">
-          <div
-            data-parallax="0.14"
-            className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c5a35c]/[0.07] blur-3xl"
-            aria-hidden="true"
-          />
-          <Shell>
-            <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-              <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a]">
-                The club
-              </p>
-              <h2
-                data-reveal="up"
-                style={delay(90)}
-                className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
-              >
-                Where to point the driver.
-              </h2>
-              <div data-reveal="up" style={delay(180)}>
-                <address className="mt-5 not-italic text-sm leading-8 text-white/70 xl:text-base">
-                  {CLUB_ADDRESS.lines.map((line) => (
-                    <span key={line} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </address>
-                <p className="mt-5 text-sm leading-7 xl:text-base xl:leading-8 text-white/60">
-                  Driving yourself and unsure at the turn, or landing and want to be met? Call the club and they will
-                  talk you in or send a transfer.
-                </p>
-                <div className="mt-7 flex flex-wrap justify-center gap-3">
-                  <a
-                    href={CLUB_PHONE.href}
-                    className="inline-flex h-12 items-center rounded-full bg-[#e2c77a] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
-                  >
-                    <Tr t="Call {0}" v={[CLUB_PHONE.label]} />
-                  </a>
-                  <Link
-                    href="/plan-your-visit"
-                    className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e2c77a] hover:text-[#efd99b]"
-                  >
-                    Arrange a transfer
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </Shell>
+        <section className="relative isolate bg-[#f3ede1] py-12 text-[#03321b] sm:py-16">
+          <div className="relative mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+            <CtaPanel
+              reveal
+              eyebrow="The club"
+              title="Where to point the driver."
+              text="CamSur Uptown Golf, San Jose, Pili, Camarines Sur 4418. Driving yourself and unsure at the turn, or landing and want to be met? Call the club and they will talk you in or send a transfer."
+              primary={{ label: `Call ${CLUB_PHONE.label}`, href: CLUB_PHONE.href }}
+              secondary={{ label: "Arrange a transfer", href: "/plan-your-visit" }}
+            />
+          </div>
         </section>
       </main>
       <Footer />

@@ -61,7 +61,7 @@ export default function ClubhouseDetails() {
           para pantay ang layo ng bandila sa teksto sa itaas at sa "The
           experience" sa ibaba. */}
       <div className="bg-[#f3ede1]">
-        <GolfDivider className="pt-16 sm:pt-20 lg:pt-24" />
+        <GolfDivider reveal className="pt-16 sm:pt-20 lg:pt-24" />
       </div>
 
       <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-16 sm:py-20 lg:py-28">

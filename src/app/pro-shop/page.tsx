@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import CtaPanel from "@/components/CtaPanel";
 import Footer from "@/components/Footer";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import ScrollMotion from "@/components/ScrollMotion";
@@ -183,31 +183,16 @@ export default function ProShopPage() {
           </div>
         </section>
 
-        <section className="relative isolate overflow-hidden bg-[#03321b] py-14 text-white sm:py-16">
-          <div className="mx-auto max-w-xl px-6 text-center xl:max-w-2xl">
-            <p data-reveal="up" className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[12px]">
-              Coming to the Pro Shop
-            </p>
-            <h2 data-reveal="up" style={delay(90)} className="mt-3 text-3xl font-medium sm:text-4xl">
-              Ask about the collection.
-            </h2>
-            <p data-reveal="up" style={delay(180)} className="mt-4 text-base leading-8 text-white/75">
-              Tell the club which pieces you would like, for yourself, a tournament group or a gift, and the team will be in touch when they are ready.
-            </p>
-            <div data-reveal="up" style={delay(240)} className="mt-7 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/plan-your-visit"
-                className="inline-flex h-12 items-center rounded-full bg-[#e2c77a] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] xl:text-[12px]"
-              >
-                Request a call back
-              </Link>
-              <a
-                href={CLUB_PHONE.href}
-                className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e2c77a] hover:text-[#efd99b] xl:text-[12px]"
-              >
-                {CLUB_PHONE.label}
-              </a>
-            </div>
+        <section className="relative isolate bg-[#f3ede1] py-12 text-[#03321b] sm:py-16">
+          <div className="relative mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+            <CtaPanel
+              reveal
+              eyebrow="Coming to the Pro Shop"
+              title="Ask about the collection."
+              text="Tell the club which pieces you would like, for yourself, a tournament group or a gift, and the team will be in touch when they are ready."
+              primary={{ label: "Request a call back", href: "/plan-your-visit" }}
+              secondary={{ label: CLUB_PHONE.label, href: CLUB_PHONE.href }}
+            />
           </div>
         </section>
       </main>

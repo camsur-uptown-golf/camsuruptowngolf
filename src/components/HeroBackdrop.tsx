@@ -27,6 +27,7 @@ export default function HeroBackdrop({
   shadeClassName = "bg-[linear-gradient(180deg,rgba(7,23,15,0.62)_0%,rgba(7,23,15,0.32)_38%,rgba(7,23,15,0.88)_100%)]",
   imageSources,
   bottomSurface,
+  mobileSrc,
 }: {
   src: string;
   alt: string;
@@ -34,6 +35,8 @@ export default function HeroBackdrop({
   shade?: boolean;
   shadeClassName?: string;
   bottomSurface?: string;
+  /** Larawang pang-cellphone (patayo ang crop). Kapag wala, gradient lang. */
+  mobileSrc?: string;
   imageSources?: {
     avif: string;
     webp: string;
@@ -43,8 +46,23 @@ export default function HeroBackdrop({
 }) {
   const media = (
     <>
+      {mobileSrc ? (
+        <>
+          <Image
+            src={mobileSrc}
+            alt=""
+            fill
+            sizes="(min-width: 640px) 1px, 100vw"
+            className="pointer-events-none -z-20 object-cover object-center sm:hidden"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(7,23,15,0.55)_0%,rgba(7,23,15,0.35)_35%,rgba(7,23,15,0.9)_100%)] sm:hidden"
+            aria-hidden="true"
+          />
+        </>
+      ) : null}
       <div
-        className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(120%_80%_at_80%_0%,#2f5a40_0%,#03321b_45%,#122a1d_100%)] sm:hidden"
+        className={`pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(120%_80%_at_80%_0%,#2f5a40_0%,#03321b_45%,#122a1d_100%)] sm:hidden ${mobileSrc ? "hidden" : ""}`}
         aria-hidden="true"
       >
         <span className="absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-[#e2c77a]/50 to-transparent" />

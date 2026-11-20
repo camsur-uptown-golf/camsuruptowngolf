@@ -34,7 +34,7 @@ export default function HomeClubhouseDayCards() {
   const { t } = useTranslation();
 
   return (
-    <section id="clubhouse-day" className="relative isolate bg-[#f3ede1] pb-14 pt-14 text-[#03321b] sm:pb-16 sm:pt-20 lg:pb-24 lg:pt-28">
+    <section id="clubhouse-day" className="relative isolate bg-[#f3ede1] pb-10 pt-12 text-[#03321b] sm:pb-12 sm:pt-14 lg:pb-14 lg:pt-16">
       <div className="mx-auto max-w-[1600px] px-6 lg:px-8">
         <div className="flex flex-col items-center gap-5 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
           <div>

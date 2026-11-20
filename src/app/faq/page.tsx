@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FaqSearch from "@/components/FaqSearch";
+import CtaPanel from "@/components/CtaPanel";
 import Footer from "@/components/Footer";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import ScrollMotion from "@/components/ScrollMotion";
-import { EDITORIAL_SECTION_ALT, Shell, Watermark, delay } from "@/components/EditorialKit";
+import { EDITORIAL_SECTION_ALT, Watermark, delay } from "@/components/EditorialKit";
 import { CLUB_PHONE, FAQ_GROUPS } from "@/lib/site-content";
 
 /**
@@ -156,46 +156,17 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#03321b] py-14 text-white sm:py-16">
-          <div
-            data-parallax="0.14"
-            className="pointer-events-none absolute -right-32 top-1/2 -z-10 h-96 w-96 rounded-full bg-[#c5a35c]/[0.07] blur-3xl"
-            aria-hidden="true"
-          />
-          <Shell>
-            <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-              <p data-reveal="up" className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a]">
-                Still deciding
-              </p>
-              <h2
-                data-reveal="up"
-                style={delay(90)}
-                className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
-              >
-                Ask the club directly.
-              </h2>
-              <div data-reveal="up" style={delay(180)}>
-                <p className="mt-4 text-sm leading-7 xl:text-base xl:leading-8 text-white/60">
-                  Tell the team your dates and how many are playing, and they will come back with the answer and a
-                  quote built around those two things.
-                </p>
-                <div className="mt-7 flex flex-wrap justify-center gap-3">
-                  <Link
-                    href="/plan-your-visit"
-                    className="inline-flex h-12 items-center rounded-full bg-[#e2c77a] px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
-                  >
-                    Request a call back
-                  </Link>
-                  <a
-                    href={CLUB_PHONE.href}
-                    className="inline-flex h-12 items-center rounded-full border border-white/25 px-7 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.12em] text-white transition hover:border-[#e2c77a] hover:text-[#efd99b]"
-                  >
-                    {CLUB_PHONE.label}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </Shell>
+        <section className="relative isolate bg-[#f3ede1] py-12 text-[#03321b] sm:py-16">
+          <div className="relative mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+            <CtaPanel
+              reveal
+              eyebrow="Still deciding"
+              title="Ask the club directly."
+              text="Tell the team your dates and how many are playing, and they will come back with the answer and a quote built around those two things."
+              primary={{ label: "Request a call back", href: "/plan-your-visit" }}
+              secondary={{ label: CLUB_PHONE.label, href: CLUB_PHONE.href }}
+            />
+          </div>
         </section>
       </main>
       <Footer />

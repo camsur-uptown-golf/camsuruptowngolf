@@ -158,7 +158,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             padding: ang pb ng #aerial-study at ang pt ng scorecard (parehong
             14/16) ang nagbibigay ng pantay na espasyo sa itaas at ibaba. */}
         <div className="bg-[#f3ede1]">
-          <GolfDivider maxWidth="max-w-7xl" />
+          <GolfDivider reveal maxWidth="max-w-7xl" />
         </div>
 
         {/* Kaparehong cream ng aerial-study sa itaas at ng call-back form sa
@@ -236,7 +236,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
         {/* Buong lapad ng screen, walang gap sa kaliwa't kanan; 2px na cream na
             guhit lang sa pagitan ng dalawang card. 16:9 ang card (aspect-video),
             kaya buo ang flyover — walang putol sa itaas o gilid. */}
-        <nav aria-label="Course navigation" className="bg-[#f3ede1] pb-14 sm:pb-16">
+        <nav aria-label="Course navigation" className="bg-[#f3ede1]">
           <div className="grid gap-[2px] sm:grid-cols-2">
             <Link
               href={`/golf/courses/${previous.slug}`}
@@ -252,19 +252,19 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               <HoleNavVideo src={previous.flyover.clear} poster={previous.image} />
               {/* Madilim lang sa ibaba (sa likod ng teksto) — kita ang larawan. */}
               <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#071d13]/85 via-[#071d13]/25 to-transparent" />
-              {/* Kapantay ng kaliwang gilid ng scorecard/plano sa itaas (parehong
-                  1280px na column at gutter). */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6 text-white sm:py-10 sm:pl-[max(1.5rem,calc((100vw-80rem)/2))] sm:pr-10 lg:pl-[max(2rem,calc((100vw-80rem)/2))]">
-                <span className="flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.36em] text-[#e1c56e] lg:text-[12px]">
+              {/* Cellphone: nasa kaliwa (gaya ng orihinal). sm pataas: nakagitna
+                  sa card (pahalang), nasa ibaba sa madilim na bahagi. */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6 text-white sm:items-center sm:p-10 sm:text-center">
+                <span className="flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e] sm:text-[11px] sm:tracking-[0.36em] lg:text-[12px]">
                   <svg viewBox="0 0 24 24" className="h-4 w-4 transition group-hover:-translate-x-1" fill="none" aria-hidden="true"><path d="m15 5-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   Previous hole
                   
                 </span>
                 {/* Tatlong hanay: label → "No. N" (malaki) → pangalan (mas maliit). */}
-                <span className="mt-2 font-display text-[clamp(2.75rem,3.8vw,4rem)] font-medium leading-[0.85] tracking-[-0.05em] lining-nums">
+                <span className="mt-2 font-display text-[2.25rem] font-medium leading-[0.85] sm:text-[clamp(2.75rem,3.8vw,4rem)] tracking-[-0.05em] lining-nums">
                   No. {previous.holes[0]}
                 </span>
-                <span className="mt-3 font-display text-[clamp(19px,1.35vw,23px)] font-medium leading-tight tracking-[-0.01em] text-white/85">
+                <span className="mt-2 font-display text-[16px] font-medium leading-tight tracking-[-0.01em] text-white/85 sm:mt-3 sm:text-[clamp(19px,1.35vw,23px)]">
                   {HOLE_PROFILES[previous.holes[0]].name}
                 </span>
               </div>
@@ -283,18 +283,19 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               <HoleNavVideo src={next.flyover.clear} poster={next.image} />
               {/* Madilim lang sa ibaba (sa likod ng teksto) — kita ang larawan. */}
               <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#071d13]/85 via-[#071d13]/25 to-transparent" />
-              {/* Kapantay ng kanang gilid ng talahanayan sa itaas. */}
-              <div className="absolute inset-0 flex flex-col items-end justify-end p-6 text-right text-white sm:py-10 sm:pl-10 sm:pr-[max(1.5rem,calc((100vw-80rem)/2))] lg:pr-[max(2rem,calc((100vw-80rem)/2))]">
-                <span className="flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.36em] text-[#e1c56e] lg:text-[12px]">
+              {/* Cellphone: nasa kanan (gaya ng orihinal). sm pataas: nakagitna
+                  sa card (pahalang), nasa ibaba sa madilim na bahagi. */}
+              <div className="absolute inset-0 flex flex-col items-end justify-end p-6 text-right text-white sm:items-center sm:p-10 sm:text-center">
+                <span className="flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e] sm:text-[11px] sm:tracking-[0.36em] lg:text-[12px]">
                   
                   Next hole
                   <svg viewBox="0 0 24 24" className="h-4 w-4 transition group-hover:translate-x-1" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </span>
                 {/* Tatlong hanay: label → "No. N" (malaki) → pangalan (mas maliit). */}
-                <span className="mt-2 font-display text-[clamp(2.75rem,3.8vw,4rem)] font-medium leading-[0.85] tracking-[-0.05em] lining-nums">
+                <span className="mt-2 font-display text-[2.25rem] font-medium leading-[0.85] sm:text-[clamp(2.75rem,3.8vw,4rem)] tracking-[-0.05em] lining-nums">
                   No. {next.holes[0]}
                 </span>
-                <span className="mt-3 font-display text-[clamp(19px,1.35vw,23px)] font-medium leading-tight tracking-[-0.01em] text-white/85">
+                <span className="mt-2 font-display text-[16px] font-medium leading-tight tracking-[-0.01em] text-white/85 sm:mt-3 sm:text-[clamp(19px,1.35vw,23px)]">
                   {HOLE_PROFILES[next.holes[0]].name}
                 </span>
               </div>
@@ -302,7 +303,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           </div>
         </nav>
 
-        <section id="request-call-back" className="scroll-mt-24 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
+        <section id="request-call-back" className="scroll-mt-24 bg-[#f3ede1] pb-14 pt-10 text-[#03321b] sm:pb-16 sm:pt-12 lg:pt-14">
           <Container>
             {/* Tanong lang ang dala ng bisita rito, kaya maikling form (QuickQuestion)
                 — hindi ang buong RequestCallback ng /plan-your-visit. */}

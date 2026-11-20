@@ -180,8 +180,10 @@ export default function PlanYourVisitPage() {
         {/* 2. Grupo at event — isang buong banda sa berde ng club. Nakatiklop
             pa rin ang form para hindi makasagabal sa pagbook; bumubukas lang
             kapag pinindot, sa sariling maliwanag na panel para mabasa. */}
-        <section id="groups" className="relative scroll-mt-24 overflow-hidden bg-[#03321b] py-14 text-white sm:py-16 lg:py-20">
-          <details className={`group/groups ${CONTAINER}`}>
+        {/* Kaparehong anyo ng CtaPanel: bilugang berdeng panel sa loob ng cream. */}
+        <section id="groups" className="relative scroll-mt-24 bg-[#f3ede1] py-12 sm:py-16">
+          <div className={CONTAINER}>
+          <details className="group/groups relative isolate overflow-hidden rounded-3xl bg-[#03321b] bg-[radial-gradient(90%_120%_at_100%_0%,#2f5a40_0%,rgba(47,90,64,0)_60%)] p-7 text-white shadow-[0_28px_60px_rgba(8,27,18,0.18)] ring-1 ring-inset ring-[#e2c77a]/15 sm:p-10 xl:p-16">
             <summary className="relative isolate flex cursor-pointer list-none flex-col gap-7 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-[#e2c77a] md:flex-row md:items-end md:justify-between md:gap-12 [&::-webkit-details-marker]:hidden">
               {/* Ang marka ng club bilang watermark sa kanan — kapareho ng nasa
                   CtaPanel. Nakaangkla sa summary (hindi sa buong section) para
@@ -193,12 +195,12 @@ export default function PlanYourVisitPage() {
                 width={911}
                 height={1251}
                 aria-hidden="true"
-                className="pointer-events-none absolute right-[3%] top-1/2 -z-10 hidden h-[190%] w-auto max-w-none -translate-y-1/2 opacity-[0.16] md:block"
+                className="pointer-events-none absolute right-[3%] top-1/2 -z-10 hidden h-[135%] w-auto max-w-none -translate-y-1/2 opacity-[0.16] md:block"
               />
               <span className="block max-w-3xl">
                 <span className={`${EYEBROW} block text-[#e2c77a]`}>Groups &amp; events</span>
                 <span className={`${SECTION_TITLE} block text-balance`}>Bringing a group or planning an event?</span>
-                <span className="mt-5 block max-w-2xl text-sm font-semibold leading-7 text-white/80 sm:text-base sm:leading-8">
+                <span className="mt-5 block max-w-2xl text-sm font-normal leading-7 text-white/80 sm:text-base sm:leading-8">
                   Company golf days, tournaments, weddings, and group trips — the events team replies within 48 hours.
                 </span>
               </span>
@@ -212,6 +214,7 @@ export default function PlanYourVisitPage() {
               <GroupInquiry />
             </div>
           </details>
+          </div>
         </section>
 
         {/* 3. Good to know */}

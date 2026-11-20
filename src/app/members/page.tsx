@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
+import GolfDivider from "@/components/GolfDivider";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import MemberAuth from "@/components/MemberAuth";
 import MemberLogout from "@/components/MemberLogout";
@@ -79,7 +80,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
       <>
         <main>
           <section id="top" className="relative isolate flex min-h-[520px] items-end overflow-hidden bg-[#03321b] px-6 pb-14 pt-40 text-white sm:min-h-[560px] sm:pb-16 sm:pt-44 lg:px-8">
-            <HeroBackdrop src="/brand-2026/rooftop-evening.webp" alt="Rooftop bar concept at dusk: two guests sharing an evening above the course" imageClassName="object-[40%_center] sm:object-center" />
+            <HeroBackdrop mobileSrc="/clubhouse/concept/members-lounge.jpg" src="/brand-2026/rooftop-evening.webp" alt="Rooftop bar concept at dusk: two guests sharing an evening above the course" imageClassName="object-[40%_center] sm:object-center" />
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">
                 Member&apos;s area
@@ -179,7 +180,15 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
             </Container>
           </section>
 
-          <section id="plans" className="scroll-mt-24 border-t border-[#03321b]/10 bg-[#f3ede1] pb-20 pt-16 text-[#03321b]">
+          {/* Golf divider sa halip na plain na border-t: pagitan ng account ng
+              miyembro at ng mga plan. Walang sariling padding maliban sa pt-2
+              sa cellphone — ang pb ng section sa itaas (14/16) at ang pt-16 ng
+              #plans ang nagpapantay sa espasyo. */}
+          <div className="bg-[#f3ede1]">
+            <GolfDivider maxWidth="max-w-7xl" className="pt-2 sm:pt-0" />
+          </div>
+
+          <section id="plans" className="scroll-mt-24 bg-[#f3ede1] pb-20 pt-16 text-[#03321b]">
             {payment ? (
               <div role="status" className="mx-auto mb-12 max-w-2xl border border-[#2e5126]/25 bg-white px-6 py-5 text-center">
                 {payment.status === "paid" && payment.periodEnd ? (
