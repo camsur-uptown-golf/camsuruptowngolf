@@ -29,7 +29,11 @@ import { trailFor } from "@/lib/breadcrumbs";
  * breadcrumb ang isang site — nababasa ito ng search engine at
  * ipinapakita bilang landas sa resulta, hindi lang bilang URL.
  */
-export default function Breadcrumbs() {
+/**
+ * `inline`: walang sariling lapad at padding — nasa loob na ng container ng
+ * pahina (hal. mga pahina ng butas), kaya kapantay ng nilalaman sa ibaba.
+ */
+export default function Breadcrumbs({ inline = false }: { inline?: boolean } = {}) {
   const pathname = usePathname();
   const trail = trailFor(pathname);
   if (trail.length === 0) return null;
@@ -51,7 +55,13 @@ export default function Breadcrumbs() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <nav aria-label="Breadcrumb">
-        <ol className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-2.5 gap-y-1 px-6 pb-2 pt-10 font-navigation text-[13px] font-medium tracking-[0.01em] text-[#7f8a82] sm:pt-12 lg:px-8">
+        <ol
+          className={`flex flex-wrap items-center gap-x-2.5 gap-y-1 font-navigation tracking-[0.01em] ${
+            /* Inline (mga pahina ng butas): mas maliit at mas mapusyaw, para
+               hindi makipagkumpitensya sa pangalan ng butas sa ilalim. */
+            inline ? "text-[12px] font-normal text-[#9aa39d]" : "mx-auto max-w-7xl px-6 pb-2 pt-10 text-[13px] font-medium text-[#7f8a82] sm:pt-12 lg:px-8"
+          }`}
+        >
           {trail.map((crumb, index) => {
             const isLast = index === trail.length - 1;
             return (

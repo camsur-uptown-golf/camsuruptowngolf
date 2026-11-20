@@ -96,8 +96,12 @@ export default function ClubhouseHeroOverlay() {
       >
         {/* Word-by-word entrance (HeroWords); nasa parent container ang
             scroll-driven na kupas (--clubhouse-title-opacity/shift). */}
-        {/* Cormorant SC (`font-display`), -40 na kerning = -0.04em. */}
-        <h1 className="max-w-4xl text-balance font-display text-[clamp(2.25rem,4.5vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.04em] text-white [text-shadow:0_3px_28px_rgba(0,0,0,0.5)]">
+        {/* INLINE ang letter-spacing: ang `main h1` sa globals.css ay naglalagay
+            ng -0.04em at nananalo ito sa anumang `tracking-*` na klase (unlayered
+            na rule laban sa utility). Mas maluwag nang kaunti ang mga letra dito kaysa sa -0.04em. */}
+        <h1
+          style={{ letterSpacing: "-0.015em" }}
+          className="max-w-6xl text-balance font-display text-[clamp(2.5rem,5.2vw,5.5rem)] font-medium leading-[0.95] text-white [text-shadow:0_3px_28px_rgba(0,0,0,0.5)]">
           <HeroWords text="The heart of the course" />
         </h1>
       </div>

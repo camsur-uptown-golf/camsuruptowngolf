@@ -1,10 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
 import ScrollMotion from "@/components/ScrollMotion";
 import ConceptCarousel from "@/components/ConceptCarousel";
 import CourseRoutingMap from "@/components/CourseRoutingMap";
 import { EditorialHeading, Shell } from "@/components/EditorialKit";
-import { Container, delay } from "@/components/SectionKit";
+import { delay } from "@/components/SectionKit";
+import CtaPanel from "@/components/CtaPanel";
 
 /**
  * The Golf page.
@@ -55,33 +54,34 @@ const TEES = [
   { name: "Forward", profile: "Comfort setup", note: "Built to keep pace comfortable for every player" },
 ] as const;
 
+/* MAS MALAPAD KAYSA SA IBANG PAHINA (`max-w-[1600px]`, makitid na gutter):
+   hindi nagsasayang ng puwang sa kaliwa at kanan — kapareho ng /packages. */
+const WIDE = "relative mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8";
+
+/* COMPACT NA OVERVIEW. Dati ay isang makitid na nakasentrong hanay — malaking
+   shield, pamagat, dalawang talata, at tatlong bilang, patong-patong — kaya
+   halos isang buong screen ito at bakante ang magkabilang gilid. Ngayon ay
+   dalawang hanay sa buong lapad: pamagat sa kaliwa, teksto at mga bilang sa
+   kanan. Inalis ang shield: palamuti lang iyon, at nasa header at footer na. */
 function Overview() {
   return (
-    <section id="the-course" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-16 pt-6 sm:pb-20 sm:pt-8 lg:pb-24 lg:pt-10">
-      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-6 sm:px-10 lg:px-12">
-        <div className="mx-auto max-w-4xl text-center">
-          <div data-reveal="up" className="relative mx-auto mb-8 h-48 w-60 overflow-hidden sm:mb-10">
-            <Image
-              src="/branding/camsur-uptown-golf-shield.png"
-              alt="CamSur Uptown Golf shield"
-              width={770}
-              height={1076}
-              sizes="140px"
-              className="mx-auto h-full w-auto"
-            />
-          </div>
-          <p data-reveal="up" className="font-navigation text-[11px] font-bold uppercase tracking-[0.26em] text-[#7d6224] sm:text-[11px]">
+    <section id="the-course" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-10 pt-4 sm:pb-12 sm:pt-6 lg:pb-14">
+      <div className={`${WIDE} z-10 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-end lg:gap-16 xl:gap-24`}>
+        <div>
+          <p data-reveal="up" className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm">
             The landscape plan
           </p>
           <h2
             data-reveal="up"
             style={delay(90)}
-            className="mx-auto mt-5 max-w-3xl text-balance text-[clamp(2.5rem,5vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.055em] text-[#03321b]"
+            className="mt-3 max-w-3xl text-balance font-display text-[clamp(2.5rem,4.6vw,4.625rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]"
           >
             Eighteen broad holes. One revised footprint.
           </h2>
+        </div>
 
-          <div className="mx-auto mt-6 max-w-3xl space-y-4 text-sm leading-7 text-[#5d685f] sm:text-base sm:leading-8 xl:text-base xl:leading-8">
+        <div>
+          <div className="max-w-2xl space-y-3 text-[12px] leading-6 text-[#3f4c45] lg:text-[15px] lg:leading-7">
             <p data-reveal="up" style={delay(180)}>
               Its 18 broad fairway corridors follow the centre parcel of the site, forming one continuous journey from
               the opening tee to the home green, with open views of Mt. Isarog.
@@ -91,22 +91,18 @@ function Overview() {
             </p>
           </div>
 
-          <dl
-            data-reveal="up"
-            style={delay(360)}
-            className="mx-auto mt-8 grid max-w-3xl grid-cols-3 border-y border-[#03321b]/12 py-5 font-navigation"
-          >
+          <dl data-reveal="up" style={delay(360)} className="mt-6 grid max-w-2xl grid-cols-3 border-y border-[#03321b]/12 py-4 font-navigation">
             <div>
-              <dt className="font-display text-xl font-semibold text-[#2e5126]">18</dt>
-              <dd className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Holes</dd>
+              <dt className="font-display text-[clamp(1.75rem,2.6vw,2.5rem)] font-medium leading-none tracking-[-0.03em] text-[#17251e]">18</dt>
+              <dd className="mt-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Holes</dd>
             </div>
             <div className="border-l border-[#03321b]/12 pl-5">
-              <dt className="font-display text-xl font-semibold text-[#2e5126]">54.23</dt>
-              <dd className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Hectares</dd>
+              <dt className="font-display text-[clamp(1.75rem,2.6vw,2.5rem)] font-medium leading-none tracking-[-0.03em] text-[#17251e]">54.23</dt>
+              <dd className="mt-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Hectares</dd>
             </div>
             <div className="border-l border-[#03321b]/12 pl-5">
-              <dt className="font-display text-xl font-semibold text-[#2e5126]">7</dt>
-              <dd className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Water features</dd>
+              <dt className="font-display text-[clamp(1.75rem,2.6vw,2.5rem)] font-medium leading-none tracking-[-0.03em] text-[#17251e]">7</dt>
+              <dd className="mt-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] xl:text-[11px]">Water features</dd>
             </div>
           </dl>
         </div>
@@ -123,37 +119,23 @@ function DesignPrinciples() {
 }
 
 
+/* Pangwakas na CTA: ang shared na berdeng panel (CtaPanel), sa loob ng cream
+   para hindi dumikit sa Footer. Pangunahin ang online na tee-time booking;
+   nananatili ang Plan your visit para sa mga grupo at event na kailangang
+   kausapin. */
 function GolfCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
-      <Container>
-        <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-          <h2 data-reveal="up" style={delay(90)} className="text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl">
-            Book your first round.
-          </h2>
-          <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8">
-            Choose your date and tee time online and secure it with a downpayment — or tell the club what you have in
-            mind and the team will arrange it for you.
-          </p>
-
-          <div data-reveal="up" style={delay(270)} className="mt-7 flex flex-wrap justify-center gap-3">
-            {/* Pangunahin: ang online na tee-time booking. Nananatili ang
-                Plan your visit para sa mga grupo at event na kailangang kausapin. */}
-            <Link
-              href="/golf/book"
-              className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
-            >
-              Reserve your round
-            </Link>
-            <Link
-              href="/plan-your-visit"
-              className="inline-flex h-11 items-center rounded-full border border-[#2e5126]/30 px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#2e5126] transition hover:border-[#2e5126] hover:bg-[#2e5126] hover:text-white"
-            >
-              Plan your visit
-            </Link>
-          </div>
-        </div>
-      </Container>
+    <section className="relative isolate bg-[#f3ede1] py-12 text-[#03321b] sm:py-16">
+      <div className={WIDE}>
+        <CtaPanel
+          reveal
+          eyebrow="Tee times"
+          title="Book your first round."
+          text="Choose your date and tee time online and secure it with a downpayment — or tell the club what you have in mind and the team will arrange it for you."
+          primary={{ label: "Reserve your round", href: "/golf/book" }}
+          secondary={{ label: "Plan your visit", href: "/plan-your-visit" }}
+        />
+      </div>
     </section>
   );
 }

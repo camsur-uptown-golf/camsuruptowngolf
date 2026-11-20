@@ -38,17 +38,17 @@ export default function HomeClubhouseDayCards() {
       <div className="mx-auto max-w-[1600px] px-6 lg:px-8">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p data-reveal="up" className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-xs">
+            <p data-reveal="up" className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm">
               {t("home.day.eyebrow")}
             </p>
             <h2
               data-reveal="up"
               style={{ fontFamily: "var(--font-cormorant-garamond), Georgia, serif" }}
-              className="mt-3 text-[clamp(2.25rem,4vw,4rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]"
+              className="mt-3 text-[clamp(2.5rem,4.6vw,4.625rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]"
             >
               {t("home.day.title")}
             </h2>
-            <p data-reveal="up" className="mt-4 max-w-md text-[17px] leading-8 text-[#3f4c45]">
+            <p data-reveal="up" className="mt-4 max-w-md text-[17px] font-normal leading-8 text-[#3f4c45]">
               {t("home.day.intro")}
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function HomeClubhouseDayCards() {
               style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
               className="group relative w-[82%] shrink-0 snap-start sm:w-[60%] lg:w-auto"
             >
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.4rem] bg-[#03321b] shadow-[0_24px_60px_-36px_rgba(3,50,27,0.55)]">
+              <div className="relative aspect-[4/5] overflow-hidden bg-[#03321b] shadow-[0_24px_60px_-36px_rgba(3,50,27,0.55)]">
                 <Image
                   src={part.image}
                   alt={`${part.title} at the CamSur Uptown clubhouse`}
@@ -106,18 +106,17 @@ export default function HomeClubhouseDayCards() {
                 {/* Stretched link: ang `after` ang tumatakip sa buong card. */}
                 <Link
                   href={`/clubhouse/${SPACE_FOR[part.time] ?? ""}`}
-                  className="after:absolute after:inset-0 after:rounded-[1.4rem] after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-[#2e5126]"
+                  className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-[#2e5126]"
                 >
                   {part.title}
                 </Link>
               </h3>
-              <p className="mt-3 max-w-sm text-[15px] leading-7 text-[#3f4c45]">{part.detail}</p>
+              <p className="mt-3 max-w-sm text-[15px] font-normal leading-7 text-[#3f4c45]">{part.detail}</p>
               <span
                 aria-hidden="true"
                 className="mt-5 inline-flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#2e5126] transition-all group-hover:gap-3"
               >
                 View the space
-                <span>→</span>
               </span>
             </li>
           ))}

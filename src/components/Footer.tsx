@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { CLUB_ADDRESS } from "@/lib/site-content";
+import { PrivacyPreferencesButton } from "@/components/PrivacyNotice";
 
 /**
  * Ang mga link ng footer.
@@ -12,8 +13,7 @@ import { CLUB_ADDRESS } from "@/lib/site-content";
  * TODO: wala pang pahina ang Our Story, Membership, Golf Academy,
  * News & Blog, Careers, at Accessibility, kaya inalis muna sila.
  * Nasa sariling "Before you book" column ang FAQs at directions.
- * Ibalik ang bawat isa kapag may pahina na. Ang Privacy Policy ang
- * pinakaunang kailangan — nag-iimbak na tayo ng personal na datos.
+ * Ibalik ang bawat isa kapag may pahina na.
  */
 const LINK_GROUPS: { title: string; links: { label: string; href: string }[] }[] = [
   {
@@ -69,7 +69,7 @@ const LINK_GROUPS: { title: string; links: { label: string; href: string }[] }[]
  */
 const SOCIALS: { label: string; href: string | null; path: string }[] = [
   { label: "Facebook", href: null, path: "M13.5 21v-7h2.3l.4-2.7h-2.7V9.5c0-.8.2-1.3 1.4-1.3h1.4V5.8c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5v1.9H8.6V14h2.3v7h2.6z" },
-  { label: "YouTube", href: null, path: "M20.5 8.4a2.2 2.2 0 0 0-1.5-1.5C17.7 6.5 12 6.5 12 6.5s-5.7 0-7 .4A2.2 2.2 0 0 0 3.5 8.4C3.1 9.7 3.1 12 3.1 12s0 2.3.4 3.6A2.2 2.2 0 0 0 5 17.1c1.3.4 7 .4 7 .4s5.7 0 7-.4a2.2 2.2 0 0 0 1.5-1.5c.4-1.3.4-3.6.4-3.6s0-2.3-.4-3.6zM10.3 14.4V9.6l4 2.4-4 2.4z" },
+  { label: "YouTube", href: "https://www.youtube.com/channel/UCHVV6NFiJ8hHlP1dnO5b3-A", path: "M20.5 8.4a2.2 2.2 0 0 0-1.5-1.5C17.7 6.5 12 6.5 12 6.5s-5.7 0-7 .4A2.2 2.2 0 0 0 3.5 8.4C3.1 9.7 3.1 12 3.1 12s0 2.3.4 3.6A2.2 2.2 0 0 0 5 17.1c1.3.4 7 .4 7 .4s5.7 0 7-.4a2.2 2.2 0 0 0 1.5-1.5c.4-1.3.4-3.6.4-3.6s0-2.3-.4-3.6zM10.3 14.4V9.6l4 2.4-4 2.4z" },
   { label: "X", href: null, path: "M17.5 5h2.1l-4.6 5.3L20.5 19h-4.3l-3.3-4.4L9 19H6.9l5-5.7L5.7 5h4.4l3 4 3.4-4zm-.8 12.6h1.2L9.4 6.3H8.1l8.6 11.3z" },
   { label: "TikTok", href: null, path: "M16.5 3c.3 2.1 1.6 3.6 3.6 3.9v2.4c-1.2.1-2.5-.3-3.6-1v5.8c0 3-2.3 5.4-5.2 5.4S6.1 17.1 6.1 14.1c0-2.8 2.1-5.1 4.8-5.4v2.5c-1.3.2-2.4 1.4-2.4 2.9 0 1.6 1.2 2.9 2.7 2.9s2.7-1.3 2.7-2.9V3h2.6z" },
 ];
@@ -196,6 +196,10 @@ export default function Footer() {
             <Link href="/terms-of-use" className="font-medium text-white/80 transition-colors hover:text-[#e2c77a]">
               Terms of Use
             </Link>
+            <Link href="/privacy-policy" className="font-medium text-white/80 transition-colors hover:text-[#e2c77a] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a]">
+              Privacy Policy
+            </Link>
+            <PrivacyPreferencesButton className="cursor-pointer font-medium text-white/80 transition-colors hover:text-[#e2c77a] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a]" />
           </div>
           <p>Where the fairway meets the mountain.</p>
         </div>

@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
 import ScrollReveal from "@/components/ScrollReveal";
-import { EDITORIAL_SECTION_ALT, Shell, delay } from "@/components/EditorialKit";
+import { EDITORIAL_SECTION_ALT, delay } from "@/components/EditorialKit";
+import CtaPanel from "@/components/CtaPanel";
 
 /**
  * The Packages page, sa parehong editorial na wika ng Visit at Events.
@@ -27,7 +28,7 @@ const PACKAGES = [
     image: "/packages-stay-play-hero-v2.png",
     name: "Stay & Play",
     summary: "A one-night stay with a round of golf",
-    who: "",
+    who: "One night · One round",
     inclusions: [
       "One night in the accommodation of your choice",
       "One round with a caddie",
@@ -41,7 +42,7 @@ const PACKAGES = [
     image: "/packages-group-getaway-hero-v2.jpeg",
     name: "Group Golf Getaway",
     summary: "A two-night group getaway with two rounds of golf",
-    who: "",
+    who: "Two nights · Two rounds",
     inclusions: [
       "A flexible three-day itinerary for your group",
       "Two rounds with caddies",
@@ -56,6 +57,12 @@ const PACKAGES = [
    at hindi lang sa mga package. Nasa FAQ_GROUPS sila ngayon sa
    site-content.ts, at may pindutan ang footer papunta roon. */
 
+/* MAS MALAPAD KAYSA SA IBANG PAHINA (`max-w-[1600px]`, hindi `max-w-7xl`):
+   sadyang maliit ang puwang sa kaliwa at kanan dito para lumaki ang mga
+   larawan ng package. Kapareho ito ng lapad ng mga section sa homepage. */
+const CONTAINER = "relative mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8";
+const EYEBROW = "font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm";
+
 function CheckIcon() {
   return (
     <svg viewBox="0 0 20 20" className="mt-1 h-3.5 w-3.5 shrink-0" fill="none" aria-hidden="true">
@@ -67,13 +74,16 @@ function CheckIcon() {
 function ThePackages() {
   return (
     <section id="packages" className={EDITORIAL_SECTION_ALT}>
-      <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-12">
-        <div className="grid gap-8 border-b border-[#03321b]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+      <div className={CONTAINER}>
+        <div className="grid gap-6 border-b border-[#03321b]/15 pb-10 lg:grid-cols-[1.3fr_1fr] lg:items-end lg:gap-12">
           <div>
+            <p data-reveal="up" className={EYEBROW}>
+              Packages
+            </p>
             <h2
               data-reveal="up"
               style={delay(110)}
-              className="mt-4 text-[clamp(2.25rem,4vw,4rem)] font-medium leading-none tracking-[-0.055em] text-[#03321b]"
+              className="mt-3 font-display text-[clamp(2.5rem,4.6vw,4.625rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]"
             >
               Two ways to put a trip together.
             </h2>
@@ -81,20 +91,20 @@ function ThePackages() {
           <p
             data-reveal="up"
             style={delay(220)}
-            className="max-w-2xl text-base leading-8 text-[#56625b] lg:justify-self-end"
+            className="max-w-xl text-base font-semibold leading-8 text-[#3f4c45] lg:justify-self-end lg:pb-2"
           >
             Choose the format that fits your stay, then open its itinerary for the full day-by-day plan.
           </p>
         </div>
 
-        <div className="mt-12 space-y-20 lg:mt-20 lg:space-y-32">
+        <div className="mt-10 space-y-16 lg:mt-16 lg:space-y-24">
           {PACKAGES.map((pack, index) => {
             const imageOnRight = index % 2 === 1;
             return (
               <article
                 key={pack.slug}
                 id={pack.slug}
-                className={`${imageOnRight ? "lg:grid-cols-[1fr_3fr]" : "lg:grid-cols-[3fr_1fr]"} grid scroll-mt-28 items-center gap-10 lg:gap-12`}
+                className={`${imageOnRight ? "lg:grid-cols-[1fr_2.3fr]" : "lg:grid-cols-[2.3fr_1fr]"} grid scroll-mt-28 items-center gap-8 lg:gap-12 xl:gap-16`}
               >
                 {/* Scroll reveal via IntersectionObserver (ScrollReveal.tsx):
                     galing sa sariling panig ang larawan, nag-a-animate ulit sa
@@ -102,7 +112,7 @@ function ThePackages() {
                 <Link
                   href={pack.href}
                   data-scroll-anim={imageOnRight ? "slide-right" : "slide-left"}
-                  className={`${imageOnRight ? "lg:order-2" : ""} group relative isolate block aspect-[3/2] overflow-hidden bg-[#03321b] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
+                  className={`${imageOnRight ? "lg:order-2" : ""} group relative isolate block aspect-[3/2] overflow-hidden rounded-2xl bg-[#03321b] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
                 >
                   {/* Napakalapad na panorama ang getaway hero (2.36:1), at nasa
                       kanang bahagi nakatipon ang apat na manlalaro. Sa 3/2 na
@@ -119,7 +129,7 @@ function ThePackages() {
                     src={pack.image}
                     alt={`${pack.name} at CamSur Uptown Golf`}
                     fill
-                    sizes="(max-width: 1023px) calc(100vw - 3rem), 800px"
+                    sizes="(max-width: 1023px) calc(100vw - 2rem), 1060px"
                     style={pack.slug === "buddy-trip" ? { objectPosition: "right" } : undefined}
                     className="object-cover transition duration-700 group-hover:scale-[1.02]"
                   />
@@ -128,17 +138,15 @@ function ThePackages() {
                 {/* Umaangat na teksto (data-scroll-anim="rise"), kasabay ng
                     side-slide ng larawan; nag-a-animate ulit sa bawat pasok. */}
                 <div data-scroll-anim="rise" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
-                  <p className="relative text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
-                    {pack.who}
-                  </p>
-                  <h3 className="relative mt-3 font-display text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#03321b]">
+                  <p className={EYEBROW}>{pack.who}</p>
+                  <h3 className="relative mt-3 font-display text-[clamp(2.25rem,3.4vw,3.25rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]">
                     {pack.name}
                   </h3>
-                  <p className="relative mt-4 text-[17px] leading-8 text-[#3f4c45]">{pack.summary}</p>
+                  <p className="relative mt-4 text-[17px] font-semibold leading-8 text-[#3f4c45]">{pack.summary}</p>
 
-                  <ul className="relative mt-7 border-t border-[#03321b]/12">
+                  <ul className="relative mt-6 border-t border-[#03321b]/12">
                     {pack.inclusions.map((item) => (
-                      <li key={item} className="flex gap-3 border-b border-[#03321b]/12 py-3 text-[13px] font-semibold uppercase leading-6 tracking-[0.06em] text-[#3f4c45]">
+                      <li key={item} className="flex gap-3 border-b border-[#03321b]/12 py-3 text-[15px] leading-6 text-[#3f4c45]">
                         <span className="text-[#2e5126]">
                           <CheckIcon />
                         </span>
@@ -147,12 +155,12 @@ function ThePackages() {
                     ))}
                   </ul>
 
-                  <p className="relative mt-6 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224] xl:text-[11px]">
+                  <p className="relative mt-6 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224] xl:text-[12px]">
                     Rate on request
                   </p>
                   <Link
                     href={pack.href}
-                    className="relative mt-5 inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition-colors hover:bg-[#efd99b] xl:text-[11px]"
+                    className="relative mt-5 inline-flex h-12 items-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition-colors hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[12px]"
                   >
                     View itinerary
                   </Link>
@@ -166,36 +174,21 @@ function ThePackages() {
   );
 }
 
+/* Pangwakas na CTA: berdeng panel sa loob ng cream, hindi buong banda —
+   madilim-berde rin ang Footer na kasunod, kaya kung buong lapad ay
+   magdidikit ang dalawa. Kapareho ng dulo ng /clubhouse. */
 function PackagesCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
-      <Shell>
-        <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-          <div>
-            <h2
-              data-reveal="up"
-              style={delay(90)}
-              className="text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
-            >
-              Send us your dates.
-            </h2>
-          </div>
-          <div data-reveal="up" style={delay(180)}>
-            <p className="text-sm leading-7 xl:text-base xl:leading-8 text-[#5d685f]">
-              Tell the club your dates, how many are playing, and which package is closest to what you want. You will
-              get back a quote built around those three things.
-            </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/plan-your-visit"
-                className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
-              >
-                Request a quote
-              </Link>
-            </div>
-          </div>
-        </div>
-      </Shell>
+    <section className="relative isolate bg-[#f3ede1] pb-16 text-[#03321b] sm:pb-20">
+      <div className={CONTAINER}>
+        <CtaPanel
+          reveal
+          eyebrow="Request a quote"
+          title="Send us your dates."
+          text="Tell the club your dates, how many are playing, and which package is closest to what you want. You will get back a quote built around those three things."
+          primary={{ label: "Request a quote", href: "/plan-your-visit" }}
+        />
+      </div>
     </section>
   );
 }

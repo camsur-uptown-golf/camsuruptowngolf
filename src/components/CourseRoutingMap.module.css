@@ -1,0 +1,220 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  scroll-margin-top: 7rem;
+  padding: 2rem 0 3rem;
+  color: #03321b;
+  background: #f3ede1;
+}
+
+/* Kapareho ng lapad ng ibang section ng /golf (`max-w-[1600px]`, 16px na
+   gutter; 32px mula 1024px) — hindi nagsasayang ng puwang sa gilid. */
+.container { width: min(100% - 2rem, 1536px); margin: auto; }
+@media (min-width: 1024px) { .container { width: min(100% - 4rem, 1536px); } }
+.intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 3rem; margin-bottom: 2.25rem; }
+.eyebrow { display: flex; align-items: center; gap: .65rem; margin-bottom: 1rem; color: #7d6224; font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+.eyebrow > span { width: 1.6rem; height: 1px; background: #b28e42; }
+.intro h2 { font-family: var(--font-cormorant-garamond), Georgia, serif; font-size: clamp(2.8rem, 4.5vw, 4.6rem); font-weight: 500; line-height: .95; letter-spacing: -.045em; }
+.intro h2 em { color: #6f7e58; font-weight: 400; }
+.introCopy { max-width: 29rem; margin-top: 1.25rem; color: #657062; font-size: 13px; line-height: 1.9; }
+.courseFacts { display: flex; align-items: flex-end; flex-shrink: 0; padding-bottom: .25rem; }
+.courseFacts > div { padding: 0 1.5rem; border-left: 1px solid #03321b24; }
+.courseFacts > div:first-child { border: 0; }
+.courseFacts > div:last-child { padding-right: 0; }
+.courseFacts dt { font-family: var(--font-cormorant-garamond), Georgia, serif; font-size: 2.8rem; font-weight: 500; line-height: 1.1; letter-spacing: -.04em; }
+.courseFacts dt span { margin-left: .4rem; font: 500 12px var(--font-montserrat), sans-serif; letter-spacing: 0; }
+.courseFacts dd { margin-top: .5rem; color: #75806f; font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+
+.explorer { overflow: hidden; border: 1px solid #b4a16c65; border-radius: 1.5rem; background: #082d21; box-shadow: 0 30px 65px -35px #17332355; }
+.explorer button { -webkit-tap-highlight-color: transparent; cursor: pointer; }
+.explorer button:disabled { cursor: default; }
+.explorer button:focus-visible, .explorer a:focus-visible { outline: 2px solid #e2c77a; outline-offset: 4px; }
+.explorer svg { width: 18px; height: 18px; flex-shrink: 0; }
+.toolbar { position: relative; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; padding: 1rem 1.5rem; border-bottom: 1px solid #f3ede118; color: #f3ede1; background: #082d21; }
+.explorerTitle { display: flex; align-items: center; gap: .65rem; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.explorerTitle svg { color: #e2c77a; }
+.nineSwitch { display: flex; padding: 4px; border: 1px solid #f3ede126; border-radius: 100px; background: #00000018; }
+.nineSwitch button { min-width: 5.4rem; padding: .6rem 1rem; border-radius: 100px; color: #c5d0be; font-size: 11px; font-weight: 600; transition: color 180ms, background 180ms; }
+.nineSwitch button:hover { color: #fff; }
+.nineSwitch button[aria-pressed="true"] { color: #193d26; background: #e2c77a; box-shadow: 0 2px 8px #0002; }
+.unitSwitch { display: flex; align-items: center; gap: .65rem; color: #72917f; font-size: 10px; }
+.unitSwitch button { padding: .5rem 0; color: #8fa597; transition: color 180ms; }
+.unitSwitch button[aria-pressed="true"] { color: #f0d98f; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 350px; }
+.map { position: relative; isolation: isolate; height: clamp(590px, 48vw, 750px); overflow: hidden; user-select: none; background-color: #123d2d; background-image: radial-gradient(ellipse at 45% 45%, #44644550, transparent 66%), repeating-radial-gradient(ellipse at -10% 100%, transparent 0, transparent 37px, #c8d8ac09 38px, transparent 39px, transparent 54px); }
+.map::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(0deg, #061e1890, transparent 20%, transparent 80%, #061e1830); }
+.draggable { cursor: grab; }
+.dragging { cursor: grabbing; }
+.mapCaption { position: absolute; inset: 1.5rem 1.5rem auto; z-index: 1; display: flex; justify-content: space-between; gap: 1rem; color: #adc0a594; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; pointer-events: none; }
+.terrain { position: absolute; left: 50%; top: 50%; height: 93%; aspect-ratio: 1; transform-origin: center; transition: transform 450ms cubic-bezier(.22, 1, .36, 1); }
+.gesturing { transition: none; }
+.mapImage { object-fit: contain; pointer-events: none; user-select: none; filter: drop-shadow(0 18px 14px #00170b75); }
+.pin { position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 29px; height: 29px; transform: translate(-50%, -50%); border: 1px solid #e2c77ae0; border-radius: 50%; color: #f8efd5; background: #143c29f5; font: 600 11px var(--font-montserrat), sans-serif; box-shadow: 0 3px 10px #001a0bb0; transition: background 160ms, color 160ms, opacity 160ms, width 160ms, height 160ms; }
+.pin > span:not(.pinHalo) { position: relative; z-index: 1; }
+.activePin { background: #e2c77a; color: #123d2a; }
+.selectedPin { width: 36px; height: 36px; border-color: #ffedb3; color: #173824; background: #e7cb7f; box-shadow: 0 0 0 4px #e7cb7f32, 0 4px 16px #001a0b99; }
+.pin:disabled { opacity: .22; }
+.pinHalo { position: absolute; inset: -7px; border: 1px solid #f3d892; border-radius: 50%; animation: selected-ring 1.8s ease-out 2; pointer-events: none; }
+.pinTooltip { position: absolute; left: 22px; top: -23px; width: max-content; max-width: 210px; padding: .7rem .9rem; border: 1px solid #d7c18b; border-radius: .5rem; color: #f3ede1; background: #082d21f5; box-shadow: 0 8px 24px #001b1555; font-size: 11px; font-weight: 600; pointer-events: none; }
+.pinTooltip small { display: block; margin-top: .3rem; color: #d8c98e; font-size: 9px; font-weight: 400; }
+.tooltipLeft { left: auto; right: 22px; }
+.clubhousePin { width: 31px; height: 31px; border-radius: 8px; color: #173824; background: #f3ede1; }
+.clubhousePin svg { width: 23px; height: 23px; }
+.clubhousePin.selectedPin { background: #e2c77a; }
+.mapControls { position: absolute; z-index: 25; left: 1.5rem; top: 4.4rem; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 5px; border: 1px solid #d4c18b40; border-radius: 100px; color: #e2d3a1; background: #062a20e8; box-shadow: 0 4px 20px #001b1524; }
+.mapControls button { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; font-size: 21px; font-weight: 300; transition: background 160ms; }
+.mapControls button:hover { background: #f3ede119; }
+.mapControls button:disabled { opacity: .3; }
+.mapControls .resetControl { width: auto; min-width: 34px; padding-inline: 6px; border-radius: 5px; }
+.mapControls > span:not(.controlDivider) { padding: .15rem 0; color: #9caf99; font-size: 8px; }
+.controlDivider { width: 16px; height: 1px; margin: 4px 0; background: #d4c18b33; }
+.mapFooter { position: absolute; inset: auto 1.5rem 1.25rem; z-index: 25; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.mapFooter p { display: flex; align-items: center; gap: .4rem; color: #c5d0be; font-size: 9px; }
+.legendDot { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: #e2c77a; }
+.tourButton { display: flex; align-items: center; justify-content: center; gap: .55rem; min-height: 38px; padding: .6rem .95rem; border: 1px solid #b9c6a34d; border-radius: 100px; color: #ece4c7; background: #082d21e8; font-size: 10px; font-weight: 500; transition: background 180ms; }
+.tourButton:hover, .tourPlaying { background: #264e39; }
+.tourButton svg { width: 13px; height: 13px; }
+.tourProgress { position: absolute; bottom: 0; left: 0; right: 0; z-index: 26; height: 2px; background: #e2c77a; transform-origin: left; animation: tour-progress linear both; }
+
+.detail { display: flex; min-width: 0; flex-direction: column; background: #faf6ed; }
+.previewImage { position: relative; height: 220px; flex-shrink: 0; overflow: hidden; background: #36513a; animation: detail-in 350ms ease-out both; }
+.imageShade { position: absolute; inset: 0; background: linear-gradient(180deg, #021a1070, transparent 40%, #021a10b0); }
+.previewLabel { position: absolute; top: 1.25rem; left: 1.5rem; color: #fff7dd; font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.bigNumber { position: absolute; bottom: .4rem; left: 1.25rem; color: #fff5d9; font-family: var(--font-cormorant-garamond), Georgia, serif; font-size: 92px; font-weight: 400; line-height: 1; letter-spacing: -.07em; }
+.bigNumber svg { width: 60px; height: 60px; margin-bottom: .75rem; }
+.conceptLabel { position: absolute; right: 1rem; bottom: 1.2rem; padding: .25rem .5rem; border: 1px solid #f3ede15c; border-radius: 2px; color: #f6edda; background: #082d2155; font-size: 8px; letter-spacing: .06em; text-transform: uppercase; }
+.detailBody { display: flex; flex: 1; flex-direction: column; padding: 1.5rem 1.5rem .8rem; }
+.detailCopy { animation: detail-in 250ms ease-out both; }
+.detailKicker { margin-bottom: .5rem; color: #8b7445; font-size: 8px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.detail h3 { color: #123d2a; font-family: var(--font-cormorant-garamond), Georgia, serif; font-size: 2rem; font-weight: 500; letter-spacing: -.035em; line-height: 1.05; }
+.holeFacts { display: grid; grid-template-columns: 1fr 1.8fr; gap: 1rem; margin-top: 1.1rem; padding: .85rem 0; border-block: 1px solid #183e261c; }
+.holeFacts > div + div { padding-left: 1.25rem; border-left: 1px solid #183e261c; }
+.holeFacts dt { margin-bottom: .15rem; color: #788071; font-size: 9px; }
+.holeFacts dd { color: #173d2a; font-family: var(--font-cormorant-garamond), Georgia, serif; font-size: 2rem; font-weight: 500; line-height: 1; }
+.holeFacts dd span { margin-left: .3rem; color: #788071; font: 400 10px var(--font-montserrat), sans-serif; }
+.description { margin-top: 1rem; color: #657062; font-size: 11px; line-height: 1.85; }
+.locateButton { display: flex; align-items: center; align-self: flex-start; gap: .4rem; margin-top: auto; padding: 1rem 0; color: #63764d; font-size: 10px; }
+.locateButton svg { width: 14px; height: 14px; }
+.locateButton:hover { color: #123d2a; }
+.holeLink { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 45px; padding: .8rem 1rem; border-radius: 4px; color: #f6edda; background: #173d2a; font-size: 10px; font-weight: 600; letter-spacing: .04em; transition: background 180ms; }
+.holeLink:hover { background: #315b39; }
+.holeNavigation { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-top: 1rem; color: #87917f; font-size: 9px; }
+.holeNavigation button { display: flex; align-items: center; gap: .25rem; min-height: 30px; color: #53664c; font-size: 10px; }
+.holeNavigation button:hover { color: #173d2a; }
+.holeNavigation svg { width: 12px; height: 12px; }
+.holeStrip { display: flex; align-items: center; gap: 1.4rem; padding: 1.15rem 1.5rem; border-top: 1px solid #f3ede118; background: #082d21; }
+.holeStrip > p { flex-shrink: 0; color: #98ad9d; font-size: 9px; line-height: 1.6; }
+.holeStrip strong { color: #e1e1c6; font-weight: 500; }
+.holeNumbers { display: flex; flex: 1; gap: .35rem; overflow-x: auto; padding: 5px; scrollbar-width: thin; scrollbar-color: #e2c77a50 transparent; }
+.holeNumbers button { flex: 1 0 31px; min-width: 31px; max-width: 44px; height: 35px; border: 1px solid transparent; border-radius: 4px; color: #9ab29c; font-size: 10px; font-weight: 500; transition: color 160ms, background 160ms; }
+.holeNumbers button:hover { color: #f8f1da; background: #ffffff0a; }
+.holeNumbers button[aria-pressed="true"] { border-color: #d4b967; color: #102e20; background: #e2c77a; }
+.holeNumbers .backNineStart { margin-left: .7rem; }
+.stripCount { padding-left: 1rem; border-left: 1px solid #f3ede122; color: #91aa95; font-size: 9px; line-height: 1.6; text-align: right; }
+.planNote { margin-top: 1rem; color: #939888; font-size: 9px; line-height: 1.7; text-align: center; }
+
+.fullscreen { display: flex; width: 100%; height: 100%; flex-direction: column; overflow-y: auto; border: 0; border-radius: 0; }
+.browserExpanded { position: fixed; inset: 0; z-index: 200; width: 100vw; height: 100dvh; }
+.fullscreen .workspace { flex: 1; min-height: 0; }
+.fullscreen .map { height: 100%; min-height: 500px; }
+.fullscreen .detail { overflow-y: auto; }
+.fullscreen .toolbar, .fullscreen .holeStrip { flex-shrink: 0; }
+
+@keyframes selected-ring { 0% { opacity: .8; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.65); } }
+@keyframes detail-in { from { opacity: .45; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes tour-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@media (min-width: 1600px) {
+  .workspace { grid-template-columns: minmax(0, 1fr) 380px; }
+  .previewImage { height: 245px; }
+  .detailBody { padding-inline: 1.8rem; }
+  .description { font-size: 12px; }
+}
+
+@media (max-width: 1100px) {
+  .workspace { grid-template-columns: minmax(0, 1fr) 310px; }
+  .courseFacts > div { padding-inline: 1rem; }
+  .courseFacts dt { font-size: 2.25rem; }
+  .courseFacts dd { max-width: 75px; font-size: 8px; line-height: 1.7; }
+  .mapFooter { align-items: flex-end; }
+  .mapFooter p { max-width: 100px; line-height: 1.6; }
+  .dragHint { display: none; }
+  .mapCaption { font-size: 8px; }
+  .mapCaption > span:last-child { display: none; }
+  .detailBody { padding-inline: 1.2rem; }
+  .stripCount { display: none; }
+}
+
+@media (max-width: 850px) {
+  .intro { align-items: flex-start; gap: 2rem; }
+  .courseFacts { display: grid; gap: .75rem; padding-top: 1.5rem; }
+  .courseFacts > div { display: flex; align-items: baseline; gap: .7rem; padding: 0; border: 0; }
+  .courseFacts dd { max-width: none; margin: 0; }
+  .courseFacts dt { font-size: 1.8rem; }
+  .workspace { grid-template-columns: 1fr; }
+  .map { height: 590px; }
+  .detail { display: grid; grid-template-columns: .9fr 1.1fr; }
+  .previewImage { height: 100%; min-height: 320px; }
+  .detailBody { padding: 1.5rem 1.5rem .8rem; }
+  .description { font-size: 12px; }
+  .toolbar { gap: .75rem; padding-inline: 1.15rem; }
+  .explorerTitle { font-size: 9px; }
+  .nineSwitch button { min-width: 4.5rem; padding-inline: .6rem; font-size: 10px; }
+  .holeNumbers { gap: .2rem; }
+  .fullscreen .workspace { display: block; overflow-y: auto; }
+  .fullscreen .map { height: 68svh; min-height: 430px; }
+  .fullscreen .detail { overflow-y: visible; }
+}
+
+@media (max-width: 560px) {
+  .section { padding-block: 2rem 3rem; }
+  .container { width: calc(100% - 1.5rem); }
+  .intro { display: block; padding-inline: .5rem; margin-bottom: 1.5rem; }
+  .intro h2 { font-size: 3rem; }
+  .introCopy { font-size: 12px; }
+  .courseFacts { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #173d2a22; }
+  .courseFacts > div { display: block; }
+  .courseFacts dt { font-size: 2rem; }
+  .courseFacts dd { margin-top: .25rem; font-size: 7px; }
+  .courseFacts dt span { font-size: 10px; }
+  .explorer { border-radius: 1rem; }
+  .toolbar { flex-wrap: wrap; padding: 1rem; }
+  .explorerTitle { flex: 1; order: 0; }
+  .unitSwitch { order: 1; }
+  .nineSwitch { order: 2; width: 100%; margin-top: .25rem; }
+  .nineSwitch button { flex: 1; min-height: 34px; }
+  .map { height: 440px; }
+  .terrain { height: 92%; }
+  .mapCaption { inset: 1rem 1rem auto; font-size: 7px; }
+  .mapControls { top: 3.2rem; left: .7rem; padding: 3px; }
+  .mapControls button { width: 30px; height: 30px; }
+  .mapControls button svg { width: 15px; height: 15px; }
+  .mapFooter { inset: auto .9rem 1rem; }
+  .mapFooter p { max-width: 90px; font-size: 8px; }
+  .tourButton { padding: .55rem .75rem; font-size: 9px; }
+  .pin { width: 26px; height: 26px; font-size: 10px; }
+  .selectedPin { width: 31px; height: 31px; }
+  .clubhousePin { width: 28px; height: 28px; }
+  .clubhousePin svg { width: 21px; height: 21px; }
+  .pinTooltip { display: none; }
+  .detail { display: flex; }
+  .previewImage { height: 200px; min-height: 0; }
+  .detailBody { padding: 1.3rem 1.3rem .8rem; }
+  .detail h3 { font-size: 2.2rem; }
+  .holeFacts { grid-template-columns: 1fr 1.6fr; }
+  .description { min-height: 0; font-size: 12px; }
+  .holeStrip { gap: .7rem; padding: .8rem; }
+  .holeStrip > p { font-size: 8px; }
+  .holeNumbers button { flex: 0 0 34px; }
+  .planNote { padding-inline: .5rem; font-size: 8px; }
+  .fullscreen .map { height: 60svh; min-height: 350px; }
+  .fullscreen .previewImage { height: 170px; }
+  .fullscreen .holeStrip { padding-block: .5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terrain, .pin, .nineSwitch button, .holeNumbers button { transition: none; }
+  .pinHalo, .previewImage, .detailCopy, .tourProgress { animation: none; }
+  .pinHalo { opacity: .5; }
+  .tourProgress { display: none; }
+}

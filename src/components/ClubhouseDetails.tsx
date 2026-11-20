@@ -1,10 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
 import BackToHeroButton from "@/components/BackToHeroButton";
 import ClubhouseRooms from "@/components/ClubhouseRooms";
-import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
 import { CLUBHOUSE_DAY, roomCountWord } from "@/lib/clubhouse";
+import CtaPanel from "@/components/CtaPanel";
 
 /**
  * Ang pahina ng Clubhouse: kung ano ang nasa loob ng gusali.
@@ -20,19 +19,35 @@ import { CLUBHOUSE_DAY, roomCountWord } from "@/lib/clubhouse";
  *
  * Magkaiba ito sa Clubhouse Lodge sa Accommodations. Tirahan iyon; ang
  * mga ito ay bahagi ng gusali ng club.
+ *
+ * IISANG GILID ANG BUONG PAHINA: lahat ng section ay nasa `CONTAINER` —
+ * kapareho ng Breadcrumbs, Footer, at /plan-your-visit. Kaliwa ang hanay ng
+ * mga pamagat at kasinlaki ng sa homepage, hindi ang nakasentrong 30px ng
+ * EditorialHeading.
  */
+
+const CONTAINER = "mx-auto w-full max-w-7xl px-6 lg:px-8";
+/* Para sa "How a day here runs": mas malapad at makitid ang puwang sa kaliwa
+   at kanan, para lumaki ang mga larawan — kapareho ng /packages. */
+const WIDE = "mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8";
+const EYEBROW = "font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm";
+const SECTION_TITLE = "mt-3 font-display text-[clamp(2.5rem,4.6vw,4.625rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]";
 
 export default function ClubhouseDetails() {
   return (
     <>
       <ScrollMotion />
 
-      {/* Ang mga area bilang full-screen visual tour — ito na ang unang malaking
-          bahagi: nauuna ang nakikita (mga larawan ng espasyo) bago ang mas
-          teknikal na breakdown kada palapag sa ibaba. */}
-      <section className="relative isolate scroll-mt-24 bg-[#f3ede1] pb-10 pt-4 sm:pb-12 sm:pt-6">
-        <div className="relative mx-auto w-full max-w-4xl px-6 sm:px-10 lg:px-12 xl:max-w-5xl">
-          <EditorialHeading size="lg" title={`${roomCountWord()} ways to experience the clubhouse.`} />
+      {/* Ang mga area bilang visual tour — ito na ang unang malaking bahagi:
+          nauuna ang nakikita (mga larawan ng espasyo). */}
+      <section className="relative isolate scroll-mt-24 bg-[#f3ede1] pb-10 pt-4 sm:pb-14 sm:pt-6">
+        <div className={CONTAINER}>
+          <p data-reveal="up" className={`${EYEBROW} text-center`}>
+            Inside the clubhouse
+          </p>
+          <h2 data-reveal="up" className={`${SECTION_TITLE} mx-auto max-w-4xl text-balance text-center`}>
+            {`${roomCountWord()} ways to experience the clubhouse.`}
+          </h2>
         </div>
       </section>
 
@@ -40,83 +55,68 @@ export default function ClubhouseDetails() {
           nasa loob ng ClubhouseRooms. */}
       <ClubhouseRooms />
 
-      <section className={EDITORIAL_SECTION_ALT}>
-        <Shell>
-          {/* Sadyang hindi EditorialHeading: gusto ng parehong sans (Manrope)
-              na mukha ng mga pamagat ng bahagi sa ibaba (Practice & play,
-              Lounge, Rooftop & bar), hindi ang Cormorant SC serif na ipinapataw
-              ng `main h2` sa globals.css — kaya inline ang font-family (nananalo
-              ito sa unlayered na element rule). Mas malaki rin ang sukat. */}
-                    <EditorialHeading
-            size="lg"
-            kicker="The experience"
-            title="How a day here runs."
-    
-          />
-        </Shell>
+      <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-16 sm:py-20 lg:py-28">
+        <div className={WIDE}>
+          <p data-reveal="up" className={`${EYEBROW} text-center`}>
+            The experience
+          </p>
+          <h2 data-reveal="up" className={`${SECTION_TITLE} text-center`}>
+            How a day here runs.
+          </h2>
 
-        {/* Editorial alternating rows — salitan ang panig ng larawan sa bawat
-            hilera. (Inalis ang dating malaking numero sa likod ng teksto.) */}
-        <div className="mx-auto mt-12 w-full max-w-7xl space-y-16 px-6 sm:mt-16 sm:px-10 lg:mt-20 lg:space-y-28 lg:px-12">
-          {CLUBHOUSE_DAY.map((part, index) => {
-            const imageOnRight = index % 2 === 1;
-            return (
-              <div
-                key={part.time}
-                className={`${imageOnRight ? "lg:grid-cols-[1fr_2.4fr]" : "lg:grid-cols-[2.4fr_1fr]"} grid items-center gap-10 lg:gap-14`}
-              >
-                {/* One-time timed reveal. Pagkatapos pumasok, hindi na ito
-                    nire-reset o binabaligtad kapag nag-scroll pataas. */}
+          {/* Editorial alternating rows — salitan ang panig ng larawan sa bawat
+              hilera. ~60/40 ang hati: dati ay 2.4:1, kaya naiipit ang teksto
+              sa makitid na hanay. */}
+          <div className="mt-12 space-y-16 sm:mt-16 lg:mt-20 lg:space-y-24">
+            {CLUBHOUSE_DAY.map((part, index) => {
+              const imageOnRight = index % 2 === 1;
+              return (
                 <div
-                  data-reveal={imageOnRight ? "right" : "left"}
-                  className={`${imageOnRight ? "lg:order-2" : ""} relative aspect-[3/2] overflow-hidden rounded-2xl bg-[#03321b] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
+                  key={part.time}
+                  className={`${imageOnRight ? "lg:grid-cols-[1fr_1.5fr]" : "lg:grid-cols-[1.5fr_1fr]"} grid items-center gap-8 lg:gap-16`}
                 >
-                  <Image
-                    src={part.image}
-                    alt={`${part.title} at the CamSur Uptown clubhouse`}
-                    fill
-                    sizes="(max-width: 1023px) calc(100vw - 3rem), 760px"
-                    className="object-cover"
-                  />
-                </div>
+                  {/* One-time timed reveal. Pagkatapos pumasok, hindi na ito
+                      nire-reset o binabaligtad kapag nag-scroll pataas. */}
+                  <div
+                    data-reveal={imageOnRight ? "right" : "left"}
+                    className={`${imageOnRight ? "lg:order-2" : ""} relative aspect-[3/2] overflow-hidden rounded-2xl bg-[#03321b] shadow-[0_22px_54px_rgba(20,50,35,0.16)]`}
+                  >
+                    <Image
+                      src={part.image}
+                      alt={`${part.title} at the CamSur Uptown clubhouse`}
+                      fill
+                      sizes="(max-width: 1023px) calc(100vw - 2rem), 920px"
+                      className="object-cover"
+                    />
+                  </div>
 
-                <div data-reveal="up" className={`${imageOnRight ? "lg:order-1" : ""} relative`}>
-                  <p className="relative font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
-                    {part.time}
-                  </p>
-                  <h3 className="relative mt-3 font-display text-[clamp(1.85rem,2.8vw,2.75rem)] font-medium leading-[1.03] tracking-[-0.04em] text-[#03321b]">
-                    {part.title}
-                  </h3>
-                  <p className="relative mt-4 text-[17px] leading-8 text-[#3f4c45]">{part.detail}</p>
+                  <div data-reveal="up" className={imageOnRight ? "lg:order-1" : ""}>
+                    <p className={EYEBROW}>{part.time}</p>
+                    <h3 className="mt-3 font-display text-[clamp(2.25rem,3.4vw,3.25rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]">
+                      {part.title}
+                    </h3>
+                    <p className="mt-5 max-w-md text-[12px] font-normal leading-6 text-[#3f4c45]">{part.detail}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* Bawal ang dobleng padding: kasunod ito ng cream na "experience"
-          section, kaya makitid na top padding lang para hindi lumalawak ang
-          puwang sa pagitan ng cards at ng pangwakas na CTA. */}
-      <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-14 pt-2 sm:pb-16 sm:pt-4">
-        <Shell>
-          <EditorialHeading
-            kicker=""
+      {/* Pangwakas na CTA: isang berdeng panel sa loob ng cream, hindi buong
+          banda — madilim-berde rin ang Footer na kasunod nito, kaya kung
+          buong lapad ay magdidikit ang dalawa at mawawala ang hangganan. */}
+      <section className="relative isolate scroll-mt-24 bg-[#f3ede1] pb-16 sm:pb-20 lg:pb-24">
+        <div className={WIDE}>
+          <CtaPanel
+            reveal
+            eyebrow="Visit the club"
             title="Come and see it."
-            intro="Plan your visit and the team will send opening hours, dress code, and visitor access before your day."
+            text="Plan your visit and the team will send opening hours, dress code, and visitor access before your day."
+            primary={{ label: "Plan your visit", href: "/plan-your-visit" }}
           />
-
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
-            <Link
-              href="/plan-your-visit"
-              data-reveal="up"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
-            >
-              Plan your visit
-            </Link>
-          </div>
-
-        </Shell>
+        </div>
       </section>
 
       <BackToHeroButton />

@@ -54,9 +54,9 @@ export default function ShopExperience() {
           <a
             href="#shop-story"
             aria-label="Explore the pro shop"
-            className="mx-auto mt-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/45 text-white transition hover:border-[#efd98f] hover:bg-[#efd98f] hover:text-[#0b281b]"
+            className="mx-auto mt-10 inline-flex min-h-11 items-center justify-center rounded-full border border-white/45 px-5 py-2 font-navigation text-[11px] font-semibold uppercase tracking-[0.1em] text-white transition hover:border-[#efd98f] hover:bg-[#efd98f] hover:text-[#0b281b]"
           >
-            <span aria-hidden="true">↓</span>
+            Explore the pro shop
           </a>
         </div>
       </section>

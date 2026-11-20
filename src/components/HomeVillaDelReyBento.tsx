@@ -57,28 +57,28 @@ export default function HomeVillaDelReyBento() {
   const { t } = useTranslation();
 
   return (
-    <section id="home-stay" className="relative isolate bg-[#f3ede1] pb-16 pt-10 text-[#03321b] sm:pb-20 lg:pb-24 lg:pt-14">
+    <section id="home-stay" className="relative isolate bg-[#f3ede1] pb-8 pt-10 text-[#03321b] sm:pb-10 lg:pb-12 lg:pt-14">
       <div className="mx-auto max-w-[1600px] px-6 lg:px-8">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-2xl">
-            <p data-reveal="up" className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-xs">
+        <div className="flex flex-col items-center gap-6 text-center">
+          <div className="max-w-5xl">
+            <p data-reveal="up" className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm">
               {t("home.stay.eyebrow")}
             </p>
             <h2
               data-reveal="up"
               style={{ fontFamily: "var(--font-cormorant-garamond), Georgia, serif" }}
-              className="mt-3 text-[clamp(2.25rem,4vw,4rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]"
+              className="mt-3 text-[clamp(2.5rem,4.6vw,4.625rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e] text-balance sm:whitespace-nowrap"
             >
               {t("home.stay.title")}
             </h2>
-            <p data-reveal="up" className="mt-4 max-w-xl text-[17px] leading-8 text-[#3f4c45]">
+            <p data-reveal="up" className="mx-auto mt-4 max-w-xl text-[17px] font-normal leading-8 text-[#3f4c45]">
               {t("home.stay.intro")}
             </p>
           </div>
           <Link
             href={VILLA_HREF}
             data-reveal="up"
-            className="inline-flex h-12 shrink-0 items-center justify-center self-start rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:self-auto xl:text-[11px]"
+            className="inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
           >
             {t("home.stay.cta")}
           </Link>
@@ -86,9 +86,7 @@ export default function HomeVillaDelReyBento() {
 
       </div>
 
-      {/* Iisang lapad (1600px) ang heading at ang grid, para magkahanay ang
-          kaliwang gilid ng title at ng larawan, at ang pindutan sa kanang gilid.
-          Magkaiba sila dati (1280 at 1600) at lumulutang ang title. */}
+      {/* The centered introduction and photo grid share the page frame. */}
       <div className="mx-auto max-w-[1600px] px-6 lg:px-8">
         <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:mt-12 lg:h-[min(86svh,860px)] lg:min-h-[600px] lg:grid-cols-[1.25fr_0.75fr_0.75fr] lg:grid-rows-2 lg:gap-5">
           {STAYS.map((stay, index) => {
@@ -102,7 +100,7 @@ export default function HomeVillaDelReyBento() {
               >
                 <Link
                   href={villaHouseHref(stay.slug)}
-                  className="group relative block h-full overflow-hidden rounded-[1.4rem] bg-[#03321b] shadow-[0_24px_60px_-36px_rgba(3,50,27,0.55)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2e5126]"
+                  className="group relative block h-full overflow-hidden bg-[#03321b] shadow-[0_24px_60px_-36px_rgba(3,50,27,0.55)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2e5126]"
                 >
                   <Image
                     src={stay.exterior}

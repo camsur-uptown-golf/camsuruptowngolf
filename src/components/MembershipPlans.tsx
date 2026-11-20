@@ -1,21 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import PaymentMethodPicker, { methodsNote } from "@/components/PaymentMethodPicker";
 import Tr from "@/components/Tr";
-import { MEMBERSHIP_PLANS, formatPeso, type PlanId } from "@/lib/membership-plans";
+import { BILLING_TERMS, MEMBERSHIP_PLANS, formatPeso, termPrice, type BillingTerm, type PlanId } from "@/lib/membership-plans";
+import type { PaymentMethod } from "@/lib/payments";
 
 /**
  * Ang tatlong membership plan bilang mga card (Birdie, Eagle, Albatross).
  *
  * Dalawang gamit:
- *   - Naka-login (`currentPlan` ay string o null): may "Choose" sa bawat card;
- *     ang kasalukuyang plan ay may tatak at may "Cancel plan".
+ *   - Naka-login: pipili ng ilang buwan (1, 3, 12) at magbabayad sa PayMongo
+ *     (GCash, Maya, GrabPay, card) o PayPal (/api/members/checkout). Ang aktibong plan
+ *     ay may tatak at "Renew"; idinudugtong ang renewal pagkatapos ng
+ *     kasalukuyang `planUntil`.
  *   - Hindi naka-login (`signedIn={false}`): ang pindutan ay papunta sa
  *     Sign up card sa itaas ng pahina.
- *
- * Sa /api/members/plan ito nagpo-POST; `refresh()` para basahin ulit ng server
- * ang plan at ipakita ito sa account card.
  */
 
 function CheckIcon() {
@@ -26,22 +26,38 @@ function CheckIcon() {
   );
 }
 
-export default function MembershipPlans({ signedIn, currentPlan = null }: { signedIn: boolean; currentPlan?: string | null }) {
-  const router = useRouter();
-  const [busy, setBusy] = useState<PlanId | "cancel" | null>(null);
+export default function MembershipPlans({
+  signedIn,
+  currentPlan = null,
+  planActive = false,
+  methods = [],
+}: {
+  signedIn: boolean;
+  /** Mga paraan ng bayad na may susi; pipili ang member kapag dalawa. */
+  methods?: PaymentMethod[];
+  currentPlan?: string | null;
+  /** Bayad pa ang `currentPlan` (hindi pa lumilipas ang `plan_until`). */
+  planActive?: boolean;
+}) {
+  const [months, setMonths] = useState<BillingTerm>(1);
+  const [busy, setBusy] = useState<PlanId | null>(null);
   const [failed, setFailed] = useState(false);
+  const [method, setMethod] = useState<PaymentMethod>(methods[0] ?? "paymongo");
 
-  async function choose(plan: PlanId | null) {
-    setBusy(plan ?? "cancel");
+  async function pay(plan: PlanId) {
+    setBusy(plan);
     setFailed(false);
     try {
-      const response = await fetch("/api/members/plan", {
+      const response = await fetch("/api/members/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
+        body: JSON.stringify({ plan, months, method }),
       });
-      if (!response.ok) throw new Error(String(response.status));
-      router.refresh();
+      const result = (await response.json().catch(() => ({}))) as { ok?: boolean; url?: string };
+      if (!response.ok || !result.ok || !result.url) throw new Error(String(response.status));
+      /* Papunta sa PayMongo/PayPal (o, sa test mode, pabalik sa /members na bayad na). */
+      window.location.assign(result.url);
+      return;
     } catch {
       setFailed(true);
     }
@@ -50,9 +66,38 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
 
   return (
     <div>
+      {signedIn ? (
+        <div className="mb-10 flex flex-col items-center gap-3">
+          <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">Pay for</p>
+          <div role="radiogroup" aria-label="How many months" className="inline-flex rounded-full border border-[#03321b]/15 bg-white p-1">
+            {BILLING_TERMS.map((term) => (
+              <button
+                key={term}
+                type="button"
+                role="radio"
+                aria-checked={months === term}
+                onClick={() => setMonths(term)}
+                className={`h-10 rounded-full px-5 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] transition ${
+                  months === term ? "bg-[#03321b] text-[#efd99b]" : "text-[#2e5126] hover:bg-[#03321b]/5"
+                }`}
+              >
+                {term === 1 ? "1 month" : `${term} months`}
+              </button>
+            ))}
+          </div>
+          {methods.length > 1 ? (
+            <>
+              <p className="mt-3 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">Pay with</p>
+              <div className="w-full max-w-md">
+                <PaymentMethodPicker methods={methods} value={method} onChange={setMethod} />
+              </div>
+            </>
+          ) : null}
+        </div>
+      ) : null}
       <div className="grid gap-6 lg:grid-cols-3 lg:items-stretch">
         {MEMBERSHIP_PLANS.map((plan) => {
-          const isCurrent = currentPlan === plan.id;
+          const isCurrent = currentPlan === plan.id && planActive;
           const dark = plan.featured;
           return (
             <article
@@ -80,6 +125,11 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
                 </span>
                 <span className={`text-sm ${dark ? "text-white/60" : "text-[#667269]"}`}>/ month</span>
               </p>
+              {signedIn && months > 1 ? (
+                <p className={`mt-1 text-sm tabular-nums ${dark ? "text-white/70" : "text-[#5d685f]"}`}>
+                  {formatPeso(termPrice(plan, months))} for {months} months
+                </p>
+              ) : null}
 
               <p className={`mt-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] ${dark ? "text-white/55" : "text-[#5f6a62]"}`}>
                 Every month you get
@@ -105,46 +155,33 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
                   >
                     Sign up to join
                   </a>
-                ) : isCurrent ? (
-                  <div className="space-y-3 text-center">
-                    <span
-                      className={`inline-flex h-12 w-full items-center justify-center rounded-full border font-navigation text-[11px] font-bold uppercase tracking-[0.14em] ${
-                        dark ? "border-[#e2c77a]/50 text-[#e2c77a]" : "border-[#2e5126]/30 text-[#2e5126]"
-                      }`}
-                    >
-                      Your plan
-                    </span>
-                    <button
-                      type="button"
-                      disabled={busy !== null}
-                      onClick={() => choose(null)}
-                      className={`text-xs underline underline-offset-4 disabled:opacity-60 ${dark ? "text-white/60 hover:text-white" : "text-[#667269] hover:text-[#03321b]"}`}
-                    >
-                      {busy === "cancel" ? "Please wait…" : "Cancel plan"}
-                    </button>
-                  </div>
                 ) : (
                   <button
                     type="button"
                     disabled={busy !== null}
-                    onClick={() => choose(plan.id)}
+                    onClick={() => pay(plan.id)}
                     className={`inline-flex h-12 w-full items-center justify-center rounded-full px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] transition disabled:cursor-not-allowed disabled:opacity-60 ${
                       dark ? "bg-[#e2c77a] text-[#03321b] hover:bg-[#efd99b]" : "bg-[#2e5126] text-[#efd99b] hover:bg-[#03321b]"
                     }`}
                   >
                     {busy === plan.id ? (
                       "Please wait…"
-                    ) : currentPlan ? (
+                    ) : isCurrent ? (
                       <span>
-                        <Tr t="Switch to {0}" v={[<span key="n" translate="no">{plan.name}</span>]} />
+                        <Tr t="Renew · {0}" v={[<span key="p" translate="no">{formatPeso(termPrice(plan, months))}</span>]} />
                       </span>
                     ) : (
                       <span>
-                        <Tr t="Choose {0}" v={[<span key="n" translate="no">{plan.name}</span>]} />
+                        <Tr t="Pay {0}" v={[<span key="p" translate="no">{formatPeso(termPrice(plan, months))}</span>]} />
                       </span>
                     )}
                   </button>
                 )}
+                {isCurrent ? (
+                  <p className={`mt-3 text-center font-navigation text-[11px] font-bold uppercase tracking-[0.14em] ${dark ? "text-[#e2c77a]" : "text-[#2e5126]"}`}>
+                    Your plan
+                  </p>
+                ) : null}
               </div>
             </article>
           );
@@ -157,8 +194,8 @@ export default function MembershipPlans({ signedIn, currentPlan = null }: { sign
         </p>
       ) : null}
       <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-6 text-[#5f6a62]">
-        Prices are in Philippine pesos, billed monthly. Choosing a plan sends your request to the club — the team will
-        contact you to confirm and arrange payment. No charge is made online.
+        Prices are in Philippine pesos. {methodsNote(methods.length ? methods : ["paymongo"])} Your membership
+        is active right after payment; renewing the same plan adds the months after your current end date.
       </p>
     </div>
   );

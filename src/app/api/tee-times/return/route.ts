@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { siteOrigin } from "@/lib/oauth";
-import { checkoutPaid } from "@/lib/paymongo";
+import { sessionPaid } from "@/lib/payments";
 import { confirmReservation, getReservation } from "@/lib/reservations-db";
 
 export const runtime = "nodejs";
 
 /**
- * Bumabalik dito ang guest mula sa PayMongo pagkatapos magbayad. Hindi
- * pinagkakatiwalaan ang pagbalik mismo: tinatanong ang PayMongo kung bayad na
- * talaga ang checkout session, saka lang kinukumpirma.
+ * Bumabalik dito ang guest mula sa PayMongo o PayPal pagkatapos magbayad. Hindi
+ * pinagkakatiwalaan ang pagbalik mismo: tinatanong ang provider kung bayad na
+ * talaga (sa PayPal, dito rin kinukuha ang bayad), saka lang kinukumpirma.
  */
 export async function GET(request: Request) {
   const code = new URL(request.url).searchParams.get("code") ?? "";
@@ -17,7 +17,7 @@ export async function GET(request: Request) {
   if (!reservation) return NextResponse.redirect(`${origin}/golf/book`, { status: 303 });
 
   if (reservation.status !== "confirmed" && reservation.paymentSessionId) {
-    const paymentRef = await checkoutPaid(reservation.paymentSessionId).catch(() => null);
+    const paymentRef = await sessionPaid(reservation.paymentSessionId).catch(() => null);
     if (paymentRef) await confirmReservation(reservation.id, paymentRef);
   }
   return NextResponse.redirect(`${origin}/golf/book/${reservation.code}`, { status: 303 });

@@ -80,7 +80,7 @@ export default function HoleOnePlan() {
             ))}
           </svg>
           <span className="absolute bottom-3 left-3 rounded-full bg-[#03321b]/90 px-3 py-1.5 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-sm sm:bottom-5 sm:left-5 sm:text-[11px]">
-            Hole 1 · Tee colours ↗ · Green ←
+            Hole 1 · Tee colours  · Green
           </span>
         </div>
         <figcaption className="border-t border-[#03321b]/12 bg-[#fffefa] px-5 py-4 text-xs leading-5 text-[#536058] sm:px-7 sm:text-sm">

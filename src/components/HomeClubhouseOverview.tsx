@@ -16,14 +16,6 @@ const AREA_FACT = CLUBHOUSE_FACTS.find((fact) => fact.label === "Square metres")
 /** Stagger helper — reads back out in CSS as `transition-delay`. */
 const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
-function ArrowIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 export default function HomeClubhouseOverview() {
   return (
     <section id="home-clubhouse" className="overflow-hidden bg-[#f3ede1] py-16 text-[#03321b] sm:py-20 lg:py-24">
@@ -80,9 +72,6 @@ export default function HomeClubhouseOverview() {
                 >
                   Designed around arrival, play, and time together.
                 </span>
-              </span>
-              <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/35 transition-colors duration-300 group-hover:border-[#e2c77a] group-hover:bg-[#e2c77a] group-hover:text-[#03321b] sm:flex">
-                <ArrowIcon className="h-4 w-4" />
               </span>
             </span>
           </Link>
@@ -164,9 +153,6 @@ export default function HomeClubhouseOverview() {
                   >
                     {space.name}
                   </span>
-                </span>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 text-[#e2c77a] transition-all duration-300 group-hover:border-[#e2c77a] group-hover:bg-[#e2c77a] group-hover:text-[#03321b]" aria-hidden="true">
-                  <ArrowIcon className="h-3.5 w-3.5" />
                 </span>
               </span>
             </Link>

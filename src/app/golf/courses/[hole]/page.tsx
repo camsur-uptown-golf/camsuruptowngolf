@@ -8,8 +8,8 @@ import Footer from "@/components/Footer";
 import QuickQuestion from "@/components/QuickQuestion";
 import Scorecard from "@/components/Scorecard";
 import ScrollMotion from "@/components/ScrollMotion";
-import HeroWords from "@/components/HeroWords";
-import HoleProgressEyebrow from "@/components/HoleProgressEyebrow";
+import HoleFlyover from "@/components/HoleFlyover";
+import HoleNavVideo from "@/components/HoleNavVideo";
 import { Container, SectionHeading, delay } from "@/components/SectionKit";
 import { HOLE_PROFILES } from "@/lib/course-holes";
 import { COURSE_PAGES } from "@/lib/site-content";
@@ -72,113 +72,83 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
       <main>
         {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
         <ScrollMotion replay />
-        <section id="top" className="relative isolate min-h-[660px] overflow-hidden bg-[#071d13] text-white">
+        {/* 620px (dating 660px): wala nang title sa hero, larawan na lang —
+            kita ang lapag, at kaunting langit sa itaas. */}
+        <section id="top" className="relative isolate min-h-[460px] overflow-hidden bg-[#071d13] text-white sm:min-h-[620px]">
           <Image
             src={concept.image}
             alt=""
             fill
+            quality={90}
             priority
             sizes="100vw"
-            className="-z-20 object-cover object-center"
+            /* Nakatutok sa pinakaibaba ng larawan: lapag ang nakikita —
+               fairway, green at tubig — halos walang langit. */
+            className="-z-20 object-cover object-bottom"
           />
-          {/* Nakagitna na ang teksto, kaya hindi na bagay ang dating gradient
-              na mabigat sa kaliwa — 0.88 doon, kaya halos hindi na makita ang
-              aerial ng butas. Ngayon: madilim sa itaas (para mabasa ang nav),
-              maliwanag sa gitna para makita ang larawan, may malambot na
-              pool sa likod ng numero, at madilim sa ibaba papunta sa divider. */}
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_58%_46%_at_50%_46%,rgba(3,17,11,0.58)_0%,transparent_72%),linear-gradient(180deg,rgba(3,17,11,0.78)_0%,rgba(3,17,11,0.20)_32%,rgba(3,17,11,0.30)_62%,rgba(3,17,11,0.88)_100%)]" />
+          {/* Walang madilim na overlay (gradient/shadow) sa ibabaw ng larawan:
+              buo at maliwanag ang aerial ng butas sa lahat ng 18 pahina. */}
           {/* Dapat eksaktong katumbas ng #aerial-study sa ibaba — kahit
               bahagyang pagkakaiba ay lumilitaw bilang tahi sa dugtungan. */}
-          <FairwayDivider fill="#f3ede1" />
-          <div className="mx-auto flex min-h-[660px] max-w-7xl items-center justify-center px-6 py-24 lg:px-8">
-            <div className="w-full text-center">
-              {/* Word-by-word na pagpasok sa pag-load (HeroWords). Inalis ang
-                  `data-reveal="up"`: iisa na lang ang entrance, ang word-by-word.
-                  Nananatili ang `data-reveal="line"` na guhit sa ibaba. */}
-              <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white">
-                <HeroWords text={`Hole No. ${index + 1}`} />
-              </h1>
-              <span
-                data-reveal="line"
-                style={delay(140)}
-                className="mx-auto mt-5 block h-px w-20 bg-[#efd99b]/60"
-                aria-hidden="true"
-              />
-            </div>
-          </div>
+          <FairwayDivider fill="#f3ede1" low />
+          {/* Walang title sa hero — larawan lang. Ang "HOLE / No. N / pangalan"
+              sa ibaba ang h1 ng pahina. Nananatili ang taas ng hero. */}
+          <div className="min-h-[460px] sm:min-h-[620px]" aria-hidden="true" />
         </section>
 
-        <div className="bg-[#f3ede1]">
-          <Breadcrumbs />
-        </div>
-
-        <section id="aerial-study" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-14 pt-0 text-[#03321b] sm:pb-16 sm:pt-0">
-          <Container>
-            <div className="relative mx-auto mb-5 h-[150px] w-28 overflow-hidden sm:mb-7 sm:h-[185px] sm:w-36" aria-hidden="true">
-              <Image
-                src="/branding/camsur-uptown-golf-shield.png"
-                alt=""
-                width={770}
-                height={1076}
-                sizes="(max-width: 639px) 112px, 144px"
-                className="mx-auto h-full w-auto"
-              />
+        {/* Iisang row sa desktop: nasa kaliwa ang pangalan, paliwanag at stats
+            ng butas; nasa kanan ang flyover. Malapad (`max-w-[1920px]`, makitid
+            na gutter) — kapareho ng /golf/book — kaya maliit lang ang gap sa
+            kaliwa't kanan. Sa cellphone, magkasunod: teksto muna, saka ang video. */}
+        <section id="aerial-study" className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] text-[#03321b]">
+          {/* Nasa iisang container ang breadcrumb at ang row, kaya magkapantay
+              sila sa kaliwa at walang hiwalay na banda ng puwang sa pagitan. */}
+          <div className="mx-auto w-full max-w-[1920px] px-4 pb-14 pt-6 sm:px-6 sm:pb-16 sm:pt-8 lg:px-8">
+            {/* Sa parehong 1280px na column ng video at scorecard, kaya
+                magkapantay ang kaliwang gilid nila. */}
+            <div className="mx-auto w-full max-w-7xl">
+              <Breadcrumbs inline />
             </div>
-            <div className="mx-auto max-w-4xl text-center">
-              {/* Pareho ng SectionHeading ang sukat at tracking — 0.24em at
-                  sm: ang dati, kaya bahagyang iba sa ibang eyebrow ng pahina. */}
-              <HoleProgressEyebrow current={concept.holes[0]} total={COURSE_PAGES.length} />
-              {/* Ang pangalan ng butas, hindi ang dating iisang editorial na
-                  headline na pareho sa lahat ng 18 pahina. */}
-              {/* Tatlong antas ang dapat: 72px ang "No. 1" sa hero, 36px ang
-                  mga section heading sa ibaba (galing sa SectionHeading). Sa
-                  dating clamp ay umaabot ito ng 60px — halos kapantay ng h1 at
-                  doble ng ibang h2, kaya walang malinaw na pagkakasunod. */}
-              <h2 className="mx-auto mt-4 max-w-4xl text-balance text-[clamp(1.85rem,3.2vw,3rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#03321b]">
-                {scorecard.name}
-              </h2>
-              <p className="mx-auto mt-6 max-w-3xl text-sm font-medium leading-7 text-[#536058] sm:text-base sm:leading-8 lg:text-lg lg:leading-9">
-                {concept.description}
-              </p>
-            </div>
-
-          </Container>
-
-          {/* Nasa labas ng Container para natural na kasinglapad ng section.
-              Dati itong `left-1/2 w-screen -translate-x-1/2`, pero kasama ng
-              100vw ang gutter ng scrollbar: 1440px ito sa 1425px na espasyo,
-              kaya may 8px na naputol sa bawat gilid (natatago lang ng
-              overflow-hidden ng section). Walang vw dito, walang pagkaputol. */}
-          {/* Walang sariling background: minamana nito ang cream ng section,
-              kaya tiyak na magkatugma. Ang border-y na lang ang naghihiwalay. */}
-          <div className="mt-14 border-y border-[#03321b]/10 px-6 py-6 text-[#03321b] sm:mt-16 sm:px-10 sm:py-8">
-            <dl className="mx-auto grid max-w-6xl grid-cols-3 text-center">
-              {[
-                { label: "Yards", value: scorecard.yards.toLocaleString() },
-                { label: "Par", value: String(scorecard.par) },
-                { label: "Opening year", value: "" },
-              ].map(({ label, value }, statIndex) => (
-                <div
-                  key={label}
-                  data-reveal="up"
-                  style={delay(statIndex * 90)}
-                  className={`flex min-h-16 flex-col items-center justify-start px-3 sm:min-h-20 sm:px-8 ${statIndex ? "border-l border-[#03321b]/15" : ""}`}
-                >
-                  <dt className="font-navigation text-[11px] font-semibold uppercase tracking-[0.13em] text-[#4f5d55] sm:text-xs">
-                    {label}
-                  </dt>
-                  {value ? (
-                    <dd className="mt-3 font-display text-3xl font-medium leading-none tracking-[-0.04em] text-[#03321b] sm:text-4xl">
-                      {value}
-                    </dd>
-                  ) : (
-                    <dd className="mt-5 font-navigation text-[11px] font-semibold uppercase tracking-[0.12em] text-[#9aa39d]">
-                      To be confirmed
-                    </dd>
-                  )}
+            {/* Kaparehong anyo ng info sa ilalim ng carousel ng homepage:
+                kaliwa (nakahanay sa kanan) ang eyebrow at pangalan, guhit sa
+                eksaktong gitna, kanan ang paliwanag. Sa cellphone, nakagitna
+                at magkasunod. */}
+            <div className="mx-auto mt-6 grid max-w-7xl gap-5 text-center lg:mt-8 lg:grid-cols-2 lg:gap-0 lg:text-left">
+              <div className="lg:flex lg:flex-col lg:items-end lg:justify-center lg:border-r lg:border-[#03321b]/35 lg:pr-20 lg:text-right">
+                {/* Visual hierarchy, tatlong antas:
+                    1. "No. N" — pinakamalaki, pinakamadilim: ang unang nakikita.
+                    2. Pangalan ng butas — katamtaman, mas malambot na kulay.
+                    3. "HOLE" — maliit na gintong label na may maluwag na tracking;
+                       nagpapakilala lang, hindi nakikipagkumpitensya. */}
+                <div className="flex flex-col items-center text-center">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.36em] text-[#7d6224] [margin-right:-0.36em] lg:text-[12px]">
+                    Hole
+                  </p>
+                  <h1 className="mt-2 font-display font-medium">
+                    <span className="block text-[clamp(2.75rem,3.8vw,4rem)] leading-[0.85] tracking-[-0.05em] text-[#03321b] lining-nums">
+                      No. {index + 1}
+                    </span>
+                    <span className="mt-3 block whitespace-nowrap text-[clamp(19px,1.35vw,23px)] leading-tight tracking-[-0.01em] text-[#536058]">
+                      {scorecard.name}
+                    </span>
+                  </h1>
                 </div>
-              ))}
-            </dl>
+              </div>
+              <div className="lg:flex lg:items-center lg:pl-20">
+                {/* 368px: dumudulo ang unang linya sa "the club", at hanggang apat na
+                    linya lang ang bawat paliwanag (16px). Kaparehong laki ng
+                    header ng scorecard sa ibaba. */}
+                <p className="mx-auto max-w-[23rem] text-sm font-normal leading-7 text-[#536058] sm:text-base lg:mx-0">
+                  {concept.description}
+                </p>
+              </div>
+            </div>
+
+            {/* Flyover sa ilalim ng pangalan at paliwanag — malapad, may gap sa
+                kaliwa't kanan (max-w-7xl). */}
+            <div className="mx-auto mt-10 w-full max-w-7xl lg:mt-12">
+              <HoleFlyover hole={concept.holes[0]} name={scorecard.name} flyover={concept.flyover} />
+            </div>
           </div>
         </section>
 
@@ -186,11 +156,8 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             ibaba. Dating `#edf0e8` — banayad na sage iyon, pero sapat ang
             pagkakaiba para magmukhang ibang banda sa gitna ng pahina.
 
-            Walang `border-t` dito, hindi tulad ng mga section sa ibaba: may
-            sariling `border-y` na ang stat bar sa itaas, kaya dalawang guhit
-            ang nabubuo na may 56px na walang laman sa pagitan. Ang ibabang
-            guhit ng stat bar at ang mga naka-border na table ang naghihiwalay
-            nito. Kapag inalis ang stat bar, ibalik ang `border-t` dito. */}
+            Walang `border-t`: tuloy-tuloy ang cream mula sa pangalan at flyover
+            sa itaas papunta sa scorecard — walang guhit sa pagitan. */}
         <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-14 sm:py-16">
           <Container>
             {/* Dating inuulit lang nito ang parehong description na nasa
@@ -205,18 +172,20 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             />
           </Container>
 
-          {/* Mas malapad kaysa sa Container: hindi magkasya ang plano at ang
-              18-hole na card nang magkatabi sa karaniwang lapad. Sa max-w-6xl
-              ay 566px lang ang natitira sa talahanayan — kulang para sa back
-              nine na may 12 hanay, kaya nagka-scrollbar ang dalawang card. */}
-          <div data-reveal="up" className="mx-auto mt-10 w-full max-w-7xl px-6 sm:px-10 lg:px-12">
-            <Scorecard
-              currentHole={concept.holes[0]}
-              photoSrc={concept.routingImage}
-              photoOrientation={concept.routingOrientation}
-              photoWidth={concept.routingWidth}
-              photoHeight={concept.routingHeight}
-            />
+          {/* Kapantay ng flyover sa itaas: parehong gutter (px-4 / lg:px-8) at
+              parehong 1280px na column (max-w-7xl) — kaya magkahanay ang
+              kaliwang gilid ng plano at ang kanang gilid ng talahanayan sa
+              mga gilid ng video. */}
+          <div data-reveal="up" className="mt-10 w-full px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto w-full max-w-7xl">
+              <Scorecard
+                currentHole={concept.holes[0]}
+                photoSrc={concept.routingImage}
+                photoOrientation={concept.routingOrientation}
+                photoWidth={concept.routingWidth}
+                photoHeight={concept.routingHeight}
+              />
+            </div>
           </div>
         </section>
 
@@ -252,32 +221,85 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           </section>
         )}
 
-        <nav aria-label="Course navigation" className="grid bg-[#f3f0e7] sm:grid-cols-2">
-          <Link href={`/golf/courses/${previous.slug}`} className="group relative min-h-72 overflow-hidden border-b border-white/15 sm:border-b-0 sm:border-r">
-            <Image src={previous.image} alt="" fill sizes="50vw" className="object-cover" />
-            <div className="absolute inset-0 bg-[#071d13]/65 transition group-hover:bg-[#071d13]/48" />
-            <div className="absolute inset-0 flex flex-col justify-end p-8 text-white sm:p-10">
-              {/* Dating `previous.title` — iisang editorial headline iyon para
-                  sa lahat, kaya magkapareho ang teksto ng dalawang card. */}
-              <p className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">← Previous hole</p>
-              <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{holeLabel(previous)}</p>
-            </div>
-          </Link>
-          <Link href={`/golf/courses/${next.slug}`} className="group relative min-h-72 overflow-hidden">
-            <Image src={next.image} alt="" fill sizes="50vw" className="object-cover" />
-            <div className="absolute inset-0 bg-[#071d13]/65 transition group-hover:bg-[#071d13]/48" />
-            <div className="absolute inset-0 flex flex-col items-end justify-end p-8 text-right text-white sm:p-10">
-              <p className="text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-[#e1c56e]">Next hole →</p>
-              <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">{holeLabel(next)}</p>
-            </div>
-          </Link>
+        {/* Nakaraan / susunod na butas — dalawang card sa parehong 1280px na
+            column ng video at scorecard (parehong gutter), may 16px na pagitan,
+            bilugang kanto (12px) gaya ng video. Flyover ng butas ang laman
+            (HoleNavVideo); madilim lang sa ibaba para mabasa ang teksto. */}
+        {/* Buong lapad ng screen, walang gap sa kaliwa't kanan; 2px na cream na
+            guhit lang sa pagitan ng dalawang card. 16:9 ang card (aspect-video),
+            kaya buo ang flyover — walang putol sa itaas o gilid. */}
+        <nav aria-label="Course navigation" className="bg-[#f3ede1] pb-14 sm:pb-16">
+          <div className="grid gap-[2px] sm:grid-cols-2">
+            <Link
+              href={`/golf/courses/${previous.slug}`}
+              className="group relative isolate block aspect-video overflow-hidden bg-[#071d13]"
+            >
+              <Image
+                src={previous.image}
+                alt=""
+                fill
+                sizes="(max-width: 639px) 100vw, 50vw"
+                className="-z-20 object-cover"
+              />
+              <HoleNavVideo src={previous.flyover.clear} poster={previous.image} />
+              {/* Madilim lang sa ibaba (sa likod ng teksto) — kita ang larawan. */}
+              <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#071d13]/85 via-[#071d13]/25 to-transparent" />
+              {/* Kapantay ng kaliwang gilid ng scorecard/plano sa itaas (parehong
+                  1280px na column at gutter). */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6 text-white sm:py-10 sm:pl-[max(1.5rem,calc((100vw-80rem)/2))] sm:pr-10 lg:pl-[max(2rem,calc((100vw-80rem)/2))]">
+                <span className="flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.36em] text-[#e1c56e] lg:text-[12px]">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 transition group-hover:-translate-x-1" fill="none" aria-hidden="true"><path d="m15 5-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  Previous hole
+                  
+                </span>
+                {/* Tatlong hanay: label → "No. N" (malaki) → pangalan (mas maliit). */}
+                <span className="mt-2 font-display text-[clamp(2.75rem,3.8vw,4rem)] font-medium leading-[0.85] tracking-[-0.05em] lining-nums">
+                  No. {previous.holes[0]}
+                </span>
+                <span className="mt-3 font-display text-[clamp(19px,1.35vw,23px)] font-medium leading-tight tracking-[-0.01em] text-white/85">
+                  {HOLE_PROFILES[previous.holes[0]].name}
+                </span>
+              </div>
+            </Link>
+            <Link
+              href={`/golf/courses/${next.slug}`}
+              className="group relative isolate block aspect-video overflow-hidden bg-[#071d13]"
+            >
+              <Image
+                src={next.image}
+                alt=""
+                fill
+                sizes="(max-width: 639px) 100vw, 50vw"
+                className="-z-20 object-cover"
+              />
+              <HoleNavVideo src={next.flyover.clear} poster={next.image} />
+              {/* Madilim lang sa ibaba (sa likod ng teksto) — kita ang larawan. */}
+              <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#071d13]/85 via-[#071d13]/25 to-transparent" />
+              {/* Kapantay ng kanang gilid ng talahanayan sa itaas. */}
+              <div className="absolute inset-0 flex flex-col items-end justify-end p-6 text-right text-white sm:py-10 sm:pl-10 sm:pr-[max(1.5rem,calc((100vw-80rem)/2))] lg:pr-[max(2rem,calc((100vw-80rem)/2))]">
+                <span className="flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.36em] text-[#e1c56e] lg:text-[12px]">
+                  
+                  Next hole
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 transition group-hover:translate-x-1" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </span>
+                {/* Tatlong hanay: label → "No. N" (malaki) → pangalan (mas maliit). */}
+                <span className="mt-2 font-display text-[clamp(2.75rem,3.8vw,4rem)] font-medium leading-[0.85] tracking-[-0.05em] lining-nums">
+                  No. {next.holes[0]}
+                </span>
+                <span className="mt-3 font-display text-[clamp(19px,1.35vw,23px)] font-medium leading-tight tracking-[-0.01em] text-white/85">
+                  {HOLE_PROFILES[next.holes[0]].name}
+                </span>
+              </div>
+            </Link>
+          </div>
         </nav>
 
-        <section id="request-call-back" className="scroll-mt-24 border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
+        <section id="request-call-back" className="scroll-mt-24 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
           <Container>
             {/* Tanong lang ang dala ng bisita rito, kaya maikling form (QuickQuestion)
                 — hindi ang buong RequestCallback ng /plan-your-visit. */}
             <SectionHeading
+              size="lg"
               eyebrow="Plan your round"
               title="Have a question about the course?"
               intro="Ask the club anything about the course and you will get an answer within 48 hours."

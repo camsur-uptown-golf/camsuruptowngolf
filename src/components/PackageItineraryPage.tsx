@@ -6,7 +6,8 @@ import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import BackToHeroButton from "@/components/BackToHeroButton";
 import HeroWords from "@/components/HeroWords";
-import { Kicker, delay } from "@/components/EditorialKit";
+import { delay } from "@/components/EditorialKit";
+import CtaPanel from "@/components/CtaPanel";
 
 export type PackageDay = {
   label: string;
@@ -34,6 +35,12 @@ type Props = {
 
 const GOLD_BUTTON =
   "inline-flex h-12 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] xl:text-[11px]";
+
+/* Kapareho ng /packages: `max-w-[1600px]` at makitid na puwang sa kaliwa at
+   kanan, kaya iisa ang lapad ng listahan ng package at ng itinerary nito. */
+const CONTAINER = "mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8";
+const EYEBROW = "font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm";
+const SECTION_TITLE = "mt-3 font-display text-[clamp(2.5rem,4.6vw,4.625rem)] font-medium leading-[0.98] tracking-[-0.045em] text-[#17251e]";
 
 function CheckIcon() {
   return (
@@ -102,21 +109,20 @@ export default function PackageItineraryPage({
         </div>
 
         {/* AT A GLANCE */}
-        <section aria-label="Package at a glance" className="bg-[#f3ede1] pt-8 sm:pt-10">
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <dl
-              data-reveal="up"
-              className="grid grid-cols-2 border-y border-[#03321b]/15 lg:grid-cols-4"
-            >
+        <section aria-label="Package at a glance" className="bg-[#f3ede1] pt-6 sm:pt-8">
+          <div className={CONTAINER}>
+            <dl data-reveal="up" className="grid grid-cols-2 overflow-hidden rounded-2xl border border-[#03321b]/12 bg-white lg:grid-cols-4">
               {facts.map(([label, value], index) => (
                 <div
                   key={label}
-                  className={`px-2 py-6 sm:px-6 ${index % 2 === 1 ? "border-l border-[#03321b]/15" : ""} ${
-                    index > 0 ? "lg:border-l lg:border-[#03321b]/15" : ""
-                  } ${index > 1 ? "border-t border-[#03321b]/15 lg:border-t-0" : ""}`}
+                  className={`p-5 sm:p-7 lg:p-8 ${index % 2 === 1 ? "border-l border-[#03321b]/12" : ""} ${
+                    index > 0 ? "lg:border-l lg:border-[#03321b]/12" : ""
+                  } ${index > 1 ? "border-t border-[#03321b]/12 lg:border-t-0" : ""}`}
                 >
-                  <dt className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#7d6224]">{label}</dt>
-                  <dd className="mt-2 text-lg font-medium leading-snug tracking-[-0.02em] text-[#03321b] sm:text-xl">{value}</dd>
+                  <dt className="font-navigation text-[11px] font-semibold uppercase tracking-[0.2em] text-[#7d6224] sm:text-xs">{label}</dt>
+                  <dd className="mt-2 font-display text-[clamp(1.5rem,2.4vw,2.25rem)] font-medium leading-[1.05] tracking-[-0.035em] text-[#17251e]">
+                    {value}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -124,21 +130,19 @@ export default function PackageItineraryPage({
         </section>
 
         {/* OVERVIEW + INCLUSIONS */}
-        <section className="bg-[#f3ede1] py-16 sm:py-20">
-          <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-16 lg:px-8">
-            <div className="lg:pt-4">
-              <Kicker>Overview</Kicker>
-              <h2
-                data-reveal="up"
-                style={delay(90)}
-                className="mt-3 max-w-xl text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[1.04] tracking-[-0.045em]"
-              >
+        <section className="bg-[#f3ede1] py-16 sm:py-20 lg:py-24">
+          <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:items-start lg:gap-16 xl:gap-24`}>
+            <div>
+              <p data-reveal="up" className={EYEBROW}>
+                Overview
+              </p>
+              <h2 data-reveal="up" style={delay(90)} className={`${SECTION_TITLE} max-w-3xl text-balance`}>
                 {overviewTitle}
               </h2>
-              <p data-reveal="up" style={delay(180)} className="mt-6 max-w-xl text-base leading-8 text-[#46554c]">
+              <p data-reveal="up" style={delay(180)} className="mt-7 max-w-2xl text-[17px] leading-8 text-[#3f4c45]">
                 {description}
               </p>
-              <p data-reveal="up" style={delay(240)} className="mt-4 max-w-xl text-sm leading-7 text-[#5d685f]">
+              <p data-reveal="up" style={delay(240)} className="mt-4 max-w-2xl text-[15px] leading-7 text-[#5d685f]">
                 Every itinerary can be adjusted. Tee times, meals, room types and transfers are arranged around your dates
                 and your party.
               </p>
@@ -147,14 +151,14 @@ export default function PackageItineraryPage({
             <aside
               data-reveal="up"
               style={delay(120)}
-              className="rounded-[28px] bg-[#03321b] p-8 text-white shadow-[0_28px_60px_rgba(8,27,18,0.18)] sm:p-10"
+              className="rounded-3xl bg-[#03321b] p-8 text-white shadow-[0_28px_60px_rgba(8,27,18,0.18)] sm:p-10 lg:p-12"
             >
-              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">
+              <p className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#e2c77a] sm:text-sm">
                 What’s included
               </p>
               <ul className="mt-6 space-y-4">
                 {inclusions.map((item) => (
-                  <li key={item} className="flex gap-3 text-[15px] leading-7 text-white/90">
+                  <li key={item} className="flex gap-3 text-base leading-7 text-white/90">
                     <CheckIcon />
                     {item}
                   </li>
@@ -173,47 +177,53 @@ export default function PackageItineraryPage({
         </section>
 
         {/* ITINERARY */}
-        <section id="itinerary" className="scroll-mt-24 bg-white py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl px-6 lg:px-8">
-            <div className="mx-auto max-w-xl text-center">
-              <Kicker>Itinerary</Kicker>
-              <h2 data-reveal="up" style={delay(90)} className="mt-3 text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl">
-                Day by day
-              </h2>
-              <p data-reveal="up" style={delay(180)} className="mt-4 text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8">
+        <section id="itinerary" className="scroll-mt-24 bg-white py-16 sm:py-20 lg:py-24">
+          <div className={CONTAINER}>
+            <div className="grid gap-5 border-b border-[#03321b]/15 pb-10 lg:grid-cols-[1.3fr_1fr] lg:items-end lg:gap-12">
+              <div>
+                <p data-reveal="up" className={EYEBROW}>
+                  Itinerary
+                </p>
+                <h2 data-reveal="up" style={delay(90)} className={SECTION_TITLE}>
+                  Day by day
+                </h2>
+              </div>
+              <p data-reveal="up" style={delay(180)} className="max-w-xl text-base leading-8 text-[#3f4c45] lg:justify-self-end lg:pb-2">
                 A suggested plan for your stay. Use it as a starting point, and we will adjust it to suit you.
               </p>
             </div>
 
-            <div className="mt-12 sm:mt-14">
+            <div>
               {days.map((day, index) => (
                 <article
                   key={day.label}
                   data-reveal="up"
                   style={delay(index * 80)}
-                  className="grid gap-6 border-t border-[#03321b]/15 py-10 md:grid-cols-[180px_minmax(0,1fr)] md:gap-12 sm:py-12"
+                  className={`${index > 0 ? "border-t border-[#03321b]/15" : ""} grid gap-6 py-10 sm:py-14 lg:grid-cols-[minmax(0,0.32fr)_minmax(0,1fr)] lg:gap-16`}
                 >
-                  <div>
-                    <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
-                      Day
-                    </p>
-                    <p className="mt-1 text-6xl font-medium leading-none tracking-[-0.05em] text-[#03321b] tabular-nums">
+                  <div className="flex items-end gap-5 lg:block">
+                    <p className="font-display text-[clamp(4.5rem,8vw,8rem)] font-medium leading-[0.8] tracking-[-0.05em] text-[#17251e] tabular-nums">
                       {String(index + 1).padStart(2, "0")}
                     </p>
-                    <p className="mt-3 font-navigation text-[11px] font-semibold uppercase tracking-[0.14em] text-[#46554c]">
+                    <p className={`${EYEBROW} pb-1 lg:mt-5 lg:pb-0`}>
+                      <span className="sr-only">Day {index + 1}: </span>
                       {day.label}
                     </p>
                   </div>
 
                   <div className="min-w-0">
-                    <h3 className="text-xl font-medium leading-snug tracking-[-0.03em] sm:text-2xl">{day.title}</h3>
-                    <p className="mt-3 max-w-2xl text-[15px] leading-7 text-[#5d685f]">{day.intro}</p>
-                    <ol className="mt-7 border-l border-[#c5a35c]/45">
+                    <h3 className="font-display text-[clamp(2rem,3.2vw,3rem)] font-medium leading-[1.02] tracking-[-0.04em] text-[#17251e]">
+                      {day.title}
+                    </h3>
+                    <p className="mt-4 max-w-3xl text-[17px] leading-8 text-[#3f4c45]">{day.intro}</p>
+                    {/* Magkakatabi ang mga sandali ng araw (umaga → tanghali →
+                        gabi) imbes na isang mahabang patayong linya: sa malapad
+                        na hanay ay sobrang haba ng bawat linya ng teksto. */}
+                    <ol className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                       {day.moments.map(([time, copy]) => (
-                        <li key={time} className="relative pb-6 pl-6 last:pb-0">
-                          <span className="absolute -left-[5px] top-[7px] h-[9px] w-[9px] rounded-full border border-[#c5a35c] bg-white" aria-hidden="true" />
-                          <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#2e5126]">{time}</p>
-                          <p className="mt-1 text-[15px] leading-7 text-[#46554c]">{copy}</p>
+                        <li key={time} className="rounded-2xl bg-[#f3ede1] p-6">
+                          <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#2e5126] sm:text-xs">{time}</p>
+                          <p className="mt-2.5 text-[15px] leading-7 text-[#46554c]">{copy}</p>
                         </li>
                       ))}
                     </ol>
@@ -225,25 +235,18 @@ export default function PackageItineraryPage({
         </section>
 
         {/* CTA */}
-        {/* Cream (kapareho ng Overview) — hindi green (kapareho ng footer sa
-            ilalim) at hindi puti (kapareho ng itinerary sa itaas). */}
-        <section className="bg-[#f3ede1] px-6 py-16 text-center text-[#03321b] sm:py-20">
-          <h2 data-reveal="up" className="mx-auto max-w-2xl text-3xl font-medium tracking-[-0.045em] sm:text-4xl">
-            Choose your dates. We’ll arrange the rest.
-          </h2>
-          <p data-reveal="up" style={delay(90)} className="mx-auto mt-4 max-w-lg text-[15px] leading-7 text-[#5d685f]">
-            Send us your preferred dates and group size, and our team will reply with availability and a tailored quote.
-          </p>
-          <div data-reveal="up" style={delay(180)} className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/plan-your-visit" className={GOLD_BUTTON}>
-              Request a quote
-            </Link>
-            <Link
-              href="/packages"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-[#03321b]/25 px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] transition hover:border-[#2e5126] hover:text-[#2e5126] xl:text-[11px]"
-            >
-              Compare packages
-            </Link>
+        {/* Berdeng panel sa loob ng cream, hindi buong banda — madilim-berde
+            rin ang Footer na kasunod. Kapareho ng dulo ng /packages. */}
+        <section className="bg-[#f3ede1] py-16 text-[#03321b] sm:py-20">
+          <div className={CONTAINER}>
+            <CtaPanel
+              reveal
+              eyebrow="Request a quote"
+              title="Choose your dates. We’ll arrange the rest."
+              text="Send us your preferred dates and group size, and our team will reply with availability and a tailored quote."
+              primary={{ label: "Request a quote", href: "/plan-your-visit" }}
+              secondary={{ label: "Compare packages", href: "/packages" }}
+            />
           </div>
         </section>
       </main>

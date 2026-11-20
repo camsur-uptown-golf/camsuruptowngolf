@@ -6,6 +6,7 @@ import { siteUrl } from "@/lib/site-url";
 import RouteScrollReset from "@/components/RouteScrollReset";
 import DomTranslator from "@/i18n/DomTranslator";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
+import { PrivacyProvider } from "@/components/PrivacyNotice";
 import "./globals.css";
 
 /* Kasama na ang `vietnamese` subset sa mga Latin face na nagbubuhat ng
@@ -71,22 +72,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             Header at ng iba pang client component ang kasalukuyang wika at ang
             `t()`. Client ito pero pumapasa lang ng {children} (server), kaya
             hindi nagiging client ang mga pahina. */}
-        <LanguageProvider>
-          {/* Naka-off muna ang PageCurtain (`components/PageCurtain.tsx`).
-              Naiwan ang file — hindi ito binura — kaya isang import at isang
-              linya lang ang kailangan para ibalik. Kapag ibinalik, dapat
-              nauuna ito sa RouteScrollReset: pareho silang nakikinig sa
-              capture phase, at kailangang makansela muna ng kurtina ang click
-              bago mag-scroll pataas ang kasalukuyang pahina. Basahin din ang
-              comment sa loob ng RouteScrollReset — may inalis doon na
-              kaakibat nito. */}
-          <RouteScrollReset />
-          <Header />
-          <HeaderUtilities />
-          {/* Isinasalin ang buong site sa piniling wika — tingnan ang i18n/DomTranslator.tsx. */}
-          <DomTranslator />
-          {children}
-        </LanguageProvider>
+        <PrivacyProvider>
+          <LanguageProvider>
+            {/* Naka-off muna ang PageCurtain (`components/PageCurtain.tsx`).
+                Naiwan ang file — hindi ito binura — kaya isang import at isang
+                linya lang ang kailangan para ibalik. Kapag ibinalik, dapat
+                nauuna ito sa RouteScrollReset: pareho silang nakikinig sa
+                capture phase, at kailangang makansela muna ng kurtina ang click
+                bago mag-scroll pataas ang kasalukuyang pahina. Basahin din ang
+                comment sa loob ng RouteScrollReset — may inalis doon na
+                kaakibat nito. */}
+            <RouteScrollReset />
+            <Header />
+            <HeaderUtilities />
+            {/* Isinasalin ang buong site sa piniling wika — tingnan ang i18n/DomTranslator.tsx. */}
+            <DomTranslator />
+            {children}
+          </LanguageProvider>
+        </PrivacyProvider>
       </body>
     </html>
   );

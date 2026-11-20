@@ -4,8 +4,10 @@ import Footer from "@/components/Footer";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import TeeTimeBooking from "@/components/TeeTimeBooking";
 import { simulatePayments } from "@/lib/booking-server";
+import { paymentMethods } from "@/lib/payments";
 import { currentMember } from "@/lib/member-session";
 import { todayInManila } from "@/lib/weather";
+import { TEE_TIME_HERO } from "@/lib/tee-time-hero";
 
 /**
  * Ang tee-time booking — ang "Reserve your round" mula sa /golf.
@@ -33,14 +35,13 @@ export default async function BookTeeTimePage({ searchParams }: { searchParams: 
   return (
     <>
       <main>
-        {/* MABABANG HERO. Booking form ang pakay ng pahinang ito, kaya dapat
-            makita ang unang hakbang nang hindi nag-i-scroll. 560px dati sa
-            desktop — nasa ilalim na ng screen ang form. */}
-        <section id="top" className="relative isolate flex min-h-[300px] items-end overflow-hidden bg-[#03321b] px-6 pb-10 pt-32 text-white sm:min-h-[400px] sm:pb-12 sm:pt-36 lg:px-8">
-          <HeroBackdrop src="/hero-images/tee-time-2027-logo.webp" alt="Golf ball printed with the CamSur Uptown Golf logo beside a driver on the morning fairway" imageClassName="object-[60%_center] sm:object-center" />
+        {/* Extend the photograph below the copy before it fades into cream.
+            Matching bottom padding keeps the title at its existing height. */}
+        <section id="top" className="relative isolate flex min-h-[400px] items-end overflow-hidden bg-[#03321b] px-6 pb-28 pt-32 text-white sm:min-h-[640px] sm:pb-52 sm:pt-36 lg:min-h-[800px] lg:px-8 lg:pb-84">
+          <HeroBackdrop {...TEE_TIME_HERO} alt="Golf ball printed with the CamSur Uptown Golf logo beside a driver on the morning fairway" />
           <div className="mx-auto max-w-3xl text-center">
-            <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">Golf</p>
-            <h1 className="mt-3 font-display text-[clamp(2.25rem,4.4vw,3.75rem)] font-medium leading-[0.95] tracking-[-0.055em]">
+            <p className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#e2c77a] sm:text-sm">Golf</p>
+            <h1 className="mt-3 font-display text-[clamp(2.75rem,5.2vw,4.75rem)] font-medium leading-[0.95] tracking-[-0.055em]">
               Reserve your round.
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/85 sm:text-base sm:leading-7">
@@ -54,11 +55,14 @@ export default async function BookTeeTimePage({ searchParams }: { searchParams: 
           <Breadcrumbs />
         </div>
 
-        <section className="bg-[#f3ede1] pb-20 pt-6 text-[#03321b]">
-          <div className="mx-auto w-full max-w-6xl px-6 lg:px-8">
+        {/* Malapad (`max-w-[1600px]`, makitid na gutter) — kapareho ng /golf at
+            /plan-your-visit — para hindi masayang ang puwang sa kaliwa at kanan. */}
+        <section className="bg-[#f3ede1] pb-16 pt-4 text-[#03321b] sm:pb-20">
+          <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
             <TeeTimeBooking
               today={todayInManila()}
               testMode={simulatePayments()}
+              methods={paymentMethods()}
               initial={initial}
               prefill={member ? { name: `${member.firstName} ${member.lastName}`.trim(), email: member.email, phone: member.mobile ?? "" } : null}
             />

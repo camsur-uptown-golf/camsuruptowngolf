@@ -49,6 +49,8 @@ const sum = (values: number[]) => values.reduce((total, value) => total + value,
 const sumKnown = (values: (number | null)[]) =>
   values.every((value): value is number => value !== null) ? sum(values) : null;
 
+/* Chevron (⌄) na umiikot pataas kapag bukas — ang orihinal na icon ng
+   "Select tees", hindi +/−. */
 function ChevronIcon({ open }: { open: boolean }) {
   return (
     <svg

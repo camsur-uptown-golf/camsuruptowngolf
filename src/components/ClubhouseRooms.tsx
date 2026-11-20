@@ -1,85 +1,70 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CLUBHOUSE_SPACES } from "@/lib/clubhouse";
-import ClubhouseRoomsRail from "./ClubhouseRoomsRail";
 
 /**
- * Ang mga kuwarto bilang sunod-sunod na full-screen panels.
+ * Ang mga kuwarto: BUONG-LAPAD NA LARAWAN, na ang eyebrow at pamagat ay nasa
+ * LOOB ng larawan, sa kaliwang-ibaba.
  *
- * ~80% NG SCREEN, HINDI BUO (`min-h-[80svh]`). Sampung buong-screen na panel
- * ang pahina dati, ~14,000px — nakakapagod i-scroll. Mas magaan din ang
- * scrim kaysa dati para lumitaw ang arkitektura; ang text-shadow ng caption
- * ang nagpapanatiling mabasa ito.
+ * Eyebrow, pamagat, at paglalarawan: walang listahan ng features o "View the
+ * space" na pindutan. Para manatiling abot ang sariling pahina ng bawat
+ * kuwarto (`/clubhouse/<id>`), ang buong larawan ang link.
  *
- * Normal document flow ang bawat panel: walang sticky stage, scroll listener,
- * progress variable, o reversible scrub. Gumagalaw pataas at pababa ang buong
- * panel kasama ng pahina, habang laging buo at mababasa ang caption.
+ * ANG PAGLALARAWAN AY NASA LOOB NG LARAWAN MULA `md` LANG. Sa cellphone ay
+ * ~220px lang ang taas ng larawan — kapag isinama roon ang tatlo-apat na
+ * linya ng paglalarawan ay matatakpan na ang buong render. Kaya roon ay nasa
+ * ILALIM ito ng larawan, sa cream.
+ *
+ * WALANG MADILIM NA PATONG SA BUONG LARAWAN. Dalawang bagay lang ang
+ * nagpapabasa sa puting teksto: ang text-shadow nito, at isang MAIKLING
+ * lilim sa ibaba (`h-2/5`, `md:h-1/2`) na naglalaho pataas — kung wala iyon ay
+ * nawawala ang teksto sa maliliwanag na render (pool, rooftop). Ang itaas na
+ * 60% ng larawan ay walang anumang patong.
+ *
+ * Nasa iisang gilid ng buong pahina ang teksto (`max-w-7xl` — kapareho ng
+ * Breadcrumbs at Footer).
+ *
+ * `aspect-[2600/1451]`: iyan ang totoong hugis ng lahat ng sampung render
+ * (1.79:1), kaya walang napuputol. Ang `max-h-[88svh]` ay para lang sa
+ * napakalapad na screen, kung saan lalampas na sa taas ng tanaw ang larawan.
  */
 
 export default function ClubhouseRooms() {
   return (
     <div id="clubhouse-rooms" className="relative w-full bg-[#f3ede1]">
-      <ClubhouseRoomsRail
-        containerId="clubhouse-rooms"
-        items={CLUBHOUSE_SPACES.map(({ id, name }) => ({ id, name }))}
-      />
       {CLUBHOUSE_SPACES.map((space) => (
-        <article
-          key={space.id}
-          id={space.id}
-          className="relative min-h-[80svh] scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
-        >
-          <div className="relative min-h-[80svh] overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]">
-            <Image src={space.image} alt={space.imageAlt} fill sizes="100vw" className="object-cover" />
+        <article key={space.id} id={space.id} className="scroll-mt-20">
+          <Link
+            href={`/clubhouse/${space.id}`}
+            className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#e2c77a]"
+          >
+            <span className="relative block aspect-[2600/1451] max-h-[88svh] w-full overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]">
+              <Image src={space.image} alt={space.imageAlt} fill sizes="100vw" className="object-cover" />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-[linear-gradient(180deg,transparent_0%,rgba(7,23,15,0.22)_45%,rgba(7,23,15,0.55)_100%)] md:h-1/2 md:bg-[linear-gradient(180deg,transparent_0%,rgba(7,23,15,0.26)_40%,rgba(7,23,15,0.62)_100%)]"
+              />
 
-            {/* Palaging nakikita ang scrim at caption. Hindi na binabago ng
-                scroll position ang opacity o transform ng alinman sa dalawa. */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(ellipse 78% 82% at 0% 100%, rgba(0,0,0,0.56) 0%, rgba(0,0,0,0.38) 38%, rgba(0,0,0,0.14) 66%, transparent 92%), linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.03) 30%, rgba(0,0,0,0.20) 60%, rgba(0,0,0,0.50) 100%)",
-              }}
-            />
-
-            <div className="absolute inset-x-0 bottom-0">
-              <div className="px-6 pb-6 pt-28 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.95),0_2px_8px_rgba(0,0,0,0.75),0_4px_20px_rgba(0,0,0,0.5)] sm:px-9 sm:pb-9 sm:pt-32 lg:px-12 lg:pb-12 lg:pt-36">
-                {/* Parehong one-time reveal module ng ibang editorial content.
-                    Minsan lang itong papasok mula kaliwa; hindi ito nire-reset
-                    o binabaligtad kapag nag-scroll pataas. */}
-                <div data-reveal="left" className="max-w-2xl">
-                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#f0d98f] xl:text-[11px]">
+              <span className="absolute inset-x-0 bottom-0 block">
+                <span
+                  data-reveal="up"
+                  className="mx-auto block w-full max-w-7xl px-6 pb-5 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_2px_14px_rgba(0,0,0,0.55)] sm:pb-8 lg:px-8 lg:pb-12"
+                >
+                  <span className="block font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f0d98f] sm:text-sm">
                     {space.floor}
-                  </p>
-                  <h3 className="mt-3 font-display text-2xl font-medium tracking-[-0.04em] text-white sm:text-3xl xl:text-4xl">
+                  </span>
+                  <h3 className="mt-2 font-display text-[clamp(1.75rem,4.4vw,4.25rem)] font-medium leading-[0.98] tracking-[-0.045em] sm:mt-3">
                     {space.name}
                   </h3>
-                  <p className="mt-4 max-w-xl line-clamp-3 text-sm leading-7 text-white/90 xl:text-base xl:leading-8">
+                  <span className="mt-4 hidden max-w-xl text-[15px] font-normal leading-7 text-white/95 md:block lg:text-base lg:leading-8">
                     {space.description}
-                  </p>
-                  {space.features.length > 0 ? (
-                    <ul className="mt-4 flex max-w-2xl flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-white/85 sm:text-sm">
-                      {space.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2">
-                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#e2c77a]" aria-hidden="true" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                  {/* Ang `id` ang slug ng sariling ruta — tingnan ang
-                      CLUBHOUSE_SPACES. Nananatili rin itong anchor dito. */}
-                  <Link
-                    href={`/clubhouse/${space.id}`}
-                    className="mt-6 inline-flex h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-[#e2c77a]/70 bg-black/20 px-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#f0d98f] backdrop-blur-[2px] transition-colors hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a] xl:text-[11px]"
-                  >
-                    View the space
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+                  </span>
+                </span>
+              </span>
+            </span>
+
+            <span className="block px-6 pb-8 pt-4 text-[12px] font-normal leading-6 text-[#3f4c45] md:hidden">{space.description}</span>
+          </Link>
         </article>
       ))}
     </div>

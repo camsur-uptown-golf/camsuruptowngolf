@@ -81,7 +81,7 @@ export const CLUBHOUSE_BRIEF =
 export const CLUBHOUSE_FACTS = [
   { value: "4", label: "Lakes" },
   { value: "3", label: "Levels + rooftop" },
-  { value: "9", label: "Main areas" },
+  { value: "10", label: "Main areas" },
   { value: "300", label: "Member lockers" },
   { value: "2,695", label: "Square metres" },
 ] as const;

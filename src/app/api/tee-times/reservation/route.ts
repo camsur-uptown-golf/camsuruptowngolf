@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { simulatePayments } from "@/lib/booking-server";
+import { paymentMethods } from "@/lib/payments";
 import { getReservation, publicReservation } from "@/lib/reservations-db";
 
 export const runtime = "nodejs";
@@ -20,6 +21,7 @@ export async function GET(request: Request) {
   return NextResponse.json({
     ok: true,
     simulate: simulatePayments(),
+    methods: paymentMethods(),
     reservation: publicReservation(reservation),
   });
 }

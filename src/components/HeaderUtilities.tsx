@@ -9,6 +9,7 @@ import ForecastDays from "@/components/ForecastDays";
 import WeatherIcon from "@/components/WeatherIcon";
 import { CURRENT_URL, dateRange, describeWeather, todayInManila } from "@/lib/weather";
 import { weatherPhrases } from "@/lib/weather-i18n";
+import { usePrivacyPreferences } from "@/components/PrivacyNotice";
 
 /**
  * Maliliit na utility na nakadikit sa kanang gilid ng screen:
@@ -29,14 +30,6 @@ function GlobeIcon({ className = "h-4 w-4" }: { className?: string }) {
     <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
       <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
       <path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function ChevronIcon({ className = "h-3 w-3" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-      <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -118,18 +111,18 @@ function MemberLogin() {
   return (
     <Link
       href="/members"
-      aria-label={member ? `My account, ${member.firstName}` : undefined}
+      aria-label={member ? `${t("action.myAccount")}, ${member.firstName}` : undefined}
+      title={member ? t("action.myAccount") : undefined}
       className="flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[11px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#efd99b] text-center"
     >
       {member ? (
         <>
-          <MemberAvatar member={member} size={30} />
-          <span className="mt-0.5 max-w-full truncate">{member.firstName}</span>
-          <span className="text-[9px] tracking-[0.14em] opacity-70">{t("action.myAccount")}</span>
+          <MemberAvatar member={member} size={34} />
+          <span className="max-w-full truncate">{member.firstName}</span>
         </>
       ) : (
         <>
-          <UserIcon className="h-5 w-5" />
+          <UserIcon className="h-[22px] w-[22px]" />
           <span>{t("action.memberLogin")}</span>
         </>
       )}
@@ -166,10 +159,9 @@ function LanguageSelector() {
         aria-label={t("lang.select")}
         className={`${open ? "text-[#efd99b]" : ""} flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[11px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#efd99b]`}
       >
-        <GlobeIcon className="h-5 w-5" />
+        <GlobeIcon className="h-[22px] w-[22px]" />
         <span className="flex items-center gap-0.5">
           {locale}
-          <ChevronIcon className={`${open ? "rotate-90" : ""} h-2.5 w-2.5 transition-transform`} />
         </span>
       </button>
       {open ? (
@@ -270,11 +262,10 @@ function WeatherNow() {
         aria-expanded={open}
         aria-controls="weather-forecast"
         className={`${open ? "text-[#efd99b]" : ""} flex w-full flex-col items-center gap-1 px-2.5 py-3.5 text-[11px] font-semibold uppercase leading-tight tracking-[0.08em] transition-colors hover:text-[#efd99b]`}
-        title={weather ? `Pili — ${w?.label}, ${Math.round(weather.tempC)}°C` : "Pili weather"}
+        title={weather ? `Pili — ${sky}, ${Math.round(weather.tempC)}°C` : "Pili weather"}
       >
-        <WeatherIcon kind={w?.kind ?? "cloud"} className="h-5 w-5" />
+        <WeatherIcon kind={w?.kind ?? "cloud"} className="h-[22px] w-[22px]" />
         <span className="tabular-nums">{weather ? `${Math.round(weather.tempC)}°C` : "—°"}</span>
-        <span translate="no" className="min-h-[10px] text-[11px] leading-tight tracking-[0.1em] opacity-75">{sky}</span>
         <span className="sr-only">
           {weather ? `Pili weather, ${w?.label}, ${Math.round(weather.tempC)} degrees. ` : "Loading Pili weather. "}
           Show the 7-day forecast.
@@ -332,6 +323,7 @@ const COLLAPSE_AFTER = 0.6;
 const FORM_HERO_PATHS = ["/members", "/plan-your-visit", "/golf/book"];
 
 export default function HeaderUtilities() {
+  const { hasOptionalConsent } = usePrivacyPreferences();
   const [open, setOpen] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   /* Ang pahina kung saan binuksan ng bisita ang rail habang dapat ay
@@ -356,6 +348,7 @@ export default function HeaderUtilities() {
 
   useEffect(() => {
     let saved: string | null = null;
+    if (!hasOptionalConsent) return;
     try {
       saved = localStorage.getItem(UTILITIES_KEY);
     } catch {
@@ -365,12 +358,13 @@ export default function HeaderUtilities() {
     /* Pagkatapos ng hydration, gaya ng LanguageProvider. */
     const timer = window.setTimeout(() => setOpen(false), 0);
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [hasOptionalConsent]);
 
   function toggle() {
     const next = !shown;
     setOpen(next);
     setPinnedPath(next && collapsed ? pathname : null);
+    if (!hasOptionalConsent) return;
     try {
       localStorage.setItem(UTILITIES_KEY, next ? "open" : "closed");
     } catch {
@@ -383,7 +377,7 @@ export default function HeaderUtilities() {
   return (
     <aside
       aria-label="Club utilities"
-      className={`${shown ? "w-[112px]" : "w-11"} fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-stretch rounded-l-2xl border border-r-0 border-white/15 bg-black/60 text-[#efd99b] shadow-[0_12px_35px_rgba(0,0,0,0.2)] backdrop-blur-md transition-[width] duration-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.45)] lg:flex`}
+      className={`${shown ? "w-[104px]" : "w-11"} fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-stretch rounded-l-2xl border border-r-0 border-white/15 bg-black/60 text-[#efd99b] shadow-[0_12px_35px_rgba(0,0,0,0.2)] backdrop-blur-md transition-[width] duration-200 [text-shadow:0_1px_6px_rgba(0,0,0,0.45)] lg:flex`}
     >
       <button
         type="button"
@@ -391,9 +385,20 @@ export default function HeaderUtilities() {
         aria-expanded={shown}
         aria-controls="club-utilities"
         aria-label={shown ? "Hide club utilities" : "Show club utilities"}
-        className="flex w-full items-center justify-center py-3.5 transition-colors hover:text-[#efd99b]"
+        className="flex w-full items-center justify-center py-3 transition-colors hover:text-[#efd99b]"
       >
-        <ChevronIcon className={`${shown ? "-rotate-90" : "rotate-90"} h-4 w-4 transition-transform`} />
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          className={`${shown ? "rotate-180" : ""} h-[18px] w-[18px] transition-transform duration-200 motion-reduce:transition-none`}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
       </button>
       <div id="club-utilities" className={`${shown ? "flex" : "hidden"} flex-col items-stretch divide-y divide-[#efd99b]/15 border-t border-[#efd99b]/15`}>
         <WeatherNow />
@@ -440,14 +445,14 @@ export function MobileUtilities({ onNavigate }: { onNavigate?: () => void }) {
     <div className="mt-3 grid grid-cols-3 gap-2">
       <div className={tile} title="Pili weather">
         <WeatherIcon kind={w?.kind ?? "cloud"} className="h-5 w-5" />
-        <span translate="no" className="text-[11px] font-semibold leading-tight tabular-nums">
+        <span translate="no" className="text-[10px] font-semibold leading-tight tabular-nums">
           {weather ? `${Math.round(weather.tempC)}°C` : "—°"}
-          {sky ? <span className="block text-[11px] font-medium uppercase tracking-[0.08em] text-white/60">{sky}</span> : null}
+          {sky ? <span className="block text-[10px] font-medium uppercase tracking-[0.08em] text-white/60">{sky}</span> : null}
         </span>
       </div>
       <label className={`${tile} relative cursor-pointer`}>
         <GlobeIcon className="h-5 w-5" />
-        <span className="text-[11px] font-semibold uppercase tracking-[0.08em]">{locale}</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.08em]">{locale}</span>
         <select
           aria-label={t("lang.select")}
           value={locale}
@@ -463,7 +468,7 @@ export function MobileUtilities({ onNavigate }: { onNavigate?: () => void }) {
       </label>
       <Link href="/members" onClick={onNavigate} className={`${tile} transition hover:border-[#efd99b]/50`}>
         {member ? <MemberAvatar member={member} size={26} /> : <UserIcon className="h-5 w-5" />}
-        <span className="max-w-full truncate text-[11px] font-semibold uppercase leading-tight tracking-[0.06em]">
+        <span className="max-w-full truncate text-[10px] font-semibold uppercase leading-tight tracking-[0.06em]">
           {member ? member.firstName : t("action.memberLogin")}
         </span>
       </Link>

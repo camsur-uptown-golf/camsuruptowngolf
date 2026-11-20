@@ -1,8 +1,8 @@
-import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
 import BackToHeroButton from "@/components/BackToHeroButton";
 import ExperiencesActivities from "@/components/ExperiencesActivities";
-import { EditorialHeading, Shell, delay } from "@/components/EditorialKit";
+import { EditorialHeading, Shell } from "@/components/EditorialKit";
+import CtaPanel from "@/components/CtaPanel";
 
 /**
  * The Experiences page — ang mga hinahandog sa labas ng golf course.
@@ -103,36 +103,21 @@ const ACTIVITIES = [
   },
 ] as const;
 
+/* Pangwakas na CTA: ang shared na berdeng panel (CtaPanel), sa loob ng cream
+   para hindi dumikit sa Footer. Kapareho ng lapad ng panel sa /packages at
+   /events (`max-w-[1600px]`). */
 function ExperiencesCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
-      <Shell>
-        <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-          <div>
-            <h2
-              data-reveal="up"
-              style={delay(90)}
-              className="text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
-            >
-              Build the rest of the trip.
-            </h2>
-          </div>
-          <div data-reveal="up" style={delay(180)}>
-            <p className="text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8">
-              Tell the team which of these your group wants and on which days. They will put the schedule together
-              around your tee times rather than against them.
-            </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/plan-your-visit"
-                className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
-              >
-                Plan your days
-              </Link>
-            </div>
-          </div>
-        </div>
-      </Shell>
+    <section className="relative isolate bg-[#f3ede1] py-12 text-[#03321b] sm:py-16">
+      <div className="relative mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        <CtaPanel
+          reveal
+          eyebrow="Beyond golf"
+          title="Build the rest of the trip."
+          text="Tell the team which of these your group wants and on which days. They will put the schedule together around your tee times rather than against them."
+          primary={{ label: "Plan your days", href: "/plan-your-visit" }}
+        />
+      </div>
     </section>
   );
 }

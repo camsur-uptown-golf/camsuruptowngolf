@@ -38,14 +38,6 @@ const DESTINATIONS = [
   },
 ] as const;
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
-      <path d="m9.5 5 7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 export default function OffCourseSection() {
   return (
     <section className="bg-[#f3ede1] py-20 text-[#1b2730] sm:py-24 lg:py-28">
@@ -111,9 +103,6 @@ export default function OffCourseSection() {
               <div className="p-6 text-white sm:p-7">
                 <div className="flex items-center justify-between gap-4">
                   <h3 className="font-navigation text-xl font-bold tracking-[-0.01em] sm:text-2xl">{item.title}</h3>
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/22 backdrop-blur-sm transition-colors group-hover:bg-[#e2c77a] group-hover:text-[#18251f]">
-                    <ArrowIcon />
-                  </span>
                 </div>
                 <p className="mt-3 text-sm leading-6 text-white/78">{item.blurb}</p>
               </div>

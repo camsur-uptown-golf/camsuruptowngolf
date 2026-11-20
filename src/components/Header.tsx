@@ -204,24 +204,6 @@ function CalendarIcon({ className = "h-4 w-4 shrink-0" }: { className?: string }
 const NAV_ITEM_CLASS =
   "pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-2 py-2.5 transition-colors duration-200 hover:text-[#efd99b] xl:px-3";
 
-/* Pang-CTA sa mega menu. Hiwalay sa `ChevronIcon`: chevron iyon para sa
-   mga listahan at drawer, at mahaba ang arrow na ito para sa pindutan. */
-function ArrowRightIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-3 w-3 shrink-0" fill="none" aria-hidden="true">
-      <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ChevronIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-      <path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function PhoneIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
@@ -1018,7 +1000,6 @@ export default function Header() {
                 onClick={() => setMobileSection(null)}
                 className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 transition-colors hover:text-[#efd99b]"
               >
-                <ChevronIcon className="h-3.5 w-3.5 rotate-180" />
                 {t("mega.goBack")}
               </button>
               <span className="border-b-2 border-[#e2c77a] pb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">
@@ -1066,7 +1047,6 @@ export default function Header() {
                   className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition-colors hover:text-[#efd99b]"
                 >
                   View all {mobileSubsection.links.length} holes
-                  <ChevronIcon className="h-3 w-3" />
                 </Link>
               ) : null}
 
@@ -1148,7 +1128,6 @@ export default function Header() {
                       className={`${isActive ? "text-[#efd99b]" : "text-white"} flex min-h-[52px] items-center justify-between gap-3 border-b border-white/12 px-3.5 transition-colors hover:text-[#efd99b]`}
                     >
                       <span className="text-sm font-bold uppercase tracking-[0.08em]">{sectionLabel(item.slug, item.label)}</span>
-                      <ChevronIcon className="h-4 w-4 text-white/45" />
                     </Link>
                   );
                 }
@@ -1162,7 +1141,7 @@ export default function Header() {
                     className={`${isActive ? "text-[#efd99b]" : "text-white"} group flex min-h-[52px] w-full items-center justify-between gap-3 border-b border-white/12 px-3.5 text-left transition-colors hover:text-[#efd99b]`}
                   >
                     <span className="text-sm font-bold uppercase tracking-[0.08em]">{sectionLabel(item.slug, item.label)}</span>
-                    <ChevronIcon className="h-4 w-4 text-white/45 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    <span aria-hidden="true" className="text-lg leading-none text-white/60">+</span>
                   </button>
                 );
               })}
@@ -1287,9 +1266,6 @@ export default function Header() {
                     <span className="mt-1 block text-sm font-medium text-white/85 transition-colors group-hover:text-white xl:text-base">
                       {item.label}
                     </span>
-                  </span>
-                  <span className="scale-125 text-[#efd99b]">
-                    <ArrowRightIcon />
                   </span>
                 </Link>
               )) : (
@@ -1534,7 +1510,6 @@ export default function Header() {
                     >
                       <span className="flex items-center justify-between gap-3">
                         <span className="text-[12px] font-semibold uppercase tracking-[0.06em]">{item.label}</span>
-                        <span className="text-[#e2c77a] transition-transform group-hover/help:translate-x-1" aria-hidden="true">→</span>
                       </span>
                       <span className="mt-1.5 block text-[11px] leading-5 text-white/50">{item.detail}</span>
                     </Link>
@@ -1658,7 +1633,6 @@ export default function Header() {
                         style={{ animationDelay: `${index * 45}ms` }}
                       >
                         <span className="text-[12px] font-semibold uppercase tracking-[0.05em]">{link.label}</span>
-                        <span className="text-[#e2c77a] opacity-0 transition-opacity duration-300 group-hover/rule:opacity-100" aria-hidden="true">→</span>
                       </Link>
                     ))}
                   </div>
@@ -1700,7 +1674,6 @@ export default function Header() {
                             className={`${hoveredExtra?.href === extra.href ? "text-[#efd99b]" : "text-white/72"} inline-flex min-h-[34px] items-center gap-1.5 text-[12px] font-semibold uppercase leading-[1.35] tracking-[0.05em] transition-colors duration-200 hover:text-[#efd99b]`}
                           >
                             {extra.label}
-                            {isExternal && <span aria-hidden="true">↗</span>}
                           </Link>
                         );
                       })}

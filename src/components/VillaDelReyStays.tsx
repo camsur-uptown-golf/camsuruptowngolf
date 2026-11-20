@@ -57,8 +57,15 @@ export default function VillaDelReyStays() {
         return (
           <article
             key={stayType.name}
-            className="py-14 sm:py-16 lg:py-20"
+            className="relative py-14 sm:py-16 lg:py-20"
           >
+            {/* Manipis na linya sa pagitan ng mga stay — nasa gitna ng puwang,
+                kapantay ng gilid ng laman (hindi buong lapad ng screen). */}
+            {index > 0 ? (
+              <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 mx-auto max-w-[1800px] px-5 sm:px-10 lg:px-14 xl:px-20">
+                <div className="h-px bg-[#03321b]/12" />
+              </div>
+            ) : null}
             <div
               className={`mx-auto grid max-w-[1800px] gap-10 px-5 sm:px-10 lg:gap-14 lg:px-14 xl:px-20 ${
                 // Ang stay na may amenities toggle (Villa) ay top-aligned para
@@ -141,7 +148,7 @@ export default function VillaDelReyStays() {
                     nag-a-animate ulit sa bawat pasok — scroll down man o pataas. */}
                 <div
                   data-scroll-anim={flip ? "slide-left" : "slide-right"}
-                  className={`group relative h-[320px] cursor-zoom-in overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_28px_70px_rgba(20,39,29,0.16)] sm:h-[460px] sm:rounded-[2rem] lg:h-[560px] xl:h-[620px]`}
+                  className={`group relative h-[320px] cursor-zoom-in overflow-hidden rounded-[1.5rem] bg-[#d9ded8] shadow-[0_8px_24px_rgba(20,39,29,0.05)] sm:h-[460px] sm:rounded-[2rem] lg:h-[560px] xl:h-[620px]`}
                   data-lightbox
                   data-lightbox-group={`villa-${stayType.name.toLowerCase()}`}
                   data-src={stayType.exterior}

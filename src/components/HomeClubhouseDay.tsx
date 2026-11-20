@@ -218,7 +218,6 @@ export default function HomeClubhouseDay() {
                           className={`mt-6 inline-flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] underline-offset-[6px] transition hover:gap-3 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 ${c("text-[#2e5126] focus-visible:outline-[#2e5126]", "text-[#efd99b] focus-visible:outline-[#efd99b]")}`}
                         >
                           View the space
-                          <span aria-hidden="true">→</span>
                         </Link>
                       </span>
                     </span>

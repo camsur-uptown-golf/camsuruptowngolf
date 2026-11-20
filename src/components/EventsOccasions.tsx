@@ -18,61 +18,76 @@ function CheckIcon() {
 }
 
 /**
- * Event occasions as normal full-screen panels.
+ * Ang mga okasyon: BUONG-LAPAD NA LARAWAN, na ang teksto ay nasa loob nito sa
+ * kaliwang-ibaba — kapareho ng mga kuwarto sa /clubhouse.
  *
- * Images move with the document instead of remaining pinned in 220vh stages.
- * Captions use the shared one-time reveal and stay visible after entering, so
- * scrolling upward cannot rewind or hide them.
+ * WALANG MADILIM NA PATONG SA BUONG LARAWAN. Dati ay may itim na scrim na
+ * sumasakop sa halos buong kaliwang-ibaba. Ngayon ay dalawa lang ang
+ * nagpapabasa sa puting teksto: ang text-shadow nito, at isang lilim sa ibaba
+ * (`h-2/5`, `lg:h-3/5`) na naglalaho pataas. Walang patong ang itaas.
+ *
+ * ANG PAGLALARAWAN AT MGA KASAMA AY NASA LOOB NG LARAWAN MULA `lg` LANG. Sa
+ * cellphone at tablet ay maikli ang larawan (~220–430px), kaya roon ay nasa ILALIM
+ * sila, sa cream; ang eyebrow at pamagat lang ang nasa loob.
+ *
+ * `aspect-[16/9]`: iyan ang totoong hugis ng tatlong larawan, kaya walang
+ * napuputol. Ang `max-h-[88svh]` ay para lang sa napakalapad na screen.
+ *
+ * Normal document flow; minsan lang pumapasok ang caption (`data-reveal`) at
+ * nananatiling kita pagkatapos.
  */
 export default function EventsOccasions({ occasions }: { occasions: readonly Occasion[] }) {
   return (
     <div className="relative w-full bg-[#f3ede1]">
       {occasions.map((occasion) => (
-        <article
-          key={occasion.title}
-          data-occasion-panel
-          className="relative min-h-svh scroll-mt-28 overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
-        >
-          <Image
-            src={occasion.image}
-            alt={occasion.imageAlt}
-            fill
-            quality={90}
-            sizes="(max-aspect-ratio: 16/9) 178svh, 100vw"
-            className="object-cover"
-          />
+        <article key={occasion.title} data-occasion-panel className="scroll-mt-20">
+          <div className="relative aspect-[16/9] max-h-[88svh] w-full overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]">
+            <Image src={occasion.image} alt={occasion.imageAlt} fill quality={90} sizes="100vw" className="object-cover" />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-[linear-gradient(180deg,transparent_0%,rgba(7,23,15,0.22)_45%,rgba(7,23,15,0.55)_100%)] lg:h-3/5 lg:bg-[linear-gradient(180deg,transparent_0%,rgba(7,23,15,0.3)_40%,rgba(7,23,15,0.68)_100%)]"
+            />
 
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 78% 82% at 0% 100%, rgba(0,0,0,0.64) 0%, rgba(0,0,0,0.46) 38%, rgba(0,0,0,0.20) 66%, transparent 92%), linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.28) 60%, rgba(0,0,0,0.58) 100%)",
-            }}
-          />
-
-          <div className="absolute inset-x-0 bottom-0 px-6 pb-6 pt-40 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_10px_rgba(0,0,0,0.62)] sm:px-9 sm:pb-9 sm:pt-48 lg:px-12 lg:pb-12 lg:pt-56">
-            <div data-reveal="left" className="max-w-2xl">
-              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#f0d98f] xl:text-[11px]">
-                {occasion.kicker}
-              </p>
-              <h3 className="mt-3 font-display text-2xl font-medium tracking-[-0.04em] text-white sm:text-3xl xl:text-4xl">
-                {occasion.title}
-              </h3>
-              <p className="mt-4 max-w-xl line-clamp-4 text-sm leading-7 text-white/90 sm:line-clamp-none xl:text-base xl:leading-8">
-                {occasion.description}
-              </p>
-              <ul className="mt-5 flex flex-col gap-2 sm:mt-6">
-                {occasion.inclusions.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-[13px] leading-6 text-white/85 xl:text-sm">
-                    <span className="text-[#f0d98f]">
-                      <CheckIcon />
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="absolute inset-x-0 bottom-0">
+              <div
+                data-reveal="left"
+                className="mx-auto w-full max-w-7xl px-6 pb-5 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_2px_14px_rgba(0,0,0,0.55)] sm:pb-8 lg:px-8 lg:pb-12"
+              >
+                <p className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f0d98f] sm:text-sm">
+                  {occasion.kicker}
+                </p>
+                <h3 className="mt-2 font-display text-[clamp(1.75rem,4.4vw,4.25rem)] font-medium leading-[0.98] tracking-[-0.045em] sm:mt-3">
+                  {occasion.title}
+                </h3>
+                <p className="mt-4 hidden max-w-xl text-[15px] leading-7 text-white/95 lg:block lg:text-base lg:leading-8">
+                  {occasion.description}
+                </p>
+                <ul className="mt-4 hidden flex-wrap gap-x-6 gap-y-1.5 text-sm text-white/95 lg:flex">
+                  {occasion.inclusions.map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="text-[#f0d98f]">
+                        <CheckIcon />
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
+          </div>
+
+          <div className="px-6 pb-9 pt-4 text-[#3f4c45] lg:hidden">
+            <p className="text-[15px] leading-7">{occasion.description}</p>
+            <ul className="mt-4 flex flex-col gap-2 text-sm">
+              {occasion.inclusions.map((item) => (
+                <li key={item} className="flex items-start gap-2.5">
+                  <span className="text-[#2e5126]">
+                    <CheckIcon />
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </article>
       ))}

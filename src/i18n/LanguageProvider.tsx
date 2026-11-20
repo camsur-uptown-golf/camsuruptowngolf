@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { DEFAULT_LOCALE, HTML_LANG, LOCALE_COOKIE, normalizeLocale, type Locale } from "./config";
 import { DICTIONARIES, type TranslationKey } from "./dictionaries";
+import { usePrivacyPreferences } from "@/components/PrivacyNotice";
 
 type LanguageContextValue = {
   locale: Locale;
@@ -25,14 +26,16 @@ function readCookie(name: string): string | null {
  *
  * Simula bilang DEFAULT (English) para pareho ang SSR at ang unang client
  * render — iniiwasan ang hydration mismatch. Sa mount, binabasa ang naunang
- * pili sa cookie/localStorage at inilalapat. Sa bawat pagbabago, isinusulat ito
+ * pili sa cookie/localStorage kung pinayagan ang optional storage. Isinusulat ito
  * pabalik at nilalagay ang `lang` at `data-locale` sa <html> — ang huli ang
  * pinagbabatayan ng font-switching sa globals.css.
  */
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+  const { hasOptionalConsent } = usePrivacyPreferences();
 
   useEffect(() => {
+    if (!hasOptionalConsent) return;
     const saved =
       readCookie(LOCALE_COOKIE) ??
       (() => {
@@ -49,7 +52,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     // first client render both stay in English.
     const timer = window.setTimeout(() => setLocaleState(next), 0);
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [hasOptionalConsent]);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -57,20 +60,22 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.dataset.locale = locale;
   }, [locale]);
 
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
+  useEffect(() => {
+    if (!hasOptionalConsent) return;
     try {
-      /* Isang taon na cookie, buong site. */
-      document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`;
+      /* 180 araw, buong site, habang pinapayagan ang optional storage. */
+      document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=15552000; samesite=lax`;
     } catch {
       /* walang cookie access — huwag hadlangan ang pagpapalit sa state. */
     }
     try {
-      localStorage.setItem(LOCALE_COOKIE, next);
+      localStorage.setItem(LOCALE_COOKIE, locale);
     } catch {
       /* walang storage — cookie na lang ang alaala. */
     }
-  }, []);
+  }, [locale, hasOptionalConsent]);
+
+  const setLocale = useCallback((next: Locale) => setLocaleState(next), []);
 
   const t = useCallback(
     (key: TranslationKey) => DICTIONARIES[locale][key] ?? DICTIONARIES[DEFAULT_LOCALE][key] ?? key,

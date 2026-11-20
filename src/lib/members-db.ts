@@ -41,6 +41,8 @@ export type Member = {
   planSince: string | null;
   /** Litrato ng Google account (https), kapag Google ang ginamit; kung hindi, `null`. */
   picture: string | null;
+  /** Huling araw (YYYY-MM-DD) na bayad ang plan; `null` kapag hindi pa nagbabayad. */
+  planUntil: string | null;
 };
 
 export type SignupInput = {
@@ -104,6 +106,8 @@ async function applySchema(client: Client) {
   await addColumn("google_sub");
   await addColumn("apple_sub");
   await addColumn("picture");
+  /* Membership na binayaran sa PayMongo: hanggang kailan (tingnan ang membership-db.ts). */
+  await addColumn("plan_until");
   await client.batch(
     [
       "CREATE UNIQUE INDEX IF NOT EXISTS members_google_sub ON members(google_sub) WHERE google_sub IS NOT NULL",
@@ -112,6 +116,9 @@ async function applySchema(client: Client) {
     "write",
   );
 }
+
+/** Para sa membership-db.ts: iisang koneksyon at schema ng members store. */
+export const membersConnection = () => connection();
 
 async function connection(): Promise<Client> {
   const client = db("members");
@@ -162,6 +169,7 @@ function toMember(row: Row): Member {
     plan: text(row.plan),
     planSince: text(row.plan_since),
     picture: text(row.picture),
+    planUntil: text(row.plan_until),
   };
 }
 
@@ -186,6 +194,7 @@ export async function createMember(input: SignupInput): Promise<Member | null> {
       plan: null,
       planSince: null,
       picture: null,
+      planUntil: null,
     };
   } catch (error) {
     if (isUniqueViolation(error)) return null;
@@ -236,7 +245,7 @@ export async function memberFromSession(token: string | undefined): Promise<Memb
   const client = await connection();
   const row = (
     await client.execute({
-      sql: `SELECT m.id, m.email, m.first_name, m.last_name, m.mobile, m.created_at, m.last_login_at, m.plan, m.plan_since, m.picture
+      sql: `SELECT m.id, m.email, m.first_name, m.last_name, m.mobile, m.created_at, m.last_login_at, m.plan, m.plan_since, m.picture, m.plan_until
             FROM member_sessions s JOIN members m ON m.id = s.member_id
             WHERE s.token_hash = ? AND s.expires_at > ?`,
       args: [sha256(token), new Date().toISOString()],
@@ -373,5 +382,6 @@ export async function findOrCreateOAuthMember(identity: OAuthIdentity): Promise<
     plan: null,
     planSince: null,
     picture,
+    planUntil: null,
   };
 }

@@ -21,6 +21,7 @@ const STANDALONE: Record<string, string> = {
   faq: "FAQs",
   "getting-here": "How to get here",
   "terms-of-use": "Terms of use",
+  "privacy-policy": "Privacy Policy",
   "pro-shop": "Pro Shop",
   "the-uptown-life": "The Uptown Life",
 };

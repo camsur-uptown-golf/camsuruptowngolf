@@ -3,7 +3,7 @@ import { ADDONS, COURSE, VILLA_NIGHTS, addonMax, quote, startTimes, type AddonId
 import { nowInManila, simulatePayments, startDownpayment } from "@/lib/booking-server";
 import { requestMember } from "@/lib/app-auth";
 import { emailGuest, heldEmail } from "@/lib/booking-emails";
-import { paymongoConfigured } from "@/lib/paymongo";
+import { pickMethod } from "@/lib/payments";
 import { confirmReservation, createHeldReservation } from "@/lib/reservations-db";
 import { daysBetween, todayInManila } from "@/lib/weather";
 
@@ -11,7 +11,7 @@ export const runtime = "nodejs";
 
 /**
  * Bagong reservation: sinusuri ang lahat, ini-hold ang slot, at gumagawa ng
- * PayMongo checkout para sa downpayment.
+ * checkout (PayMongo o PayPal — `method` sa body) para sa downpayment.
  *
  * Ang presyo ay kinukuwenta DITO, hindi tinatanggap mula sa browser — kung
  * hindi, puwedeng magpadala ang kahit sino ng ₱1 na "kabuuan".
@@ -61,7 +61,8 @@ export async function POST(request: Request) {
   }
   const villaSlug = VILLA_NIGHTS.some((v) => v.slug === body.villa) ? String(body.villa) : null;
 
-  if (!paymongoConfigured() && !simulatePayments()) {
+  const method = pickMethod(body.method);
+  if (!method && !simulatePayments()) {
     return NextResponse.json({ ok: false, error: "payments" }, { status: 503 });
   }
 
@@ -86,7 +87,7 @@ export async function POST(request: Request) {
   });
   if (!result.ok) return NextResponse.json({ ok: false, error: result.error }, { status: 409 });
 
-  /* TEST MODE (walang PayMongo key, hindi production): confirmed agad, walang bayad. */
+  /* TEST MODE (walang PayMongo/PayPal key, hindi production): confirmed agad, walang bayad. */
   if (simulatePayments()) {
     await confirmReservation(result.reservation.id, "TEST-PAYMENT");
     return NextResponse.json({ ok: true, code: result.reservation.code });
@@ -94,7 +95,8 @@ export async function POST(request: Request) {
   /* Email sa nagpareserve: link para magbayad, kung sakaling maisara niya ang checkout. */
   emailGuest(heldEmail(result.reservation));
   try {
-    const checkoutUrl = await startDownpayment(request, result.reservation);
+    if (!method) throw new Error("no payment method");
+    const checkoutUrl = await startDownpayment(request, result.reservation, method);
     return NextResponse.json({ ok: true, code: result.reservation.code, checkoutUrl });
   } catch {
     /* Naka-hold pa rin ang slot — puwedeng subukan ulit sa pahina ng reservation. */

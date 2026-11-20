@@ -61,11 +61,9 @@ export function SectionHeading({
         <p
           data-reveal="up"
           style={delay(180)}
-          className={`text-[#5d685f] ${
-            isLg
-              ? "mx-auto mt-6 max-w-3xl text-sm leading-7 sm:text-base sm:leading-8 lg:text-lg lg:leading-9"
-              : "mt-4 text-sm leading-7 xl:text-base xl:leading-8"
-          }`}
+          /* Kaparehong istilo ng paliwanag ng butas (ang "main" na body text):
+             16px, regular, #536058, leading-7. */
+          className={`mx-auto text-sm font-normal leading-7 text-[#536058] sm:text-base ${isLg ? "mt-6 max-w-3xl" : "mt-4"}`}
         >
           {intro}
         </p>

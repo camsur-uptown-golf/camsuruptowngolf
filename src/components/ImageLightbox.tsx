@@ -144,9 +144,11 @@ export default function ImageLightbox() {
             event.stopPropagation();
             move(-1);
           }}
-          className="absolute left-3 top-1/2 z-20 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-white/35 bg-[#10251a]/70 text-3xl leading-none text-white transition hover:bg-[#10251a] sm:left-7 sm:size-13"
+          className="absolute left-3 top-1/2 z-20 sm:left-7 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-[#10251a]/70 text-white transition hover:bg-[#10251a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e2c77a]"
         >
-          <span aria-hidden="true">‹</span>
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="m15 5-7 7 7 7" />
+          </svg>
         </button>
       ) : null}
 
@@ -209,9 +211,11 @@ export default function ImageLightbox() {
             event.stopPropagation();
             move(1);
           }}
-          className="absolute right-3 top-1/2 z-20 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full border border-white/35 bg-[#10251a]/70 text-3xl leading-none text-white transition hover:bg-[#10251a] sm:right-7 sm:size-13"
+          className="absolute right-3 top-1/2 z-20 sm:right-7 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-[#10251a]/70 text-white transition hover:bg-[#10251a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e2c77a]"
         >
-          <span aria-hidden="true">›</span>
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="m9 5 7 7-7 7" />
+          </svg>
         </button>
       ) : null}
     </div>

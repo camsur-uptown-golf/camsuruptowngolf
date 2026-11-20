@@ -9,10 +9,6 @@ import ConceptCarousel from "@/components/ConceptCarousel";
    scroll story (C) ay nasa `HomeClubhouseDay` pa rin — palitan lang ang import
    path sa ibaba para bumalik doon. */
 import HomeClubhouseDay from "@/components/HomeClubhouseDayCards";
-/* Villa Del Rey: bento mosaic (`HomeVillaDelReyBento`) ang subok ngayon.
-   Mga kahalili: `HomeVillaDelReyCards`, `HomeVillaDelReyTabs`,
-   `HomeVillaDelReyShowcase`, at
-   `HomeVillaDelRey` (ang dating accordion) — palitan lang ang import path. */
 import HomeVillaDelRey from "@/components/HomeVillaDelReyBento";
 import PackagesCarousel from "@/components/PackagesCarousel";
 import HeroVideo from "@/components/HeroVideo";
@@ -73,8 +69,11 @@ function Hero() {
           />
           <HeroVideo />
         </div>
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,16,10,0.68)_0%,rgba(2,16,10,0.24)_48%,rgba(2,16,10,0.08)_72%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,14,9,0.42)_0%,transparent_30%,transparent_58%,rgba(2,16,10,0.72)_100%)]" />
+        {/* Bahagyang pinagaan (Nob 2026): 0.68→0.50 sa kaliwa, 0.24→0.16 sa gitna,
+            0.42→0.30 sa itaas, 0.72→0.56 sa ibaba — mas maliwanag ang video pero
+            nababasa pa rin ang menu at ang stats. */}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,16,10,0.50)_0%,rgba(2,16,10,0.16)_48%,rgba(2,16,10,0.04)_72%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,14,9,0.30)_0%,transparent_30%,transparent_58%,rgba(2,16,10,0.56)_100%)]" />
       </div>
       <CourseSnapshot />
     </section>
@@ -125,13 +124,13 @@ function Introduction() {
   return (
     <section
       id="story"
-      className="relative isolate z-10 flex min-h-[400px] items-center overflow-hidden bg-[#f3ede1] text-[#03321b] shadow-[0_-28px_70px_rgba(2,14,9,0.45)]"
+      className="relative isolate z-10 flex min-h-[480px] items-center overflow-hidden bg-[#f3ede1] text-[#03321b] shadow-[0_-28px_70px_rgba(2,14,9,0.45)]"
     >
       {/* Maliit na gintong guhit sa itaas — ang "hawakan" ng card na umaangat. */}
       <span className="pointer-events-none absolute left-1/2 top-4 h-[3px] w-12 -translate-x-1/2 rounded-full bg-[#e2c77a]/70 sm:top-5" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center" aria-hidden="true">
-        {/* Safe to parallax: a floating watermark has no container edge to expose. */}
-        <div data-parallax="0.1" className="relative h-[290px] w-[340px] overflow-hidden opacity-[0.1] sm:h-[350px] sm:w-[420px]">
+        {/* Nakapirmi ang crest — walang parallax (hindi gumagalaw habang nag-i-scroll). */}
+        <div className="relative h-[320px] w-[380px] overflow-hidden opacity-[0.1] sm:h-[460px] sm:w-[540px]">
           <Image
             src="/branding/camsur-uptown-golf-shield.png"
             alt=""
@@ -141,22 +140,22 @@ function Introduction() {
           />
         </div>
       </div>
-      <div className="mx-auto flex max-w-[1280px] flex-col items-center px-6 py-10 text-center sm:py-12 lg:px-10">
+      <div className="mx-auto flex max-w-[1280px] flex-col items-center px-6 py-14 text-center sm:py-20 lg:px-10">
         <p
           data-reveal="up"
-          className="mb-5 font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-xs"
+          className="mb-5 font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm"
         >
           Est. 2027
         </p>
         <h1
           data-reveal="up"
           style={{ ...delay(110), fontFamily: "var(--font-cormorant-garamond), Georgia, serif" }}
-          className="max-w-[1120px] text-[#17251e]"
+          className="max-w-[1280px] text-[#17251e]"
         >
-          <span className="block text-[clamp(2.5rem,4.2vw,4.5rem)] font-medium leading-[0.94] tracking-[-0.055em]">
+          <span className="block text-[clamp(2.75rem,4.6vw,4.75rem)] font-medium leading-[0.94] tracking-[-0.05em]">
             CamSur Uptown Golf
           </span>
-          <span className="mx-auto mt-3 block max-w-[1040px] text-[clamp(1.15rem,1.9vw,2rem)] font-normal leading-[1.12] tracking-[-0.025em] text-[#26362e] sm:mt-4">
+          <span className="mx-auto mt-5 block max-w-[1040px] text-[clamp(1.25rem,1.9vw,1.875rem)] font-semibold leading-[1.3] tracking-[-0.015em] text-[#26362e] sm:mt-7">
             <T k="home.designedBy" />{" "}
             <a
               href="https://www.img.com/"
@@ -177,7 +176,7 @@ function Introduction() {
           href="/golf"
           data-reveal="up"
           style={delay(330)}
-          className="mt-5 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#e2c77a] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#efd99b] xl:text-[12px]"
+          className="mt-9 inline-flex h-12 min-w-[190px] items-center justify-center gap-3 rounded-full bg-[#e2c77a] px-7 text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#efd99b] xl:text-[12px]"
         >
           <T k="action.planRound" />
         </Link>

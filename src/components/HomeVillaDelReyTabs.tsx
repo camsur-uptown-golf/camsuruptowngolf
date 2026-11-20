@@ -184,7 +184,6 @@ export default function HomeVillaDelReyTabs() {
               className="mt-8 inline-flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#2e5126] underline-offset-[6px] transition hover:gap-3 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2e5126]"
             >
               Ask about availability
-              <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

@@ -8,6 +8,38 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { COURSE_PAGES as SLIDES } from "@/lib/site-content";
 import { useTranslation } from "@/i18n/LanguageProvider";
 
+/**
+ * Flyover ng card na nasa gitna (active): naka-mute, paulit-ulit, kusang
+ * tumutugtog. Iisang video lang ang sabay na naglo-load — ang mga card sa
+ * gilid ay nananatiling larawan. Nasa ilalim pa rin ang larawan habang
+ * naglo-load ang video, kaya walang blangkong kislap. Kapag naka-"reduce
+ * motion" ang device, hindi ito tumutugtog (larawan lang).
+ */
+function ActiveFlyover({ flyover, poster }: { flyover: { desktop: string; mobile: string }; poster: string }) {
+  return (
+    <video
+      ref={(element) => {
+        if (!element) return;
+        /* Sa ref, hindi sa `muted` lang: hindi laging inilalagay ng React ang
+           `muted` sa HTML, kaya puwedeng tanggihan ng browser ang autoplay. */
+        element.muted = true;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        void element.play().catch(() => undefined);
+      }}
+      muted
+      loop
+      playsInline
+      preload="auto"
+      poster={poster}
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    >
+      <source src={flyover.mobile} type="video/mp4" media="(max-width: 767px)" />
+      <source src={flyover.desktop} type="video/mp4" />
+    </video>
+  );
+}
+
 const N = SLIDES.length;
 const SWIPE_THRESHOLD = 56;
 
@@ -154,7 +186,7 @@ export default function ConceptCarousel() {
     >
       {/* Ang data-reveal ay may sarili nang transform, kaya nasa labas ito ng
           3D stage na humahawak ng mga naka-perspective na card. */}
-      <div data-reveal="scale">
+      <div data-reveal="scale" className="relative">
         <div
           onPointerDown={startSwipe}
           onPointerMove={moveSwipe}
@@ -165,7 +197,7 @@ export default function ConceptCarousel() {
           <div
             ref={stageRef}
             style={{ perspective: "1600px", transformStyle: "preserve-3d" }}
-            className="relative mx-auto aspect-[1.94] w-[calc(100vw-3rem)] max-w-[1360px] sm:w-[66vw]"
+            className="relative mx-auto aspect-video w-[calc(100vw-3rem)] max-w-[1360px] sm:w-[66vw]"
           >
             {SLIDES.map((slide, index) => {
               const d = wrappedDelta(index, pos);
@@ -175,7 +207,7 @@ export default function ConceptCarousel() {
                   key={slide.slug}
                   href={`/golf/courses/${slide.slug}`}
                   data-slide={index}
-                  aria-label={isActive ? `View ${slide.title}` : `Show ${slide.title}`}
+                  aria-label={isActive ? `View Hole No. ${index + 1}` : `Show Hole No. ${index + 1}`}
                   aria-current={isActive ? "true" : undefined}
                   aria-hidden={Math.abs(d) > WINDOW ? "true" : undefined}
                   tabIndex={isActive ? 0 : -1}
@@ -198,12 +230,14 @@ export default function ConceptCarousel() {
                 >
                   <Image
                     src={slide.image}
-                    alt={`${slide.title} — CamSur Uptown Golf hole`}
+                    alt={`Hole ${index + 1} flyover rendering — CamSur Uptown Golf`}
                     fill
+                    quality={90}
                     priority={index === 0}
                     sizes="(min-width: 2060px) 1360px, (min-width: 640px) 66vw, calc(100vw - 3rem)"
                     className="pointer-events-none object-cover"
                   />
+                  {isActive ? <ActiveFlyover key={slide.slug} flyover={slide.flyover} poster={slide.image} /> : null}
                   {/* Bahagyang dumidilim ang mga gilid para umurong ang tingin. */}
                   <div
                     className={`pointer-events-none absolute inset-0 transition-opacity duration-[560ms] ${
@@ -225,6 +259,35 @@ export default function ConceptCarousel() {
             })}
           </div>
         </div>
+
+        {/* Mga pindutang Previous / Next — sa card sa gilid, malapit sa card sa
+            gitna (24px na pagitan), sapat
+            ang laki (40px sa cellphone, 48px sa desktop). Nasa labas ng
+            swipe area para hindi nila masimulan ang drag. */}
+        <button
+          type="button"
+          onClick={goPrevious}
+          aria-label="Previous hole"
+          className="group absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-full outline-none sm:left-[max(0.5rem,calc(50%_-_min(33vw,680px)_-_72px))]"
+        >
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f3ede1]/95 text-[#03321b] shadow-[0_10px_30px_rgba(6,26,17,0.28)] ring-1 ring-[#03321b]/10 backdrop-blur-sm transition hover:scale-105 hover:bg-white focus-visible:outline-none focus-visible:ring-2 group-focus-visible:ring-2 group-focus-visible:ring-[#b38c34] sm:h-12 sm:w-12">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" aria-hidden="true">
+              <path d="m15 5-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={goNext}
+          aria-label="Next hole"
+          className="group absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-full outline-none sm:right-[max(0.5rem,calc(50%_-_min(33vw,680px)_-_72px))]"
+        >
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f3ede1]/95 text-[#03321b] shadow-[0_10px_30px_rgba(6,26,17,0.28)] ring-1 ring-[#03321b]/10 backdrop-blur-sm transition hover:scale-105 hover:bg-white focus-visible:outline-none focus-visible:ring-2 group-focus-visible:ring-2 group-focus-visible:ring-[#b38c34] sm:h-12 sm:w-12">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" aria-hidden="true">
+              <path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
       </div>
 
       <div
@@ -232,20 +295,28 @@ export default function ConceptCarousel() {
         style={{ "--reveal-delay": "150ms" } as CSSProperties}
         className="mx-auto w-full max-w-[1360px] px-6 pt-7 sm:w-[66vw] sm:min-w-[720px] sm:px-0 sm:pt-8"
       >
-        <div className="grid min-w-0 gap-7 lg:grid-cols-2 lg:gap-10" aria-live="polite">
-          <div className="min-w-0 lg:border-r lg:border-[#03321b]/35 lg:pr-10">
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#7d6224] xl:text-[11px]">
+        {/* Walang gap sa grid (lg:gap-0): ang guhit ay border-r ng kaliwang column,
+            kaya kapag may gap ay napupunta ito sa kaliwa ng gitna. Sa halip,
+            tig-80px na padding ang dalawang column — nasa eksaktong gitna ang
+            guhit, sa ilalim ng gitna ng video at ng mga tuldok. */}
+        <div className="grid min-w-0 gap-7 lg:grid-cols-2 lg:gap-0" aria-live="polite">
+          {/* Sa desktop, nakahanay sa kanan — dikit sa guhit sa gitna, kaya
+              magkatabi ang pangalan at ang paliwanag sa kabila. */}
+          <div className="min-w-0 lg:flex lg:flex-col lg:items-end lg:border-r lg:border-[#03321b]/35 lg:pr-20 lg:text-right">
+            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#7d6224]">
               {t("course.eyebrow")}
             </p>
-            <h3 className="mt-2 max-w-full font-serif text-[clamp(2rem,2.5vw,3rem)] font-medium leading-[0.92] tracking-[-0.05em]">
+            <h3 className="mt-2 max-w-full font-serif text-[clamp(2.25rem,2.8vw,3.4rem)] lining-nums font-medium leading-[0.92] tracking-[-0.05em]">
               {t("course.holeNo")} {active + 1}
             </h3>
-            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-10 min-w-[112px] items-center justify-center rounded-full bg-[#e2c77a] px-6 text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:bg-[#efd99b]">
+            <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[132px] items-center justify-center rounded-full bg-[#e2c77a] px-7 text-[12px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:bg-[#efd99b]">
               View the hole
             </Link>
           </div>
-          <div className="hidden lg:block lg:pt-6">
-            <p className="text-sm leading-6 text-[#536058]">{SLIDES[active].description}</p>
+          {/* Nakagitna nang patayo sa taas ng guhit, kaya kapantay ng pangalan
+              ng butas sa kaliwa at walang bakanteng puwang sa ibaba. */}
+          <div className="hidden lg:flex lg:items-center lg:pl-20">
+            <p className="max-w-[18rem] text-base font-normal leading-7 text-[#536058]">{SLIDES[active].summary}</p>
           </div>
         </div>
       </div>
@@ -261,7 +332,7 @@ export default function ConceptCarousel() {
             key={slide.slug}
             type="button"
             onClick={() => setActive(index)}
-            aria-label={`Show ${slide.title}`}
+            aria-label={`Show Hole No. ${index + 1}`}
             aria-current={active === index ? "true" : undefined}
             /* MAS MALAKING TAP AREA, PAREHONG ITSURA. 6px na tuldok pa rin ang
                nakikita (ang `span`), pero 32px na ang taas ng pinipindot at ang

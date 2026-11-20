@@ -1,5 +1,6 @@
 import { memberFromSession, type Member } from "@/lib/members-db";
 import { currentMember } from "@/lib/member-session";
+import { todayInManila } from "@/lib/weather";
 
 /**
  * Ang member app (`mobile/`): token sa `Authorization: Bearer`, hindi cookie.
@@ -14,6 +15,10 @@ export type AppMember = {
   since: string;
   /** Numero sa member card at sa QR, hal. `CUG · 2026 · 0042`. */
   memberNumber: string;
+  /** Huling araw na bayad ang plan (YYYY-MM-DD), o `null`. */
+  planUntil: string | null;
+  /** May plan at bayad pa ngayong araw — ito ang nagbubukas ng app. */
+  membershipActive: boolean;
 };
 
 /**
@@ -35,6 +40,8 @@ export function toAppMember(member: Member): AppMember {
     plan: member.plan,
     since: member.planSince ?? member.createdAt,
     memberNumber: memberNumber(member),
+    planUntil: member.planUntil,
+    membershipActive: Boolean(member.plan && member.planUntil && member.planUntil >= todayInManila()),
   };
 }
 

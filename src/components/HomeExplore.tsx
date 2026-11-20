@@ -31,25 +31,6 @@ const LAYOUT: Record<SiteSection["slug"], { variant: Variant; className: string;
 
 const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
 
-function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-/** Bilog na arrow — napupuno ng gold kapag hinover ang card. */
-function ArrowDisc({ size = "h-11 w-11" }: { size?: string }) {
-  return (
-    <span
-      className={`${size} inline-flex shrink-0 items-center justify-center rounded-full border border-[#e2c77a]/70 text-[#f0d98f] transition duration-300 group-hover:border-[#e2c77a] group-hover:bg-[#e2c77a] group-hover:text-[#03321b]`}
-    >
-      <ArrowIcon className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
-    </span>
-  );
-}
-
 function Label({ slug }: { slug: SiteSection["slug"] }) {
   return <T k={`nav.${slug}` as TranslationKey} />;
 }
@@ -98,7 +79,6 @@ function ExploreCard({ section, index }: { section: SiteSection; index: number }
                 {section.title}
               </h3>
               <span className="mt-5 inline-flex items-center gap-3 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#f0d98f] xl:text-[11px]">
-                <ArrowDisc size="h-10 w-10" />
                 <T k="home.explore.cta" />
               </span>
             </div>
@@ -142,7 +122,6 @@ function ExploreCard({ section, index }: { section: SiteSection; index: number }
                   </h3>
                 )}
               </div>
-              <ArrowDisc size={isFeature ? "h-14 w-14" : "h-11 w-11"} />
             </div>
           </div>
         </>

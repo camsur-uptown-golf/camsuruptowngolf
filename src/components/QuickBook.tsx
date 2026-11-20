@@ -28,7 +28,10 @@ function addDays(date: string, days: number) {
   return new Date(Date.parse(`${date}T00:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
 }
 
-export default function QuickBook() {
+/** `plain`: walang sariling kahon (bg, border, anino) — para kapag nasa loob
+    na ito ng isang panel na may sarili nang kahon, gaya ng hero ng
+    /plan-your-visit. */
+export default function QuickBook({ plain = false }: { plain?: boolean }) {
   const router = useRouter();
   const today = todayInManila();
   const [date, setDate] = useState(addDays(today, 1));
@@ -42,7 +45,7 @@ export default function QuickBook() {
         event.preventDefault();
         router.push(`/golf/book?date=${date}&round=${round}&players=${players}`);
       }}
-      className="grid gap-5 border border-[#03321b]/12 bg-[#f3ede1] p-5 text-[#03321b] shadow-[0_24px_60px_rgba(0,0,0,0.3)] sm:p-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.7fr)_auto_auto] lg:items-end lg:gap-4"
+      className={`${plain ? "" : "rounded-2xl border border-[#03321b]/12 bg-[#f3ede1] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.3)] sm:p-6"} grid gap-5 text-[#03321b] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.7fr)_auto_auto] lg:items-end lg:gap-4`}
     >
       <div>
         <span id="qb-date-label" className={LABEL}>

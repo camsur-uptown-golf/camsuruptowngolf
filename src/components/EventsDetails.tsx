@@ -1,8 +1,8 @@
-import Link from "next/link";
 import ScrollMotion from "@/components/ScrollMotion";
 import BackToHeroButton from "@/components/BackToHeroButton";
 import EventsOccasions from "@/components/EventsOccasions";
 import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell, delay } from "@/components/EditorialKit";
+import CtaPanel from "@/components/CtaPanel";
 
 /**
  * The Events page, sa parehong editorial na wika ng Visit: malalapad na
@@ -71,26 +71,32 @@ function occasionCountWord() {
   return words[OCCASIONS.length] ?? String(OCCASIONS.length);
 }
 
+/* Iisang gilid ng pahina: kapareho ng Breadcrumbs, Footer, at /clubhouse. */
+const CONTAINER = "relative mx-auto w-full max-w-7xl px-6 lg:px-8";
+const EYEBROW = "font-navigation text-xs font-semibold uppercase tracking-[0.24em] sm:text-sm";
+const SECTION_TITLE = "mt-3 font-display text-[clamp(2.5rem,4.6vw,4.625rem)] font-medium leading-[0.98] tracking-[-0.045em]";
+
 function Occasions() {
   return (
-    /* Normal-flow full-screen panels ang mga occasion. Walang sticky stage o
+    /* Normal-flow na mga panel ang mga occasion. Walang sticky stage o
        scroll-scrub; minsan lang pumapasok ang caption at nananatiling visible. */
-    <section id="occasions" className="relative isolate scroll-mt-24 bg-[#f3ede1] pt-8 sm:pt-10">
-      {/* Nakasentrong ulo — contained pa rin sa 1100px na hanay. */}
-      <div className="relative mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-12">
-        <EditorialHeading
-          size="lg"
-          kicker=""
-          title={`${occasionCountWord()} ways to gather well.`}
-          intro="Each of these can be tailored around your group, your schedule, and the occasion. Nothing here is a fixed package."
-        />
+    <section id="occasions" className="relative isolate scroll-mt-24 bg-[#f3ede1] pt-4 sm:pt-6">
+      <div className={`${CONTAINER} grid gap-5 pb-10 sm:pb-14 lg:grid-cols-[1.3fr_1fr] lg:items-end lg:gap-12`}>
+        <div>
+          <p data-reveal="up" className={`${EYEBROW} text-[#7d6224]`}>
+            Events
+          </p>
+          <h2 data-reveal="up" style={delay(90)} className={`${SECTION_TITLE} text-[#17251e]`}>
+            {`${occasionCountWord()} ways to gather well.`}
+          </h2>
+        </div>
+        <p data-reveal="up" style={delay(180)} className="max-w-xl text-base leading-8 text-[#3f4c45] lg:justify-self-end lg:pb-2">
+          Each of these can be tailored around your group, your schedule, and the occasion. Nothing here is a fixed
+          package.
+        </p>
       </div>
 
-      {/* Nasa loob pa rin ng larawan ang teksto, pero hindi na kontrolado o
-          binabaligtad ng scroll position ang larawan at caption. */}
-      <div className="mt-8 sm:mt-10">
-        <EventsOccasions occasions={OCCASIONS} />
-      </div>
+      <EventsOccasions occasions={OCCASIONS} />
     </section>
   );
 }
@@ -135,36 +141,22 @@ function HowPlanningWorks() {
   );
 }
 
+/* Pangwakas na CTA: berdeng panel sa loob ng cream, hindi buong banda —
+   madilim-berde rin ang Footer na kasunod. Kapareho ng dulo ng /clubhouse. */
 function EventsCta() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-[#03321b]/10 bg-[#f3ede1] py-14 text-[#03321b] sm:py-16">
-      <Shell>
-        <div className="mx-auto max-w-xl text-center xl:max-w-2xl">
-          <div>
-            <h2
-              data-reveal="up"
-              style={delay(90)}
-              className="text-2xl font-medium tracking-[-0.035em] sm:text-3xl xl:text-4xl"
-            >
-              Tell us the occasion.
-            </h2>
-          </div>
-          <div data-reveal="up" style={delay(180)}>
-            <p className="text-sm leading-7 text-[#5d685f] xl:text-base xl:leading-8">
-              Send your date, your group size, and the kind of day you have in mind. The club team will come back with
-              what the course and clubhouse can do around it.
-            </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/plan-your-visit"
-                className="inline-flex h-11 items-center rounded-full bg-[#e2c77a] px-6 text-[11px] xl:text-[11px] font-bold uppercase tracking-[0.12em] text-[#0a2619] transition hover:-translate-y-0.5 hover:bg-[#efd99b]"
-              >
-                Enquire about events
-              </Link>
-            </div>
-          </div>
-        </div>
-      </Shell>
+    <section className="relative isolate bg-[#f3ede1] py-16 text-[#03321b] sm:py-20 lg:py-24">
+      {/* Mas malapad kaysa sa ibang bahagi ng pahina (`max-w-[1600px]`),
+          kapareho ng panel sa /packages. */}
+      <div className="relative mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        <CtaPanel
+          reveal
+          eyebrow="Plan an event"
+          title="Tell us the occasion."
+          text="Send your date, your group size, and the kind of day you have in mind. The club team will come back with what the course and clubhouse can do around it."
+          primary={{ label: "Enquire about events", href: "/plan-your-visit" }}
+        />
+      </div>
     </section>
   );
 }

@@ -128,11 +128,11 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
           {!isClubhouse ? (
             <Image
               src={section.image}
-              alt={`${section.label} at CamSur Uptown Golf`}
+              alt={isGolf ? "Golf course concept with open fairways, lakes and the broad, rounded summit of Mt. Isarog" : `${section.label} at CamSur Uptown Golf`}
               fill
               priority
               sizes="100vw"
-              quality={isEvents ? 90 : undefined}
+              quality={isEvents || isGolf ? 90 : undefined}
               data-parallax={usesHeroParallax ? "-0.06" : undefined}
               data-hero-media={usesStickyReveal ? "" : undefined}
               className={`-z-20 object-cover ${usesHeroParallax ? "parallax-media" : ""}`}

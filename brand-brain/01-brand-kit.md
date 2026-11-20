@@ -138,7 +138,7 @@ Source: [CSS], [EDK], [SK], [FD], [HEADER], [HOME].
 | Set | Path | What it is | Label status |
 |---|---|---|---|
 | Home hero film + poster | `public/hero-golf-2027.mp4`, poster in [SITE] `TEASER_POSTER` | Course film | — |
-| Hole aerials | `public/golf/aerial-holes/hole-NN-aerial.png`, `official-hole-maps/` | Sunlit oblique aerials: lakes, palms, bunkers, cart paths | Course is under development ([04] §2), so treat as visualisations. Unlabelled — owner call | (not in the repo)
+| Hole flyovers | `public/golf/aerial-holes/hole-NN-flyover.webp`, `official-hole-maps/` | Supplied 9 Nov 2026 Hole 01–18 flyover renders; 6000×3375 source JPEGs exported as 3840×2160 WebP for the website. Shared by hole heroes, the home carousel, menu previews, and course map. | Course is under development ([04] §2), so treat as visualisations. Unlabelled — owner call |
 | Course concepts | `public/course-concepts/concept-NN-*.png` | Concept views | Named "concept" in files |
 | Clubhouse concept | `public/clubhouse/concept/*.jpg`, `public/clubhouse/*.jpg`, `*.mp4` | Renders: curved bronze-and-glass volume, rooftop trees, lake reflections, golden-hour light | Concept note printed on `/clubhouse/architecture` only |
 | Fairway Villas | `public/fairway-villas/*.png` | Interiors and terrace facing Mt. Isarog | Unlabelled — owner call |

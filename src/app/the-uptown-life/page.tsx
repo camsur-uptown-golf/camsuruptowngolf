@@ -200,7 +200,7 @@ export default function UptownLifePage() {
             </ul>
             <p className="mt-8 text-center">
               <Link href="/pro-shop" className="font-navigation text-[12px] font-bold uppercase tracking-[0.18em] text-[#2e5126] underline-offset-4 hover:underline">
-                See the Pro Shop collections →
+                See the Pro Shop collections
               </Link>
             </p>
           </div>

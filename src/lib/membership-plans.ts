@@ -82,6 +82,21 @@ export function findPlan(id: string | null | undefined): MembershipPlan | null {
   return MEMBERSHIP_PLANS.find((plan) => plan.id === id) ?? null;
 }
 
+/**
+ * Ilang buwan ang puwedeng bayaran nang sabay. Walang discount pa — ang club
+ * ang magpapasya; dito lang babaguhin (`termPrice`).
+ */
+export const BILLING_TERMS = [1, 3, 12] as const;
+export type BillingTerm = (typeof BILLING_TERMS)[number];
+
+export function isBillingTerm(value: unknown): value is BillingTerm {
+  return BILLING_TERMS.includes(value as BillingTerm);
+}
+
+export function termPrice(plan: MembershipPlan, months: BillingTerm): number {
+  return plan.pricePerMonth * months;
+}
+
 /** "₱7,500" — walang decimal, may kuwit, piso. */
 export function formatPeso(amount: number): string {
   return `₱${amount.toLocaleString("en-US")}`;

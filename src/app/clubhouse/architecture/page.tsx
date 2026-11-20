@@ -63,7 +63,7 @@ export default function ClubhouseArchitecturePage() {
               style={delay(280)}
               className="mt-8 inline-flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#e1c56e] transition-colors hover:text-white xl:text-[11px]"
             >
-              <span aria-hidden="true">←</span> Back to the clubhouse
+               Back to the clubhouse
             </Link>
           </Shell>
         </section>
@@ -216,7 +216,7 @@ export default function ClubhouseArchitecturePage() {
                 rel="noreferrer"
                 className="mt-4 inline-flex items-center gap-1.5 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#7d6224] transition-colors hover:text-[#2e5126] xl:text-[11px]"
               >
-                {CLUBHOUSE_DESIGNER.website} <span aria-hidden="true">↗</span>
+                {CLUBHOUSE_DESIGNER.website}
               </a>
               <p
                 data-reveal="up"

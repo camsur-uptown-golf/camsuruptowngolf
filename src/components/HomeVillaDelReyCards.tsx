@@ -119,7 +119,6 @@ export default function HomeVillaDelReyCards() {
                 className="mt-4 inline-flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#2e5126] transition-all group-hover:gap-3"
               >
                 View stay
-                <span>→</span>
               </span>
             </li>
           ))}

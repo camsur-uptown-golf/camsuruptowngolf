@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/getting-here",
     "/members",
     "/terms-of-use",
+    "/privacy-policy",
     ...SITE_SECTIONS.filter((section) => section.slug !== "accommodations").map((section) => `/${section.slug}`),
     ...COURSE_PAGES.map((course) => `/golf/courses/${course.slug}`),
     ...CLUBHOUSE_SPACES.map((space) => `/clubhouse/${space.id}`),

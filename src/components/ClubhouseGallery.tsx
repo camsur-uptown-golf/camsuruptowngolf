@@ -1,11 +1,16 @@
 import Image from "next/image";
 
 /**
- * Extra views for an individual Clubhouse space.
+ * Mga dagdag na kuha ng isang espasyo sa Clubhouse.
  *
- * Each image is a normal full-screen panel. There is no sticky stage, scroll
- * listener, progress variable, or reversible scrub. The caption uses the
- * site's shared one-time reveal and remains visible after it has entered.
+ * BUONG-LAPAD NA LARAWAN, kapareho ng mga kuwarto sa /clubhouse: buo ang
+ * bawat render (`aspect-[2600/1451]` — ang hugis ng lahat ng kuha), at ang
+ * caption ay nasa loob nito sa kaliwang-ibaba, sa gilid ng pahina.
+ *
+ * WALANG MADILIM NA PATONG SA BUONG LARAWAN: text-shadow at isang lilim sa
+ * ibaba lang ang nagpapabasa sa puting caption.
+ *
+ * Normal document flow; minsan lang pumapasok ang caption (`data-reveal`).
  */
 export default function ClubhouseGallery({
   label,
@@ -20,25 +25,23 @@ export default function ClubhouseGallery({
         <figure
           key={shot.src}
           data-shot-panel
-          className="relative min-h-svh overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
+          className="relative aspect-[2600/1451] max-h-[88svh] w-full overflow-hidden bg-[radial-gradient(120%_80%_at_70%_20%,#2f5a40_0%,#03321b_50%,#102419_100%)]"
         >
           <Image src={shot.src} alt={shot.alt} fill sizes="100vw" className="object-cover" />
-
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 78% 82% at 0% 100%, rgba(0,0,0,0.64) 0%, rgba(0,0,0,0.46) 38%, rgba(0,0,0,0.20) 66%, transparent 92%), linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.28) 60%, rgba(0,0,0,0.58) 100%)",
-            }}
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,transparent_0%,rgba(7,23,15,0.26)_40%,rgba(7,23,15,0.62)_100%)]"
           />
 
-          <figcaption className="absolute inset-x-0 bottom-0 px-6 pb-6 pt-20 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_2px_10px_rgba(0,0,0,0.6)] sm:px-9 sm:pb-9 sm:pt-24 lg:px-12 lg:pb-12 lg:pt-28">
-            <div data-reveal="left" className="max-w-xl">
-              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.18em] text-[#e2c77a] xl:text-[11px]">
+          <figcaption className="absolute inset-x-0 bottom-0">
+            <div
+              data-reveal="left"
+              className="mx-auto w-full max-w-7xl px-6 pb-5 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_2px_14px_rgba(0,0,0,0.55)] sm:pb-8 lg:px-8 lg:pb-12"
+            >
+              <p className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f0d98f] sm:text-sm">
                 {label}
               </p>
-              <p className="mt-3 text-lg leading-8 text-white sm:text-xl xl:text-2xl xl:leading-9">
+              <p className="mt-2 max-w-3xl font-display text-[clamp(1.25rem,2.8vw,2.5rem)] font-medium leading-[1.1] tracking-[-0.03em] sm:mt-3">
                 {shot.alt}
               </p>
             </div>

@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { verifyWebhook } from "@/lib/paymongo";
+import { confirmMembershipPayment, getMembershipPaymentBySession } from "@/lib/membership-db";
+import { emailMembershipPaid } from "@/lib/membership-emails";
 import { confirmReservation, getReservationBySession } from "@/lib/reservations-db";
 
 export const runtime = "nodejs";
@@ -22,8 +24,15 @@ export async function POST(request: Request) {
   };
   const attributes = event.data?.attributes;
   if (attributes?.type === "checkout_session.payment.paid" && attributes.data?.id) {
+    const paymentRef = attributes.data.attributes?.payments?.[0]?.id ?? "webhook";
     const reservation = await getReservationBySession(attributes.data.id);
-    if (reservation) await confirmReservation(reservation.id, attributes.data.attributes?.payments?.[0]?.id ?? "webhook");
+    if (reservation) await confirmReservation(reservation.id, paymentRef);
+    /* Kung hindi tee time, baka bayad sa membership. */
+    const membership = reservation ? null : await getMembershipPaymentBySession(attributes.data.id);
+    if (membership) {
+      const paid = await confirmMembershipPayment(membership.id, paymentRef);
+      if (paid) emailMembershipPaid(paid);
+    }
   }
   /* Laging 200 kapag tunay ang pirma, para hindi paulit-ulit magpadala ang PayMongo. */
   return NextResponse.json({ ok: true });

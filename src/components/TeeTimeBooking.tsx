@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import BookingDatePicker from "@/components/BookingDatePicker";
 import ForecastDays from "@/components/ForecastDays";
+import PaymentMethodPicker, { methodsNote } from "@/components/PaymentMethodPicker";
 import Tr from "@/components/Tr";
 import { lookup, useSiteStrings } from "@/i18n/site-strings";
 import {
@@ -22,6 +23,7 @@ import {
   type Tee,
 } from "@/lib/golf-booking";
 import { formatPeso } from "@/lib/membership-plans";
+import type { PaymentMethod } from "@/lib/payments";
 
 /**
  * Ang tee-time booking form — iisang pahina, sunod-sunod na hakbang:
@@ -45,32 +47,48 @@ type Choice = Slot & { tee: Tee };
      - front = Holes 1–9
      - back  = Holes 10–18 */
 type Round = "full" | "front" | "back";
-/** A compact summary of the nines included in the selected round. */
-function RoundCoverage({ round }: { round: Round }) {
+/* ISANG HANAY NG CARD — dating tatlong toggle + dalawang berdeng kahon
+   ("Front nine / Back nine") sa ilalim. Nakalilito: sa Full course ay
+   parehong berde ang dalawang kahon, kaya mukhang dalawa ang napili. Ngayon
+   ay iisang pili lang: ang card na may tsek. */
+const ROUND_CARDS: { value: Round; title: string; holes: string; time: string; holesCount: Holes }[] = [
+  { value: "full", title: "Full course", holes: "Holes 1–18", time: "About 4½ hours", holesCount: 18 },
+  { value: "front", title: "Front nine", holes: "Holes 1–9", time: "About 2 hours", holesCount: 9 },
+  { value: "back", title: "Back nine", holes: "Holes 10–18", time: "About 2 hours", holesCount: 9 },
+];
+
+function RoundCards({ value, onChange }: { value: Round; onChange: (round: Round) => void }) {
   return (
-    <div className="mt-4 grid grid-cols-2 gap-3" role="group" aria-label="Holes included in your round">
-      {([
-        { id: "front", label: "Front nine", holes: "Holes 1–9" },
-        { id: "back", label: "Back nine", holes: "Holes 10–18" },
-      ] as const).map((nine) => {
-        const included = round === "full" || round === nine.id;
+    <div role="radiogroup" aria-label="How much would you like to play?" className="grid gap-3 sm:grid-cols-3">
+      {ROUND_CARDS.map((card) => {
+        const selected = value === card.value;
         return (
-          <div
-            key={nine.id}
-            className={`border p-3.5 transition-colors sm:p-4 ${included ? "border-[#2e5126] bg-[#2e5126] text-[#f3ede1]" : "border-[#03321b]/10 bg-[#03321b]/[0.03] text-[#788279]"}`}
+          <button
+            key={card.value}
+            type="button"
+            role="radio"
+            aria-checked={selected}
+            onClick={() => onChange(card.value)}
+            className={`relative flex flex-col rounded-2xl border bg-white p-5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2e5126]/40 ${
+              selected ? "border-[#2e5126] ring-1 ring-[#2e5126] shadow-[0_12px_30px_rgba(20,39,29,0.10)]" : "border-[#03321b]/15 hover:border-[#2e5126]/50"
+            }`}
           >
-            <div className="flex items-center gap-2">
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={`h-4 w-4 shrink-0 ${included ? "text-[#e2c77a]" : "text-[#9aa39d]"}`}>
-                <path d="M6 21V3m0 0c4-3 8 3 12 0v10c-4 3-8-3-12 0M3 21h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.12em] sm:text-[11px]">{nine.label}</p>
-            </div>
-            <p className="mt-3 text-base font-medium tracking-[-0.02em] sm:text-lg">{nine.holes}</p>
-            <p className={`mt-1.5 flex items-center gap-1.5 text-[11px] ${included ? "text-[#e2c77a]" : "text-[#5f6a62]"}`}>
-              {included ? <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5"><path d="m3 8 3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg> : null}
-              {included ? "Included in your round" : "Not included"}
-            </p>
-          </div>
+            <span
+              aria-hidden="true"
+              className={`absolute right-4 top-4 flex h-5 w-5 items-center justify-center rounded-full border transition ${
+                selected ? "border-[#2e5126] bg-[#2e5126] text-[#efd99b]" : "border-[#03321b]/25 text-transparent"
+              }`}
+            >
+              <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </span>
+            <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#7d6224]">{card.title}</span>
+            <span className="mt-2 text-lg font-medium tracking-[-0.02em] text-[#03321b]">{card.holes}</span>
+            <span className="mt-1 text-xs text-[#667269]">{card.time}</span>
+            <span className="mt-4 border-t border-[#03321b]/10 pt-3 text-sm text-[#03321b]">
+              <span className="font-semibold">{formatPeso(GREEN_FEES[card.holesCount])}</span>
+              <span className="text-[#667269]"> per player</span>
+            </span>
+          </button>
         );
       })}
     </div>
@@ -96,37 +114,6 @@ const TITLE = "mt-2 text-xl font-medium tracking-[-0.03em] text-[#03321b]";
 
 function addDays(date: string, days: number) {
   return new Date(Date.parse(`${date}T00:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
-}
-
-function Toggle<T extends string | number>({
-  value,
-  options,
-  onChange,
-}: {
-  value: T;
-  options: { value: T; label: string; hint?: string }[];
-  onChange: (value: T) => void;
-}) {
-  return (
-    <div className={`grid gap-2 ${options.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
-      {options.map((option) => (
-        <button
-          key={String(option.value)}
-          type="button"
-          aria-pressed={value === option.value}
-          onClick={() => onChange(option.value)}
-          className={`border px-4 py-3 text-left transition ${
-            value === option.value ? "border-[#2e5126] bg-[#2e5126] text-white" : "border-[#03321b]/20 bg-white text-[#03321b] hover:border-[#2e5126]"
-          }`}
-        >
-          <span className="block text-sm font-semibold">{option.label}</span>
-          {option.hint ? (
-            <span className={`mt-0.5 block text-xs ${value === option.value ? "text-white/70" : "text-[#667269]"}`}>{option.hint}</span>
-          ) : null}
-        </button>
-      ))}
-    </div>
-  );
 }
 
 function Stepper({ value, min, max, onChange, label }: { value: number; min: number; max: number; onChange: (v: number) => void; label: string }) {
@@ -177,11 +164,11 @@ function StepCard({
   return (
     <section
       id={`booking-step-${n}`}
-      className={`scroll-mt-28 border bg-white transition ${
+      className={`scroll-mt-28 overflow-hidden rounded-2xl border bg-white transition ${
         state === "open" ? "border-[#2e5126]/40 shadow-[0_18px_44px_rgba(20,39,29,0.08)]" : "border-[#03321b]/12"
       } ${state === "todo" ? "bg-white/50" : ""}`}
     >
-      <header className="flex items-center gap-4 px-5 py-4 sm:px-6">
+      <header className="flex items-center gap-4 px-5 py-4 sm:px-7 sm:py-5">
         <span
           className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
             state === "done" ? "bg-[#2e5126] text-[#efd99b]" : state === "open" ? "border-2 border-[#2e5126] text-[#2e5126]" : "border border-[#03321b]/20 text-[#9aa39d]"
@@ -190,7 +177,7 @@ function StepCard({
           {state === "done" ? <CheckIcon /> : n}
         </span>
         <div className="min-w-0 flex-1">
-          <h2 className={`text-base font-semibold tracking-[-0.01em] ${state === "todo" ? "text-[#9aa39d]" : "text-[#03321b]"}`}>{title}</h2>
+          <h2 className={`font-display text-[1.6rem] font-medium leading-none ${state === "todo" ? "text-[#9aa39d]" : "text-[#17251e]"}`}>{title}</h2>
           {state === "done" && summary ? <p className="mt-0.5 truncate text-sm text-[#667269]">{summary}</p> : null}
         </div>
         {state === "done" && onChange ? (
@@ -203,7 +190,7 @@ function StepCard({
           </button>
         ) : null}
       </header>
-      {state === "open" ? <div className="border-t border-[#03321b]/10 px-5 pb-6 pt-5 sm:px-6">{children}</div> : null}
+      {state === "open" ? <div className="border-t border-[#03321b]/10 px-5 pb-6 pt-5 sm:px-7 sm:pb-8">{children}</div> : null}
     </section>
   );
 }
@@ -212,10 +199,13 @@ export default function TeeTimeBooking({
   today,
   prefill,
   testMode = false,
+  methods = [],
   initial,
 }: {
   today: string;
-  /** Walang PayMongo: confirmed agad ang booking, walang bayad. */
+  /** Mga paraan ng bayad na may susi (PayMongo, PayPal); pipili ang guest kapag dalawa. */
+  methods?: PaymentMethod[];
+  /** Walang PayMongo/PayPal: confirmed agad ang booking, walang bayad. */
   testMode?: boolean;
   /** Mula sa quick-book ng /plan-your-visit (`?date=&round=&players=`). */
   initial?: { date?: string; round?: Round; players?: number };
@@ -250,6 +240,7 @@ export default function TeeTimeBooking({
   const [contact, setContact] = useState(prefill ?? { name: "", email: "", phone: "" });
   const [status, setStatus] = useState<"idle" | "sending">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [method, setMethod] = useState<PaymentMethod>(methods[0] ?? "paymongo");
 
   /* Availability kada palit ng petsa o round. */
   useEffect(() => {
@@ -354,6 +345,7 @@ export default function TeeTimeBooking({
           contactName: contact.name,
           contactEmail: contact.email,
           contactPhone: contact.phone,
+          method,
         }),
       });
       const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; code?: string; checkoutUrl?: string };
@@ -375,7 +367,7 @@ export default function TeeTimeBooking({
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,1fr)_420px]">
       <div id="booking-steps" className="space-y-3">
         <StepCard
           n={1}
@@ -408,16 +400,7 @@ export default function TeeTimeBooking({
           <div className="mt-8 border-t border-[#03321b]/10 pt-6">
           <h3 className={TITLE}>How much would you like to play?</h3>
           <div className="mt-4">
-            <Toggle
-              value={round}
-              onChange={changeRound}
-              options={[
-                { value: "full", label: "Full course", hint: `Holes 1 to 18 · about 4½ hours · ${formatPeso(GREEN_FEES[18])} per player` },
-                { value: "front", label: "Front nine", hint: `Holes 1 to 9 · about 2 hours · ${formatPeso(GREEN_FEES[9])} per player` },
-                { value: "back", label: "Back nine", hint: `Holes 10 to 18 · about 2 hours · ${formatPeso(GREEN_FEES[9])} per player` },
-              ]}
-            />
-            <RoundCoverage round={round} />
+            <RoundCards value={round} onChange={changeRound} />
             <p className="mt-4 border-l-2 border-[#e2c77a] bg-white/60 px-3 py-2 text-xs leading-5 text-[#5d685f]">
               Only want a few holes, like Holes 1 to 5? Choose the Front nine — you can stop whenever you like. The
               9-hole rate applies.
@@ -446,8 +429,8 @@ export default function TeeTimeBooking({
             )}
           </div>
           {validDate && !loading && availability && openCount > 0 ? (
-            <div className="mt-4 max-w-md">
-              <div role="group" aria-label={tr("Choose a tee time")} className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            <div className="mt-4">
+              <div role="group" aria-label={tr("Choose a tee time")} className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
                 {slots.filter((slot) => slot.status === "open").map((slot) => (
                   <button
                     key={slot.time}
@@ -658,7 +641,7 @@ export default function TeeTimeBooking({
       </div>
 
       {/* Buod — dumidikit sa gilid sa desktop. */}
-      <aside className="border border-[#03321b]/12 bg-white p-6 lg:sticky lg:top-28">
+      <aside className="rounded-2xl border border-[#03321b]/12 bg-white p-6 shadow-[0_18px_44px_rgba(20,39,29,0.08)] sm:p-7 lg:sticky lg:top-28">
         <div className="flex items-center justify-between gap-3">
           <p className={STEP}>Summary</p>
         </div>
@@ -709,6 +692,13 @@ export default function TeeTimeBooking({
           </p>
         ) : null}
 
+        {!testMode && methods.length > 1 ? (
+          <div className="mt-5">
+            <p className="mb-2 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#5f6a62]">Pay with</p>
+            <PaymentMethodPicker methods={methods} value={method} onChange={setMethod} />
+          </div>
+        ) : null}
+
         <button
           type="button"
           onClick={submit}
@@ -733,7 +723,7 @@ export default function TeeTimeBooking({
           </p>
         ) : null}
         <p className="mt-3 text-[11px] leading-5 text-[#5f6a62]">
-          {testMode ? null : `Pay by GCash, Maya, GrabPay, or card. Your tee time is held for ${COURSE.holdMinutes} minutes while you pay.`}{" "}
+          {testMode ? null : `${methodsNote(methods)} Your tee time is held for ${COURSE.holdMinutes} minutes while you pay.`}{" "}
           Free cancellation up to 48 hours before your tee time; the downpayment is kept for later cancellations or no-shows.
           Heavy rain? Your downpayment moves to a new date.
         </p>

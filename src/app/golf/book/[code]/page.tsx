@@ -3,17 +3,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import HeroBackdrop from "@/components/HeroBackdrop";
+import { TEE_TIME_HERO } from "@/lib/tee-time-hero";
 import ReservationActions from "@/components/ReservationActions";
 import Tr from "@/components/Tr";
 import { ADDONS, COURSE, VILLA_NIGHTS, formatTime, toMinutes, toTime } from "@/lib/golf-booking";
 import { simulatePayments } from "@/lib/booking-server";
+import { paymentMethods } from "@/lib/payments";
 import { formatPeso } from "@/lib/membership-plans";
 import { getReservation } from "@/lib/reservations-db";
 import { CLUB_PHONE } from "@/lib/site-content";
 
 /**
  * Ang pahina ng isang reservation, sa pamamagitan ng code nito (CU-XXXXXXXXXX).
- * Dito bumabalik ang guest mula sa PayMongo, at ito ang link na itatago niya.
+ * Dito bumabalik ang guest mula sa PayMongo o PayPal, at ito ang link na itatago niya.
  *
  * Mahirap hulaan ang code (10 random na titik), kaya ito na rin ang "susi"
  * para makita ang reservation. Hindi ito ini-index ng search engine.
@@ -64,8 +66,8 @@ export default async function ReservationPage({ params }: { params: Promise<{ co
   return (
     <>
       <main className="bg-[#f3ede1] text-[#03321b]">
-        <section id="top" className="relative isolate min-h-[380px] overflow-hidden bg-[#03321b] px-6 pb-14 pt-64 text-center text-white sm:min-h-[560px] sm:pb-16 sm:pt-72 lg:px-8">
-          <HeroBackdrop src="/hero-images/tee-time-2027-logo.webp" alt="Golf ball printed with the CamSur Uptown Golf logo and driver ready for a morning tee time" imageClassName="object-[60%_center] sm:object-center" />
+        <section id="top" className="relative isolate min-h-[380px] overflow-hidden bg-[#03321b] px-6 pb-28 pt-64 text-center text-white sm:min-h-[640px] sm:pb-52 sm:pt-72 lg:min-h-[800px] lg:px-8 lg:pb-84">
+          <HeroBackdrop {...TEE_TIME_HERO} alt="Golf ball printed with the CamSur Uptown Golf logo and driver ready for a morning tee time" />
           <span className={`inline-flex rounded-full px-3 py-1 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] ${state.tone}`}>
             {state.label}
           </span>
@@ -122,7 +124,7 @@ export default async function ReservationPage({ params }: { params: Promise<{ co
                       ]}
                     />
                   </p>
-                  <ReservationActions code={reservation.code} simulate={simulatePayments()} />
+                  <ReservationActions code={reservation.code} simulate={simulatePayments()} methods={paymentMethods()} />
                 </>
               ) : reservation.status === "confirmed" ? (
                 <p className="mt-6 text-sm leading-6 text-[#5d685f]">

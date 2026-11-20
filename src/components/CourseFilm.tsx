@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePrivacyPreferences } from "@/components/PrivacyNotice";
 
 const MEDIA_ID = "xfqyn64zqs";
 
@@ -20,13 +21,14 @@ const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties
 
 export default function CourseFilm() {
   const [playing, setPlaying] = useState(false);
+  const { hasOptionalConsent, openPrivacyPreferences } = usePrivacyPreferences();
 
   return (
     <section
       id="film"
       className="relative isolate flex min-h-[540px] items-center overflow-hidden bg-[#071d13] text-white sm:min-h-[620px] lg:min-h-[720px]"
     >
-      {playing ? (
+      {playing && hasOptionalConsent ? (
         <iframe
           src={PLAYER_SRC}
           title="CamSur Uptown Golf teaser film"
@@ -85,8 +87,8 @@ export default function CourseFilm() {
                 sa pagsentro, at ire-reset iyon ng landed na reveal. */}
             <button
               type="button"
-              onClick={() => setPlaying(true)}
-              aria-label="Play the CamSur Uptown teaser film"
+              onClick={() => hasOptionalConsent ? setPlaying(true) : openPrivacyPreferences()}
+              aria-label={hasOptionalConsent ? "Play the CamSur Uptown teaser film" : "Review privacy preferences to play the teaser film"}
               className="group mt-12 flex flex-col items-center gap-4 lg:absolute lg:left-1/2 lg:top-1/2 lg:mt-0 lg:-translate-x-1/2 lg:-translate-y-1/2"
             >
               <span className="flex h-[72px] w-[72px] items-center justify-center rounded-full border border-white/55 bg-white/[0.06] backdrop-blur-[2px] transition duration-300 group-hover:scale-105 group-hover:border-white group-hover:bg-white/15 sm:h-24 sm:w-24">
@@ -95,7 +97,7 @@ export default function CourseFilm() {
                 </svg>
               </span>
               <span className="text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.24em] text-white/85 transition-colors group-hover:text-white">
-                Watch
+                {hasOptionalConsent ? "Watch" : "Enable video & watch"}
               </span>
             </button>
           </div>

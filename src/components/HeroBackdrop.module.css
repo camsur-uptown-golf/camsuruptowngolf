@@ -1,0 +1,28 @@
+.surface {
+  position: absolute;
+  inset: 0;
+  z-index: -20;
+  pointer-events: none;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 72%,
+    rgb(0 0 0 / 95%) 80%,
+    rgb(0 0 0 / 60%) 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 72%,
+    rgb(0 0 0 / 95%) 80%,
+    rgb(0 0 0 / 60%) 90%,
+    transparent 100%
+  );
+}

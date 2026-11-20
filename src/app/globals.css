@@ -151,6 +151,16 @@ button.rounded-full {
   text-shadow: none;
 }
 
+/* Keep number fields arrow-free while retaining typed and keyboard input. */
+input[type="number"] {
+  appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* All prose uses Montserrat site-wide (Brand Guidelines 2026, p.32). Display
    figures and compact navigation labels retain their dedicated brand faces. */
 main p:not(.font-display):not(.font-navigation) {

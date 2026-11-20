@@ -11,7 +11,10 @@ import Tr from "@/components/Tr";
 import { Container } from "@/components/SectionKit";
 import { currentMember } from "@/lib/member-session";
 import { CLUB_EMAIL, CLUB_PHONE } from "@/lib/site-content";
-import { findPlan, formatPeso } from "@/lib/membership-plans";
+import { findPlan } from "@/lib/membership-plans";
+import { getMembershipPayment } from "@/lib/membership-db";
+import { paymentMethods } from "@/lib/payments";
+import { todayInManila } from "@/lib/weather";
 
 /**
  * Ang pupuntahan ng "Member's Login" sa side bar.
@@ -61,9 +64,15 @@ function PlansHeading({ eyebrow, title, intro }: { eyebrow: string; title: strin
   );
 }
 
-export default async function MembersPage() {
+export default async function MembersPage({ searchParams }: { searchParams: Promise<{ paid?: string }> }) {
   const member = await currentMember();
   const plan = findPlan(member?.plan);
+  /* Bayad pa ang plan hanggang `planUntil` (kasama ang araw na iyon). */
+  const planActive = Boolean(plan && member?.planUntil && member.planUntil >= todayInManila());
+  /* Pagbalik mula sa PayMongo/PayPal: `?paid=MB-…` — sariling bayad lang ng member ang ipinapakita. */
+  const { paid } = await searchParams;
+  const justPaid = member && paid && /^MB-[A-Z0-9]{10}$/.test(paid) ? await getMembershipPayment(paid) : null;
+  const payment = justPaid && justPaid.memberId === member?.id ? justPaid : null;
 
   if (member) {
     return (
@@ -99,7 +108,16 @@ export default async function MembersPage() {
                       ["Email", member.email],
                       ["Mobile number", member.mobile ?? "—"],
                       ["Member since", formatDate(member.createdAt)],
-                      ["Plan", plan ? `${plan.name} · ${formatPeso(plan.pricePerMonth)}/mo` : "—"],
+                      [
+                        "Plan",
+                        plan
+                          ? planActive
+                            ? `${plan.name} · active until ${formatDate(member.planUntil)}`
+                            : member.planUntil
+                              ? `${plan.name} · ended ${formatDate(member.planUntil)}`
+                              : `${plan.name} · payment needed`
+                          : "—",
+                      ],
                     ].map(([label, value]) => (
                       <div key={label} className="flex flex-col gap-1 border-b border-[#03321b]/10 pb-4 last:border-0 last:pb-0 sm:flex-row sm:justify-between sm:gap-6">
                         <dt className="text-[#667269]">{label}</dt>
@@ -162,15 +180,35 @@ export default async function MembersPage() {
           </section>
 
           <section id="plans" className="scroll-mt-24 border-t border-[#03321b]/10 bg-[#f3ede1] pb-20 pt-16 text-[#03321b]">
+            {payment ? (
+              <div role="status" className="mx-auto mb-12 max-w-2xl border border-[#2e5126]/25 bg-white px-6 py-5 text-center">
+                {payment.status === "paid" && payment.periodEnd ? (
+                  <>
+                    <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">Payment received</p>
+                    <p className="mt-2 text-sm leading-7 text-[#3f4c45]">
+                      Thank you — your {findPlan(payment.plan)?.name} membership is active until{" "}
+                      <strong className="text-[#03321b]">{formatDate(payment.periodEnd)}</strong>. A receipt is on its way to your email.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">Payment processing</p>
+                    <p className="mt-2 text-sm leading-7 text-[#3f4c45]">
+                      We haven’t received confirmation of your payment yet. This page will show your plan once it arrives — usually within a minute.
+                    </p>
+                  </>
+                )}
+              </div>
+            ) : null}
             {/* Mas malapad kaysa sa Container — tatlong card na may mahabang listahan. */}
             <div className="mx-auto w-full max-w-6xl px-6 lg:px-8">
               <PlansHeading
                 eyebrow="Membership plans"
-                title={plan ? "Your membership." : "Choose your membership."}
-                intro="Three monthly plans. Pick the one that fits how often you play — you can switch or cancel at any time."
+                title={planActive ? "Your membership." : "Choose your membership."}
+                intro="Three monthly plans. Pay for one, three or twelve months at a time — renew whenever you like."
               />
               <div className="mt-14">
-                <MembershipPlans signedIn currentPlan={member.plan} />
+                <MembershipPlans signedIn currentPlan={member.plan} planActive={planActive} methods={paymentMethods()} />
               </div>
             </div>
           </section>

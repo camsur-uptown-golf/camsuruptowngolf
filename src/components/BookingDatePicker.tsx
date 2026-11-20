@@ -29,14 +29,6 @@ function offsetMonth(value: string, months: number) {
   return iso(date);
 }
 
-function Chevron({ className = "" }: { className?: string }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className={`h-4 w-4 ${className}`}>
-      <path d="m7.5 5 5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 function Calendar({
   id, value, min, max, lang, tr, onSelect, onClose,
 }: {
@@ -83,15 +75,15 @@ function Calendar({
     setFocusedDate(clamp(next));
   }
 
-  const navButton = "flex h-7 w-7 items-center justify-center rounded-sm border border-white/20 text-white transition hover:border-[#e2c77a] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e2c77a] disabled:cursor-not-allowed disabled:opacity-25";
+  const navButton = "flex min-h-8 shrink-0 items-center justify-center rounded-sm border border-white/20 px-2 text-[11px] text-white transition hover:border-[#e2c77a] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e2c77a] disabled:cursor-not-allowed disabled:opacity-25";
 
   return (
     <div id={id} role="dialog" aria-label={tr("Choose a date")} className="absolute left-0 top-full z-30 mt-1.5 w-full max-w-[288px] overflow-hidden rounded-sm border border-[#2e5126]/15 bg-white shadow-[0_8px_24px_-8px_rgba(10,36,24,0.25)]">
-      <div className="flex items-center justify-between gap-2 bg-[#03321b] px-3 py-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2 bg-[#03321b] px-3 py-2.5">
         <p id={`${id}-month`} aria-live="polite" className="text-sm font-medium text-white">{format(first, { month: "long", year: "numeric" })}</p>
         <div className="flex items-center gap-1">
-          <button type="button" aria-label={tr("Previous month")} disabled={month <= min.slice(0, 7)} onClick={() => setFocusedDate(clamp(offsetMonth(focusedDate, -1)))} className={navButton}><Chevron className="rotate-180" /></button>
-          <button type="button" aria-label={tr("Next month")} disabled={month >= max.slice(0, 7)} onClick={() => setFocusedDate(clamp(offsetMonth(focusedDate, 1)))} className={navButton}><Chevron /></button>
+          <button type="button" aria-label={tr("Previous month")} disabled={month <= min.slice(0, 7)} onClick={() => setFocusedDate(clamp(offsetMonth(focusedDate, -1)))} className={navButton}>{tr("Previous")}</button>
+          <button type="button" aria-label={tr("Next month")} disabled={month >= max.slice(0, 7)} onClick={() => setFocusedDate(clamp(offsetMonth(focusedDate, 1)))} className={navButton}>{tr("Next")}</button>
           <button type="button" aria-label={tr("Close calendar")} onClick={onClose} className="ml-1 flex h-7 w-5 items-center justify-center rounded-sm text-white/60 transition hover:text-white focus-visible:outline-2 focus-visible:outline-[#e2c77a]">
             <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
           </button>
@@ -226,7 +218,6 @@ export default function BookingDatePicker({ id, value, min, max, onChange, compa
           <span id={`${id}-value`} aria-live="polite" className="min-w-0 flex-1 text-sm font-medium text-[#03321b]">
             {format(value, { weekday: "short", day: "numeric", month: "short", year: "numeric" })}
           </span>
-          <Chevron className={`shrink-0 text-[#2e5126] transition-transform ${open ? "-rotate-90" : "rotate-90"}`} />
         </button>
         {open ? <Calendar id={`${id}-calendar`} value={value} min={min} max={max} lang={lang} tr={tr} onSelect={select} onClose={close} /> : null}
       </div>

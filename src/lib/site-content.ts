@@ -362,14 +362,34 @@ export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
        production na wala sa dev, ito ang unang tingnan — `hole-no-1` ang
        ligtas na anyo. */
     slug: `hole-no.${hole}`,
-    image: `/golf/aerial-holes/hole-${String(hole).padStart(2, "0")}-aerial.png`,
+    /* Supplied 9 Nov 2026 flyovers, matched by hole number and exported as 4K WebP. */
+    image: `/golf/aerial-holes/hole-${String(hole).padStart(2, "0")}-flyover.webp`,
     /* Direct PNG exports with routing lines: 1.png = Hole 1, and so on. */
     routingImage: `/golf/official-hole-maps/hole-${String(hole).padStart(2, "0")}-with-lines.png`,
     routingOrientation: routingImageDimensions.width >= routingImageDimensions.height ? "landscape" as const : "portrait" as const,
     routingWidth: routingImageDimensions.width,
     routingHeight: routingImageDimensions.height,
+    /* Flyover ng butas (Nob 2026 renders, may hole badge at logo). Galing sa
+       4K master sa `CamSur_Hole_Flyovers_4K_Final`, ini-encode sa H.264 60fps
+       na may AAC: 1920 sa ~6 Mbps (~12–20MB), 1280 sa ~2.8 Mbps para sa
+       cellphone. Unang frame ang poster. Hole 01: hanggang 16.65s lang (wala
+       ang itim na dulo).
+       `clear`: parehong flyover pero WALANG numero sa kanan (galing sa
+       `4k clear` na master) — para sa mga card na Previous/Next hole, kung
+       saan ang title ng card na ang nagsasabi ng butas. Parehong encoding ng
+       nasa itaas: 1920 sa desktop, 1280 sa cellphone. */
+    flyover: {
+      desktop: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-1920.mp4`,
+      mobile: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-1280.mp4`,
+      poster: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-poster.jpg`,
+      clear: {
+        desktop: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-clear-1920.mp4`,
+        mobile: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-clear-1280.mp4`,
+      },
+    },
     title: COURSE_HEADLINE,
     description: HOLE_PROFILES[hole].description,
+    summary: HOLE_PROFILES[hole].summary,
     holes: [hole] as const,
     markers: concept.markers.filter((marker) => marker.hole === hole),
   };
@@ -399,8 +419,9 @@ export const SITE_SECTIONS = [
     eyebrow: "Opening fairway to home green",
     title: "A landmark clubhouse at the heart of the course",
     description: "A championship golf experience shaped around play, arrival, dining, recovery, and the landscape of Camarines Sur.",
-    /* Course at bundok, walang clubhouse — tugma sa "An IMG-designed championship course". Ang dating clubhouse aerial ay nasa `/golf-clubhouse-aerial-hero-v2.png` pa rin. */
-    image: "/course-concepts/concept-10-mountain-stretch.png",
+    /* Golf hero: mas bukas na fairways at malapad, bilugang tuktok ng Isarog.
+       Nananatili ang orihinal na course concept sa CONCEPTS sa itaas. */
+    image: "/golf/golf-hero-isarog-open-fairways.webp",
     links: COURSE_PAGES.map((course, index) => ({ label: `Hole No. ${index + 1}`, href: `/golf/courses/${course.slug}` })),
   },
   /* Kasunod ng Golf: dito natatapos ang round, at ang mga espasyong ito ang

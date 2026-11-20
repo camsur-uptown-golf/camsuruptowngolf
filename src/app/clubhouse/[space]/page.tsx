@@ -7,8 +7,8 @@ import Footer from "@/components/Footer";
 import ScrollMotion from "@/components/ScrollMotion";
 import ClubhouseGallery from "@/components/ClubhouseGallery";
 import HeroWords from "@/components/HeroWords";
-import { EDITORIAL_SECTION_ALT, EditorialHeading, Shell } from "@/components/EditorialKit";
 import { CLUBHOUSE_SPACES } from "@/lib/clubhouse";
+import CtaPanel from "@/components/CtaPanel";
 
 /**
  * Ang sariling pahina ng bawat espasyo sa clubhouse.
@@ -20,7 +20,12 @@ import { CLUBHOUSE_SPACES } from "@/lib/clubhouse";
  * Magkatabi ito ng `/clubhouse/architecture`, na static na segment —
  * nauuna ang static sa dynamic sa Next, kaya hindi ito nag-aagawan.
  * Kaya nga hindi kasama ang "architecture" sa `generateStaticParams`.
+ *
+ * Iisang gilid ang buong pahina (`CONTAINER` — kapareho ng Breadcrumbs,
+ * Footer, at /clubhouse).
  */
+const CONTAINER = "mx-auto w-full max-w-7xl px-6 lg:px-8";
+const EYEBROW = "font-navigation text-xs font-semibold uppercase tracking-[0.24em] sm:text-sm";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -53,23 +58,23 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             reverses when the user scrolls back up. */}
         <ScrollMotion />
 
-        <section id="top" className="relative isolate flex min-h-[560px] items-end overflow-hidden bg-[#071d13] text-white sm:min-h-[640px]">
-          <Image
-            src={space.image}
-            alt={space.imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="-z-20 object-cover"
-          />
+        {/* HERO. Walang madilim na patong sa buong larawan: maikling lilim sa
+            itaas (para mabasa ang menu at logo) at sa ibaba (sa likod ng
+            pamagat) lang. Ang gitna ng render ay walang patong. */}
+        <section id="top" className="relative isolate flex min-h-[560px] items-end overflow-hidden bg-[#071d13] text-white sm:min-h-[680px]">
+          <Image src={space.image} alt={space.imageAlt} fill priority sizes="100vw" className="-z-20 object-cover" />
           <div
-            className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(5,22,15,0.5)_0%,rgba(5,22,15,0.12)_42%,rgba(5,22,15,0.86)_100%)]"
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-72 bg-[linear-gradient(180deg,rgba(7,23,15,0.62)_0%,rgba(7,23,15,0.36)_50%,transparent_100%)]"
             aria-hidden="true"
           />
-          <div className="mx-auto w-full max-w-4xl px-6 pb-16 pt-56 sm:px-10 sm:pb-20 lg:px-12 xl:max-w-5xl">
-            {/* Word-by-word na pagpasok sa pag-load (HeroWords). Inalis ang
-                `data-reveal="up"`: iisa na lang ang entrance, ang word-by-word. */}
-            <h1 className="max-w-3xl text-[clamp(2.25rem,4.5vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em]">
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-[linear-gradient(180deg,transparent_0%,rgba(7,23,15,0.3)_45%,rgba(7,23,15,0.7)_100%)]"
+            aria-hidden="true"
+          />
+          <div className={`${CONTAINER} pb-12 pt-56 [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_2px_14px_rgba(0,0,0,0.55)] sm:pb-16`}>
+            <p className={`${EYEBROW} text-[#f0d98f]`}>{space.floor}</p>
+            {/* Word-by-word na pagpasok sa pag-load (HeroWords). */}
+            <h1 className="mt-3 max-w-4xl font-display text-[clamp(2.75rem,6vw,5.5rem)] font-medium leading-[0.95] tracking-[-0.05em]">
               <HeroWords text={space.name} />
             </h1>
           </div>
@@ -79,59 +84,59 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
           <Breadcrumbs />
         </div>
 
-        <section className="relative isolate bg-[#f3ede1] pt-10 pb-6 sm:pt-12 sm:pb-8">
-          <Shell>
-            <p
-              data-reveal="up"
-              className="mx-auto max-w-3xl text-center text-base leading-8 text-[#03321b] sm:text-lg sm:leading-9"
-            >
-              {space.description}
-            </p>
-          </Shell>
+        {/* Paglalarawan + mga tampok. Kapag walang features ang espasyo
+            (locker rooms, showers), mag-isa ang paglalarawan. */}
+        <section className="relative isolate bg-[#f3ede1] pb-10 pt-6 text-[#03321b] sm:pb-14 sm:pt-8">
+          <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-20`}>
+            <div>
+              <p data-reveal="up" className={`${EYEBROW} text-[#7d6224]`}>
+                The space
+              </p>
+              <p
+                data-reveal="up"
+                className="mt-3 max-w-2xl text-[13px] font-normal leading-6 text-[#3f4c45]"
+              >
+                {space.description}
+              </p>
+            </div>
+            {space.features.length > 0 ? (
+              <div data-reveal="up" className="lg:pt-1">
+                <p className={`${EYEBROW} text-[#7d6224]`}>What’s here</p>
+                <ul className="mt-4 border-t border-[#03321b]/12">
+                  {space.features.map((feature) => (
+                    <li key={feature} className="flex items-center gap-3 border-b border-[#03321b]/12 py-3 text-[15px] text-[#3f4c45]">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#b8963f]" aria-hidden="true" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
         </section>
 
         {/* Wala pang dagdag na render ang ibang espasyo sa dokumento, kaya
-            nawawala nang buo ang section na ito sa halip na mag-iwan ng
-            blangkong ulo.
+            nawawala nang buo ang section na ito. Walang ulo ang gallery
+            ("Gallery / More of …") — tuloy agad ang mga larawan. */}
+        {space.gallery.length > 0 ? <ClubhouseGallery label={space.name} shots={space.gallery} /> : null}
 
-            Normal-flow, full-screen panels ang mga kuha — kapareho ng mga
-            kuwarto sa `/clubhouse`. Walang sticky stage o scroll-scrub; ang
-            caption ay minsan lang nagre-reveal at nananatiling visible. */}
-        {space.gallery.length > 0 ? (
-          <>
-            <section className="relative isolate scroll-mt-24 bg-[#f3ede1] pt-4 pb-10 sm:pt-6 sm:pb-14">
-              <Shell>
-                <EditorialHeading size="lg" kicker="" title={`More of ${space.name.toLowerCase()}.`} />
-              </Shell>
-            </section>
-
-            <ClubhouseGallery label={space.name} shots={space.gallery} />
-          </>
-        ) : null}
-
-        <section className={EDITORIAL_SECTION_ALT}>
-          <Shell>
-            <EditorialHeading
-              size="lg"
-              kicker=""
+        {/* Pangwakas na CTA: berdeng panel sa loob ng cream — kapareho ng
+            dulo ng /clubhouse. */}
+        <section className="relative isolate bg-[#f3ede1] py-16 sm:py-20 lg:py-24">
+          <div className={CONTAINER}>
+            <CtaPanel
+              reveal
+              eyebrow="Visit the club"
               title="Come and see it."
-              intro="Plan your visit and the team will send opening hours, dress code, and visitor access before your day."
+              text="Plan your visit and the team will send opening hours, dress code, and visitor access before your day."
+              primary={{ label: "Plan your visit", href: "/plan-your-visit" }}
             />
-
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
-              <Link
-                href="/plan-your-visit"
-                data-reveal="up"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] xl:text-[11px]"
-              >
-                Plan your visit
-              </Link>
-            </div>
-          </Shell>
+          </div>
         </section>
 
-        {/* Pabalik-balik sa anim na kuwarto, gaya ng sa mga butas ng golf. */}
-        <nav aria-label="Other rooms" className="grid border-t border-[#03321b]/10 sm:grid-cols-2">
+        {/* Pabalik-balik sa mga kuwarto, gaya ng sa mga butas ng golf. Lilim sa
+            ibaba lang ng bawat larawan, hindi sa buong tile. */}
+        <nav aria-label="Other rooms" className="grid sm:grid-cols-2">
           {[
             { space: previous, label: "Previous" },
             { space: next, label: "Next" },
@@ -139,7 +144,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             <Link
               key={label}
               href={`/clubhouse/${other.id}`}
-              className="group relative min-h-64 overflow-hidden border-b border-white/15 sm:border-b-0 sm:[&:first-child]:border-r"
+              className="group relative isolate block aspect-[16/10] overflow-hidden bg-[#071d13] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#e2c77a] sm:aspect-[16/9]"
             >
               <Image
                 src={other.image}
@@ -149,14 +154,14 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
                 className="-z-20 object-cover transition duration-700 group-hover:scale-[1.03]"
               />
               <span
-                className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(4,20,13,0.42)_0%,rgba(4,20,13,0.82)_100%)]"
+                className="absolute inset-x-0 bottom-0 -z-10 h-3/5 bg-[linear-gradient(180deg,transparent_0%,rgba(7,23,15,0.3)_45%,rgba(7,23,15,0.7)_100%)]"
                 aria-hidden="true"
               />
-              <span className="absolute inset-x-0 bottom-0 p-8 text-white sm:p-10">
-                <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.2em] text-[#e2c77a] xl:text-[11px]">
-                  {label}
+              <span className="absolute inset-x-0 bottom-0 block p-6 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_2px_14px_rgba(0,0,0,0.55)] sm:p-8 lg:p-10">
+                <span className={`${EYEBROW} block text-[#f0d98f]`}>{label}</span>
+                <span className="mt-2 block font-display text-[clamp(1.75rem,3vw,3rem)] font-medium leading-[1] tracking-[-0.04em]">
+                  {other.name}
                 </span>
-                <span className="mt-3 block text-2xl font-medium tracking-[-0.04em] sm:text-3xl">{other.name}</span>
               </span>
             </Link>
           ))}

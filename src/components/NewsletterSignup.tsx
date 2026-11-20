@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { revealConfirmation } from "@/lib/reveal-confirmation";
 import Tr from "@/components/Tr";
+import Link from "next/link";
 
 /**
  * Newsletter sa footer.
@@ -79,14 +80,12 @@ export default function NewsletterSignup() {
             ng email sa ilalim ng RA 10173, kaya hindi ito opsyonal. */}
         <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#c5a35c]" />
         <span>
-          {/* TODO: ikabit sa totoong Privacy Policy kapag mayroon na. Hindi ito
-              link ngayon dahil walang pahinang matuturo. */}
           <Tr
             t="I agree to receive news and offers from CamSur Uptown, and I have read the {0}."
             v={[
-              <span key="privacy" className="text-white">
+              <Link key="privacy" href="/privacy-policy" className="text-white underline underline-offset-4 hover:text-[#e2c77a] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a]">
                 Privacy Policy
-              </span>,
+              </Link>,
             ]}
           />
         </span>

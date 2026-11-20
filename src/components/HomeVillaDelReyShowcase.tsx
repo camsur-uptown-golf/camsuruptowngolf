@@ -140,9 +140,6 @@ export default function HomeVillaDelReyShowcase() {
                           </span>
                         </span>
                       ) : null}
-                      <span aria-hidden="true" className="shrink-0 text-[#e2c77a] transition-transform duration-300 group-hover:translate-x-1">
-                        →
-                      </span>
                     </Link>
                   </li>
                 );

@@ -100,7 +100,7 @@ export default function GroupInquiry() {
         <label className={LABEL} htmlFor="gi-type">
           Type of event
         </label>
-        <select id="gi-type" name="type" required defaultValue={TYPES[0]} className={`${FIELD} mt-2.5`}>
+        <select id="gi-type" name="type" required defaultValue={TYPES[0]} className={`${FIELD} mt-2.5 appearance-none`}>
           {TYPES.map((type) => (
             <option key={type}>{type}</option>
           ))}
