@@ -9,7 +9,6 @@ import QuickQuestion from "@/components/QuickQuestion";
 import Scorecard from "@/components/Scorecard";
 import ScrollMotion from "@/components/ScrollMotion";
 import HoleFlyover from "@/components/HoleFlyover";
-import GolfDivider from "@/components/GolfDivider";
 import HoleNavVideo from "@/components/HoleNavVideo";
 import { Container, SectionHeading, delay } from "@/components/SectionKit";
 import { HOLE_PROFILES } from "@/lib/course-holes";
@@ -154,19 +153,12 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           </div>
         </section>
 
-        {/* Golf divider sa pagitan ng flyover at ng scorecard. Walang sariling
-            padding: ang pb ng #aerial-study at ang pt ng scorecard (parehong
-            14/16) ang nagbibigay ng pantay na espasyo sa itaas at ibaba. */}
-        <div className="bg-[#f3ede1]">
-          <GolfDivider reveal maxWidth="max-w-7xl" />
-        </div>
-
         {/* Kaparehong cream ng aerial-study sa itaas at ng call-back form sa
             ibaba. Dating `#edf0e8` — banayad na sage iyon, pero sapat ang
             pagkakaiba para magmukhang ibang banda sa gitna ng pahina.
 
             Walang `border-t`: ang GolfDivider sa itaas na ang hangganan. */}
-        <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-14 sm:py-16">
+        <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] pb-14 pt-4 sm:pb-16 sm:pt-6">
           <Container>
             {/* Dating inuulit lang nito ang parehong description na nasa
                 itaas, kasama ang "Hole 1" na chip na hindi na kailangan sa
@@ -251,10 +243,10 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               />
               <HoleNavVideo src={previous.flyover.clear} poster={previous.image} />
               {/* Madilim lang sa ibaba (sa likod ng teksto) — kita ang larawan. */}
-              <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#071d13]/85 via-[#071d13]/25 to-transparent" />
+              <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(7,29,19,0.62)_0%,rgba(7,29,19,0.38)_45%,rgba(7,29,19,0.18)_100%)]" />
               {/* Cellphone: nasa kaliwa (gaya ng orihinal). sm pataas: nakagitna
                   sa card (pahalang), nasa ibaba sa madilim na bahagi. */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6 text-white sm:items-center sm:p-10 sm:text-center">
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-white sm:p-10">
                 <span className="flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e] sm:text-[11px] sm:tracking-[0.36em] lg:text-[12px]">
                   <svg viewBox="0 0 24 24" className="h-4 w-4 transition group-hover:-translate-x-1" fill="none" aria-hidden="true"><path d="m15 5-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   Previous hole
@@ -282,10 +274,10 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
               />
               <HoleNavVideo src={next.flyover.clear} poster={next.image} />
               {/* Madilim lang sa ibaba (sa likod ng teksto) — kita ang larawan. */}
-              <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#071d13]/85 via-[#071d13]/25 to-transparent" />
+              <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(7,29,19,0.62)_0%,rgba(7,29,19,0.38)_45%,rgba(7,29,19,0.18)_100%)]" />
               {/* Cellphone: nasa kanan (gaya ng orihinal). sm pataas: nakagitna
                   sa card (pahalang), nasa ibaba sa madilim na bahagi. */}
-              <div className="absolute inset-0 flex flex-col items-end justify-end p-6 text-right text-white sm:items-center sm:p-10 sm:text-center">
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-white sm:p-10">
                 <span className="flex items-center gap-2 font-navigation text-[10px] font-bold uppercase tracking-[0.24em] text-[#e1c56e] sm:text-[11px] sm:tracking-[0.36em] lg:text-[12px]">
                   
                   Next hole
