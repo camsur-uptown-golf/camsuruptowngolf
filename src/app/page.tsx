@@ -8,6 +8,7 @@ import ConceptCarousel from "@/components/ConceptCarousel";
 /* "Your day at the club": B (tatlong pantay na card) ang subok ngayon. Ang
    scroll story (C) ay nasa `HomeClubhouseDay` pa rin — palitan lang ang import
    path sa ibaba para bumalik doon. */
+import GolfDivider from "@/components/GolfDivider";
 import HomeClubhouseDay from "@/components/HomeClubhouseDayCards";
 import HomeVillaDelRey from "@/components/HomeVillaDelReyBento";
 import PackagesCarousel from "@/components/PackagesCarousel";
@@ -210,7 +211,10 @@ export default function Home() {
         <div className="relative z-10 bg-[#f3ede1]">
           {/* <HomeExplore /> */}
           <ConceptCarousel />
+          {/* Golf divider — cellphone at tablet lang (nakatago sa desktop). */}
+          <GolfDivider className="pt-12 sm:pt-14" />
           <HomeClubhouseDay />
+          <GolfDivider className="pb-2 sm:pb-4" />
           <HomeVillaDelRey />
           {/* <HomeClubhouseOverview /> */}
           <PackagesCarousel />

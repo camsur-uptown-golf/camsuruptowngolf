@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import FairwayDivider from "@/components/FairwayDivider";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
+import GolfDivider from "@/components/GolfDivider";
 import QuickQuestion from "@/components/QuickQuestion";
 import Scorecard from "@/components/Scorecard";
 import ScrollMotion from "@/components/ScrollMotion";
@@ -152,6 +153,12 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             </div>
           </div>
         </section>
+
+        {/* Golf divider sa pagitan ng flyover at ng scorecard — cellphone at
+            tablet lang (nakatago sa desktop). */}
+        <div className="bg-[#f3ede1]">
+          <GolfDivider maxWidth="max-w-7xl" className="pt-12 sm:pt-14" />
+        </div>
 
         {/* Kaparehong cream ng aerial-study sa itaas at ng call-back form sa
             ibaba. Dating `#edf0e8` — banayad na sage iyon, pero sapat ang

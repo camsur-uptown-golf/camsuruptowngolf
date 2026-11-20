@@ -414,7 +414,7 @@ export const CLUBHOUSE_DAY = [
     time: "Afternoon",
     image: "/clubhouse/concept/day-afternoon.jpg",
     title: "Members’ Lounge",
-    detail: "Facing a full sweep of glass across the lake and fairways, a calm room for coffee, papers and post-round conversation.",
+    detail: "A calm room facing the lake and fairways, for coffee and post-round conversation.",
   },
   {
     time: "Evening",
