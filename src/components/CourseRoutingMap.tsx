@@ -315,12 +315,6 @@ export default function CourseRoutingMap() {
     setView(clampView({ scale, x: (0.5 - selectedPosition.x / 100) * size * scale, y: (0.5 - selectedPosition.y / 100) * size * scale }));
   }
 
-  function toggleTour() {
-    if (!isTourPlaying && (typeof selectedSpot !== "number" || !visibleHoles.includes(selectedSpot))) setSelectedSpot(visibleHoles[0]);
-    setHoveredSpot(null);
-    setFocusedSpot(null);
-    setIsTourPlaying((current) => !current);
-  }
 
   function spotHandlers(spot: Spot) {
     return {
@@ -394,10 +388,6 @@ export default function CourseRoutingMap() {
                 <button type="button" className={styles.resetControl} aria-label="Reset map view" disabled={isDefaultView} onClick={() => setView(INITIAL_VIEW)}><span className="text-[11px] font-medium">Reset</span></button>
                 <button type="button" data-fullscreen-toggle aria-label={isExpanded ? "Exit full screen map" : "View map full screen"} aria-pressed={isExpanded} onClick={toggleFullscreen}><Icon name={isExpanded ? "collapse" : "expand"} /></button>
               </div>
-              <div className={styles.mapFooter}>
-                <p><span className={styles.legendDot} /> Select a pin to explore<span className={styles.dragHint}> · Zoom in to drag</span></p>
-                <button type="button" onClick={toggleTour} aria-pressed={isTourPlaying} className={`${styles.tourButton} ${isTourPlaying ? styles.tourPlaying : ""}`}><Icon name={isTourPlaying ? "pause" : "play"} />{isTourPlaying ? "Pause tour" : "Take a course tour"}</button>
-              </div>
               {isTourPlaying ? <div key={`${selectedSpot}-${nine}`} className={styles.tourProgress} style={{ animationDuration: `${TOUR_INTERVAL}ms` }} aria-hidden="true" /> : null}
             </div>
 
@@ -405,19 +395,17 @@ export default function CourseRoutingMap() {
               <div key={String(selectedSpot)} className={styles.previewImage}>
                 <Image src={previewImage} alt={selectedHole ? `${selectedHole.name}, hole ${selectedSpot}, course concept` : "CamSur Uptown clubhouse concept"} fill sizes="(max-width: 639px) 100vw, (max-width: 1023px) 42vw, 380px" className="object-cover" />
                 <div className={styles.imageShade} />
-                <span className={styles.previewLabel}>{selectedHole ? `Hole ${String(selectedSpot).padStart(2, "0")} / ${Number(selectedSpot) <= 9 ? "Front nine" : "Back nine"}` : "At the heart of the course"}</span>
-                <span className={styles.bigNumber} aria-hidden="true">{selectedHole ? String(selectedSpot).padStart(2, "0") : <Icon name="clubhouse" />}</span>
+                <span className={styles.previewLabel}>{selectedHole ? selectedHole.name : "At the heart of the course"}</span>
                 <span className={styles.conceptLabel}>Course concept</span>
               </div>
               <div className={styles.detailBody}>
                 <div key={String(selectedSpot)} className={styles.detailCopy}>
-                  <p className={styles.detailKicker}>{selectedHole ? "Your next perspective" : "Between rounds"}</p>
-                  <h3>{selectedHole?.name ?? "The clubhouse"}</h3>
-                  {selectedHole ? <dl className={styles.holeFacts}><div><dt>Par</dt><dd>{selectedHole.par}</dd></div><div><dt>Back tees</dt><dd>{unit === "yards" ? selectedHole.yards : selectedHole.blueMetres}<span>{unitLabel}</span></dd></div></dl> : null}
+                  {selectedHole ? null : <h3>The clubhouse</h3>}
+                  {selectedHole ? <dl className={`${styles.holeFacts} lining-nums`}><div><dt>Hole No.</dt><dd>{selectedSpot}</dd></div><div><dt>Par</dt><dd>{selectedHole.par}</dd></div><div><dt>Back tees</dt><dd>{unit === "yards" ? selectedHole.yards : selectedHole.blueMetres}<span>{unitLabel}</span></dd></div></dl> : null}
                   <p className={styles.description}>{selectedHole?.description ?? CLUBHOUSE_SECTION?.description ?? "Return to the heart of the club before or after your round."}</p>
                 </div>
                 <button type="button" onClick={locateSelected} className={styles.locateButton}><Icon name="locate" />Locate on the map</button>
-                <Link href={selectedLink?.href ?? "/clubhouse"} className={styles.holeLink}>{selectedHole ? `Explore hole ${String(selectedSpot).padStart(2, "0")}` : "Explore the clubhouse"}</Link>
+                <Link href={selectedLink?.href ?? "/clubhouse"} className={styles.holeLink}>{selectedHole ? `Explore Hole No. ${selectedSpot}` : "Explore the clubhouse"}<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>
                 <div className={styles.holeNavigation}>
                   <button type="button" aria-label="Previous hole" onClick={() => stepHole(-1)}>Previous</button>
                   <span>{selectedHole ? `${String(selectedSpot).padStart(2, "0")} / 18` : "Clubhouse"}</span>

@@ -204,6 +204,14 @@ function CalendarIcon({ className = "h-4 w-4 shrink-0" }: { className?: string }
 const NAV_ITEM_CLASS =
   "pointer-events-auto relative z-10 cursor-pointer whitespace-nowrap rounded-full px-2 py-2.5 transition-colors duration-200 hover:text-[#efd99b] xl:px-3";
 
+function ChevronIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
+      <path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function PhoneIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
@@ -353,6 +361,8 @@ export default function Header() {
   const [pillHidden, setPillHidden] = useState(false);
   /** Slug ng section na binuksan sa loob ng mobile drawer; null = ugat na listahan. */
   const [mobileSection, setMobileSection] = useState<string | null>(null);
+  /* Golf sa mobile menu: "See more" — ipinapakita rito mismo ang lahat ng butas. */
+  const [showAllHoles, setShowAllHoles] = useState(false);
   const [hoveredPreviewIndex, setHoveredPreviewIndex] = useState<number | null>(null);
   const [accommodationSlideIndex, setAccommodationSlideIndex] = useState(0);
   /** Naka-hover na item sa pangatlong hanay; nauuna ito sa preview. */
@@ -652,7 +662,10 @@ export default function Header() {
      nagsasara, para hindi kumislap ang unang antas sa panahon ng fade. */
   useEffect(() => {
     if (mobileMenuOpen) return;
-    const timer = setTimeout(() => setMobileSection(null), 320);
+    const timer = setTimeout(() => {
+      setMobileSection(null);
+      setShowAllHoles(false);
+    }, 320);
     return () => clearTimeout(timer);
   }, [mobileMenuOpen]);
 
@@ -1000,6 +1013,7 @@ export default function Header() {
                 onClick={() => setMobileSection(null)}
                 className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 transition-colors hover:text-[#efd99b]"
               >
+                <ChevronIcon className="h-3.5 w-3.5 rotate-180" />
                 {t("mega.goBack")}
               </button>
               <span className="border-b-2 border-[#e2c77a] pb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">
@@ -1008,7 +1022,7 @@ export default function Header() {
             </div>
 
             <div className="border-t border-white/12 px-3.5 pb-1 pt-4">
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#efd99b]">
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[#efd99b]">
                 {t("mega.highlights")}
               </p>
 
@@ -1017,7 +1031,7 @@ export default function Header() {
                   ay iilang butas lang ang kita (`MOBILE_GOLF_HIGHLIGHTS`); nasa
                   "View all" na link sa ibaba ang natitira. */}
               <ul className={`mt-3.5 grid gap-x-4 ${mobileSubsection.slug === "golf" || mobileSubsection.links.length > 6 ? "grid-cols-2 gap-y-3" : "grid-cols-1 gap-y-3.5"}`}>
-                {(mobileSubsection.slug === "golf"
+                {(mobileSubsection.slug === "golf" && !showAllHoles
                   ? mobileSubsection.links.slice(0, MOBILE_GOLF_HIGHLIGHTS)
                   : mobileSubsection.links
                 ).map((link) => {
@@ -1029,7 +1043,7 @@ export default function Header() {
                         target={isExternal ? "_blank" : undefined}
                         rel={isExternal ? "noreferrer" : undefined}
                         onClick={closeMobileNav}
-                        className="block text-sm font-medium leading-snug text-white/82 transition-colors hover:text-[#efd99b]"
+                        className="block text-base font-medium leading-snug text-white/82 transition-colors hover:text-[#efd99b]"
                       >
                         {link.label}
                       </Link>
@@ -1038,16 +1052,18 @@ export default function Header() {
                 })}
               </ul>
 
-              {/* Natitirang butas: isang link na lang papunta sa buong listahan
-                  sa /golf, sa halip na ilista silang lahat dito. */}
+              {/* "See more": lumalabas dito mismo ang lahat ng butas (hindi na
+                  lumilipat sa /golf); "See less" para itago ulit. */}
               {mobileSubsection.slug === "golf" && mobileSubsection.links.length > MOBILE_GOLF_HIGHLIGHTS ? (
-                <Link
-                  href="/golf"
-                  onClick={closeMobileNav}
-                  className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition-colors hover:text-[#efd99b]"
+                <button
+                  type="button"
+                  onClick={() => setShowAllHoles((open) => !open)}
+                  aria-expanded={showAllHoles}
+                  className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#efd99b] transition-colors hover:text-white"
                 >
-                  View all {mobileSubsection.links.length} holes
-                </Link>
+                  {showAllHoles ? "See less" : "See more"}
+                  <ChevronIcon className={`h-3.5 w-3.5 transition-transform duration-200 ${showAllHoles ? "-rotate-90" : "rotate-90"}`} />
+                </button>
               ) : null}
 
               {mobileSubsection.slug === "golf" ? (
@@ -1095,7 +1111,13 @@ export default function Header() {
                   onClick={closeMobileNav}
                   className="mt-5 flex min-h-11 items-center justify-center rounded-full border border-white/35 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-white transition hover:border-[#efd99b] hover:bg-[#efd99b] hover:text-[#0b281b]"
                 >
-                  {t("mega.viewAll")} {sectionLabel(mobileSubsection.slug, mobileSubsection.label)}
+                  {/* Golf: "Explore the course" — malinaw kung saan pupunta, at hindi
+                      kamukha ng "See more" ng mga butas sa itaas. */}
+                  {mobileSubsection.slug === "golf"
+                    ? t("mega.exploreCourse")
+                    : mobileSubsection.slug === "clubhouse"
+                      ? t("mega.exploreClubhouse")
+                      : `${t("mega.viewAll")} ${sectionLabel(mobileSubsection.slug, mobileSubsection.label)}`}
                 </Link>
               ) : null}
             </div>
@@ -1141,7 +1163,7 @@ export default function Header() {
                     className={`${isActive ? "text-[#efd99b]" : "text-white"} group flex min-h-[52px] w-full items-center justify-between gap-3 border-b border-white/12 px-3.5 text-left transition-colors hover:text-[#efd99b]`}
                   >
                     <span className="text-sm font-bold uppercase tracking-[0.08em]">{sectionLabel(item.slug, item.label)}</span>
-                    <span aria-hidden="true" className="text-lg leading-none text-white/60">+</span>
+                    <ChevronIcon className="h-4 w-4 text-white/45 transition-transform duration-200 group-hover:translate-x-0.5" />
                   </button>
                 );
               })}

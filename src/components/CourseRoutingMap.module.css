@@ -79,7 +79,7 @@
 .detail { display: flex; min-width: 0; flex-direction: column; background: #faf6ed; }
 .previewImage { position: relative; height: 220px; flex-shrink: 0; overflow: hidden; background: #36513a; animation: detail-in 350ms ease-out both; }
 .imageShade { position: absolute; inset: 0; background: linear-gradient(180deg, #021a1070, transparent 40%, #021a10b0); }
-.previewLabel { position: absolute; top: 1.25rem; left: 1.5rem; color: #fff7dd; font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.previewLabel { position: absolute; top: 1.25rem; left: 1.5rem; color: #fff7dd; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-shadow: 0 1px 8px rgba(0, 0, 0, .35); text-transform: uppercase; }
 .bigNumber { position: absolute; bottom: .4rem; left: 1.25rem; color: #fff5d9; font-family: var(--font-cormorant-garamond), Georgia, serif; font-size: 92px; font-weight: 400; line-height: 1; letter-spacing: -.07em; }
 .bigNumber svg { width: 60px; height: 60px; margin-bottom: .75rem; }
 .conceptLabel { position: absolute; right: 1rem; bottom: 1.2rem; padding: .25rem .5rem; border: 1px solid #f3ede15c; border-radius: 2px; color: #f6edda; background: #082d2155; font-size: 8px; letter-spacing: .06em; text-transform: uppercase; }
@@ -87,7 +87,7 @@
 .detailCopy { animation: detail-in 250ms ease-out both; }
 .detailKicker { margin-bottom: .5rem; color: #8b7445; font-size: 8px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .detail h3 { color: #123d2a; font-family: var(--font-cormorant-garamond), Georgia, serif; font-size: 2rem; font-weight: 500; letter-spacing: -.035em; line-height: 1.05; }
-.holeFacts { display: grid; grid-template-columns: 1fr 1.8fr; gap: 1rem; margin-top: 1.1rem; padding: .85rem 0; border-block: 1px solid #183e261c; }
+.holeFacts { display: grid; grid-template-columns: 1fr 1fr 1.6fr; gap: 1rem; margin-top: 0; padding: 0 0 .85rem; border-bottom: 1px solid #183e261c; }
 .holeFacts > div + div { padding-left: 1.25rem; border-left: 1px solid #183e261c; }
 .holeFacts dt { margin-bottom: .15rem; color: #788071; font-size: 9px; }
 .holeFacts dd { color: #173d2a; font-family: var(--font-cormorant-garamond), Georgia, serif; font-size: 2rem; font-weight: 500; line-height: 1; }
@@ -96,8 +96,13 @@
 .locateButton { display: flex; align-items: center; align-self: flex-start; gap: .4rem; margin-top: auto; padding: 1rem 0; color: #63764d; font-size: 10px; }
 .locateButton svg { width: 14px; height: 14px; }
 .locateButton:hover { color: #123d2a; }
-.holeLink { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 45px; padding: .8rem 1rem; border-radius: 4px; color: #f6edda; background: #173d2a; font-size: 10px; font-weight: 600; letter-spacing: .04em; transition: background 180ms; }
-.holeLink:hover { background: #315b39; }
+/* Pangunahing aksyon ng panel: gintong pill, kapareho ng "View the hole" sa
+   homepage, para ito ang unang mapansin. Arrow sa kanan na umuusog sa hover. */
+.holeLink { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 48px; padding: .8rem 1.35rem; border-radius: 999px; color: #03321b; background: #e2c77a; box-shadow: 0 10px 24px -14px rgba(152, 120, 47, .9); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background 180ms, box-shadow 180ms; }
+.holeLink:hover { background: #efd99b; box-shadow: 0 14px 28px -14px rgba(152, 120, 47, 1); }
+.holeLink svg { width: 16px; height: 16px; flex-shrink: 0; transition: transform 180ms; }
+.holeLink:hover svg { transform: translateX(3px); }
+.holeLink:focus-visible { outline: 2px solid #03321b; outline-offset: 3px; }
 .holeNavigation { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding-top: 1rem; color: #87917f; font-size: 9px; }
 .holeNavigation button { display: flex; align-items: center; gap: .25rem; min-height: 30px; color: #53664c; font-size: 10px; }
 .holeNavigation button:hover { color: #173d2a; }
@@ -201,7 +206,7 @@
   .previewImage { height: 200px; min-height: 0; }
   .detailBody { padding: 1.3rem 1.3rem .8rem; }
   .detail h3 { font-size: 2.2rem; }
-  .holeFacts { grid-template-columns: 1fr 1.6fr; }
+  .holeFacts { grid-template-columns: 1fr 1fr 1.5fr; }
   .description { min-height: 0; font-size: 12px; }
   .holeStrip { gap: .7rem; padding: .8rem; }
   .holeStrip > p { font-size: 8px; }

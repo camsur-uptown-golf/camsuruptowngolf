@@ -9,6 +9,7 @@ import QuickQuestion from "@/components/QuickQuestion";
 import Scorecard from "@/components/Scorecard";
 import ScrollMotion from "@/components/ScrollMotion";
 import HoleFlyover from "@/components/HoleFlyover";
+import GolfDivider from "@/components/GolfDivider";
 import HoleNavVideo from "@/components/HoleNavVideo";
 import { Container, SectionHeading, delay } from "@/components/SectionKit";
 import { HOLE_PROFILES } from "@/lib/course-holes";
@@ -118,10 +119,11 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
                 {/* Visual hierarchy, tatlong antas:
                     1. "No. N" — pinakamalaki, pinakamadilim: ang unang nakikita.
                     2. Pangalan ng butas — katamtaman, mas malambot na kulay.
-                    3. "HOLE" — maliit na gintong label na may maluwag na tracking;
+                    3. "HOLE" — maliit na gintong label na may maluwag na tracking
+                       (#d1af58, kapareho ng "Scorecard" na eyebrow sa ibaba);
                        nagpapakilala lang, hindi nakikipagkumpitensya. */}
                 <div className="flex flex-col items-center text-center">
-                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.36em] text-[#7d6224] [margin-right:-0.36em] lg:text-[12px]">
+                  <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.36em] text-[#d1af58] [margin-right:-0.36em] lg:text-[12px]">
                     Hole
                   </p>
                   <h1 className="mt-2 font-display font-medium">
@@ -152,12 +154,18 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
           </div>
         </section>
 
+        {/* Golf divider sa pagitan ng flyover at ng scorecard. Walang sariling
+            padding: ang pb ng #aerial-study at ang pt ng scorecard (parehong
+            14/16) ang nagbibigay ng pantay na espasyo sa itaas at ibaba. */}
+        <div className="bg-[#f3ede1]">
+          <GolfDivider maxWidth="max-w-7xl" />
+        </div>
+
         {/* Kaparehong cream ng aerial-study sa itaas at ng call-back form sa
             ibaba. Dating `#edf0e8` — banayad na sage iyon, pero sapat ang
             pagkakaiba para magmukhang ibang banda sa gitna ng pahina.
 
-            Walang `border-t`: tuloy-tuloy ang cream mula sa pangalan at flyover
-            sa itaas papunta sa scorecard — walang guhit sa pagitan. */}
+            Walang `border-t`: ang GolfDivider sa itaas na ang hangganan. */}
         <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-14 sm:py-16">
           <Container>
             {/* Dating inuulit lang nito ang parehong description na nasa

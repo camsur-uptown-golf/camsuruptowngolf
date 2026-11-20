@@ -4,6 +4,7 @@ import BackToHeroButton from "@/components/BackToHeroButton";
 import ClubhouseRooms from "@/components/ClubhouseRooms";
 import { CLUBHOUSE_DAY, roomCountWord } from "@/lib/clubhouse";
 import CtaPanel from "@/components/CtaPanel";
+import GolfDivider from "@/components/GolfDivider";
 
 /**
  * Ang pahina ng Clubhouse: kung ano ang nasa loob ng gusali.
@@ -54,6 +55,14 @@ export default function ClubhouseDetails() {
       {/* Ang `id` ng bawat kuwarto ay nananatiling anchor ng mega menu —
           nasa loob ng ClubhouseRooms. */}
       <ClubhouseRooms />
+
+      {/* Golf divider sa pagitan ng mga kuwarto at ng "How a day here runs" —
+          parehong cream ang dalawa. Buong lapad ang cream na balot; ang pt ay
+          para pantay ang layo ng bandila sa teksto sa itaas at sa "The
+          experience" sa ibaba. */}
+      <div className="bg-[#f3ede1]">
+        <GolfDivider className="pt-16 sm:pt-20 lg:pt-24" />
+      </div>
 
       <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-16 sm:py-20 lg:py-28">
         <div className={WIDE}>

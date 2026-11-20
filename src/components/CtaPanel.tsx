@@ -39,7 +39,8 @@ type Action = { label: string; href: string };
  *
  * Lumalampas ito sa itaas at ibaba ng panel at pinuputol ng `overflow-hidden`,
  * at naglalaho pakaliwa (`mask-image`) para hindi dumaan sa likod ng pamagat.
- * Sa makitid na panel ay nakatago: wala itong lugar doon na hindi teksto.
+ * Sa makitid na panel (cellphone): nasa kanan din, nakagitna nang patayo,
+ * mas mahina — nasa likod lang ito ng teksto.
  */
 function ClubMark() {
   return (
@@ -49,7 +50,7 @@ function ClubMark() {
       width={911}
       height={1251}
       aria-hidden="true"
-      className="pointer-events-none absolute right-[3cqi] top-1/2 -z-10 hidden h-[135%] w-auto max-w-none -translate-y-1/2 opacity-[0.16] [mask-image:linear-gradient(90deg,transparent_0%,black_45%)] @3xl:block"
+      className="pointer-events-none absolute right-[4cqi] top-1/2 -z-10 h-[70%] w-auto max-w-none -translate-y-1/2 opacity-[0.12] [mask-image:linear-gradient(90deg,transparent_0%,black_50%)] @3xl:right-[3cqi] @3xl:h-[135%] @3xl:opacity-[0.16] @3xl:[mask-image:linear-gradient(90deg,transparent_0%,black_45%)]"
     />
   );
 }
@@ -97,22 +98,9 @@ export default function CtaPanel({
         <div className="flex shrink-0 flex-wrap gap-3">
           <Link
             href={primary.href}
-            className="group inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-[#e2c77a] pl-7 pr-6 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a] xl:text-[12px]"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e2c77a] xl:text-[12px]"
           >
             {primary.label}
-            <svg
-              viewBox="0 0 24 24"
-              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14" />
-              <path d="m13 6 6 6-6 6" />
-            </svg>
           </Link>
           {secondary ? (
             <Link

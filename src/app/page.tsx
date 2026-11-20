@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import ConceptCarousel from "@/components/ConceptCarousel";
+import GolfDivider from "@/components/GolfDivider";
 // import HomeClubhouseOverview from "@/components/HomeClubhouseOverview"; // temporarily hidden
 // import HomeExplore from "@/components/HomeExplore"; // temporarily hidden
 /* "Your day at the club": B (tatlong pantay na card) ang subok ngayon. Ang
@@ -210,7 +211,18 @@ export default function Home() {
         <div className="relative z-10 bg-[#f3ede1]">
           {/* <HomeExplore /> */}
           <ConceptCarousel />
+          {/* Golf divider (bola, butas, bandila) sa pagitan ng mga butas at ng clubhouse —
+              parehong cream ang dalawa kaya kailangan ng hangganan. Kapantay
+              ng gutter ng content (1600px, px-6 / lg:px-8). Ang pt ay kapareho ng
+              pt ng #clubhouse-day (14/20/28), kaya pantay ang layo ng guhit sa
+              dots sa itaas at sa "The Clubhouse" sa ibaba. */}
+          <GolfDivider className="pt-14 sm:pt-20 lg:pt-28" />
           <HomeClubhouseDay />
+          {/* Parehong golf divider sa pagitan ng clubhouse at Villa Del Rey. Nasa itaas
+              na ang pb ng #clubhouse-day (14/16/24); ang pb rito + pt ng
+              #home-stay (10/10/14) ay kapareho niyon, kaya pantay ang layo ng
+              guhit sa "View the space" at sa "Accommodations". */}
+          <GolfDivider className="pb-4 sm:pb-6 lg:pb-10" />
           <HomeVillaDelRey />
           {/* <HomeClubhouseOverview /> */}
           <PackagesCarousel />

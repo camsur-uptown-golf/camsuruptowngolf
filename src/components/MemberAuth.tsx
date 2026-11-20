@@ -57,6 +57,10 @@ function AppleIcon() {
   );
 }
 
+/* Nakatago muna ang "Continue with Apple" (Nob 2026). Gawing `true` para
+   ibalik — buo pa rin ang /api/auth/apple at ang AppleIcon. */
+const SHOW_APPLE = false;
+
 /* "Continue with Google / Apple" — mga link papunta sa /api/auth/<provider>,
    na siyang nagre-redirect sa Google/Apple at pabalik. Karaniwang link (hindi
    fetch) dahil buong paglipat ng pahina ang OAuth. */
@@ -70,11 +74,13 @@ function SocialButtons() {
         <GoogleIcon />
         Continue with Google
       </a>
-      {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- route handler na nagre-redirect sa Apple, hindi pahina */}
-      <a href="/api/auth/apple" className={`${base} border-black bg-black text-white hover:bg-[#222]`}>
-        <AppleIcon />
-        Continue with Apple
-      </a>
+      {SHOW_APPLE ? (
+        /* eslint-disable-next-line @next/next/no-html-link-for-pages -- route handler na nagre-redirect sa Apple, hindi pahina */
+        <a href="/api/auth/apple" className={`${base} border-black bg-black text-white hover:bg-[#222]`}>
+          <AppleIcon />
+          Continue with Apple
+        </a>
+      ) : null}
     </div>
   );
 }

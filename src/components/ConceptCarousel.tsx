@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { COURSE_PAGES as SLIDES } from "@/lib/site-content";
+import { HOLE_PROFILES } from "@/lib/course-holes";
 import { useTranslation } from "@/i18n/LanguageProvider";
 
 /**
@@ -82,8 +83,8 @@ function cardTransform(d: number): CSSProperties {
 }
 
 export default function ConceptCarousel() {
-  const { t } = useTranslation();
   const router = useRouter();
+  const { t } = useTranslation();
   const [active, setActive] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -300,11 +301,13 @@ export default function ConceptCarousel() {
             tig-80px na padding ang dalawang column — nasa eksaktong gitna ang
             guhit, sa ilalim ng gitna ng video at ng mga tuldok. */}
         <div className="grid min-w-0 gap-7 lg:grid-cols-2 lg:gap-0" aria-live="polite">
-          {/* Sa desktop, nakahanay sa kanan — dikit sa guhit sa gitna, kaya
-              magkatabi ang pangalan at ang paliwanag sa kabila. */}
-          <div className="min-w-0 lg:flex lg:flex-col lg:items-end lg:border-r lg:border-[#03321b]/35 lg:pr-20 lg:text-right">
-            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#7d6224]">
-              {t("course.eyebrow")}
+          {/* Cellphone/tablet: nakagitna. Sa desktop, nakahanay sa kanan — dikit
+              sa guhit sa gitna, kaya magkatabi ang pangalan at ang paliwanag. */}
+          <div className="flex min-w-0 flex-col items-center text-center lg:items-end lg:border-r lg:border-[#03321b]/35 lg:pr-20 lg:text-right">
+            {/* Pangalan ng butas (hal. "Opening Fairway") ang eyebrow, sa
+                kaparehong anyo ng "THE CLUBHOUSE" (HomeClubhouseDayCards). */}
+            <p className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm">
+              {HOLE_PROFILES[active + 1]?.name ?? t("course.eyebrow")}
             </p>
             <h3 className="mt-2 max-w-full font-serif text-[clamp(2.25rem,2.8vw,3.4rem)] lining-nums font-medium leading-[0.92] tracking-[-0.05em]">
               {t("course.holeNo")} {active + 1}

@@ -19,8 +19,8 @@ import { CLUBHOUSE_DAY } from "@/lib/clubhouse";
  * Isang manipis na "sky line" sa itaas ng mga card — kulay ng madaling-araw
  * hanggang dapit-hapon — ang nagdudugtong sa tatlo bilang iisang araw.
  *
- * Cellphone: swipeable na hanay na sumisilip ang kasunod na card (scroll-snap,
- * walang JavaScript). Buong card ang napipindot (stretched link sa `<h3>`),
+ * Cellphone/tablet: magkakasunod pababa ang tatlong card, at nakagitna ang
+ * heading at ang teksto ng bawat card. Buong card ang napipindot (stretched link sa `<h3>`),
  * papunta sa kuwarto mismo.
  */
 
@@ -36,7 +36,7 @@ export default function HomeClubhouseDayCards() {
   return (
     <section id="clubhouse-day" className="relative isolate bg-[#f3ede1] pb-14 pt-14 text-[#03321b] sm:pb-16 sm:pt-20 lg:pb-24 lg:pt-28">
       <div className="mx-auto max-w-[1600px] px-6 lg:px-8">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col items-center gap-5 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left">
           <div>
             <p data-reveal="up" className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm">
               {t("home.day.eyebrow")}
@@ -48,7 +48,7 @@ export default function HomeClubhouseDayCards() {
             >
               {t("home.day.title")}
             </h2>
-            <p data-reveal="up" className="mt-4 max-w-md text-[17px] font-normal leading-8 text-[#3f4c45]">
+            <p data-reveal="up" className="mx-auto mt-4 max-w-md text-[17px] font-normal leading-8 text-[#3f4c45] lg:mx-0">
               {t("home.day.intro")}
             </p>
           </div>
@@ -57,7 +57,7 @@ export default function HomeClubhouseDayCards() {
           <Link
             href="/clubhouse"
             data-reveal="up"
-            className="inline-flex h-12 shrink-0 items-center justify-center self-start rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:self-auto xl:text-[11px]"
+            className="inline-flex h-12 shrink-0 items-center justify-center self-center rounded-full bg-[#e2c77a] px-7 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#03321b] shadow-[0_14px_34px_rgba(152,120,47,0.14)] transition hover:-translate-y-0.5 hover:bg-[#efd99b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] lg:self-auto xl:text-[11px]"
           >
             {t("home.day.cta")}
           </Link>
@@ -83,20 +83,20 @@ export default function HomeClubhouseDayCards() {
           </div>
         </div>
 
-        <ol className="-mx-6 mt-10 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] lg:mx-0 lg:mt-8 lg:grid lg:grid-cols-3 lg:gap-6 xl:gap-8 lg:overflow-visible lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden">
+        <ol className="mt-10 flex flex-col gap-12 lg:mt-8 lg:grid lg:grid-cols-3 lg:gap-6 xl:gap-8">
           {CLUBHOUSE_DAY.map((part, index) => (
             <li
               key={part.time}
               data-reveal="up"
               style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
-              className="group relative w-[82%] shrink-0 snap-start sm:w-[60%] lg:w-auto"
+              className="group relative mx-auto w-full max-w-md text-center lg:mx-0 lg:max-w-none lg:text-left"
             >
               <div className="relative aspect-[4/5] overflow-hidden bg-[#03321b] shadow-[0_24px_60px_-36px_rgba(3,50,27,0.55)]">
                 <Image
                   src={part.image}
                   alt={`${part.title} at the CamSur Uptown clubhouse`}
                   fill
-                  sizes="(min-width: 1600px) 500px, (min-width: 1024px) 32vw, 82vw"
+                  sizes="(min-width: 1600px) 500px, (min-width: 1024px) 32vw, (min-width: 480px) 448px, 100vw"
                   className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                 />
               </div>
@@ -111,7 +111,7 @@ export default function HomeClubhouseDayCards() {
                   {part.title}
                 </Link>
               </h3>
-              <p className="mt-3 max-w-sm text-[15px] font-normal leading-7 text-[#3f4c45]">{part.detail}</p>
+              <p className="mx-auto mt-3 max-w-sm text-[15px] font-normal leading-7 text-[#3f4c45] lg:mx-0">{part.detail}</p>
               <span
                 aria-hidden="true"
                 className="mt-5 inline-flex items-center gap-2 font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#2e5126] transition-all group-hover:gap-3"
