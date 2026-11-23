@@ -183,8 +183,8 @@ export default function ProShopPage() {
           </div>
         </section>
 
-        <section className="relative isolate bg-[#f3ede1] py-12 text-[#03321b] sm:py-16">
-          <div className="relative mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        <section className="py-4 sm:py-6 lg:py-8 relative isolate bg-[#fbf8f1] text-[#03321b] ">
+          <div className="relative w-full px-4 sm:px-6 lg:px-8">
             <CtaPanel
               reveal
               eyebrow="Coming to the Pro Shop"

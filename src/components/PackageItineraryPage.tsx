@@ -237,8 +237,8 @@ export default function PackageItineraryPage({
         {/* CTA */}
         {/* Berdeng panel sa loob ng cream, hindi buong banda — madilim-berde
             rin ang Footer na kasunod. Kapareho ng dulo ng /packages. */}
-        <section className="bg-[#f3ede1] py-16 text-[#03321b] sm:py-20">
-          <div className={CONTAINER}>
+        <section className="py-4 sm:py-6 lg:py-8 bg-[#f3ede1] text-[#03321b] ">
+          <div className="relative w-full px-4 sm:px-6 lg:px-8">
             <CtaPanel
               reveal
               eyebrow="Request a quote"

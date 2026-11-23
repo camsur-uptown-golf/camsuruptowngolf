@@ -179,8 +179,8 @@ function ThePackages() {
    magdidikit ang dalawa. Kapareho ng dulo ng /clubhouse. */
 function PackagesCta() {
   return (
-    <section className="relative isolate bg-[#f3ede1] pb-16 text-[#03321b] sm:pb-20">
-      <div className={CONTAINER}>
+    <section className="py-4 sm:py-6 lg:py-8 relative isolate bg-[#f3ede1] text-[#03321b] ">
+      <div className="relative w-full px-4 sm:px-6 lg:px-8">
         <CtaPanel
           reveal
           eyebrow="Request a quote"

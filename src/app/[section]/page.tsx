@@ -10,6 +10,7 @@ import ClubhouseDetails from "@/components/ClubhouseDetails";
 import ClubhouseHeroOverlay from "@/components/ClubhouseHeroOverlay";
 import EventsDetails from "@/components/EventsDetails";
 import GolfDetails from "@/components/GolfDetails";
+import GolfHeroImage from "@/components/GolfHeroImage";
 import HeroWords from "@/components/HeroWords";
 import ExperiencesDetails from "@/components/ExperiencesDetails";
 import PackagesDetails from "@/components/PackagesDetails";
@@ -125,14 +126,19 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               isang 4K na larawang hindi naman lilitaw ay sayang na download.
               Nananatili ang `section.image` sa site-content — ginagamit pa
               iyon ng mega menu at ng mga card. */}
-          {!isClubhouse ? (
+          {isGolf ? (
+            <GolfHeroImage
+              src={section.image}
+              alt="Wide aerial golf course concept showing multiple fairways and greens, tropical palms, a clubhouse, lakes and Mt. Isarog"
+            />
+          ) : !isClubhouse ? (
             <Image
               src={section.image}
-              alt={isGolf ? "Golf course concept with open fairways, lakes and the broad, rounded summit of Mt. Isarog" : `${section.label} at CamSur Uptown Golf`}
+              alt={`${section.label} at CamSur Uptown Golf`}
               fill
               priority
               sizes="100vw"
-              quality={isEvents || isGolf ? 90 : undefined}
+              quality={isEvents ? 90 : undefined}
               data-parallax={usesHeroParallax ? "-0.06" : undefined}
               data-hero-media={usesStickyReveal ? "" : undefined}
               className={`-z-20 object-cover ${usesHeroParallax ? "parallax-media" : ""}`}
@@ -184,7 +190,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
                   ? "bg-[linear-gradient(180deg,rgba(5,22,15,0.44)_0%,rgba(5,22,15,0.14)_45%,rgba(5,22,15,0.66)_100%)]"
                 : isExperiences
                   ? "bg-[linear-gradient(180deg,rgba(5,22,15,0.58)_0%,rgba(5,22,15,0.16)_45%,rgba(5,22,15,0.72)_100%)]"
-                : "bg-[linear-gradient(180deg,rgba(5,22,15,0.62)_0%,rgba(5,22,15,0.2)_45%,rgba(5,22,15,0.88)_100%)]"
+                : "bg-[linear-gradient(180deg,rgba(5,22,15,0.38)_0%,rgba(5,22,15,0.06)_42%,rgba(5,22,15,0.6)_100%)]"
             }`}
           />
           {usesFairwayDivider && <FairwayDivider fill={dividerFill} />}

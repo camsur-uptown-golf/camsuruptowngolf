@@ -122,8 +122,8 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
 
         {/* Pangwakas na CTA: berdeng panel sa loob ng cream — kapareho ng
             dulo ng /clubhouse. */}
-        <section className="relative isolate bg-[#f3ede1] py-16 sm:py-20 lg:py-24">
-          <div className={CONTAINER}>
+        <section className="py-4 sm:py-6 lg:py-8 relative isolate bg-[#f3ede1] ">
+          <div className="relative w-full px-4 sm:px-6 lg:px-8">
             <CtaPanel
               reveal
               eyebrow="Visit the club"

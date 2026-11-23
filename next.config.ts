@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
     ],
   },
   images: {
-    qualities: [75, 90],
+    qualities: [75, 85, 90],
     remotePatterns: [
       // Poster frame ng Wistia teaser, ginagamit ng course film section.
       { protocol: "https", hostname: "embed-ssl.wistia.com", pathname: "/deliveries/**" },
@@ -35,11 +35,13 @@ const nextConfig: NextConfig = {
   },
   /* Ang web preview ng Expo app (repo `app-camsuruptowngolf`, port 8081) ay ibang origin, kaya
      hinaharang ng browser ang fetch nito sa /api. Sa dev lang — walang CORS
-     ang totoong iOS/Android app, at hindi nagbabago ang production. */
+     ang totoong iOS/Android app, at hindi nagbabago ang production.
+     `*` (hindi lang localhost:8081): gumagana rin sa ibang port at sa IP ng Mac
+     (hal. 192.168.x.x:8081). Ligtas dahil Bearer token ang auth, hindi cookie. */
   async headers() {
     if (process.env.NODE_ENV === "production") return [];
     const allow = (methods: string) => [
-      { key: "Access-Control-Allow-Origin", value: "http://localhost:8081" },
+      { key: "Access-Control-Allow-Origin", value: "*" },
       { key: "Access-Control-Allow-Methods", value: methods },
       { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization" },
     ];

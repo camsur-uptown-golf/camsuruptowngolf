@@ -419,9 +419,9 @@ export const SITE_SECTIONS = [
     eyebrow: "Opening fairway to home green",
     title: "A landmark clubhouse at the heart of the course",
     description: "A championship golf experience shaped around play, arrival, dining, recovery, and the landscape of Camarines Sur.",
-    /* Golf hero: mas bukas na fairways at malapad, bilugang tuktok ng Isarog.
-       Nananatili ang orihinal na course concept sa CONCEPTS sa itaas. */
-    image: "/golf/golf-hero-isarog-open-fairways.webp",
+    /* Wider concept panorama with more visible holes and the Hole 18
+       clubhouse reference. Previous hero versions remain in public/. */
+    image: "/golf/hero-wide-v3/1672.webp",
     links: COURSE_PAGES.map((course, index) => ({ label: `Hole No. ${index + 1}`, href: `/golf/courses/${course.slug}` })),
   },
   /* Kasunod ng Golf: dito natatapos ang round, at ang mga espasyong ito ang

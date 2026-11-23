@@ -125,8 +125,8 @@ function DesignPrinciples() {
    kausapin. */
 function GolfCta() {
   return (
-    <section className="relative isolate bg-[#f3ede1] py-12 text-[#03321b] sm:py-16">
-      <div className={WIDE}>
+    <section className="py-4 sm:py-6 lg:py-8 relative isolate bg-[#f3ede1] text-[#03321b] ">
+      <div className="relative w-full px-4 sm:px-6 lg:px-8">
         <CtaPanel
           reveal
           eyebrow="Tee times"

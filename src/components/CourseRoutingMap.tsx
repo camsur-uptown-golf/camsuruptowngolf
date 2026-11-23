@@ -416,7 +416,7 @@ export default function CourseRoutingMap() {
           </div>
 
           <div className={styles.holeStrip}>
-            <p>Choose<br /><strong>your hole</strong></p>
+            <p>Choose<br /><strong>your hole no.</strong></p>
             <div role="group" aria-label="Hole selector" className={styles.holeNumbers}>
               {visibleHoles.map((number) => <button key={number} type="button" aria-label={`Select hole ${number}`} aria-pressed={selectedSpot === number} onClick={() => selectSpot(number)} className={number === 10 ? styles.backNineStart : ""}>{String(number).padStart(2, "0")}</button>)}
             </div>

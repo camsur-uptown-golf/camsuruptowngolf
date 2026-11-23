@@ -199,8 +199,8 @@ export default function PlanYourVisitPage() {
               />
               <span className="block max-w-3xl">
                 <span className={`${EYEBROW} block text-[#e2c77a]`}>Groups &amp; events</span>
-                <span className={`${SECTION_TITLE} block text-balance`}>Bringing a group or planning an event?</span>
-                <span className="mt-5 block max-w-2xl text-sm font-normal leading-7 text-white/80 sm:text-base sm:leading-8">
+                <span className="mt-3 block text-balance font-display text-[clamp(1.75rem,3.2vw,3.5rem)] font-medium leading-[0.98] tracking-[-0.045em]">Bringing a group or planning an event?</span>
+                <span className="mt-4 block max-w-2xl text-sm font-normal leading-7 text-white/80">
                   Company golf days, tournaments, weddings, and group trips — the events team replies within 48 hours.
                 </span>
               </span>

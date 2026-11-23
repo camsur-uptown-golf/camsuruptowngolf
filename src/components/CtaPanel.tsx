@@ -73,7 +73,7 @@ export default function CtaPanel({
   return (
     <div
       data-reveal={reveal ? "up" : undefined}
-      className="@container relative isolate overflow-hidden rounded-3xl bg-[#03321b] text-white shadow-[0_28px_60px_rgba(8,27,18,0.18)] ring-1 ring-inset ring-[#e2c77a]/15"
+      className="@container relative isolate overflow-hidden rounded-3xl bg-[#03321b] text-white ring-1 ring-inset ring-[#e2c77a]/15"
     >
       {/* Mahinang liwanag sa kanang-itaas, para hindi patag na kahon ang panel. */}
       <div
@@ -82,17 +82,17 @@ export default function CtaPanel({
       />
       <ClubMark />
 
-      <div className="flex flex-col gap-8 p-7 @md:p-10 @3xl:flex-row @3xl:items-end @3xl:justify-between @3xl:gap-12 @5xl:p-16">
+      <div className="flex flex-col gap-8 p-7 @md:p-10 @3xl:flex-row @3xl:items-center @3xl:justify-between @3xl:gap-12 @5xl:p-16">
         <div className="max-w-2xl">
           {eyebrow ? (
-            <p className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#e2c77a] @md:text-sm">{eyebrow}</p>
+            <p className="font-navigation text-[11px] font-semibold uppercase tracking-[0.24em] text-[#e2c77a] @md:text-xs">{eyebrow}</p>
           ) : null}
           <h2
-            className={`${eyebrow ? "mt-3 " : ""}text-balance font-display text-[clamp(2rem,6.2cqi,4.625rem)] font-medium leading-[0.98] tracking-[-0.045em]`}
+            className={`${eyebrow ? "mt-3 " : ""}text-balance font-display text-[clamp(1.75rem,4.6cqi,3.5rem)] font-medium leading-[0.98] tracking-[-0.045em]`}
           >
             {title}
           </h2>
-          {text ? <p className="mt-5 max-w-xl text-sm leading-7 text-white/80 @md:text-base @md:leading-8">{text}</p> : null}
+          {text ? <p className="mt-4 max-w-xl text-sm leading-7 text-white/80">{text}</p> : null}
         </div>
 
         <div className="flex shrink-0 flex-wrap gap-3">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { CLUB_ADDRESS } from "@/lib/site-content";
 import { PrivacyPreferencesButton } from "@/components/PrivacyNotice";
+import headerLogo from "../../public/branding/camsur-uptown-golf-header-2027.png";
 
 /**
  * Ang mga link ng footer.
@@ -102,16 +103,15 @@ export default function Footer() {
           {/* Sa cellphone at tablet, katabi ng logo ang contact (sa kanan) para walang
               bakanteng espasyo; sa desktop, nasa ilalim ulit ng logo. */}
           <div className="flex items-center justify-between gap-6 sm:justify-start sm:gap-12 lg:block">
-            <Link href="/" aria-label="CamSur Uptown Golf, home" className="inline-block shrink-0">
+            <Link href="/" aria-label="CamSur Uptown Golf, home" className="block w-fit shrink-0">
               <Image
-                src="/branding/camsur-uptown-golf-master-2027.png"
+                src={headerLogo}
                 alt="CamSur Uptown Golf"
-                width={618}
-                height={1162}
-                className="h-40 w-auto sm:h-36 lg:h-44"
+                sizes="(min-width: 1024px) 156px, (min-width: 640px) 144px, 132px"
+                className="h-44 w-auto sm:h-48 lg:h-52"
               />
             </Link>
-            <address className="min-w-0 space-y-1 lg:mt-8 text-[13px] font-semibold not-italic leading-7 text-white">
+            <address className="min-w-0 space-y-1 lg:mt-14 text-[13px] font-semibold not-italic leading-7 text-white">
               {CLUB_ADDRESS.lines.map((line) => (
                 <p key={line}>{line}</p>
               ))}

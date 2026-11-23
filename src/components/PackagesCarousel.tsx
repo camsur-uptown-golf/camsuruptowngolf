@@ -22,15 +22,15 @@ export default function PackagesCarousel() {
             className="-z-20 object-cover"
           />
           <div
-            className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(15,17,13,0.76)_0%,rgba(15,17,13,0.3)_45%,rgba(15,17,13,0.04)_100%)] sm:bg-[linear-gradient(90deg,rgba(15,17,13,0.72)_0%,rgba(15,17,13,0.42)_40%,rgba(15,17,13,0.04)_68%,transparent_100%)]"
+            className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(15,17,13,0.76)_0%,rgba(15,17,13,0.3)_45%,rgba(15,17,13,0.04)_100%)] sm:bg-[radial-gradient(ellipse_50%_42%_at_16%_58%,rgba(15,17,13,0.3)_0%,rgba(15,17,13,0.12)_55%,transparent_100%)]"
             aria-hidden="true"
           />
           {/* Blend mula sa cream ng Villa Del Rey sa itaas papasok sa langit ng
               larawan — walang matigas na putol sa pagitan ng dalawang section. */}
           <SectionBlend surface="#f3ede1" edge="top" height="clamp(6rem, 14vw, 12rem)" />
-          {/* `max-w-7xl`: kapareho ng Footer na kasunod nito, kaya iisang patayong
-              linya ang kaliwa ng pamagat at ng logo sa footer. */}
-          <div className="mx-auto w-full max-w-7xl px-6 pb-10 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.55),0_2px_18px_rgba(0,0,0,0.45)] sm:pb-0 lg:px-8">
+          {/* `max-w-[1600px]` at px-6/lg:px-8: kapareho ng Villa Del Rey sa itaas,
+              kaya kapantay ng kaliwang gilid ng mga card ng stay ang pamagat. */}
+          <div className="mx-auto w-full max-w-[1600px] px-6 pb-10 text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.55),0_2px_18px_rgba(0,0,0,0.45)] sm:pb-0 lg:px-8">
             <div className="max-w-[760px]">
               <h2 id="home-packages-title" className="font-display text-[clamp(2.5rem,4.6vw,4.125rem)] font-normal leading-[0.98] tracking-[-0.04em]">
                 Plan your golf getaway

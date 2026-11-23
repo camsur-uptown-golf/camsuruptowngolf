@@ -64,7 +64,7 @@ export default function ClubhouseDetails() {
         <GolfDivider className="pt-16 sm:pt-20" />
       </div>
 
-      <section className="relative isolate scroll-mt-24 overflow-hidden bg-[#f3ede1] py-16 sm:py-20 lg:py-28">
+      <section className="relative isolate scroll-mt-24 bg-[#f3ede1] pb-4 pt-16 sm:pb-6 sm:pt-20 lg:pb-8 lg:pt-28">
         <div className={WIDE}>
           <p data-reveal="up" className={`${EYEBROW} text-center`}>
             The experience
@@ -116,8 +116,8 @@ export default function ClubhouseDetails() {
       {/* Pangwakas na CTA: isang berdeng panel sa loob ng cream, hindi buong
           banda — madilim-berde rin ang Footer na kasunod nito, kaya kung
           buong lapad ay magdidikit ang dalawa at mawawala ang hangganan. */}
-      <section className="relative isolate scroll-mt-24 bg-[#f3ede1] pb-16 sm:pb-20 lg:pb-24">
-        <div className={WIDE}>
+      <section className="py-4 sm:py-6 lg:py-8 relative isolate scroll-mt-24 ">
+        <div className="relative w-full px-4 sm:px-6 lg:px-8">
           <CtaPanel
             reveal
             eyebrow="Visit the club"
