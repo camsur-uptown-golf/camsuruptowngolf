@@ -75,7 +75,7 @@ export default function HeroVideo() {
     </div>
     </div>
     <div className="pointer-events-none absolute bottom-40 right-5 z-20 sm:bottom-9 sm:right-6 lg:bottom-10 lg:right-8">
-      <p className="font-navigation text-sm font-medium tracking-[0.04em] text-white/90 [text-shadow:0_1px_6px_rgba(0,0,0,0.7)] sm:text-base lg:text-lg">
+      <p className="font-navigation text-[13px] font-medium tracking-[0.04em] text-white/85 [text-shadow:0_1px_5px_rgba(0,0,0,0.65)] sm:text-[15px]">
         {holes.length === 0
           ? "Course overview"
           : `${holes.length > 1 ? "Holes" : "Hole"} ${holes.map((hole) => String(hole).padStart(2, "0")).join(" · ")}`}
