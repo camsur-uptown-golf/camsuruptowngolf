@@ -67,14 +67,9 @@ export default function HeroVideo() {
         className="absolute inset-0 h-full w-full object-cover"
       >
         {/* Ang unang tumugmang `<source>` ang pinipili: 1280 sa cellphone,
-            2560 sa retina o napakalapad na screen (kung hindi ay pinalalaki ang
-            1080p at lumalabo), 1920 sa iba. Tingnan ang TEASER_VIDEO_SOURCES. */}
+            1920 sa iba. Nasa Cloudinary ang dalawa; tingnan ang
+            TEASER_VIDEO_SOURCES. */}
         <source src={TEASER_VIDEO_SOURCES.mobile} type="video/mp4" media="(max-width: 767px)" />
-        <source
-          src={TEASER_VIDEO_SOURCES.retina}
-          type="video/mp4"
-          media="(min-resolution: 2dppx), (-webkit-min-device-pixel-ratio: 2), (min-width: 1921px)"
-        />
         <source src={TEASER_VIDEO_SOURCES.desktop} type="video/mp4" />
       </video>
     </div>

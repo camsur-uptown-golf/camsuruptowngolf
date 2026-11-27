@@ -48,6 +48,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       // Poster frame ng Wistia teaser, ginagamit ng course film section.
       { protocol: "https", hostname: "embed-ssl.wistia.com", pathname: "/deliveries/**" },
+      // Poster frame ng homepage hero video (Cloudinary).
+      { protocol: "https", hostname: "res.cloudinary.com", pathname: "/ypqgyrbc/**" },
     ],
   },
   /* Walang sariling pahina ang /accommodations — ang mga tuluyan ay nasa

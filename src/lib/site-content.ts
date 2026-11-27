@@ -177,22 +177,26 @@ export const FAQ_GROUPS = [
 ] as const;
 
 /**
- * Updated homepage hero: file-2027-centered-logo-4K.mp4, supplied 26 Nov 2026.
- * Full 92-second edit, 3840×2160 / 60fps master. Web copies preserve 60fps,
- * omit audio (the hero is muted) and use H.264 with faststart.
- * Versioned paths keep browsers from reusing earlier logo edits.
+ * Homepage hero: "golf club new video.mp4", supplied 27 Nov 2026 and hosted on
+ * Cloudinary as `golf_club_new_video_1080p` (1920×1080, 24fps, 92s, same
+ * scene timing as the previous edit). Cloudinary transcodes the web copies:
+ * `ac_none` drops the audio (the hero is muted), `q_auto` picks the bitrate,
+ * `w_1280` makes the phone copy (~18 MB; desktop ~31 MB).
+ * The master is 1080p, so there is no separate Retina/2560 copy.
  */
-export const TEASER_VIDEO = "/hero-golf-2027-v3-2560.mp4";
+const CLOUDINARY_VIDEO = "https://res.cloudinary.com/ypqgyrbc/video/upload";
+const HERO_PUBLIC_ID = "golf_club_new_video_1080p";
 
-/** Mobile, standard desktop and Retina sources from the same edit/timeline. */
+export const TEASER_VIDEO = `${CLOUDINARY_VIDEO}/q_auto,vc_h264,ac_none/${HERO_PUBLIC_ID}.mp4`;
+
+/** Mobile and desktop sources from the same edit/timeline. */
 export const TEASER_VIDEO_SOURCES = {
-  retina: TEASER_VIDEO,
-  desktop: "/hero-golf-2027-v3-1920.mp4",
-  mobile: "/hero-golf-2027-v3-1280.mp4",
+  desktop: TEASER_VIDEO,
+  mobile: `${CLOUDINARY_VIDEO}/w_1280,q_auto,vc_h264,ac_none/${HERO_PUBLIC_ID}.mp4`,
 } as const;
 
-/** Poster from the new edit's opening flag shot. */
-export const TEASER_POSTER = "/hero-golf-2027-v3-poster.jpg";
+/** Poster: the new edit's opening flag shot (first frame, from Cloudinary). */
+export const TEASER_POSTER = `${CLOUDINARY_VIDEO}/so_0,w_1920,q_auto/${HERO_PUBLIC_ID}.jpg`;
 
 export const CONCEPTS = [
   {
