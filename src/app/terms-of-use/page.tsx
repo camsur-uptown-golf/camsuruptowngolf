@@ -104,7 +104,7 @@ const SECTIONS = [
 export default function TermsOfUsePage() {
   return (
     <>
-      <main className="bg-[#f3ede1] text-[#03321b]">
+      <main id="main-content" tabIndex={-1} className="bg-[#f3ede1] text-[#03321b]">
         <ScrollMotion />
 
         <section id="top" className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#03321b] px-6 pb-16 pt-40 text-white sm:min-h-[560px] sm:pb-20 sm:pt-44 lg:px-8">

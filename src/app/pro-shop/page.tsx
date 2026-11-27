@@ -72,7 +72,7 @@ const COLLECTIONS = [
 export default function ProShopPage() {
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ScrollMotion />
 
         <section

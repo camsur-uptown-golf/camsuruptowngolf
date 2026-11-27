@@ -62,7 +62,7 @@ export default function StayInfoTabs({
               className={`cursor-pointer rounded-full border px-3 py-2 transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] ${
                 active === tab.id
                   ? "border-[#98782f]/35 bg-[#98782f]/10 text-[#7d6224] shadow-[inset_0_0_0_1px_rgba(152,120,47,0.05)]"
-                  : "border-transparent text-[#5d685f]/55 hover:-translate-y-0.5 hover:border-[#98782f]/25 hover:bg-[#98782f]/[0.06] hover:text-[#7e6327]"
+                  : "border-transparent text-[#5d685f] hover:-translate-y-0.5 hover:border-[#98782f]/25 hover:bg-[#98782f]/[0.06] hover:text-[#7e6327]"
               }`}
             >
               {tab.label}

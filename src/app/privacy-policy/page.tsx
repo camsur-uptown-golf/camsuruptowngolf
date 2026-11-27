@@ -49,6 +49,7 @@ const SECTIONS = [
       "Information needed to handle your request may be accessed by authorised club personnel and the providers supporting website hosting, databases, email delivery, and booking or payment services. Those services may process information outside the Philippines, depending on their infrastructure.",
       "Online payments use the hosted checkout of PayMongo (GCash, Maya, GrabPay, card) or PayPal, whichever you choose. The website records payment references and status linked to the relevant booking or membership; card entry takes place with the payment provider. Google or Apple sign-in is used only when you select that option.",
       "Course films use Wistia. After you accept optional features and start playback, the player connects to Wistia, which may process your network address, device information, cookies, and viewing activity under its own privacy policy. The site also requests weather for the club’s fixed location from Open-Meteo and delivers media through hosting and content-delivery services. It does not need your device’s precise location for the club forecast.",
+      "To understand how the website is used and how fast it loads, the site uses Vercel Web Analytics and Speed Insights. They count page views, referring sites, country, device type, and loading times without cookies and without identifying individual visitors.",
       "External maps, social platforms, and other CamSur websites have their own privacy practices. Your browser connects to those services when you follow their links. Information may also be disclosed where a lawful obligation or a valid legal request requires it.",
     ],
   },
@@ -83,7 +84,7 @@ const BUTTON_CLASS = "inline-flex min-h-11 items-center justify-center rounded-f
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <main className="bg-[#f3ede1] text-[#03321b]">
+      <main id="main-content" tabIndex={-1} className="bg-[#f3ede1] text-[#03321b]">
         <section className="relative isolate flex min-h-[380px] items-end overflow-hidden bg-[#03321b] px-6 pb-16 pt-40 text-white sm:min-h-[500px] sm:pb-20 sm:pt-44 lg:px-8">
           <HeroBackdrop src="/hero-images/terms-v2.webp" alt="Guest information folio on a table inside the clubhouse" imageClassName="object-[65%_center] sm:object-center" />
           <div className="mx-auto max-w-4xl text-center">

@@ -51,7 +51,7 @@ const PRINT = [
 export default function UptownLifePage() {
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ScrollMotion />
 
         <section

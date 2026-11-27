@@ -35,7 +35,7 @@ export default function HoleOnePlan() {
             src="/golf/course-01-detailed-plan-v1.png"
             alt="Top-down illustrated plan of Hole 1, with the lake above its curved fairway, the green at left and tee complexes at upper right"
             fill
-            priority
+            preload
             sizes="(max-width: 1280px) 100vw, 1280px"
             className="object-cover"
           />

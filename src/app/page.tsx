@@ -15,7 +15,6 @@ import PackagesCarousel from "@/components/PackagesCarousel";
 import HeroVideo from "@/components/HeroVideo";
 import ScrollMotion from "@/components/ScrollMotion";
 import { T } from "@/components/T";
-import { TEASER_POSTER } from "@/lib/site-content";
 
 /** `count` drives the count-up; leave it null for values that are not numbers.
     Ang `labelKey` ang i18n key ng label — isinasalin sa piniling wika via <T>. */
@@ -52,24 +51,8 @@ function ImgDesignerMark() {
 function Hero() {
   return (
     <section id="top" className="hero-recede sticky top-0 isolate h-svh min-h-[680px] overflow-hidden bg-[#061a11] text-white">
-      <div className="absolute inset-0" aria-hidden="true">
-        {/* Only the media drifts; the gradients below stay put so the fade into
-            the course snapshot strip does not move with it. */}
-        <div
-          data-parallax="-0.04"
-          className="parallax-media absolute inset-0"
-          style={{ "--parallax-scale": "1.15" } as CSSProperties}
-        >
-          <Image
-            src={TEASER_POSTER}
-            alt=""
-            fill
-            preload
-            sizes="100vw"
-            className="hero-image object-cover object-center"
-          />
-          <HeroVideo />
-        </div>
+      <HeroVideo />
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         {/* Bahagyang pinagaan (Nob 2026): 0.68→0.50 sa kaliwa, 0.24→0.16 sa gitna,
             0.42→0.30 sa itaas, 0.72→0.56 sa ibaba — mas maliwanag ang video pero
             nababasa pa rin ang menu at ang stats. */}
@@ -162,7 +145,7 @@ function Introduction() {
               href="https://www.img.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-[#8a681f] underline-offset-4 transition-colors hover:text-[#2e5126] hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2e5126]"
+              className="font-semibold text-[#7d6224] underline-offset-4 transition-colors hover:text-[#2e5126] hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2e5126]"
             >
               IMG
             </a>{" "}
@@ -192,7 +175,7 @@ export default function Home() {
       {/* replay: umuulit ang mga reveal sa bawat pasok (scroll down o pataas),
           kaya walang dead air. */}
       <ScrollMotion replay />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* PAGLIPAT MULA SA HERO. Naka-`sticky` ang hero sa loob ng balot na
             ito, kaya nananatili ito habang umaangat sa ibabaw nito ang
             Introduction — isang card na may tuwid na itaas at anino. Kasabay

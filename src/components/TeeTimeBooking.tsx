@@ -83,10 +83,10 @@ function RoundCards({ value, onChange }: { value: Round; onChange: (round: Round
             </span>
             <span className="font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#7d6224]">{card.title}</span>
             <span className="mt-2 text-lg font-medium tracking-[-0.02em] text-[#03321b]">{card.holes}</span>
-            <span className="mt-1 text-xs text-[#667269]">{card.time}</span>
+            <span className="mt-1 text-xs text-[#5f6b63]">{card.time}</span>
             <span className="mt-4 border-t border-[#03321b]/10 pt-3 text-sm text-[#03321b]">
               <span className="font-semibold">{formatPeso(GREEN_FEES[card.holesCount])}</span>
-              <span className="text-[#667269]"> per player</span>
+              <span className="text-[#5f6b63]"> per player</span>
             </span>
           </button>
         );
@@ -108,7 +108,7 @@ const ERRORS: Record<string, string> = {
 };
 
 const FIELD =
-  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#9aa39d] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
+  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#6b766e] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
 const STEP = "font-navigation text-[11px] font-bold uppercase tracking-[0.16em] text-[#7d6224]";
 const TITLE = "mt-2 text-xl font-medium tracking-[-0.03em] text-[#03321b]";
 
@@ -171,14 +171,14 @@ function StepCard({
       <header className="flex items-center gap-4 px-5 py-4 sm:px-7 sm:py-5">
         <span
           className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-            state === "done" ? "bg-[#2e5126] text-[#efd99b]" : state === "open" ? "border-2 border-[#2e5126] text-[#2e5126]" : "border border-[#03321b]/20 text-[#9aa39d]"
+            state === "done" ? "bg-[#2e5126] text-[#efd99b]" : state === "open" ? "border-2 border-[#2e5126] text-[#2e5126]" : "border border-[#03321b]/20 text-[#5f6b63]"
           }`}
         >
           {state === "done" ? <CheckIcon /> : n}
         </span>
         <div className="min-w-0 flex-1">
-          <h2 className={`font-display text-[1.6rem] font-medium leading-none ${state === "todo" ? "text-[#9aa39d]" : "text-[#17251e]"}`}>{title}</h2>
-          {state === "done" && summary ? <p className="mt-0.5 truncate text-sm text-[#667269]">{summary}</p> : null}
+          <h2 className={`font-display text-[1.6rem] font-medium leading-none ${state === "todo" ? "text-[#737e76]" : "text-[#17251e]"}`}>{title}</h2>
+          {state === "done" && summary ? <p className="mt-0.5 truncate text-sm text-[#5f6b63]">{summary}</p> : null}
         </div>
         {state === "done" && onChange ? (
           <button
@@ -409,14 +409,14 @@ export default function TeeTimeBooking({
           </div>
           <div className="mt-8 border-t border-[#03321b]/10 pt-6">
           <h3 className={TITLE}>Choose a tee time</h3>
-          <p className="mt-2 text-xs leading-5 text-[#667269]">
+          <p className="mt-2 text-xs leading-5 text-[#5f6b63]">
             Each tee time is private to your group. Only available tee times are shown below.
           </p>
           <div role="status" aria-live="polite" className="mt-4 border border-[#03321b]/15 bg-white px-4 py-3 text-sm">
             {!validDate ? (
               <p className="text-[#a8492f]">Please choose a date within the next 30 days.</p>
             ) : loading ? (
-              <p className="text-[#667269]">Checking availability…</p>
+              <p className="text-[#5f6b63]">Checking availability…</p>
             ) : !availability ? (
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-[#a8492f]">Availability could not be loaded.</p>
@@ -528,7 +528,7 @@ export default function TeeTimeBooking({
               <div key={addon.id} className="flex items-center justify-between gap-4 px-4 py-3">
                 <span>
                   <span className="block text-sm font-semibold text-[#03321b]">{addon.name}</span>
-                  <span className="block text-xs text-[#667269]">
+                  <span className="block text-xs text-[#5f6b63]">
                     <span translate="no">{formatPeso(addon.price)}</span> {addon.unit}
                   </span>
                 </span>
@@ -562,7 +562,7 @@ export default function TeeTimeBooking({
           onChange={() => goTo(4)}
           summary={villa ? <span translate="no">{VILLA_NIGHTS.find((v) => v.slug === villa)?.name}</span> : tr("No overnight stay")}
         >
-          <p className="mt-2 text-xs leading-5 text-[#667269]">
+          <p className="mt-2 text-xs leading-5 text-[#5f6b63]">
             {late
               ? "Your round finishes late in the afternoon — rest by the course tonight instead of driving home."
               : "Make it a weekend: add a night by the course after your round."}
@@ -590,7 +590,7 @@ export default function TeeTimeBooking({
                       {formatPeso(house.pricePerNight)}
                     </span>
                   </span>
-                  <span className={`mt-0.5 block text-xs ${selected ? "text-white/70" : "text-[#667269]"}`}>
+                  <span className={`mt-0.5 block text-xs ${selected ? "text-white/70" : "text-[#5f6b63]"}`}>
                     {left === 0 ? (
                       "Fully booked tonight"
                     ) : (
@@ -680,7 +680,7 @@ export default function TeeTimeBooking({
             </span>
             <span translate="no" className="font-semibold tabular-nums">{formatPeso(price.deposit)}</span>
           </div>
-          <div className="flex justify-between gap-3 text-[#667269]">
+          <div className="flex justify-between gap-3 text-[#5f6b63]">
             <span>Balance at the club</span>
             <span translate="no" className="tabular-nums">{formatPeso(price.balance)}</span>
           </div>

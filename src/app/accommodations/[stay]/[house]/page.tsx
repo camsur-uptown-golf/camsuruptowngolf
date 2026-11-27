@@ -51,7 +51,7 @@ export default async function VillaHousePage({ params }: { params: Params }) {
 
   return (
     <>
-      <main className="bg-[#f3ede1] text-[#03321b]">
+      <main id="main-content" tabIndex={-1} className="bg-[#f3ede1] text-[#03321b]">
         <section id="top" className="relative isolate min-h-[380px] overflow-hidden bg-[#03321b] px-6 pb-14 pt-64 text-center text-white sm:min-h-[560px] sm:pb-16 sm:pt-72 lg:px-8">
           <HeroBackdrop src={house.exterior} alt={`${house.name} at Villa Del Rey — ${house.setting}`} />
           <p className="font-navigation text-[11px] font-bold uppercase tracking-[0.24em] text-[#e2c77a] xl:text-[11px]">

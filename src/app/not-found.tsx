@@ -26,7 +26,7 @@ const LINKS = [
 export default function NotFound() {
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section className="relative isolate flex min-h-svh items-end overflow-hidden bg-[#03321b] px-6 pb-20 pt-48 text-white sm:px-8 lg:px-12">
           <HeroBackdrop src="/brand-2026/first-tee-dew.webp" alt="" imageClassName="object-[50%_62%]" />
 

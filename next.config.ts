@@ -41,6 +41,10 @@ const nextConfig: NextConfig = {
   },
   images: {
     qualities: [75, 85, 90],
+    /* Dinagdag ang 2560: retina laptop na 1280–1440px ang lapad ay kumukuha
+       noon ng 3840 (doble ang bigat, ~1.7 MB sa hero ng bawat hole) dahil
+       walang sukat sa pagitan ng 2048 at 3840. */
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2560, 3840],
     remotePatterns: [
       // Poster frame ng Wistia teaser, ginagamit ng course film section.
       { protocol: "https", hostname: "embed-ssl.wistia.com", pathname: "/deliveries/**" },

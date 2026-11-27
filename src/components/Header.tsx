@@ -97,9 +97,9 @@ const MOBILE_GOLF_HIGHLIGHTS = 6;
 function namesGridClass(count: number, sectionSlug: string) {
   if (count > 12) return "grid-flow-col grid-rows-[repeat(6,max-content)] grid-cols-3";
   if (sectionSlug === "experiences") {
-    /* Limang hilera bawat haligi (5×5 ang 10 highlight, pantay) at mas makit
-       na haligi (140px) para lumiit ang lawak ng highlights — napupunta ang
-       natitirang espasyo sa preview column sa kaliwa. */
+    /* Hanggang limang hilera bawat haligi (sa tatlong highlight ngayon, iisang
+       haligi lang) at mas makitid na haligi (140px) para lumiit ang lawak ng
+       highlights — napupunta ang natitirang espasyo sa preview column sa kaliwa. */
     return "grid-flow-col grid-rows-[repeat(5,max-content)] grid-cols-[140px_140px] justify-start";
   }
   if (count > 6) return "grid-flow-col grid-rows-[repeat(5,max-content)] grid-cols-[180px_180px] justify-start";
@@ -847,7 +847,7 @@ export default function Header() {
                 "visible max-h-16 w-auto max-w-[calc(100vw-3rem)] rounded-full border border-transparent p-1.5 opacity-100 [text-shadow:0_1px_8px_rgba(0,0,0,0.45)]"} ${desktopPanelOpen ? "flex items-center justify-between gap-1 xl:gap-1.5" : "grid grid-flow-col auto-cols-max items-center justify-evenly gap-1 xl:gap-1.5"} pointer-events-auto relative z-50 h-12 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#efd99b] xl:text-[12px] xl:tracking-[0.09em] min-[1400px]:text-[13px]`}
           >
             {isAwayFromHome ? (
-              <Link href="/" onClick={closeDesktopMenu} className={NAV_ITEM_CLASS}>
+              <Link href="/" onClick={closeDesktopMenu} className={`max-xl:hidden ${NAV_ITEM_CLASS}`}>
                 {t("nav.home")}
               </Link>
             ) : null}
@@ -955,7 +955,7 @@ export default function Header() {
               alt=""
               width={911}
               height={1251}
-              priority
+              preload
               className="h-8 w-auto"
             />
           </Link>
@@ -1206,7 +1206,7 @@ export default function Header() {
         className={`${isScrolled ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"} absolute left-1/2 top-[16px] z-50 hidden h-12 w-auto max-w-[calc(100vw-3rem)] -translate-x-1/2 grid-flow-col auto-cols-max items-center gap-1 xl:gap-1.5 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#efd99b] lg:grid xl:text-[11px] xl:tracking-[0.09em]`}
       >
         {isAwayFromHome ? (
-          <Link href="/" onClick={closeDesktopMenu} className={NAV_ITEM_CLASS}>
+          <Link href="/" onClick={closeDesktopMenu} className={`max-xl:hidden ${NAV_ITEM_CLASS}`}>
             {t("nav.home")}
           </Link>
         ) : null}

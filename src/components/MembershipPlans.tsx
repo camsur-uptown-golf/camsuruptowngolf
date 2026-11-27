@@ -123,7 +123,7 @@ export default function MembershipPlans({
                 <span translate="no" className="font-navigation text-3xl font-semibold tabular-nums tracking-[-0.02em]">
                   {formatPeso(plan.pricePerMonth)}
                 </span>
-                <span className={`text-sm ${dark ? "text-white/60" : "text-[#667269]"}`}>/ month</span>
+                <span className={`text-sm ${dark ? "text-white/60" : "text-[#5f6b63]"}`}>/ month</span>
               </p>
               {signedIn && months > 1 ? (
                 <p className={`mt-1 text-sm tabular-nums ${dark ? "text-white/70" : "text-[#5d685f]"}`}>

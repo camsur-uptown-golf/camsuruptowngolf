@@ -63,7 +63,7 @@ export default function PackageItineraryPage({
 }: Props) {
   return (
     <>
-      <main className="bg-[#f3ede1] text-[#03321b]">
+      <main id="main-content" tabIndex={-1} className="bg-[#f3ede1] text-[#03321b]">
         {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
         <ScrollMotion replay />
 
@@ -73,7 +73,7 @@ export default function PackageItineraryPage({
             src={image}
             alt=""
             fill
-            priority
+            preload
             sizes="100vw"
             className="-z-20 object-cover"
             style={{ objectPosition: "right center" }}

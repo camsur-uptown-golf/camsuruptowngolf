@@ -96,7 +96,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
 
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Naka-pin ang clubhouse hero: nananatili ang larawan sa sukat ng
             viewport habang tumatakbo ang sequence (title out → stats in →
             hold), saka umaangat sa ibabaw nito ang nilalaman bilang card
@@ -136,7 +136,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               src={section.image}
               alt={`${section.label} at CamSur Uptown Golf`}
               fill
-              priority
+              preload
               sizes="100vw"
               quality={isEvents ? 90 : undefined}
               data-parallax={usesHeroParallax ? "-0.06" : undefined}

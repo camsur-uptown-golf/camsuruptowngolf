@@ -1001,7 +1001,7 @@
  "Swimming pool bar": "수영장 바",
  "Swimming pool changing room": "수영장 탈의실",
  "Tailored shorts, trousers, skorts, and golf skirts": "단정한 반바지, 긴바지, 스코트, 골프 스커트",
- "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur for the active days, and a massage or a quiet hour by the lake for the slower ones.": "활동적인 날에는 CamSur의 웨이크보드, 피클볼, 농구, ATV 트레일을, 느긋한 날에는 마사지나 호숫가에서의 조용한 시간을 즐기세요.",
+ "Wakeboarding and pickle ball at CamSur for the active days, and a quiet hour on Lago Del Rey for the slower ones.": "활동적인 날에는 CamSur의 웨이크보드와 피클볼을, 느긋한 날에는 Lago Del Rey에서의 조용한 시간을 즐기세요.",
  "Tee times, flights and pairings arranged for your group": "그룹을 위해 준비되는 티타임, 플라이트, 조 편성",
  "Tell the club when you would like to play and how many are in your group, and the team will take care of the tee time, the caddies, and anything else you need.": "희망하시는 플레이 일정과 인원을 알려 주시면 티타임, 캐디 및 필요한 모든 사항을 준비해 드립니다.",
  "Tell the club when you would like to play or stay, and the team will call you back within 48 hours at the time you choose.": "희망하시는 플레이 또는 숙박 일정을 알려 주시면 48시간 이내에 원하시는 시간에 전화드립니다.",
@@ -1188,7 +1188,7 @@
  "Wake slowly, spend the day on the course, and come back to a quiet room, a pool, and an evening that is yours.": "느긋하게 일어나 코스에서 하루를 보내고, 조용한 객실과 수영장, 오롯이 당신만의 저녁으로 돌아오세요.",
  "Wakeboarding": "웨이크보드",
  "Wakeboarding, ATV, a bike track, and the quieter corners of the resort.": "웨이크보드, ATV, 바이크 트랙, 그리고 리조트의 한적한 공간.",
- "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur, plus a massage or a quiet hour by the lake.": "CamSur의 웨이크보드, 피클볼, 농구, ATV 트레일, 그리고 마사지나 호숫가에서의 조용한 시간.",
+ "Wakeboarding and pickle ball at CamSur, plus a quiet hour on Lago Del Rey.": "CamSur의 웨이크보드와 피클볼, 그리고 Lago Del Rey에서의 조용한 시간.",
  "Walk the setting": "공간 둘러보기",
  "Walnut": "월넛",
  "Walnut joinery for fitting and display": "피팅 및 디스플레이용 월넛 가구",
@@ -1846,5 +1846,7 @@
  "Exterior of the selected accommodation at Villa Del Rey": "Villa Del Rey에서 선택한 숙소의 외관",
  "Bedroom of the selected accommodation at Villa Del Rey": "Villa Del Rey에서 선택한 숙소의 침실",
  "Top": "맨 위",
- "Reset": "초기화"
+ "Reset": "초기화",
+ "Book a Tee Time": "티타임 예약",
+ "Skip to content": "본문으로 건너뛰기"
 }

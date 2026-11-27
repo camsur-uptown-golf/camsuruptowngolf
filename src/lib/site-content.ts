@@ -177,43 +177,22 @@ export const FAQ_GROUPS = [
 ] as const;
 
 /**
- * CamSur Uptown Golf hero — direktang 4K MP4 (3840x2160, 60fps, ~20s).
- * Updated ang flag sa unang shot at ang closing logo: walang "Club", at
- * katamtaman ang "Golf", kapareho ng header logo at original brand colors.
- * Ang establishment mark sa flag at closing logo ay Est. 2027.
- * Render: scripts/render-flag-logo.py, tapos scripts/render-hero-ending.mjs.
- * Naka-backup pa rin ang dating video sa /hero-golf-club.mp4.
- *
- * Lokal na file sa /public, hindi embed, kaya native <video> ang ginagamit at
- * wala nang panlabas na player script. Maikli ang clip kaya natural lang na
- * naglo-loop (walang manu-manong hiwa ang kailangan).
- *
- * Isang bagay lang: walang adaptive streaming ang isang MP4 — pareho ang
- * 4K na natatanggap ng nasa cellphone at ng nasa desktop.
+ * Updated homepage hero: file-2027-centered-logo-4K.mp4, supplied 26 Nov 2026.
+ * Full 92-second edit, 3840×2160 / 60fps master. Web copies preserve 60fps,
+ * omit audio (the hero is muted) and use H.264 with faststart.
+ * Versioned paths keep browsers from reusing earlier logo edits.
  */
-export const TEASER_VIDEO = "/hero-golf-2027.mp4";
+export const TEASER_VIDEO = "/hero-golf-2027-v3-2560.mp4";
 
-/* ANG TALAGANG INIHAHAIN: mga compressed na kopya ng TEASER_VIDEO. 60MB ang 4K
-   na master; ito ang tatlong sukat (lahat 60fps, walang audio, H.264,
-   faststart):
-     retina  — 2560, CRF 24, ~21MB (retina at malalaking screen)
-     desktop — 1920, CRF 23, ~15MB
-     mobile  — 1280, CRF 25, ~5.6MB
-   60FPS, HINDI 30. Sinubukan ang 30fps/CRF 28 (~7MB) pero mukhang malabo at
-   pumipitik ang tuloy-tuloy na aerial na galaw — napansin agad sa home.
-   Naka-mute ang hero, kaya walang nawawala sa pag-alis ng audio.
-   KAPAG NIRE-RENDER ULIT ANG MASTER, gawin ulit ang tatlo, hal.:
-     ffmpeg -i hero-golf-2027.mp4 -an -vf "scale=2560:-2" -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -movflags +faststart hero-golf-2027-2560.mp4
-     (1920 → `-crf 23`, 1280 → `-crf 25`) */
+/** Mobile, standard desktop and Retina sources from the same edit/timeline. */
 export const TEASER_VIDEO_SOURCES = {
-  retina: "/hero-golf-2027-2560.mp4",
-  desktop: "/hero-golf-2027-1920.mp4",
-  mobile: "/hero-golf-2027-1280.mp4",
+  retina: TEASER_VIDEO,
+  desktop: "/hero-golf-2027-v3-1920.mp4",
+  mobile: "/hero-golf-2027-v3-1280.mp4",
 } as const;
 
-/** Poster frame ng teaser, para may makita habang naglo-load ang video. */
-export const TEASER_POSTER =
-  "/hero-golf-2027-poster.jpg";
+/** Poster from the new edit's opening flag shot. */
+export const TEASER_POSTER = "/hero-golf-2027-v3-poster.jpg";
 
 export const CONCEPTS = [
   {
@@ -369,19 +348,19 @@ export const COURSE_PAGES = Array.from({ length: 18 }, (_, index) => {
     routingOrientation: routingImageDimensions.width >= routingImageDimensions.height ? "landscape" as const : "portrait" as const,
     routingWidth: routingImageDimensions.width,
     routingHeight: routingImageDimensions.height,
-    /* Flyover ng butas (Nob 2026 renders, may hole badge at logo). Galing sa
-       4K master sa `CamSur_Hole_Flyovers_4K_Final`, ini-encode sa H.264 60fps
-       na may AAC: 1920 sa ~6 Mbps (~12–20MB), 1280 sa ~2.8 Mbps para sa
-       cellphone. Unang frame ang poster. Hole 01: hanggang 16.65s lang (wala
-       ang itim na dulo).
+    /* Flyover ng butas (Nob 2026 renders, may hole badge at maliit na 2027
+       logo). Galing sa 4K small-logo masters: H.264 60fps, 1920 sa desktop,
+       1280 sa cellphone, at parehong AAC audio. Unang frame ang poster.
+       Hole 01: hanggang 16.65s lang para walang itim na dulo sa pag-loop.
+       May bersiyon ang URL para hindi magamit ang lumang logo sa cache.
        `clear`: parehong flyover pero WALANG numero sa kanan (galing sa
        `4k clear` na master) — para sa mga card na Previous/Next hole, kung
-       saan ang title ng card na ang nagsasabi ng butas. Parehong encoding ng
-       nasa itaas: 1920 sa desktop, 1280 sa cellphone. */
+       saan ang title ng card na ang nagsasabi ng butas. H.264 60fps din:
+       1920 sa desktop, 1280 sa cellphone. */
     flyover: {
-      desktop: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-1920.mp4`,
-      mobile: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-1280.mp4`,
-      poster: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-poster.jpg`,
+      desktop: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-1920.mp4?v=small-logo-2027`,
+      mobile: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-1280.mp4?v=small-logo-2027`,
+      poster: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-poster.jpg?v=small-logo-2027`,
       clear: {
         desktop: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-clear-1920.mp4`,
         mobile: `/golf/flyovers/hole-${String(hole).padStart(2, "0")}-clear-1280.mp4`,
@@ -505,7 +484,7 @@ export const SITE_SECTIONS = [
     label: "Experiences",
     eyebrow: "Experience",
     title: "More to enjoy beyond the course",
-    description: "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur, plus a massage or a quiet hour by the lake.",
+    description: "Wakeboarding and pickle ball at CamSur, plus a quiet hour on Lago Del Rey.",
     image: "/experiences/banner11-dehazed.jpg",
     /* Isa-isa ang bawat pasilidad dito, hindi ang apat na pangkat: ito ang
        aktwal na hinahanap ng bisita sa menu. Ang bawat anchor ay tumuturo sa
@@ -513,26 +492,16 @@ export const SITE_SECTIONS = [
        sundan dito. Walang Golf dito: sarili niyang section iyon sa nav. */
     links: [
       /* Ang mga facility ay may sarili nang official external pages. Sinadya
-         (hiniling) ang pagkakasunod-sunod, hindi alpabetiko. Sa 5×5 na mega
-         menu: unang haligi = 1–5, pangalawang haligi = 6–10. */
+         (hiniling) ang pagkakasunod-sunod, hindi alpabetiko. Tatlo na lang ang
+         nasa Highlights ng mega menu (hiniling): nasa page pa rin ng
+         Experiences ang ibang pasilidad. */
       { label: "Wakeboarding", href: "https://visitcamsur.com/facilities/wakepark", image: "/experiences/wakepark-riders.webp" },
+      { label: "Lago Del Rey", href: "https://visitcamsur.com/facilities/lagodelrey", image: "/experiences/lago-del-rey-paddle.webp" },
       {
         label: "Pickle Ball",
         href: "https://pickleball.camsur.com/",
         image: "/experiences/pickleball-indoor.webp",
       },
-      {
-        label: "Outdoor/Indoor Basketball Court",
-        href: "https://visitcamsur.com/facilities/playground",
-        image: "/experiences/basketball-arena.webp",
-      },
-      { label: "Massage", href: "https://visitcamsur.com/facilities/massage", image: "/experiences/massage-spa.webp" },
-      { label: "ATV", href: "https://visitcamsur.com/facilities/atv", image: "/experiences/atv-ride.webp" },
-      { label: "Lago Del Rey", href: "https://visitcamsur.com/facilities/lagodelrey", image: "/experiences/lago-del-rey-paddle.webp" },
-      { label: "Pump Track", href: "https://visitcamsur.com/facilities/bike-track", image: "/experiences/pump-track-night.webp" },
-      { label: "Skate Park", href: "https://visitcamsur.com/facilities/skate-park", image: "/experiences/skate-park-sunset.webp" },
-      { label: "Kiddie Park", href: "https://visitcamsur.com/facilities/kiddiepark", image: "/experiences/kiddie-park-playground.webp" },
-      { label: "Billiards", href: "https://visitcamsur.com/facilities/billiards", image: "/experiences/billiards-lounge.webp" },
     ],
   },
 ] as const;

@@ -42,7 +42,7 @@ export default function StayFeatures({
               className={`${LABEL} cursor-pointer border-b-2 pb-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] ${
                 active === "highlights"
                   ? "border-current text-[#7d6224]"
-                  : "border-transparent text-[#5d685f]/45 hover:text-[#7d6224]/80"
+                  : "border-transparent text-[#5d685f] hover:text-[#7d6224]"
               }`}
             >
               Highlights
@@ -57,7 +57,7 @@ export default function StayFeatures({
               className={`${LABEL} cursor-pointer border-b-2 pb-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#98782f] ${
                 active === "amenities"
                   ? "border-current text-[#7d6224]"
-                  : "border-transparent text-[#5d685f]/45 hover:text-[#7d6224]/80"
+                  : "border-transparent text-[#5d685f] hover:text-[#7d6224]"
               }`}
             >
               Amenities

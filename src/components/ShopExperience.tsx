@@ -38,7 +38,7 @@ export default function ShopExperience() {
           src="/camsur-pro-shop.png"
           alt="Interior of the CamSur Uptown Pro Shop"
           fill
-          priority
+          preload
           sizes="100vw"
           className="hero-image -z-20 object-cover"
         />

@@ -131,7 +131,7 @@ function HowPlanningWorks() {
               </p>
               <div className="min-w-0">
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-[#03321b]">{title}</h3>
-                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
+                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#5f6b63]">{description}</p>
               </div>
             </div>
           ))}

@@ -78,7 +78,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
   if (member) {
     return (
       <>
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <section id="top" className="relative isolate flex min-h-[520px] items-end overflow-hidden bg-[#03321b] px-6 pb-14 pt-40 text-white sm:min-h-[560px] sm:pb-16 sm:pt-44 lg:px-8">
             <HeroBackdrop mobileSrc="/clubhouse/concept/members-lounge.jpg" src="/brand-2026/rooftop-evening.webp" alt="Rooftop bar concept at dusk: two guests sharing an evening above the course" imageClassName="object-[40%_center] sm:object-center" />
             <div className="mx-auto max-w-3xl text-center">
@@ -121,7 +121,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
                       ],
                     ].map(([label, value]) => (
                       <div key={label} className="flex flex-col gap-1 border-b border-[#03321b]/10 pb-4 last:border-0 last:pb-0 sm:flex-row sm:justify-between sm:gap-6">
-                        <dt className="text-[#667269]">{label}</dt>
+                        <dt className="text-[#5f6b63]">{label}</dt>
                         <dd translate="no" className="font-semibold break-words sm:text-right">
                           {value}
                         </dd>
@@ -229,7 +229,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* `lg:pt-64`: nakapatong ang fixed na header (208px ang taas ng marka)
             sa itaas ng pahina at sinasalo nito ang mga click. Sa ilalim nito
             dapat magsimula ang card, kung hindi ay hindi mapindot ang mga tab. */}

@@ -585,3 +585,16 @@ html {
     transition: none;
   }
 }
+
+/* Hero hole label — malumanay na pasok kapag nagpalit ang eksena. */
+@keyframes hero-hole-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.hero-hole-label { animation: hero-hole-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) { .hero-hole-label { animation: none; } }
+
+/* Target ng "Skip to content": natatanggap ang focus pero walang outline. */
+main:focus {
+  outline: none;
+}

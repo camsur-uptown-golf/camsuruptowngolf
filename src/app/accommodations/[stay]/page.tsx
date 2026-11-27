@@ -37,7 +37,7 @@ export default async function AccommodationPage({ params }: { params: Promise<{ 
 
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section
           id="top"
           className={`isolate flex w-full items-end overflow-hidden bg-[#0b2419] text-white ${

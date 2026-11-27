@@ -131,7 +131,7 @@ function Calendar({
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between gap-3 border-t border-[#03321b]/10 bg-[#faf9f5] px-3 py-2 text-[11px] text-[#667269]">
+      <div className="flex items-center justify-between gap-3 border-t border-[#03321b]/10 bg-[#faf9f5] px-3 py-2 text-[11px] text-[#5f6b63]">
         <span className="flex items-center gap-1.5"><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#98782f]" />{tr("Today")}</span>
         <span>{format(min, { month: "short", day: "numeric" })} – {format(max, { month: "short", day: "numeric" })}</span>
       </div>
@@ -228,7 +228,7 @@ export default function BookingDatePicker({ id, value, min, max, onChange, compa
             type="button"
             aria-pressed={value === shortcut.date}
             onClick={() => { if (shortcut.date !== value) onChange(shortcut.date); }}
-            className={`rounded-sm border px-2.5 py-1 text-[11px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2e5126] ${value === shortcut.date ? "border-[#2e5126]/25 bg-[#2e5126]/[0.07] text-[#2e5126]" : "border-[#03321b]/15 bg-transparent text-[#667269] hover:border-[#2e5126]/40 hover:bg-white hover:text-[#2e5126]"}`}
+            className={`rounded-sm border px-2.5 py-1 text-[11px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2e5126] ${value === shortcut.date ? "border-[#2e5126]/25 bg-[#2e5126]/[0.07] text-[#2e5126]" : "border-[#03321b]/15 bg-transparent text-[#5f6b63] hover:border-[#2e5126]/40 hover:bg-white hover:text-[#2e5126]"}`}
           >
             {tr(shortcut.label)}
           </button>

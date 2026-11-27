@@ -82,7 +82,7 @@ export default function ForecastDays({ dates, tone = "light" }: { dates: string[
   if (upcoming.length === 0) return null;
 
   const dark = tone === "dark";
-  const muted = dark ? "text-white/60" : "text-[#667269]";
+  const muted = dark ? "text-white/60" : "text-[#5f6b63]";
   const card = dark ? "border-white/12 bg-white/[0.06]" : "border-[#03321b]/12 bg-white";
   const strong = dark ? "text-white" : "text-[#03321b]";
   const accent = dark ? "text-[#efd99b]" : "text-[#2e5126]";

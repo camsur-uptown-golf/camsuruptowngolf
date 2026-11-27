@@ -1001,7 +1001,7 @@
  "Swimming pool bar": "Swimming pool bar",
  "Swimming pool changing room": "Bihisan sa swimming pool",
  "Tailored shorts, trousers, skorts, and golf skirts": "Tailored shorts, pantalon, skorts, at golf skirts",
- "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur for the active days, and a massage or a quiet hour by the lake for the slower ones.": "Wakeboarding, pickleball, basketball, at ATV trails sa CamSur para sa mga aktibong araw, at masahe o tahimik na oras sa tabi ng lawa para sa mas mabagal na araw.",
+ "Wakeboarding and pickle ball at CamSur for the active days, and a quiet hour on Lago Del Rey for the slower ones.": "Wakeboarding at pickleball sa CamSur para sa mga aktibong araw, at tahimik na oras sa Lago Del Rey para sa mas mabagal na araw.",
  "Tee times, flights and pairings arranged for your group": "Tee times, flights at pairings na inayos para sa grupo mo",
  "Tell the club when you would like to play and how many are in your group, and the team will take care of the tee time, the caddies, and anything else you need.": "Sabihin sa club kung kailan mo gustong maglaro at ilan kayo, at ang team na ang bahala sa tee time, caddies, at iba pang kailangan mo.",
  "Tell the club when you would like to play or stay, and the team will call you back within 48 hours at the time you choose.": "Sabihin sa club kung kailan mo gustong maglaro o mag-stay, at tatawagan ka ng team sa loob ng 48 oras sa oras na pipiliin mo.",
@@ -1188,7 +1188,7 @@
  "Wake slowly, spend the day on the course, and come back to a quiet room, a pool, and an evening that is yours.": "Gumising nang dahan-dahan, ilaan ang araw sa course, at bumalik sa tahimik na kuwarto, sa pool, at sa gabing iyo lang.",
  "Wakeboarding": "Wakeboarding",
  "Wakeboarding, ATV, a bike track, and the quieter corners of the resort.": "Wakeboarding, ATV, bike track, at tahimik na sulok ng resort.",
- "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur, plus a massage or a quiet hour by the lake.": "Wakeboarding, pickleball, basketball, at ATV trails sa CamSur, pati masahe o tahimik na oras sa tabi ng lawa.",
+ "Wakeboarding and pickle ball at CamSur, plus a quiet hour on Lago Del Rey.": "Wakeboarding at pickleball sa CamSur, pati tahimik na oras sa Lago Del Rey.",
  "Walk the setting": "Libutin ang lugar",
  "Walnut": "Walnut",
  "Walnut joinery for fitting and display": "Walnut joinery para sa fitting at display",
@@ -1846,5 +1846,7 @@
  "Exterior of the selected accommodation at Villa Del Rey": "Panlabas ng napiling tuluyan sa Villa Del Rey",
  "Bedroom of the selected accommodation at Villa Del Rey": "Kuwarto ng napiling tuluyan sa Villa Del Rey",
  "Top": "Itaas",
- "Reset": "I-reset"
+ "Reset": "I-reset",
+ "Book a Tee Time": "Mag-book ng Tee Time",
+ "Skip to content": "Lumaktaw sa nilalaman"
 }

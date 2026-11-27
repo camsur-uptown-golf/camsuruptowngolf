@@ -34,7 +34,7 @@ export default async function BookTeeTimePage({ searchParams }: { searchParams: 
   } as const;
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Extend the photograph below the copy before it fades into cream.
             Matching bottom padding keeps the title at its existing height. */}
         <section id="top" className="relative isolate flex min-h-[400px] items-end overflow-hidden bg-[#03321b] px-6 pb-28 pt-32 text-white sm:min-h-[640px] sm:pb-52 sm:pt-36 lg:min-h-[800px] lg:px-8 lg:pb-84">

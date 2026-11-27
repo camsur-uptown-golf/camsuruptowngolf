@@ -86,7 +86,7 @@ function SocialButtons() {
 }
 
 const FIELD =
-  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#9aa39d] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
+  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#6b766e] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
 const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b]";
 
 function EyeIcon({ open }: { open: boolean }) {
@@ -133,7 +133,7 @@ function PasswordField({
           onClick={() => setVisible((v) => !v)}
           aria-label={visible ? "Hide password" : "Show password"}
           aria-pressed={visible}
-          className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-[#667269] transition hover:text-[#2e5126]"
+          className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-[#5f6b63] transition hover:text-[#2e5126]"
         >
           <EyeIcon open={visible} />
         </button>

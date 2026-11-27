@@ -17,7 +17,7 @@ import { CALL_WINDOWS, CLUB_PHONE } from "@/lib/site-content";
  */
 
 const FIELD =
-  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#9aa39d] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
+  "w-full border border-[#03321b]/25 bg-white px-4 py-3 text-sm text-[#03321b] outline-none transition placeholder:text-[#6b766e] focus:border-[#2e5126] focus:ring-2 focus:ring-[#2e5126]/20";
 const LABEL = "block font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#03321b]";
 
 export default function QuickQuestion({ context }: { context: string }) {

@@ -76,7 +76,7 @@ function TravelIcon({ name }: { name: TravelIconName }) {
 export default function GettingHerePage() {
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ScrollMotion />
 
         <section
@@ -124,7 +124,7 @@ export default function GettingHerePage() {
                   </div>
                   <div className="min-w-0">
                     <h3 className="text-base font-semibold tracking-[-0.02em] text-[#03321b]">{route.from}</h3>
-                    <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{route.note}</p>
+                    <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#5f6b63]">{route.note}</p>
                   </div>
                   {/* Ang oras ang pinakamalaking bagay sa hilera — iyon ang
                       unang hinahanap ng bumibisita. */}

@@ -30,6 +30,29 @@ const SPACE_FOR: Record<string, string> = {
   Evening: "rooftop",
 };
 
+function DayIcon({ time }: { time: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+      {time === "Morning" ? (
+        <>
+          <path d="M3 17h18M5 21h14M7 17a5 5 0 0 1 10 0M12 3v3M4.2 9.2l2.1 2.1M19.8 9.2l-2.1 2.1" />
+          <path d="m9.5 5.5 2.5-2.5 2.5 2.5" />
+        </>
+      ) : time === "Afternoon" ? (
+        <>
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </>
+      ) : (
+        <>
+          <path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z" />
+          <path d="M18 2v4M16 4h4" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 export default function HomeClubhouseDayCards() {
   const { t } = useTranslation();
 
@@ -77,8 +100,10 @@ export default function HomeClubhouseDayCards() {
             {CLUBHOUSE_DAY.map((part, index) => (
               <span
                 key={part.time}
-                className={`block h-3 w-3 rounded-full border-2 border-[#f3ede1] ${["bg-[#e8d39b]", "bg-[#d9a95a]", "bg-[#0d2419]"][index] ?? "bg-[#7d6224]"}`}
-              />
+                className={`flex h-11 w-11 items-center justify-center rounded-full border border-current bg-[#f3ede1] ring-4 ring-[#f3ede1] ${["text-[#98782f]", "text-[#a87528]", "text-[#0d2419]"][index] ?? "text-[#7d6224]"}`}
+              >
+                <DayIcon time={part.time} />
+              </span>
             ))}
           </div>
         </div>

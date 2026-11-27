@@ -59,7 +59,7 @@ export default function Breadcrumbs({ inline = false }: { inline?: boolean } = {
           className={`flex flex-wrap items-center gap-x-2.5 gap-y-1 font-navigation tracking-[0.01em] ${
             /* Inline (mga pahina ng butas): mas maliit at mas mapusyaw, para
                hindi makipagkumpitensya sa pangalan ng butas sa ilalim. */
-            inline ? "text-[12px] font-normal text-[#9aa39d]" : "mx-auto max-w-7xl px-6 pb-2 pt-10 text-[13px] font-medium text-[#7f8a82] sm:pt-12 lg:px-8"
+            inline ? "text-[12px] font-normal text-[#5f6b63]" : "mx-auto max-w-7xl px-6 pb-2 pt-10 text-[13px] font-medium text-[#5f6b63] sm:pt-12 lg:px-8"
           }`}
         >
           {trail.map((crumb, index) => {

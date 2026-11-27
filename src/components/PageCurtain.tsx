@@ -132,7 +132,7 @@ export default function PageCurtain() {
         alt=""
         width={618}
         height={1162}
-        priority
+        preload
         className="h-48 w-auto sm:h-64 lg:h-[22rem] xl:h-[26rem]"
         /* Nakabatay sa SLIDE_IN_MS ang mga oras dito sa halip na naka-hardcode:
            dapat tapos nang lumitaw ang marka bago pa matapos tumakip ang panel.

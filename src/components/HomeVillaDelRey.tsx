@@ -244,7 +244,7 @@ export default function HomeVillaDelRey() {
                       <Link
                         href={villaHouseHref(stay.slug)}
                         tabIndex={isActive ? undefined : -1}
-                        className="mb-5 inline-flex h-10 items-center gap-2 rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#8a681f] transition hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] xl:text-[11px]"
+                        className="mb-5 inline-flex h-10 items-center gap-2 rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[11px] font-bold uppercase tracking-[0.12em] text-[#7d6224] transition hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] xl:text-[11px]"
                       >
                         Ask about availability
                       </Link>

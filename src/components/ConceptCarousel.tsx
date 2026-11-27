@@ -16,22 +16,38 @@ import { useTranslation } from "@/i18n/LanguageProvider";
  * naglo-load ang video, kaya walang blangkong kislap. Kapag naka-"reduce
  * motion" ang device, hindi ito tumutugtog (larawan lang).
  */
-function ActiveFlyover({ flyover, poster }: { flyover: { desktop: string; mobile: string }; poster: string }) {
+function ActiveFlyover({ flyover }: { flyover: { desktop: string; mobile: string } }) {
+  const video = useRef<HTMLVideoElement>(null);
+
+  /* Naglo-load at tumutugtog lang habang nakikita ang carousel
+     (IntersectionObserver), kaya walang video na dina-download habang nasa
+     itaas pa ng pahina ang bisita. Sa effect ang `muted`: hindi laging
+     inilalagay ng React ang `muted` sa HTML, kaya puwedeng tanggihan ng
+     browser ang autoplay. */
+  useEffect(() => {
+    const element = video.current;
+    if (!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    element.muted = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) void element.play().catch(() => undefined);
+        else element.pause();
+      },
+      { rootMargin: "200px 0px" },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  /* Walang poster: ang <Image /> sa ilalim ang nakikita habang naglo-load
+     (dati ay 1.3 MB na orihinal na webp ang poster). */
   return (
     <video
-      ref={(element) => {
-        if (!element) return;
-        /* Sa ref, hindi sa `muted` lang: hindi laging inilalagay ng React ang
-           `muted` sa HTML, kaya puwedeng tanggihan ng browser ang autoplay. */
-        element.muted = true;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        void element.play().catch(() => undefined);
-      }}
+      ref={video}
       muted
       loop
       playsInline
-      preload="auto"
-      poster={poster}
+      preload="none"
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 h-full w-full object-cover"
     >
@@ -233,12 +249,11 @@ export default function ConceptCarousel() {
                     src={slide.image}
                     alt={`Hole ${index + 1} flyover rendering — CamSur Uptown Golf`}
                     fill
-                    quality={90}
-                    priority={index === 0}
+                    quality={80}
                     sizes="(min-width: 2060px) 1360px, (min-width: 640px) 66vw, calc(100vw - 3rem)"
                     className="pointer-events-none object-cover"
                   />
-                  {isActive ? <ActiveFlyover key={slide.slug} flyover={slide.flyover} poster={slide.image} /> : null}
+                  {isActive ? <ActiveFlyover key={slide.slug} flyover={slide.flyover} /> : null}
                   {/* Bahagyang dumidilim ang mga gilid para umurong ang tingin. */}
                   <div
                     className={`pointer-events-none absolute inset-0 transition-opacity duration-[560ms] ${
@@ -309,9 +324,9 @@ export default function ConceptCarousel() {
             <p className="font-navigation text-xs font-semibold uppercase tracking-[0.24em] text-[#7d6224] sm:text-sm">
               {HOLE_PROFILES[active + 1]?.name ?? t("course.eyebrow")}
             </p>
-            <h3 className="mt-2 max-w-full font-serif text-[clamp(2.25rem,2.8vw,3.4rem)] lining-nums font-medium leading-[0.92] tracking-[-0.05em]">
+            <h2 className="mt-2 max-w-full font-serif text-[clamp(2.25rem,2.8vw,3.4rem)] lining-nums font-medium leading-[0.92] tracking-[-0.05em]">
               {t("course.holeNo")} {active + 1}
-            </h3>
+            </h2>
             <Link href={`/golf/courses/${SLIDES[active].slug}`} className="mt-5 inline-flex h-12 min-w-[132px] items-center justify-center rounded-full bg-[#e2c77a] px-7 text-[12px] font-bold uppercase tracking-[0.12em] text-[#03321b] transition hover:bg-[#efd99b]">
               View the hole
             </Link>

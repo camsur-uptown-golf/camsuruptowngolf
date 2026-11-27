@@ -53,7 +53,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
 
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* One-time reveals: once visible, content stays visible and never
             reverses when the user scrolls back up. */}
         <ScrollMotion />
@@ -62,7 +62,7 @@ export default async function ClubhouseSpacePage({ params }: { params: Promise<{
             itaas (para mabasa ang menu at logo) at sa ibaba (sa likod ng
             pamagat) lang. Ang gitna ng render ay walang patong. */}
         <section id="top" className="relative isolate flex min-h-[560px] items-end overflow-hidden bg-[#071d13] text-white sm:min-h-[680px]">
-          <Image src={space.image} alt={space.imageAlt} fill priority sizes="100vw" className="-z-20 object-cover" />
+          <Image src={space.image} alt={space.imageAlt} fill preload sizes="100vw" className="-z-20 object-cover" />
           <div
             className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-72 bg-[linear-gradient(180deg,rgba(7,23,15,0.62)_0%,rgba(7,23,15,0.36)_50%,transparent_100%)]"
             aria-hidden="true"

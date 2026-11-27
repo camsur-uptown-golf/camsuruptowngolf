@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 export default function ClubhouseArchitecturePage() {
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ScrollMotion />
 
         <section id="top" className="relative isolate flex min-h-[440px] items-end overflow-hidden bg-[#071d13] pb-16 pt-44 text-white sm:min-h-[640px] sm:pb-20 sm:pt-52">
@@ -221,7 +221,7 @@ export default function ClubhouseArchitecturePage() {
               <p
                 data-reveal="up"
                 style={delay(260)}
-                className="mx-auto mt-6 max-w-lg border-t border-[#03321b]/10 pt-6 text-xs leading-6 text-[#7a847d]"
+                className="mx-auto mt-6 max-w-lg border-t border-[#03321b]/10 pt-6 text-xs leading-6 text-[#5f6b63]"
               >
                 {CLUBHOUSE_CONCEPT_NOTE}
               </p>

@@ -167,7 +167,7 @@ function GettingHere() {
               </div>
               <div className="min-w-0">
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-[#03321b]">{route.from}</h3>
-                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{route.note}</p>
+                <p className="mt-1.5 text-sm leading-7 xl:text-base xl:leading-8 text-[#5f6b63]">{route.note}</p>
               </div>
               {/* Ang oras ang pinakamalaking bagay sa hilera — iyon ang
                   unang hinahanap ng bumibisita. */}
@@ -232,7 +232,7 @@ function GreenFees() {
               >
                 <div className="min-w-0">
                   <dt className="text-xl font-medium tracking-[-0.02em] text-[#2e5126] sm:text-2xl">{fee.item}</dt>
-                  <p className="mt-2 max-w-md text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{fee.detail}</p>
+                  <p className="mt-2 max-w-md text-sm leading-7 xl:text-base xl:leading-8 text-[#5f6b63]">{fee.detail}</p>
                 </div>
                 <dd className="shrink-0 font-navigation text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.16em] text-[#7d6224]">
                   {fee.price}
@@ -297,7 +297,7 @@ function ClubGuidelines() {
               ))}
             </ul>
 
-            <p className="mt-8 border-t border-[#03321b]/12 pt-6 text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">
+            <p className="mt-8 border-t border-[#03321b]/12 pt-6 text-sm leading-7 xl:text-base xl:leading-8 text-[#5f6b63]">
               Smart casual applies throughout the clubhouse, and caps come off in the dining room.
             </p>
           </div>
@@ -347,7 +347,7 @@ function GuestInformation() {
               </p>
               <div>
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-[#2e5126]">{title}</h3>
-                <p className="mt-1.5 max-w-sm text-sm leading-7 xl:text-base xl:leading-8 text-[#667269]">{description}</p>
+                <p className="mt-1.5 max-w-sm text-sm leading-7 xl:text-base xl:leading-8 text-[#5f6b63]">{description}</p>
               </div>
             </div>
           ))}

@@ -1001,7 +1001,7 @@
  "Swimming pool bar": "プールバー",
  "Swimming pool changing room": "プール更衣室",
  "Tailored shorts, trousers, skorts, and golf skirts": "テーラードのショートパンツ、スラックス、スコート、ゴルフスカート",
- "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur for the active days, and a massage or a quiet hour by the lake for the slower ones.": "アクティブな日には CamSur のウェイクボード、ピックルボール、バスケットボール、ATV トレイルを。ゆっくり過ごす日には、マッサージや湖畔での静かなひとときを。",
+ "Wakeboarding and pickle ball at CamSur for the active days, and a quiet hour on Lago Del Rey for the slower ones.": "アクティブな日には CamSur のウェイクボードとピックルボールを。ゆっくり過ごす日には、Lago Del Rey での静かなひとときを。",
  "Tee times, flights and pairings arranged for your group": "グループに合わせたティータイム、組分け、ペアリングの手配",
  "Tell the club when you would like to play and how many are in your group, and the team will take care of the tee time, the caddies, and anything else you need.": "ご希望のプレー日とグループの人数をクラブにお知らせください。ティータイム、キャディ、その他必要なすべてをスタッフが手配いたします。",
  "Tell the club when you would like to play or stay, and the team will call you back within 48 hours at the time you choose.": "プレーまたはご宿泊のご希望時期をクラブにお知らせいただければ、ご指定の時間に48時間以内にスタッフよりお電話いたします。",
@@ -1188,7 +1188,7 @@
  "Wake slowly, spend the day on the course, and come back to a quiet room, a pool, and an evening that is yours.": "ゆっくり目覚め、コースで一日を過ごし、静かな客室とプール、そしてあなただけの夜へ戻る。",
  "Wakeboarding": "ウェイクボード",
  "Wakeboarding, ATV, a bike track, and the quieter corners of the resort.": "ウェイクボード、ATV、バイクトラック、そしてリゾートの静かな一角。",
- "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur, plus a massage or a quiet hour by the lake.": "CamSur のウェイクボード、ピックルボール、バスケットボール、ATV トレイル。マッサージや湖畔での静かなひとときも。",
+ "Wakeboarding and pickle ball at CamSur, plus a quiet hour on Lago Del Rey.": "CamSur のウェイクボードとピックルボール。Lago Del Rey での静かなひとときも。",
  "Walk the setting": "敷地を歩く",
  "Walnut": "ウォルナット",
  "Walnut joinery for fitting and display": "フィッティングとディスプレイのためのウォルナットの造作",
@@ -1846,5 +1846,7 @@
  "Exterior of the selected accommodation at Villa Del Rey": "Villa Del Reyで選択した宿泊施設の外観",
  "Bedroom of the selected accommodation at Villa Del Rey": "Villa Del Reyで選択した宿泊施設の寝室",
  "Top": "先頭",
- "Reset": "リセット"
+ "Reset": "リセット",
+ "Book a Tee Time": "ティータイムを予約",
+ "Skip to content": "本文へスキップ"
 }

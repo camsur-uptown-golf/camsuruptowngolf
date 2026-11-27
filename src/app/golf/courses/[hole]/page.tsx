@@ -70,7 +70,7 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
 
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* replay: umuulit ang reveal pababa't pataas — walang dead air. */}
         <ScrollMotion replay />
         {/* 620px (dating 660px): wala nang title sa hero, larawan na lang —
@@ -80,12 +80,20 @@ export default async function HolePage({ params }: { params: Promise<{ hole: str
             src={concept.image}
             alt=""
             fill
-            quality={90}
-            priority
+            quality={85}
+            preload
+            /* sync: sa `async` (default ng next/image) ay paminsan-minsang
+               hindi ipinipinta ng Chrome ang larawan matapos itong ma-decode —
+               nananatiling madilim na berde ang hero hanggang mag-scroll. */
+            decoding="sync"
             sizes="100vw"
             /* Nakatutok sa pinakaibaba ng larawan: lapag ang nakikita —
-               fairway, green at tubig — halos walang langit. */
-            className="-z-20 object-cover object-bottom"
+               fairway, green at tubig — halos walang langit.
+               z-0, hindi negatibo: sa -z-20 ay paminsan-minsang hindi
+               ipinipinta ng Chrome ang larawan (madilim na berde lang ang
+               hero ng hole 1). Nasa ibabaw pa rin ang FairwayDivider dahil
+               mas huli ito sa DOM. */
+            className="z-0 object-cover object-bottom"
           />
           {/* Walang madilim na overlay (gradient/shadow) sa ibabaw ng larawan:
               buo at maliwanag ang aerial ng butas sa lahat ng 18 pahina. */}

@@ -22,7 +22,7 @@ const ROUNDS: { value: Round; label: string; hint: string }[] = [
   { value: "back", label: "Back nine", hint: "Holes 10–18" },
 ];
 
-const LABEL = "mb-2 block font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#667269]";
+const LABEL = "mb-2 block font-navigation text-[11px] font-bold uppercase tracking-[0.14em] text-[#5f6b63]";
 
 function addDays(date: string, days: number) {
   return new Date(Date.parse(`${date}T00:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
@@ -73,7 +73,7 @@ export default function QuickBook({ plain = false }: { plain?: boolean }) {
                 {/* Isang linya lang ang label: ~95px lang ang bawat pindutan sa 390px na
                     cellphone, kaya naghahati dati ang "Full course". */}
                 <span className="block whitespace-nowrap text-[12px] font-semibold leading-4 sm:text-[13px]">{option.label}</span>
-                <span className={`mt-0.5 block whitespace-nowrap text-[11px] leading-3 ${selected ? "text-white/70" : "text-[#667269]"}`}>{option.hint}</span>
+                <span className={`mt-0.5 block whitespace-nowrap text-[11px] leading-3 ${selected ? "text-white/70" : "text-[#5f6b63]"}`}>{option.hint}</span>
               </button>
             );
           })}

@@ -84,7 +84,7 @@ function InfoIcon({ d }: { d: string }) {
 export default function PlanYourVisitPage() {
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ScrollMotion />
 
         {/* The panoramic photo has its own frame, independent of form height.

@@ -65,7 +65,7 @@ export default async function ReservationPage({ params }: { params: Promise<{ co
 
   return (
     <>
-      <main className="bg-[#f3ede1] text-[#03321b]">
+      <main id="main-content" tabIndex={-1} className="bg-[#f3ede1] text-[#03321b]">
         <section id="top" className="relative isolate min-h-[380px] overflow-hidden bg-[#03321b] px-6 pb-28 pt-64 text-center text-white sm:min-h-[640px] sm:pb-52 sm:pt-72 lg:min-h-[800px] lg:px-8 lg:pb-84">
           <HeroBackdrop {...TEE_TIME_HERO} alt="Golf ball printed with the CamSur Uptown Golf logo and driver ready for a morning tee time" />
           <span className={`inline-flex rounded-full px-3 py-1 font-navigation text-[11px] font-bold uppercase tracking-[0.14em] ${state.tone}`}>
@@ -86,7 +86,7 @@ export default async function ReservationPage({ params }: { params: Promise<{ co
               <dl className="mt-5 space-y-4 text-sm">
                 {rows.map(([label, value]) => (
                   <div key={label} className="flex flex-col gap-1 border-b border-[#03321b]/10 pb-4 last:border-0 last:pb-0 sm:flex-row sm:justify-between sm:gap-6">
-                    <dt className="text-[#667269]">{label}</dt>
+                    <dt className="text-[#5f6b63]">{label}</dt>
                     <dd translate="no" className="font-semibold sm:text-right">
                       {value}
                     </dd>
@@ -106,7 +106,7 @@ export default async function ReservationPage({ params }: { params: Promise<{ co
                   <dt>{reservation.status === "confirmed" ? "Downpayment paid" : "Downpayment due"}</dt>
                   <dd translate="no" className="font-semibold tabular-nums">{formatPeso(reservation.amountDeposit)}</dd>
                 </div>
-                <div className="flex justify-between gap-3 text-[#667269]">
+                <div className="flex justify-between gap-3 text-[#5f6b63]">
                   <dt>Balance at the club</dt>
                   <dd translate="no" className="tabular-nums">{formatPeso(reservation.amountTotal - reservation.amountDeposit)}</dd>
                 </div>
@@ -114,7 +114,7 @@ export default async function ReservationPage({ params }: { params: Promise<{ co
 
               {reservation.status === "held" ? (
                 <>
-                  <p className="mt-6 text-xs leading-5 text-[#667269]">
+                  <p className="mt-6 text-xs leading-5 text-[#5f6b63]">
                     <Tr
                       t="Your tee time is held until {0}. If the downpayment is not completed by then, the time is released."
                       v={[

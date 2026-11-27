@@ -133,7 +133,7 @@ export default function VillaDelReyStays() {
                   href={villaHouseHref(stayType.slug)}
                   data-reveal="up"
                   style={delay(270)}
-                  className="mt-8 inline-flex h-12 max-w-full items-center justify-center gap-3 whitespace-nowrap rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#8a681f] transition hover:-translate-y-0.5 hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:px-7 sm:text-[11px] sm:tracking-[0.12em] xl:text-[12px]"
+                  className="mt-8 inline-flex h-12 max-w-full items-center justify-center gap-3 whitespace-nowrap rounded-full border border-[#b8963f]/55 px-5 font-navigation text-[11px] font-bold uppercase tracking-[0.1em] text-[#7d6224] transition hover:-translate-y-0.5 hover:border-[#e2c77a] hover:bg-[#e2c77a] hover:text-[#03321b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#98782f] sm:px-7 sm:text-[11px] sm:tracking-[0.12em] xl:text-[12px]"
                 >
                   Ask about availability
                 </Link>

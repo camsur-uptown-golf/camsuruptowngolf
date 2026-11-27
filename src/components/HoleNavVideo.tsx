@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 /**
  * Flyover sa mga card na "Previous / Next hole" sa ibaba ng pahina ng butas.
@@ -12,6 +13,10 @@ import { useEffect, useRef } from "react";
  * kalahati ng screen ang card, kaya malabo ang 1280 doon), 1280 sa cellphone
  * (isang card bawat hanay, < 640px). Nasa ilalim ang
  * larawan (poster) habang naglo-load. Kapag naka-"reduce motion", larawan lang.
+ *
+ * Ang poster ay `<Image>` (lazy, naka-resize), hindi `poster` attribute: ang
+ * attribute ay buong orihinal na webp (~1.7 MB bawat card) na dina-download
+ * agad pagbukas ng pahina, kahit nasa pinakababa pa ang mga card.
  */
 export default function HoleNavVideo({
   src,
@@ -38,13 +43,21 @@ export default function HoleNavVideo({
   }, []);
 
   return (
+    <>
+    <Image
+      src={poster}
+      alt=""
+      fill
+      loading="lazy"
+      sizes="(min-width: 640px) 50vw, 100vw"
+      className="-z-10 object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
+    />
     <video
       ref={video}
       muted
       loop
       playsInline
       preload="none"
-      poster={poster}
       aria-hidden="true"
       /* Buong frame, hindi naka-zoom: wala nang "17 | PAR 5" sa kanan ng mga
          flyover, at 16:9 din ang card, kaya buo ang kita. Bahagyang zoom lang
@@ -54,5 +67,6 @@ export default function HoleNavVideo({
       <source src={src.mobile} type="video/mp4" media="(max-width: 639px)" />
       <source src={src.desktop} type="video/mp4" />
     </video>
+    </>
   );
 }

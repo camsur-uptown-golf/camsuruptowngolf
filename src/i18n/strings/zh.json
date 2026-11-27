@@ -1001,7 +1001,7 @@
  "Swimming pool bar": "游泳池酒吧",
  "Swimming pool changing room": "游泳池更衣室",
  "Tailored shorts, trousers, skorts, and golf skirts": "合身短裤、长裤、裙裤及高尔夫短裙",
- "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur for the active days, and a massage or a quiet hour by the lake for the slower ones.": "活力满满的日子，可在 CamSur 体验滑水、匹克球、篮球及全地形车越野；悠闲的日子，则可享受按摩或湖畔的宁静时光。",
+ "Wakeboarding and pickle ball at CamSur for the active days, and a quiet hour on Lago Del Rey for the slower ones.": "活力满满的日子，可在 CamSur 体验滑水与匹克球；悠闲的日子，则可在 Lago Del Rey 享受宁静时光。",
  "Tee times, flights and pairings arranged for your group": "为您的团队安排开球时间、分组与配对",
  "Tell the club when you would like to play and how many are in your group, and the team will take care of the tee time, the caddies, and anything else you need.": "告诉俱乐部您希望何时打球以及团队人数，团队将为您安排开球时间、球童及其他所需事项。",
  "Tell the club when you would like to play or stay, and the team will call you back within 48 hours at the time you choose.": "告诉俱乐部您希望何时打球或入住，团队将在 48 小时内于您选择的时间回电。",
@@ -1188,7 +1188,7 @@
  "Wake slowly, spend the day on the course, and come back to a quiet room, a pool, and an evening that is yours.": "慢慢醒来，在球场度过一天，再回到安静的房间、泳池，以及只属于你的夜晚。",
  "Wakeboarding": "滑水",
  "Wakeboarding, ATV, a bike track, and the quieter corners of the resort.": "滑水、全地形车、自行车赛道，以及度假村的静谧角落。",
- "Wakeboarding, pickle ball, basketball, and ATV trails at CamSur, plus a massage or a quiet hour by the lake.": "CamSur 的滑水、匹克球、篮球及全地形车越野，还有按摩或湖畔的宁静时光。",
+ "Wakeboarding and pickle ball at CamSur, plus a quiet hour on Lago Del Rey.": "CamSur 的滑水与匹克球，还有 Lago Del Rey 的宁静时光。",
  "Walk the setting": "实地参观场地",
  "Walnut": "胡桃木",
  "Walnut joinery for fitting and display": "用于试装与陈列的胡桃木细木工",
@@ -1846,5 +1846,7 @@
  "Exterior of the selected accommodation at Villa Del Rey": "Villa Del Rey 所选住宿的外观",
  "Bedroom of the selected accommodation at Villa Del Rey": "Villa Del Rey 所选住宿的卧室",
  "Top": "顶部",
- "Reset": "重置"
+ "Reset": "重置",
+ "Book a Tee Time": "预订开球时间",
+ "Skip to content": "跳到主要内容"
 }

@@ -41,7 +41,7 @@ function topicId(title: string) {
 export default function FaqPage() {
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ScrollMotion />
 
         <section
