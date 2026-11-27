@@ -1,5 +1,24 @@
 import type { NextConfig } from "next";
 
+/* Kapag may sariling domain na (SITE_URL, hal. https://camsuruptowngolf.com),
+   ang mga pahinang binuksan sa `*.vercel.app` ng production ay inililipat doon
+   — iisang address para sa Google, sa share preview, at sa sign-in (nasa
+   domain ng SITE_URL ang OAuth callback, kaya doon dapat nakatakda ang cookie).
+   Hindi kasama ang /api: tumatawag pa roon ang mga webhook ng PayMongo/PayPal
+   at ang member app. Walang epekto habang walang SITE_URL o sa preview. */
+function vercelAppToCustomDomain() {
+  const site = process.env.SITE_URL?.trim().replace(/\/$/, "");
+  if (process.env.VERCEL_ENV !== "production" || !site) return [];
+  return [
+    {
+      source: "/:path((?!api(?:/|$)).*)",
+      has: [{ type: "host" as const, value: ".*\\.vercel\\.app" }],
+      destination: `${site}/:path`,
+      permanent: true,
+    },
+  ];
+}
+
 const nextConfig: NextConfig = {
   /* Ang `process.cwd()` sa db.ts (lokal na SQLite sa data/) ay nagpapasama sa
      BUONG proyekto sa bawat server function — ~780 MB na may mga video, lampas
@@ -31,7 +50,10 @@ const nextConfig: NextConfig = {
      /accommodations/<stay>. Pansamantala (307) dahil puwedeng magkaroon
      ito ng sariling listahan kapag may pangalawang resort na. */
   async redirects() {
-    return [{ source: "/accommodations", destination: "/accommodations/villa-del-rey", permanent: false }];
+    return [
+      { source: "/accommodations", destination: "/accommodations/villa-del-rey", permanent: false },
+      ...vercelAppToCustomDomain(),
+    ];
   },
   /* Ang web preview ng Expo app (repo `app-camsuruptowngolf`, port 8081) ay ibang origin, kaya
      hinaharang ng browser ang fetch nito sa /api. Sa dev lang — walang CORS
